@@ -1891,6 +1891,47 @@ const DataIO={
 };
 
 /* ═══════════════════════════════════════════════
+   WHAT'S NEW
+   ═══════════════════════════════════════════════ */
+const WhatsNew={
+  _notes:{
+    '1.2.0':[
+      'New <b>Feeding</b> tab — log nutrients, pH in/out, EC/PPM per plant or environment',
+      'New <b>Photo Journal</b> — visual timeline of your grow with photo uploads',
+      'New <b>IPM Log</b> — track pests, diseases &amp; treatments with severity levels',
+      'Plant cards now have <b>+ Feed</b>, <b>+ Photo</b>, <b>+ IPM</b> quick actions',
+      'Dashboard shows <b>Active Issues</b> count'
+    ],
+    '1.1.1':[
+      'Toggle to <b>hide/show</b> the hero banner (gear icon in header)',
+      'Version number in footer links to <b>changelog</b>',
+      'Fixed environment readings filter bug'
+    ],
+    '1.1.0':[
+      'New <b>Environments</b> tab — manage grow tents, rooms &amp; spaces',
+      'Assign plants to environments, track readings per environment',
+      'Dashboard shows environment count'
+    ]
+  },
+  check(){
+    const seen=Store.setting('lastSeenVersion')||'';
+    if(seen===APP_VERSION) return;
+    const notes=this._notes[APP_VERSION];
+    if(!notes||!notes.length){Store.setting('lastSeenVersion',APP_VERSION);return}
+    let h='<div style="margin-bottom:var(--space-md);font-size:.85rem;color:var(--text-secondary)">v'+APP_VERSION+'</div>';
+    h+='<ul style="padding-left:var(--space-lg);margin:0;line-height:1.8">';
+    notes.forEach(n=>{h+='<li style="font-size:.85rem;margin-bottom:var(--space-xs)">'+n+'</li>'});
+    h+='</ul>';
+    Modal.open("What's New",h,'<button class="btn btn-primary" onclick="WhatsNew.dismiss()">Got it!</button>');
+  },
+  dismiss(){
+    Store.setting('lastSeenVersion',APP_VERSION);
+    Modal.close();
+  }
+};
+window.WhatsNew=WhatsNew;
+
+/* ═══════════════════════════════════════════════
    INIT
    ═══════════════════════════════════════════════ */
 function init(){
@@ -1906,6 +1947,7 @@ function init(){
     if(renderers[tab]) renderers[tab].render();
   });
   Router.init();
+  WhatsNew.check();
 }
 
 if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init);
