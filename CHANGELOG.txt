@@ -32,6 +32,12 @@ FEATURE: Strain Catalog Expansion & Clone Provider Support
   - Breeder name displayed on each catalog card
   - Source links to Deep Green Genetics, Hawaiian Budline, and CloneFreak
 
+  Fixes
+  - Clone catalog entries now store the source breeder (e.g. "Runtz Crew")
+    as the strain breeder instead of the provider name ("CloneFreak")
+  - Grow notes for clones show full context: "Clone from CloneFreak
+    (bred by Runtz Crew)"
+
 
 v1.3.0 — 2026-03-07
 --------------------
