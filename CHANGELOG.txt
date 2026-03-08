@@ -1,0 +1,81 @@
+CHANGELOG — Tropical Roots Maui - Plant Manager
+=================================================
+https://github.com/magikh0e/PlantManager
+
+
+v1.1.0 — 2026-03-07
+--------------------
+FEATURE: Grow Environments
+
+  Added grow tents and environments as first-class entities. Plants can
+  now be assigned to an environment, and environmental readings (temp,
+  humidity, pH, EC/PPM, light hours) are tracked per environment instead
+  of per plant.
+
+  - New "Environs" tab with full CRUD (add, edit, search, archive)
+  - Environment cards display type badge, dimensions, light setup,
+    assigned plant count, and latest sensor readings
+  - Six environment types: tent, room, greenhouse, outdoor, closet, other
+  - Plants module: replaced free-text location field with environment
+    dropdown selector
+  - Environment readings tab: filter readings by specific environment
+  - "+ Log Reading" shortcut on each environment card (pre-selects env)
+  - Dashboard: new Environments stat card and "+ Add Environ" quick action
+  - Backward compatible — existing plants with old location field and
+    legacy per-plant readings still display correctly
+
+
+v1.0.0 — 2026-03-07
+--------------------
+Initial release of Tropical Roots Maui - Plant Manager.
+
+  CORE
+  - Single self-contained HTML file, no server required
+  - All data persisted in browser localStorage
+  - Light / dark theme toggle with system preference detection
+  - Full data import / export (JSON backup & restore)
+  - Responsive layout for mobile, tablet, and desktop
+
+  MOTHER PLANTS
+  - Add, edit, search, and archive mother plants
+  - Track strain, genetics, source, acquisition date, growth stage
+  - Photo upload with automatic canvas resize (400px, JPEG)
+  - Health status badges: thriving, healthy, stressed, sick, quarantine
+  - Clone success rate tracking per mother
+  - Filter plants by status
+
+  CLONE TRACKING
+  - Log clone batches linked to a mother plant
+  - Record cut date, quantity, medium, rooting hormone, and notes
+  - Auto-calculated success rate feeds back to mother card
+  - Search and filter clone history
+
+  TASK SCHEDULING
+  - Create one-time or recurring care tasks (daily, weekly, biweekly,
+    monthly, quarterly)
+  - Assign tasks to specific plants
+  - Mark tasks complete with automatic next-due advancement
+  - Priority levels: low, medium, high, urgent
+  - Overdue and due-today highlighting
+  - Filter by status and plant
+
+  ENVIRONMENT READINGS
+  - Log temperature, humidity, light hours, pH, and EC/PPM
+  - Latest-reading summary cards with current values
+  - Trend history table with SVG sparkline mini-charts
+  - Filter readings by plant (v1.0) or environment (v1.1)
+
+  DASHBOARD
+  - At-a-glance stat cards: mothers, clones, environments, tasks due,
+    health overview
+  - Quick action buttons for all major workflows
+  - Chronological activity feed (recent adds, edits, completions)
+  - Hero banner with Kanehiwa alchemical sanctuary artwork
+
+  BRANDING & SEO
+  - Tropical Roots Maui branding with TRM logo
+  - Full Open Graph and Twitter Card meta tags
+  - Canonical URL, favicon references, structured keywords
+
+  LICENSE
+  - Released under GNU General Public License v3.0 (GPL-3.0)
