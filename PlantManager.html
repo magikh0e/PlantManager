@@ -1,0 +1,1333 @@
+<!--
+  Tropical Roots Maui - Plant Manager
+  Copyright (C) 2025-2026 Tropical Roots Maui
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program. If not, see <https://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tropical Roots Maui - Plant Manager</title>
+
+<!-- Primary Meta -->
+<meta name="description" content="Tropical Roots Maui Plant Manager — Track mother plants, clones, care schedules, and grow room conditions. A complete cannabis cultivation management tool.">
+<meta name="keywords" content="Tropical Roots Maui, plant manager, mother plant tracker, cannabis clones, grow journal, cultivation tool, plant care schedule, grow room monitor">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Tropical Roots Maui">
+<link rel="canonical" href="https://tropicalrootsmaui.com/PlantManager.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tropical Roots Maui - Plant Manager">
+<meta property="og:description" content="Track mother plants, clones, care schedules, and grow room conditions. A complete cannabis cultivation management tool.">
+<meta property="og:url" content="https://tropicalrootsmaui.com/PlantManager.html">
+<meta property="og:site_name" content="Tropical Roots Maui">
+<meta property="og:image" content="https://tropicalrootsmaui.com/img/tropical-roots-maui-kanehiwa-alchemical-sanctuary-logo.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A Tiki Golem Master named Kānehiwa stands in a misty, futuristic Polynesian lab, gesturing at a glowing holographic projection of a cannabis plant and its golden root zone.">
+<meta property="og:locale" content="en_US">
+
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tropical Roots Maui - Plant Manager">
+<meta name="twitter:description" content="Track mother plants, clones, care schedules, and grow room conditions. A complete cannabis cultivation management tool.">
+<meta name="twitter:image" content="https://tropicalrootsmaui.com/img/tropical-roots-maui-kanehiwa-alchemical-sanctuary-logo.webp">
+<meta name="twitter:image:alt" content="A Tiki Golem Master named Kānehiwa stands in a misty, futuristic Polynesian lab, gesturing at a glowing holographic projection of a cannabis plant and its golden root zone.">
+<meta name="twitter:site" content="@tropicalrootsmaui">
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── Reset ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+
+/* ── Theme Tokens ── */
+:root{
+  --cyan:#00c8c0;--cyan-dim:#00968f;--gold:#f0b429;--orange:#e8721a;
+  --green:#2d6e35;--leaf:#4a9e52;--jungle:#1b3a1e;
+  --health-thriving:#2d6e35;--health-healthy:#4a9e52;--health-stressed:#f0b429;--health-sick:#e05c3a;--health-quarantine:#9b6bb5;
+  --space-xs:.25rem;--space-sm:.5rem;--space-md:1rem;--space-lg:1.5rem;--space-xl:2rem;--space-2xl:3rem;
+  --header-h:56px;--tab-h:52px;--max-w:1200px;--radius:10px;--radius-sm:6px;--radius-lg:14px;
+  --ease:cubic-bezier(.4,0,.2,1);--duration:.25s;
+  /* dark defaults */
+  --bg-primary:#0a0c0a;--bg-secondary:#0d160d;--bg-card:rgba(27,58,30,.18);--bg-card-hover:rgba(27,58,30,.32);
+  --bg-input:rgba(255,255,255,.05);--border-subtle:rgba(255,255,255,.08);--border-focus:var(--cyan);
+  --text-primary:#f0ead8;--text-secondary:rgba(240,234,216,.55);--text-tertiary:rgba(240,234,216,.35);
+  --shadow-card:0 2px 12px rgba(0,0,0,.3);--shadow-hover:0 8px 24px rgba(0,0,0,.4);
+  --overlay:rgba(0,0,0,.75);
+}
+[data-theme="light"]{
+  --bg-primary:#f5f2eb;--bg-secondary:#ece8df;--bg-card:rgba(255,255,255,.85);--bg-card-hover:rgba(255,255,255,.95);
+  --bg-input:rgba(0,0,0,.04);--border-subtle:rgba(0,0,0,.1);
+  --text-primary:#1a1a1a;--text-secondary:rgba(0,0,0,.55);--text-tertiary:rgba(0,0,0,.3);
+  --shadow-card:0 2px 12px rgba(0,0,0,.08);--shadow-hover:0 8px 24px rgba(0,0,0,.12);
+  --overlay:rgba(0,0,0,.45);
+}
+
+/* ── Hero Banner ── */
+.hero-banner{margin-bottom:var(--space-xl);border-radius:var(--radius-lg);overflow:hidden;position:relative;border:1px solid var(--border-subtle);box-shadow:var(--shadow-card)}
+.hero-banner img{width:100%;height:auto;display:block}
+.hero-caption{position:absolute;bottom:0;left:0;right:0;padding:var(--space-md) var(--space-lg);background:linear-gradient(transparent,rgba(0,0,0,.85));color:rgba(240,234,216,.85);font-size:.75rem;font-style:italic;line-height:1.5}
+
+/* ── Base ── */
+body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;transition:background var(--duration) var(--ease),color var(--duration) var(--ease)}
+
+/* ── Header ── */
+.header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:var(--bg-secondary);border-bottom:1px solid var(--border-subtle);display:flex;align-items:center;justify-content:space-between;padding:0 var(--space-lg);z-index:200;transition:background var(--duration) var(--ease)}
+.header-left{display:flex;align-items:center;gap:var(--space-sm)}
+.header-logo{height:36px;width:auto;border-radius:4px}
+.header-title{font-size:1.05rem;font-weight:700;letter-spacing:-.02em}
+.header-right{display:flex;align-items:center;gap:var(--space-xs)}
+.icon-btn{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border-subtle);border-radius:var(--radius-sm);background:transparent;color:var(--text-secondary);font-size:1.1rem;transition:all var(--duration) var(--ease)}
+.icon-btn:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,200,192,.06)}
+
+/* ── Tab Nav ── */
+.tab-nav{position:fixed;top:var(--header-h);left:0;right:0;height:var(--tab-h);background:var(--bg-secondary);border-bottom:1px solid var(--border-subtle);display:flex;overflow-x:auto;z-index:190;transition:background var(--duration) var(--ease);scrollbar-width:none}
+.tab-nav::-webkit-scrollbar{display:none}
+.tab-btn{flex:1;min-width:72px;max-width:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:.4rem .5rem;border:none;background:none;color:var(--text-tertiary);font-size:.65rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;border-bottom:3px solid transparent;transition:all var(--duration) var(--ease);-webkit-tap-highlight-color:transparent;white-space:nowrap}
+.tab-btn .tab-icon{font-size:1.15rem;line-height:1}
+.tab-btn:hover{color:var(--text-secondary)}
+.tab-btn.active{color:var(--cyan);border-bottom-color:var(--cyan)}
+
+/* ── Main Content ── */
+.main{padding-top:calc(var(--header-h) + var(--tab-h) + var(--space-lg));padding-bottom:var(--space-2xl);min-height:100vh}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 var(--space-lg)}
+.tab-panel{display:none;animation:fadeUp .35s var(--ease)}
+.tab-panel.active{display:block}
+
+/* ── Cards ── */
+.card{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius);box-shadow:var(--shadow-card);transition:all var(--duration) var(--ease);overflow:hidden}
+.card:hover{border-color:rgba(0,200,192,.25);box-shadow:var(--shadow-hover);transform:translateY(-2px)}
+.card-body{padding:var(--space-lg)}
+
+/* ── Stat Cards ── */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:var(--space-md)}
+.stat-card{padding:var(--space-lg);border-top:3px solid var(--cyan);text-align:center}
+.stat-card .stat-icon{font-size:1.6rem;margin-bottom:var(--space-xs)}
+.stat-card .stat-value{font-size:2rem;font-weight:700;line-height:1.1}
+.stat-card .stat-label{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-secondary);margin-top:var(--space-xs)}
+.stat-card.gold{border-top-color:var(--gold)}
+.stat-card.green{border-top-color:var(--leaf)}
+.stat-card.orange{border-top-color:var(--orange)}
+
+/* ── Section Headers ── */
+.section-title{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-secondary);margin-bottom:var(--space-md);display:flex;align-items:center;gap:var(--space-sm)}
+
+/* ── Toolbar ── */
+.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-sm);margin-bottom:var(--space-lg)}
+.search-input{flex:1;min-width:180px;padding:.55rem .9rem;background:var(--bg-input);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);color:var(--text-primary);font-size:.85rem;transition:border-color var(--duration) var(--ease)}
+.search-input:focus{outline:none;border-color:var(--border-focus);box-shadow:0 0 0 3px rgba(0,200,192,.12)}
+.search-input::placeholder{color:var(--text-tertiary)}
+.filter-select{padding:.55rem .9rem;padding-right:2rem;background:var(--bg-input);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);color:var(--text-primary);font-size:.85rem;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2399998a' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .7rem center;cursor:pointer;transition:border-color var(--duration) var(--ease)}
+.filter-select:focus{outline:none;border-color:var(--border-focus)}
+.form-select option,.filter-select option{background:#1a1a1a;color:#f0ead8}
+[data-theme="light"] .form-select option,[data-theme="light"] .filter-select option{background:#fff;color:#1a1a1a}
+
+/* ── Buttons ── */
+.btn{display:inline-flex;align-items:center;gap:var(--space-sm);padding:.6rem 1.2rem;border-radius:var(--radius-sm);font-size:.8rem;font-weight:600;border:none;transition:all var(--duration) var(--ease);white-space:nowrap}
+.btn-primary{background:linear-gradient(135deg,var(--cyan-dim),var(--cyan));color:#0a0c0a}
+.btn-primary:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn-outline{background:transparent;border:1px solid var(--cyan);color:var(--cyan)}
+.btn-outline:hover{background:rgba(0,200,192,.08)}
+.btn-ghost{background:transparent;border:1px solid var(--border-subtle);color:var(--text-secondary)}
+.btn-ghost:hover{border-color:var(--text-secondary);color:var(--text-primary)}
+.btn-danger{background:rgba(224,92,58,.1);border:1px solid rgba(224,92,58,.25);color:#e05c3a}
+.btn-danger:hover{background:rgba(224,92,58,.2)}
+.btn-sm{padding:.35rem .75rem;font-size:.72rem}
+.btn-icon{width:36px;height:36px;padding:0;justify-content:center}
+
+/* ── Quick Actions ── */
+.quick-actions{display:flex;flex-wrap:wrap;gap:var(--space-sm);margin-bottom:var(--space-xl)}
+
+/* ── Plant Cards Grid ── */
+.plant-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:var(--space-lg)}
+.plant-card .plant-photo{height:180px;background:linear-gradient(135deg,var(--bg-secondary),rgba(27,58,30,.3));display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative;overflow:hidden}
+.plant-card .plant-photo img{width:100%;height:100%;object-fit:cover}
+.plant-card .health-badge{position:absolute;top:var(--space-sm);right:var(--space-sm);padding:.15rem .55rem;border-radius:3px;font-size:.6rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.badge-thriving{background:var(--health-thriving);color:#fff}
+.badge-healthy{background:var(--health-healthy);color:#fff}
+.badge-stressed{background:var(--health-stressed);color:#1a1a1a}
+.badge-sick{background:var(--health-sick);color:#fff}
+.badge-quarantine{background:var(--health-quarantine);color:#fff}
+.plant-card .plant-info{padding:var(--space-md) var(--space-lg) var(--space-lg)}
+.plant-card .plant-name{font-size:1.05rem;font-weight:700;margin-bottom:var(--space-xs)}
+.plant-card .plant-meta{display:flex;flex-wrap:wrap;gap:var(--space-xs);margin-bottom:var(--space-sm)}
+.plant-tag{display:inline-flex;padding:.12rem .5rem;border-radius:3px;font-size:.65rem;font-weight:600;background:var(--bg-input);color:var(--text-secondary);border:1px solid var(--border-subtle)}
+.plant-card .plant-details{font-size:.8rem;color:var(--text-secondary);margin-bottom:var(--space-md);line-height:1.7}
+.plant-card .plant-details span{display:block}
+.plant-card .plant-actions{display:flex;gap:var(--space-xs);flex-wrap:wrap}
+
+/* ── Clone Cards ── */
+.clone-grid{display:grid;gap:var(--space-md)}
+.clone-card .card-body{display:flex;flex-wrap:wrap;gap:var(--space-md);align-items:center}
+.clone-card .clone-main{flex:1;min-width:200px}
+.clone-card .clone-title{font-size:.9rem;font-weight:700;margin-bottom:var(--space-xs)}
+.clone-card .clone-subtitle{font-size:.75rem;color:var(--text-secondary)}
+.clone-card .clone-counts{display:flex;gap:var(--space-lg);flex-wrap:wrap;align-items:center}
+.clone-count{text-align:center}
+.clone-count .count-val{font-size:1.3rem;font-weight:700;line-height:1}
+.clone-count .count-label{font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text-secondary)}
+.clone-count.success .count-val{color:var(--leaf)}
+.clone-count.fail .count-val{color:#e05c3a}
+.clone-count.pending .count-val{color:var(--text-secondary)}
+.progress-bar{width:100%;height:6px;background:var(--bg-input);border-radius:3px;overflow:hidden;display:flex;margin-top:var(--space-sm)}
+.progress-bar .seg-success{background:var(--leaf);height:100%}
+.progress-bar .seg-fail{background:#e05c3a;height:100%}
+.progress-bar .seg-pending{background:var(--text-tertiary);height:100%}
+.clone-card .clone-actions{display:flex;gap:var(--space-xs);align-items:center;flex-shrink:0}
+
+/* ── Task Cards ── */
+.task-section{margin-bottom:var(--space-xl)}
+.task-section-header{display:flex;align-items:center;gap:var(--space-sm);padding-left:var(--space-sm);margin-bottom:var(--space-md);border-left:3px solid var(--cyan);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-secondary)}
+.task-section.overdue .task-section-header{border-left-color:#e05c3a;color:#e05c3a}
+.task-section.today .task-section-header{border-left-color:var(--gold);color:var(--gold)}
+.task-section.completed .task-section-header{border-left-color:var(--text-tertiary);color:var(--text-tertiary)}
+.task-list{display:grid;gap:var(--space-sm)}
+.task-card{display:flex;align-items:center;gap:var(--space-md);padding:var(--space-md) var(--space-lg);transition:all .3s var(--ease)}
+.task-card.sliding-out{opacity:0;transform:translateX(40px);max-height:0;padding-top:0;padding-bottom:0;margin:0;overflow:hidden}
+.task-check{width:44px;height:44px;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer}
+.task-check input{display:none}
+.task-check .checkmark{width:24px;height:24px;border:2px solid var(--border-subtle);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all var(--duration) var(--ease);font-size:.7rem;color:transparent}
+.task-check:hover .checkmark{border-color:var(--cyan)}
+.task-check input:checked+.checkmark{background:var(--cyan);border-color:var(--cyan);color:#0a0c0a}
+.task-body{flex:1;min-width:0}
+.task-body .task-title{font-size:.85rem;font-weight:600}
+.task-body .task-sub{font-size:.72rem;color:var(--text-secondary);display:flex;flex-wrap:wrap;gap:var(--space-sm)}
+.task-due{font-size:.7rem;font-weight:600;white-space:nowrap}
+.task-due.overdue{color:#e05c3a}
+.task-due.today{color:var(--gold)}
+.task-recurring-badge{font-size:.6rem;padding:.1rem .4rem;border-radius:3px;background:rgba(0,200,192,.1);color:var(--cyan);font-weight:600}
+
+/* ── Environment ── */
+.env-readings{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:var(--space-md);margin-bottom:var(--space-xl)}
+.env-reading-card{padding:var(--space-md);text-align:center}
+.env-reading-card .env-val{font-size:1.6rem;font-weight:700;color:var(--cyan)}
+.env-reading-card .env-label{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-secondary)}
+.env-table-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--border-subtle)}
+.env-table{width:100%;border-collapse:collapse;font-size:.8rem}
+.env-table th{padding:.6rem .8rem;text-align:left;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-secondary);background:var(--bg-secondary);border-bottom:1px solid var(--border-subtle)}
+.env-table td{padding:.5rem .8rem;border-bottom:1px solid var(--border-subtle)}
+.env-table tr:last-child td{border-bottom:none}
+.sparkline{vertical-align:middle}
+
+/* ── Activity Feed ── */
+.activity-feed{list-style:none}
+.activity-item{display:flex;gap:var(--space-sm);padding:var(--space-sm) 0;border-bottom:1px solid var(--border-subtle);font-size:.8rem}
+.activity-item:last-child{border-bottom:none}
+.activity-time{color:var(--text-tertiary);font-size:.7rem;white-space:nowrap;min-width:60px}
+.activity-msg{color:var(--text-secondary)}
+
+/* ── Modal ── */
+.modal-overlay{position:fixed;inset:0;background:var(--overlay);backdrop-filter:blur(6px);z-index:500;display:none;align-items:center;justify-content:center;padding:var(--space-lg);overflow-y:auto}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg-secondary);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);width:100%;max-width:560px;max-height:90vh;overflow-y:auto;animation:modalIn .3s var(--ease);box-shadow:0 24px 48px rgba(0,0,0,.4)}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:var(--space-lg) var(--space-xl);border-bottom:1px solid var(--border-subtle);position:sticky;top:0;background:var(--bg-secondary);z-index:1}
+.modal-title{font-size:1rem;font-weight:700}
+.modal-close{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border:none;background:none;color:var(--text-secondary);font-size:1.2rem;border-radius:var(--radius-sm);transition:all var(--duration) var(--ease)}
+.modal-close:hover{background:var(--bg-input);color:var(--text-primary)}
+.modal-body{padding:var(--space-xl)}
+.modal-footer{display:flex;justify-content:flex-end;gap:var(--space-sm);padding:var(--space-lg) var(--space-xl);border-top:1px solid var(--border-subtle)}
+
+/* ── Forms ── */
+.form-group{margin-bottom:var(--space-lg)}
+.form-label{display:block;font-size:.7rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:var(--space-xs)}
+.form-input,.form-select,.form-textarea{width:100%;padding:.6rem .9rem;background:var(--bg-input);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);color:var(--text-primary);font-size:.85rem;transition:border-color var(--duration) var(--ease)}
+.form-input:focus,.form-select:focus,.form-textarea:focus{outline:none;border-color:var(--border-focus);box-shadow:0 0 0 3px rgba(0,200,192,.12)}
+.form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2399998a' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .7rem center;padding-right:2rem;cursor:pointer}
+.form-textarea{min-height:80px;resize:vertical}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-md)}
+.form-hint{font-size:.65rem;color:var(--text-tertiary);margin-top:var(--space-xs)}
+.photo-preview{width:100%;height:150px;border:2px dashed var(--border-subtle);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;color:var(--text-tertiary);font-size:.8rem;cursor:pointer;overflow:hidden;transition:border-color var(--duration) var(--ease);position:relative}
+.photo-preview:hover{border-color:var(--cyan)}
+.photo-preview img{width:100%;height:100%;object-fit:cover}
+.photo-preview .photo-placeholder{text-align:center}
+
+/* ── Toast ── */
+.toast-container{position:fixed;bottom:var(--space-lg);right:var(--space-lg);z-index:600;display:flex;flex-direction:column;gap:var(--space-sm)}
+.toast{padding:var(--space-md) var(--space-lg);background:var(--bg-secondary);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);font-size:.8rem;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.3);animation:toastIn .3s var(--ease);max-width:320px}
+.toast.success{border-left:3px solid var(--leaf)}
+.toast.error{border-left:3px solid #e05c3a}
+.toast.info{border-left:3px solid var(--cyan)}
+
+/* ── Empty State ── */
+.empty-state{text-align:center;padding:var(--space-2xl) var(--space-xl);color:var(--text-secondary)}
+.empty-state .empty-icon{font-size:3rem;margin-bottom:var(--space-md);opacity:.5}
+.empty-state .empty-text{font-size:.9rem;margin-bottom:var(--space-lg)}
+
+/* ── Confirm Dialog ── */
+.confirm-msg{font-size:.9rem;line-height:1.6;margin-bottom:var(--space-lg);color:var(--text-secondary)}
+
+/* ── Animations ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes modalIn{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes toastIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.pulse{animation:pulse 2s infinite}
+
+/* ── Responsive ── */
+@media(max-width:640px){
+  .container{padding:0 var(--space-md)}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .plant-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .toolbar{flex-direction:column;align-items:stretch}
+  .toolbar .search-input{min-width:0}
+  .clone-card .card-body{flex-direction:column;align-items:stretch}
+  .clone-card .clone-actions{justify-content:flex-end}
+  .header-title{font-size:.9rem}
+  .modal{max-height:95vh;border-radius:var(--radius)}
+  .modal-body{padding:var(--space-lg)}
+}
+@media(min-width:900px){
+  .plant-grid{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+}
+
+/* hidden file input */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+.license-footer{text-align:center;padding:var(--space-lg) var(--space-md);font-size:.7rem;color:var(--text-tertiary);border-top:1px solid var(--border-subtle);margin-top:var(--space-xl)}
+.license-footer a{color:var(--cyan);text-decoration:none}
+.license-footer a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-left">
+    <img class="header-logo" src="/img/tropicalrootslogosmall.jpeg" alt="TRM Logo">
+    <span class="header-title">Tropical Roots Maui - Plant Manager</span>
+  </div>
+  <div class="header-right">
+    <button class="icon-btn" id="themeToggle" title="Toggle theme">&#9790;</button>
+    <button class="icon-btn" id="exportBtn" title="Export data">&#8681;</button>
+    <button class="icon-btn" id="importBtn" title="Import data">&#8679;</button>
+    <input type="file" id="importFile" accept=".json" class="sr-only">
+  </div>
+</header>
+
+<!-- Tab Nav -->
+<nav class="tab-nav" id="tabNav">
+  <button class="tab-btn active" data-tab="dashboard"><span class="tab-icon">&#9638;</span>Dashboard</button>
+  <button class="tab-btn" data-tab="plants"><span class="tab-icon">&#127807;</span>Plants</button>
+  <button class="tab-btn" data-tab="clones"><span class="tab-icon">&#9986;</span>Clones</button>
+  <button class="tab-btn" data-tab="tasks"><span class="tab-icon">&#9745;</span>Tasks</button>
+  <button class="tab-btn" data-tab="environment"><span class="tab-icon">&#127777;</span>Environ</button>
+</nav>
+
+<!-- Main Content -->
+<main class="main">
+  <div class="container">
+    <!-- Dashboard -->
+    <section class="tab-panel active" id="panel-dashboard"></section>
+    <!-- Plants -->
+    <section class="tab-panel" id="panel-plants"></section>
+    <!-- Clones -->
+    <section class="tab-panel" id="panel-clones"></section>
+    <!-- Tasks -->
+    <section class="tab-panel" id="panel-tasks"></section>
+    <!-- Environment -->
+    <section class="tab-panel" id="panel-environment"></section>
+  </div>
+</main>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <h2 class="modal-title" id="modalTitle"></h2>
+      <button class="modal-close" id="modalClose">&times;</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer" id="modalFooter"></div>
+  </div>
+</div>
+
+<!-- License Footer -->
+<footer class="license-footer">&copy; 2025-2026 <a href="https://www.tropicalrootsmaui.com" target="_blank" rel="noopener">Tropical Roots Maui</a> &mdash; Licensed under <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank" rel="noopener">GPL-3.0</a></footer>
+
+<!-- Toasts -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+/*
+ * Tropical Roots Maui - Plant Manager
+ * Copyright (C) 2025-2026 Tropical Roots Maui
+ * License: GPL-3.0-or-later (https://www.gnu.org/licenses/gpl-3.0.html)
+ */
+(function(){
+'use strict';
+
+/* ═══════════════════════════════════════════════
+   UTILS
+   ═══════════════════════════════════════════════ */
+const U = {
+  id(prefix){ return prefix+'_'+Date.now()+'_'+Math.random().toString(36).substr(2,5) },
+  esc(s){ const d=document.createElement('div'); d.textContent=s; return d.innerHTML },
+  today(){ return new Date().toISOString().split('T')[0] },
+  parseDate(s){ const p=s.split('-'); return new Date(+p[0],+p[1]-1,+p[2]) },
+  daysBetween(a,b){ return Math.floor((b-a)/864e5) },
+  formatDate(s){
+    if(!s) return '—';
+    const d=U.parseDate(s);
+    return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})
+  },
+  age(dateStr){
+    if(!dateStr) return '—';
+    const days=U.daysBetween(U.parseDate(dateStr),new Date());
+    if(days<0) return 'Future';
+    if(days<30) return days+'d';
+    if(days<365) return Math.floor(days/30)+'mo '+days%30+'d';
+    const y=Math.floor(days/365), m=Math.floor((days%365)/30);
+    return y+'yr '+m+'mo';
+  },
+  relTime(ts){
+    const s=Math.floor((Date.now()-ts)/1000);
+    if(s<60) return 'Just now';
+    if(s<3600) return Math.floor(s/60)+'m ago';
+    if(s<86400) return Math.floor(s/3600)+'h ago';
+    if(s<172800) return 'Yesterday';
+    return Math.floor(s/86400)+'d ago';
+  },
+  debounce(fn,ms){let t;return function(){clearTimeout(t);t=setTimeout(()=>fn.apply(this,arguments),ms)}},
+  resizeImage(file,maxDim,quality,cb){
+    const r=new FileReader();
+    r.onload=function(e){
+      const img=new Image();
+      img.onload=function(){
+        const c=document.createElement('canvas');
+        let w=img.width,h=img.height;
+        if(w>maxDim||h>maxDim){if(w>h){h=h*(maxDim/w);w=maxDim}else{w=w*(maxDim/h);h=maxDim}}
+        c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);
+        cb(c.toDataURL('image/jpeg',quality));
+      };
+      img.src=e.target.result;
+    };
+    r.readAsDataURL(file);
+  }
+};
+
+/* ═══════════════════════════════════════════════
+   STORE
+   ═══════════════════════════════════════════════ */
+const Store = {
+  _key:'motherPlantTracker',
+  _data:null,
+  _subs:[],
+  _default(){return{version:'1.0.0',settings:{theme:'dark',lastActiveTab:'dashboard'},mothers:{},clones:{},tasks:{},taskCompletions:{},envLogs:{},activityLog:[]}},
+  load(){
+    try{
+      const raw=localStorage.getItem(this._key);
+      this._data=raw?JSON.parse(raw):this._default();
+      if(!this._data.version) this._data=this._default();
+    }catch(e){this._data=this._default()}
+  },
+  save(){
+    if(this._data.activityLog.length>100) this._data.activityLog=this._data.activityLog.slice(-100);
+    try{localStorage.setItem(this._key,JSON.stringify(this._data))}catch(e){Toast.show('Storage full! Export and clear old data.','error')}
+  },
+  get(col){return this._data[col]||{}},
+  getById(col,id){return(this._data[col]||{})[id]},
+  set(col,id,obj){
+    if(!this._data[col]) this._data[col]={};
+    obj.updatedAt=Date.now();
+    this._data[col][id]=obj;
+    this.save();this.notify();
+  },
+  remove(col,id){
+    if(this._data[col]) delete this._data[col][id];
+    this.save();this.notify();
+  },
+  addActivity(type,msg,refId){
+    this._data.activityLog.push({ts:Date.now(),type:type,msg:msg,refId:refId||''});
+    this.save();
+  },
+  subscribe(fn){this._subs.push(fn)},
+  notify(){this._subs.forEach(fn=>fn())},
+  exportJSON(){return JSON.stringify(this._data,null,2)},
+  importJSON(str){
+    try{
+      const d=JSON.parse(str);
+      if(!d.version||!d.mothers) throw new Error('Invalid');
+      this._data=d;this.save();this.notify();return true;
+    }catch(e){return false}
+  },
+  setting(k,v){
+    if(v===undefined) return this._data.settings[k];
+    this._data.settings[k]=v;this.save();
+  },
+  mothersArray(){return Object.values(this._data.mothers).filter(m=>!m.archived).sort((a,b)=>a.strainName.localeCompare(b.strainName))},
+  clonesArray(){return Object.values(this._data.clones).sort((a,b)=>new Date(b.cloneDate)-new Date(a.cloneDate))},
+  tasksArray(){return Object.values(this._data.tasks).sort((a,b)=>a.nextDueDate>b.nextDueDate?1:-1)},
+  envArray(){return Object.values(this._data.envLogs).sort((a,b)=>b.timestamp-a.timestamp)},
+  completionsFor(taskId){return Object.values(this._data.taskCompletions).filter(c=>c.taskId===taskId)},
+  clonesForMother(mid){return Object.values(this._data.clones).filter(c=>c.motherId===mid)},
+  cloneSuccessRate(mid){
+    const batches=this.clonesForMother(mid);
+    if(!batches.length) return null;
+    const taken=batches.reduce((s,b)=>s+b.countTaken,0);
+    const success=batches.reduce((s,b)=>s+b.successCount,0);
+    return taken?Math.round(success/taken*100):0;
+  }
+};
+
+/* ═══════════════════════════════════════════════
+   TOAST
+   ═══════════════════════════════════════════════ */
+const Toast={
+  show(msg,type='success'){
+    const el=document.createElement('div');
+    el.className='toast '+type;
+    el.textContent=msg;
+    document.getElementById('toastContainer').appendChild(el);
+    setTimeout(()=>{el.style.opacity='0';el.style.transition='opacity .3s';setTimeout(()=>el.remove(),300)},3000);
+  }
+};
+
+/* ═══════════════════════════════════════════════
+   THEME
+   ═══════════════════════════════════════════════ */
+const Theme={
+  init(){
+    const t=Store.setting('theme')||'dark';
+    document.documentElement.dataset.theme=t;
+    this._updateIcon(t);
+    document.getElementById('themeToggle').addEventListener('click',()=>this.toggle());
+  },
+  toggle(){
+    const t=document.documentElement.dataset.theme==='dark'?'light':'dark';
+    document.documentElement.dataset.theme=t;
+    Store.setting('theme',t);
+    this._updateIcon(t);
+  },
+  _updateIcon(t){document.getElementById('themeToggle').innerHTML=t==='dark'?'&#9788;':'&#9790;'}
+};
+
+/* ═══════════════════════════════════════════════
+   MODAL
+   ═══════════════════════════════════════════════ */
+const Modal={
+  _onSave:null,
+  init(){
+    const ov=document.getElementById('modalOverlay');
+    document.getElementById('modalClose').addEventListener('click',()=>this.close());
+    ov.addEventListener('click',e=>{if(e.target===ov)this.close()});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'&&ov.classList.contains('open'))this.close()});
+  },
+  open(title,bodyHtml,footerHtml){
+    document.getElementById('modalTitle').textContent=title;
+    document.getElementById('modalBody').innerHTML=bodyHtml;
+    document.getElementById('modalFooter').innerHTML=footerHtml||'';
+    document.getElementById('modalOverlay').classList.add('open');
+    const first=document.querySelector('#modalBody input,#modalBody select,#modalBody textarea');
+    if(first) setTimeout(()=>first.focus(),100);
+  },
+  close(){document.getElementById('modalOverlay').classList.remove('open')},
+  confirm(title,msg,onYes){
+    this.open(title,
+      '<p class="confirm-msg">'+msg+'</p>',
+      '<button class="btn btn-ghost" onclick="Modal.close()">Cancel</button><button class="btn btn-danger" id="confirmYes">Delete</button>'
+    );
+    document.getElementById('confirmYes').addEventListener('click',()=>{onYes();this.close()});
+  }
+};
+window.Modal=Modal;
+
+/* ═══════════════════════════════════════════════
+   ROUTER
+   ═══════════════════════════════════════════════ */
+const Router={
+  _current:'dashboard',
+  init(){
+    document.querySelectorAll('.tab-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>this.switchTo(btn.dataset.tab));
+    });
+    const last=Store.setting('lastActiveTab')||'dashboard';
+    this.switchTo(last);
+  },
+  switchTo(tab){
+    this._current=tab;
+    Store.setting('lastActiveTab',tab);
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
+    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active',p.id==='panel-'+tab));
+    const renderers={dashboard:Dashboard,plants:Plants,clones:Clones,tasks:Tasks,environment:Environment};
+    if(renderers[tab]) renderers[tab].render();
+  }
+};
+
+/* ═══════════════════════════════════════════════
+   DASHBOARD
+   ═══════════════════════════════════════════════ */
+const Dashboard={
+  render(){
+    const mothers=Store.mothersArray();
+    const allClones=Store.clonesArray();
+    const activeClones=allClones.filter(c=>!['transplanted','failed'].includes(c.rootingStatus));
+    const allTasks=Store.tasksArray().filter(t=>t.enabled);
+    const today=U.today();
+    const overdue=allTasks.filter(t=>t.nextDueDate<today);
+    const dueToday=allTasks.filter(t=>t.nextDueDate===today);
+    const healthCounts={thriving:0,healthy:0,stressed:0,sick:0,quarantine:0};
+    mothers.forEach(m=>{if(healthCounts[m.healthStatus]!==undefined)healthCounts[m.healthStatus]++});
+    const worstHealth=mothers.length?
+      (healthCounts.sick+healthCounts.quarantine>0?'Needs Attention':
+       healthCounts.stressed>0?'Some Stressed':'All Good'):'—';
+
+    let h='<div class="hero-banner"><img src="https://tropicalrootsmaui.com/img/tropical-roots-maui-kanehiwa-alchemical-sanctuary-logo.webp" alt="A Tiki Golem Master named Kānehiwa stands in a misty, futuristic Polynesian lab, gesturing at a glowing holographic projection of a cannabis plant and its golden root zone. The scene is framed by hand-carved Koa wood with the text BUILDING THE MICROBIAL FORTRESS and features a tropical waterfall sunrise in the background." title="Tropical Roots Maui: Kānehiwa Plant Tracker Interface"><div class="hero-caption">Kānehiwa monitors real-time biological data and the Microbial Fortress through the sanctuary\'s holographic Plant Tracker interface.</div></div>';
+    h+='<div class="stats-grid">';
+    h+='<div class="card stat-card"><div class="stat-icon">&#127793;</div><div class="stat-value">'+mothers.length+'</div><div class="stat-label">Mother Plants</div></div>';
+    h+='<div class="card stat-card gold"><div class="stat-icon">&#9986;</div><div class="stat-value">'+activeClones.length+'</div><div class="stat-label">Active Clones</div></div>';
+    h+='<div class="card stat-card green"><div class="stat-icon">&#9745;</div><div class="stat-value">'+(dueToday.length+overdue.length)+'</div><div class="stat-label">Tasks Due</div></div>';
+    h+='<div class="card stat-card orange"><div class="stat-icon">&#128154;</div><div class="stat-value" style="font-size:1.1rem">'+worstHealth+'</div><div class="stat-label">Health Overview</div></div>';
+    h+='</div>';
+
+    h+='<div class="quick-actions" style="margin-top:var(--space-xl)">';
+    h+='<button class="btn btn-primary" onclick="Plants.openAddModal()">+ Add Mother</button>';
+    h+='<button class="btn btn-outline" onclick="Clones.openAddModal()">+ Log Clones</button>';
+    h+='<button class="btn btn-outline" onclick="Tasks.openAddModal()">+ Add Task</button>';
+    h+='<button class="btn btn-outline" onclick="Environment.openLogModal()">+ Log Env</button>';
+    h+='</div>';
+
+    if(overdue.length){
+      h+='<div class="section-title" style="color:#e05c3a">&#9888; Overdue Tasks</div>';
+      h+='<div class="task-list" style="margin-bottom:var(--space-xl)">';
+      overdue.forEach(t=>{
+        const m=t.motherId?Store.getById('mothers',t.motherId):null;
+        const days=U.daysBetween(U.parseDate(t.nextDueDate),new Date());
+        h+='<div class="card task-card"><div class="task-check"><label><input type="checkbox" onchange="Tasks.handleComplete(\''+t.id+'\')"><span class="checkmark">&#10003;</span></label></div>';
+        h+='<div class="task-body"><div class="task-title">'+taskIcon(t.taskType)+' '+U.esc(t.description)+'</div>';
+        h+='<div class="task-sub">'+(m?'<span>'+U.esc(m.strainName)+'</span>':'')+'<span class="task-due overdue">'+days+'d overdue</span>';
+        if(t.scheduleType==='recurring') h+='<span class="task-recurring-badge">Every '+t.intervalDays+'d</span>';
+        h+='</div></div></div>';
+      });
+      h+='</div>';
+    }
+
+    const activity=Store.get('activityLog');
+    const recent=(Array.isArray(activity)?activity:[]).slice(-15).reverse();
+    if(recent.length){
+      h+='<div class="section-title">Recent Activity</div>';
+      h+='<ul class="activity-feed">';
+      recent.forEach(a=>{
+        h+='<li class="activity-item"><span class="activity-time">'+U.relTime(a.ts)+'</span><span class="activity-msg">'+U.esc(a.msg)+'</span></li>';
+      });
+      h+='</ul>';
+    }
+
+    if(!mothers.length && !recent.length){
+      h+='<div class="empty-state"><div class="empty-icon">&#127793;</div><div class="empty-text">Welcome! Add your first mother plant to get started.</div><button class="btn btn-primary" onclick="Plants.openAddModal()">+ Add Mother Plant</button></div>';
+    }
+
+    document.getElementById('panel-dashboard').innerHTML=h;
+  }
+};
+window.Dashboard=Dashboard;
+
+/* ═══════════════════════════════════════════════
+   PLANTS
+   ═══════════════════════════════════════════════ */
+const Plants={
+  _search:'',_filter:'all',
+  render(){
+    const mothers=Store.mothersArray();
+    let filtered=mothers;
+    if(this._filter!=='all') filtered=filtered.filter(m=>m.healthStatus===this._filter);
+    if(this._search){const q=this._search.toLowerCase();filtered=filtered.filter(m=>(m.strainName+' '+m.breeder+' '+m.location+' '+m.notes).toLowerCase().includes(q))}
+
+    let h='<div class="toolbar">';
+    h+='<button class="btn btn-primary" onclick="Plants.openAddModal()">+ Add Mother</button>';
+    h+='<input class="search-input" type="text" placeholder="Search plants..." value="'+U.esc(this._search)+'" oninput="Plants._onSearch(this.value)">';
+    h+='<select class="filter-select" onchange="Plants._onFilter(this.value)">';
+    h+='<option value="all"'+(this._filter==='all'?' selected':'')+'>All Status</option>';
+    ['thriving','healthy','stressed','sick','quarantine'].forEach(s=>{
+      h+='<option value="'+s+'"'+(this._filter===s?' selected':'')+'>'+s.charAt(0).toUpperCase()+s.slice(1)+'</option>';
+    });
+    h+='</select></div>';
+
+    if(!filtered.length){
+      h+='<div class="empty-state"><div class="empty-icon">&#127807;</div><div class="empty-text">'+(mothers.length?'No plants match your search.':'No mother plants yet. Add your first one!')+'</div>';
+      if(!mothers.length) h+='<button class="btn btn-primary" onclick="Plants.openAddModal()">+ Add Mother</button>';
+      h+='</div>';
+    }else{
+      h+='<div class="plant-grid">';
+      filtered.forEach(m=>{
+        const rate=Store.cloneSuccessRate(m.id);
+        h+='<div class="card plant-card">';
+        h+='<div class="plant-photo">';
+        if(m.photo) h+='<img src="'+m.photo+'" alt="'+U.esc(m.strainName)+'">';
+        else h+='&#127807;';
+        h+='<span class="health-badge badge-'+m.healthStatus+'">'+m.healthStatus+'</span>';
+        h+='</div>';
+        h+='<div class="plant-info">';
+        h+='<div class="plant-name">'+U.esc(m.strainName)+'</div>';
+        h+='<div class="plant-meta">';
+        h+='<span class="plant-tag">'+U.esc(m.strainType||'—')+'</span>';
+        if(m.breeder) h+='<span class="plant-tag">'+U.esc(m.breeder)+'</span>';
+        if(m.source) h+='<span class="plant-tag">'+U.esc(m.source)+'</span>';
+        h+='</div>';
+        h+='<div class="plant-details">';
+        h+='<span>Age: '+U.age(m.dateAcquired)+'</span>';
+        if(m.location) h+='<span>Location: '+U.esc(m.location)+'</span>';
+        if(m.growthStage) h+='<span>Stage: '+m.growthStage.charAt(0).toUpperCase()+m.growthStage.slice(1)+'</span>';
+        if(rate!==null) h+='<span>Clone Rate: '+rate+'%</span>';
+        h+='</div>';
+        h+='<div class="plant-actions">';
+        h+='<button class="btn btn-ghost btn-sm" onclick="Plants.openEditModal(\''+m.id+'\')">Edit</button>';
+        h+='<button class="btn btn-ghost btn-sm" onclick="Clones.openAddModal(\''+m.id+'\')">+ Clone</button>';
+        h+='<button class="btn btn-ghost btn-sm" onclick="Tasks.openAddModal(\''+m.id+'\')">+ Task</button>';
+        h+='<button class="btn btn-danger btn-sm" onclick="Plants.handleDelete(\''+m.id+'\')">Archive</button>';
+        h+='</div></div></div>';
+      });
+      h+='</div>';
+    }
+    document.getElementById('panel-plants').innerHTML=h;
+  },
+  _onSearch:U.debounce(function(v){Plants._search=v;Plants.render()},300),
+  _onFilter(v){this._filter=v;this.render()},
+  _buildForm(m){
+    m=m||{};
+    let h='<div class="form-group"><label class="form-label">Strain Name *</label><input class="form-input" id="f_strainName" value="'+U.esc(m.strainName||'')+'" required></div>';
+    h+='<div class="form-row">';
+    h+='<div class="form-group"><label class="form-label">Type</label><select class="form-select" id="f_strainType">';
+    ['hybrid','sativa','indica','ruderalis'].forEach(t=>{h+='<option value="'+t+'"'+(m.strainType===t?' selected':'')+'>'+t.charAt(0).toUpperCase()+t.slice(1)+'</option>'});
+    h+='</select></div>';
+    h+='<div class="form-group"><label class="form-label">Breeder</label><input class="form-input" id="f_breeder" value="'+U.esc(m.breeder||'')+'"></div>';
+    h+='</div>';
+    h+='<div class="form-row">';
+    h+='<div class="form-group"><label class="form-label">Date Acquired</label><input class="form-input" id="f_dateAcquired" type="date" value="'+(m.dateAcquired||U.today())+'"></div>';
+    h+='<div class="form-group"><label class="form-label">Source</label><select class="form-select" id="f_source">';
+    [['seed','Seed'],['clone','Clone'],['tissue_culture','Tissue Culture']].forEach(([v,l])=>{h+='<option value="'+v+'"'+(m.source===v?' selected':'')+'>'+l+'</option>'});
+    h+='</select></div>';
+    h+='</div>';
+    h+='<div class="form-row">';
+    h+='<div class="form-group"><label class="form-label">Health Status</label><select class="form-select" id="f_healthStatus">';
+    ['thriving','healthy','stressed','sick','quarantine'].forEach(s=>{h+='<option value="'+s+'"'+(m.healthStatus===s?' selected':'')+'>'+s.charAt(0).toUpperCase()+s.slice(1)+'</option>'});
+    h+='</select></div>';
+    h+='<div class="form-group"><label class="form-label">Growth Stage</label><select class="form-select" id="f_growthStage">';
+    ['seedling','vegetative','mature','declining'].forEach(s=>{h+='<option value="'+s+'"'+(m.growthStage===s?' selected':'')+'>'+s.charAt(0).toUpperCase()+s.slice(1)+'</option>'});
+    h+='</select></div>';
+    h+='</div>';
+    h+='<div class="form-group"><label class="form-label">Location</label><input class="form-input" id="f_location" value="'+U.esc(m.location||'')+'"></div>';
+    h+='<div class="form-group"><label class="form-label">Photo</label>';
+    h+='<div class="photo-preview" id="photoPreview" onclick="document.getElementById(\'f_photo\').click()">';
+    if(m.photo) h+='<img src="'+m.photo+'" id="photoImg">';
+    else h+='<div class="photo-placeholder" id="photoPlaceholder">Click to upload photo</div>';
+    h+='</div><input type="file" id="f_photo" accept="image/*" class="sr-only" onchange="Plants._onPhoto(this)"></div>';
+    h+='<div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="f_notes">'+U.esc(m.notes||'')+'</textarea></div>';
+    return h;
+  },
+  _photoData:'',
+  _onPhoto(input){
+    if(!input.files[0]) return;
+    U.resizeImage(input.files[0],400,0.7,function(dataUrl){
+      Plants._photoData=dataUrl;
+      const preview=document.getElementById('photoPreview');
+      preview.innerHTML='<img src="'+dataUrl+'" id="photoImg">';
+    });
+  },
+  _readForm(){
+    const name=document.getElementById('f_strainName').value.trim();
+    if(!name){Toast.show('Strain name is required.','error');return null}
+    return{
+      strainName:name,
+      strainType:document.getElementById('f_strainType').value,
+      breeder:document.getElementById('f_breeder').value.trim(),
+      dateAcquired:document.getElementById('f_dateAcquired').value,
+      source:document.getElementById('f_source').value,
+      healthStatus:document.getElementById('f_healthStatus').value,
+      growthStage:document.getElementById('f_growthStage').value,
+      location:document.getElementById('f_location').value.trim(),
+      notes:document.getElementById('f_notes').value.trim(),
+      photo:Plants._photoData||''
+    };
+  },
+  openAddModal(){
+    Plants._photoData='';
+    Modal.open('Add Mother Plant',Plants._buildForm(),
+      '<button class="btn btn-ghost" onclick="Modal.close()">Cancel</button><button class="btn btn-primary" id="savePlant">Save</button>'
+    );
+    document.getElementById('savePlant').addEventListener('click',()=>{
+      const data=Plants._readForm();if(!data) return;
+      const id=U.id('m');
+      data.id=id;data.archived=false;data.createdAt=Date.now();
+      Store.set('mothers',id,data);
+      Store.addActivity('plant_added','Added mother: '+data.strainName,id);
+      Modal.close();Toast.show('Mother plant added!');
+      Router.switchTo('plants');
+    });
+  },
+  openEditModal(id){
+    const m=Store.getById('mothers',id);if(!m) return;
+    Plants._photoData=m.photo||'';
+    Modal.open('Edit Mother Plant',Plants._buildForm(m),
+      '<button class="btn btn-ghost" onclick="Modal.close()">Cancel</button><button class="btn btn-primary" id="savePlant">Save</button>'
+    );
+    document.getElementById('savePlant').addEventListener('click',()=>{
+      const data=Plants._readForm();if(!data) return;
+      const updated=Object.assign({},m,data);
+      if(Plants._photoData) updated.photo=Plants._photoData;
+      else if(!Plants._photoData && m.photo) updated.photo=m.photo;
+      Store.set('mothers',id,updated);
+      Store.addActivity('plant_updated','Updated mother: '+data.strainName,id);
+      Modal.close();Toast.show('Plant updated!');
+    });
+  },
+  handleDelete(id){
+    const m=Store.getById('mothers',id);if(!m) return;
+    Modal.confirm('Archive Plant','Archive "'+U.esc(m.strainName)+'"? This will hide it from your active plants.',()=>{
+      m.archived=true;
+      Store.set('mothers',id,m);
+      Store.addActivity('plant_archived','Archived mother: '+m.strainName,id);
+      Toast.show('Plant archived.');
+    });
+  }
+};
+window.Plants=Plants;
+
+/* ═══════════════════════════════════════════════
+   CLONES
+   ═══════════════════════════════════════════════ */
+const Clones={
+  _filterMother:'all',_filterStatus:'all',
+  render(){
+    const mothers=Store.mothersArray();
+    let batches=Store.clonesArray();
+    if(this._filterMother!=='all') batches=batches.filter(c=>c.motherId===this._filterMother);
+    if(this._filterStatus!=='all') batches=batches.filter(c=>c.rootingStatus===this._filterStatus);
+
+    const totalBatches=batches.length;
+    const totalClones=batches.reduce((s,b)=>s+b.countTaken,0);
+    const totalSuccess=batches.reduce((s,b)=>s+b.successCount,0);
+    const avgRate=totalClones?Math.round(totalSuccess/totalClones*100):0;
+    const activeRooting=batches.filter(c=>['cutting','callusing','rooting'].includes(c.rootingStatus)).reduce((s,b)=>s+(b.countTaken-b.successCount-b.failureCount),0);
+
+    let h='<div class="toolbar">';
+    h+='<button class="btn btn-primary" onclick="Clones.openAddModal()">+ Log Clone Batch</button>';
+    h+='<select class="filter-select" onchange="Clones._filterMother=this.value;Clones.render()">';
+    h+='<option value="all">All Mothers</option>';
+    mothers.forEach(m=>{h+='<option value="'+m.id+'"'+(this._filterMother===m.id?' selected':'')+'>'+U.esc(m.strainName)+'</option>'});
+    h+='</select>';
+    h+='<select class="filter-select" onchange="Clones._filterStatus=this.value;Clones.render()">';
+    h+='<option value="all">All Status</option>';
+    ['cutting','callusing','rooting','rooted','transplanted','failed'].forEach(s=>{
+      h+='<option value="'+s+'"'+(this._filterStatus===s?' selected':'')+'>'+s.charAt(0).toUpperCase()+s.slice(1)+'</option>'});
+    h+='</select></div>';
+
+    h+='<div class="stats-grid" style="margin-bottom:var(--space-xl)">';
+    h+='<div class="card stat-card"><div class="stat-value">'+totalBatches+'</div><div class="stat-label">Batches</div></div>';
+    h+='<div class="card stat-card gold"><div class="stat-value">'+totalClones+'</div><div class="stat-label">Total Clones</div></div>';
+    h+='<div class="card stat-card green"><div class="stat-value">'+avgRate+'%</div><div class="stat-label">Avg Success</div></div>';
+    h+='<div class="card stat-card orange"><div class="stat-value">'+activeRooting+'</div><div class="stat-label">Active Rooting</div></div>';
+    h+='</div>';
+
+    if(!batches.length){
+      h+='<div class="empty-state"><div class="empty-icon">&#9986;</div><div class="empty-text">No clone batches yet. Log your first batch!</div></div>';
+    }else{
+      h+='<div class="clone-grid">';
+      batches.forEach(c=>{
+        const m=Store.getById('mothers',c.motherId);
+        const pending=c.countTaken-c.successCount-c.failureCount;
+        const rate=c.countTaken?Math.round(c.successCount/c.countTaken*100):0;
+        const sPct=c.countTaken?(c.successCount/c.countTaken*100):0;
+        const fPct=c.countTaken?(c.failureCount/c.countTaken*100):0;
+        const pPct=100-sPct-fPct;
+        h+='<div class="card clone-card"><div class="card-body">';
+        h+='<div class="clone-main">';
+        h+='<div class="clone-title">'+(m?U.esc(m.strainName):'Unknown Mother')+'</div>';
+        h+='<div class="clone-subtitle">'+U.formatDate(c.cloneDate)+' &middot; '+U.esc(c.rootingMedium.replace('_',' '))+' &middot; <span class="badge-'+statusColor(c.rootingStatus)+'\" style="padding:.1rem .4rem;border-radius:3px;font-size:.6rem;font-weight:700">'+c.rootingStatus+'</span></div>';
+        h+='<div class="progress-bar"><div class="seg-success" style="width:'+sPct+'%"></div><div class="seg-fail" style="width:'+fPct+'%"></div><div class="seg-pending" style="width:'+pPct+'%"></div></div>';
+        h+='</div>';
+        h+='<div class="clone-counts">';
+        h+='<div class="clone-count success"><div class="count-val">'+c.successCount+'</div><div class="count-label">Success</div></div>';
+        h+='<div class="clone-count fail"><div class="count-val">'+c.failureCount+'</div><div class="count-label">Failed</div></div>';
+        h+='<div class="clone-count pending"><div class="count-val">'+pending+'</div><div class="count-label">Pending</div></div>';
+        h+='<div class="clone-count"><div class="count-val">'+rate+'%</div><div class="count-label">Rate</div></div>';
+        h+='</div>';
+        h+='<div class="clone-actions">';
+        h+='<button class="btn btn-ghost btn-sm" onclick="Clones.openEditModal(\''+c.id+'\')">Edit</button>';
+        if(pending>0){
+          h+='<button class="btn btn-ghost btn-sm" style="color:var(--leaf)" onclick="Clones.quickUpdate(\''+c.id+'\',\'success\')">+1 &#10003;</button>';
+          h+='<button class="btn btn-ghost btn-sm" style="color:#e05c3a" onclick="Clones.quickUpdate(\''+c.id+'\',\'fail\')">+1 &#10007;</button>';
+        }
+        h+='</div></div></div>';
+      });
+      h+='</div>';
+    }
+    document.getElementById('panel-clones').innerHTML=h;
+  },
+  _buildForm(c,preselect){
+    c=c||{};
+    const mothers=Store.mothersArray();
+    let h='<div class="form-group"><label class="form-label">Mother Plant *</label><select class="form-select" id="f_motherId">';
+    h+='<option value="">Select mother...</option>';
+    mothers.forEach(m=>{h+='<option value="'+m.id+'"'+((c.motherId===m.id||(preselect===m.id))?' selected':'')+'>'+U.esc(m.strainName)+'</option>'});
+    h+='</select></div>';
+    h+='<div class="form-row">';
+    h+='<div class="form-group"><label class="form-label">Clone Date</label><input class="form-input" id="f_cloneDate" type="date" value="'+(c.cloneDate||U.today())+'"></div>';
+    h+='<div class="form-group"><label class="form-label">Count Taken *</label><input class="form-input" id="f_countTaken" type="number" min="1" value="'+(c.countTaken||'')+'"></div>';
+    h+='</div>';
+    h+='<div class="form-group"><label class="form-label">Rooting Medium</label><select class="form-select" id="f_rootingMedium">';
+    [['rockwool','Rockwool'],['rapid_rooter','Rapid Rooter'],['aerocloner','Aerocloner'],['soil','Soil'],['water','Water']].forEach(([v,l])=>{
+      h+='<option value="'+v+'"'+(c.rootingMedium===v?' selected':'')+'>'+l+'</option>'});
+    h+='</select></div>';
+    h+='<div class="form-row">';
+    h+='<div class="form-group"><label class="form-label">Success Count</label><input class="form-input" id="f_successCount" type="number" min="0" value="'+(c.successCount||0)+'"></div>';
+    h+='<div class="form-group"><label class="form-label">Failure Count</label><input class="form-input" id="f_failureCount" type="number" min="0" value="'+(c.failureCount||0)+'"></div>';
+    h+='</div>';
+    h+='<div class="form-group"><label class="form-label">Rooting Status</label><select class="form-select" id="f_rootingStatus">';
+    ['cutting','callusing','rooting','rooted','transplanted','failed'].forEach(s=>{
+      h+='<option value="'+s+'"'+(c.rootingStatus===s?' selected':'')+'>'+s.charAt(0).toUpperCase()+s.slice(1)+'</option>'});
+    h+='</select></div>';
+    h+='<div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="f_cloneNotes">'+U.esc(c.notes||'')+'</textarea></div>';
+    return h;
+  },
+  _readForm(){
+    const mid=document.getElementById('f_motherId').value;
+    const count=parseInt(document.getElementById('f_countTaken').value)||0;
+    if(!mid){Toast.show('Select a mother plant.','error');return null}
+    if(count<1){Toast.show('Count must be at least 1.','error');return null}
+    const success=Math.min(parseInt(document.getElementById('f_successCount').value)||0,count);
+    const failure=Math.min(parseInt(document.getElementById('f_failureCount').value)||0,count-success);
+    return{
+      motherId:mid,cloneDate:document.getElementById('f_cloneDate').value,
+      countTaken:count,rootingMedium:document.getElementById('f_rootingMedium').value,
+      successCount:success,failureCount:failure,
+      rootingStatus:document.getElementById('f_rootingStatus').value,
+      notes:document.getElementById('f_cloneNotes').value.trim()
+    };
+  },
+  openAddModal(preselect){
+    Modal.open('Log Clone Batch',Clones._buildForm(null,preselect),
+      '<button class="btn btn-ghost" onclick="Modal.close()">Cancel</button><button class="btn btn-primary" id="saveClone">Save</button>'
+    );
+    document.getElementById('saveClone').addEventListener('click',()=>{
+      const data=Clones._readForm();if(!data) return;
+      const id=U.id('c');data.id=id;data.createdAt=Date.now();
+      Store.set('clones',id,data);
+      const m=Store.getById('mothers',data.motherId);
+      Store.addActivity('clone_added','Took '+data.countTaken+' clones from '+(m?m.strainName:'unknown'),id);
+      Modal.close();Toast.show('Clone batch logged!');
+      Router.switchTo('clones');
+    });
+  },
+  openEditModal(id){
+    const c=Store.getById('clones',id);if(!c) return;
+    Modal.open('Edit Clone Batch',Clones._buildForm(c),
+      '<button class="btn btn-ghost" onclick="Modal.close()">Cancel</button><button class="btn btn-danger" id="deleteClone" style="margin-right:auto">Delete</button><button class="btn btn-primary" id="saveClone">Save</button>'
+    );
+    document.getElementById('saveClone').addEventListener('click',()=>{
+      const data=Clones._readForm();if(!data) return;
+      const updated=Object.assign({},c,data);
+      Store.set('clones',id,updated);
+      Store.addActivity('clone_updated','Updated clone batch',id);
+      Modal.close();Toast.show('Clone batch updated!');
+    });
+    document.getElementById('deleteClone').addEventListener('click',()=>{
+      Modal.close();
+      setTimeout(()=>{
+        Modal.confirm('Delete Clone Batch','Delete this clone batch? This cannot be undone.',()=>{
+          Store.remove('clones',id);Toast.show('Clone batch deleted.');
+        });
+      },100);
+    });
+  },
+  quickUpdate(id,type){
+    const c=Store.getById('clones',id);if(!c) return;
+    const pending=c.countTaken-c.successCount-c.failureCount;
+    if(pending<=0) return;
+    if(type==='success') c.successCount++;
+    else c.failureCount++;
+    Store.set('clones',id,c);
+    Toast.show(type==='success'?'+1 Success':'+1 Failed',type==='success'?'success':'error');
+  }
+};
+window.Clones=Clones;
+
+function statusColor(s){
+  const map={cutting:'stressed',callusing:'stressed',rooting:'healthy',rooted:'thriving',transplanted:'thriving',failed:'sick'};
+  return map[s]||'healthy';
+}
+
+/* ═══════════════════════════════════════════════
+   TASKS
+   ═══════════════════════════════════════════════ */
+const Tasks={
+  _filterPlant:'all',_filterType:'all',
+  render(){
+    const mothers=Store.mothersArray();
+    let tasks=Store.tasksArray();
+    if(this._filterPlant!=='all') tasks=tasks.filter(t=>t.motherId===this._filterPlant);
+    if(this._filterType!=='all') tasks=tasks.filter(t=>t.taskType===this._filterType);
+
+    const today=U.today();
+    const enabled=tasks.filter(t=>t.enabled);
+    const overdue=enabled.filter(t=>t.nextDueDate<today);
+    const dueToday=enabled.filter(t=>t.nextDueDate===today);
+    const upcoming=enabled.filter(t=>t.nextDueDate>today);
+    const completions=Object.values(Store.get('taskCompletions')).sort((a,b)=>b.completedAt-a.completedAt).slice(0,10);
+
+    let h='<div class="toolbar">';
+    h+='<button class="btn btn-primary" onclick="Tasks.openAddModal()">+ Add Task</button>';
+    h+='<select class="filter-select" onchange="Tasks._filterPlant=this.value;Tasks.render()">';
+    h+='<option value="all">All Plants</option><option value=""'+(this._filterPlant===''?' selected':'')+'>Global Tasks</option>';
+    mothers.forEach(m=>{h+='<option value="'+m.id+'"'+(this._filterPlant===m.id?' selected':'')+'>'+U.esc(m.strainName)+'</option>'});
+    h+='</select>';
+    h+='<select class="filter-select" onchange="Tasks._filterType=this.value;Tasks.render()">';
+    h+='<option value="all">All Types</option>';
+    ['watering','feeding','pruning','ipm','repotting','cleaning','other'].forEach(t=>{
+      h+='<option value="'+t+'"'+(this._filterType===t?' selected':'')+'>'+t.charAt(0).toUpperCase()+t.slice(1)+'</option>'});
+    h+='</select></div>';
+
+    if(!enabled.length && !completions.length){
+      h+='<div class="empty-state"><div class="empty-icon">&#9745;</div><div class="empty-text">No tasks yet. Create one to stay on top of your plant care!</div></div>';
+    }
+
+    if(overdue.length) h+=Tasks._renderSection('Overdue','overdue',overdue,today);
+    if(dueToday.length) h+=Tasks._renderSection('Due Today','today',dueToday,today);
+    if(upcoming.length) h+=Tasks._renderSection('Upcoming','upcoming',upcoming,today);
+
+    if(completions.length){
+      h+='<div class="task-section completed">';
+      h+='<div class="task-section-header">Recently Completed ('+completions.length+')</div>';
+      h+='<div class="task-list">';
+      completions.forEach(tc=>{
+        const t=Store.getById('tasks',tc.taskId);
+        h+='<div class="card task-card" style="opacity:.5"><div class="task-body">';
+        h+='<div class="task-title">&#10003; '+(t?U.esc(t.description):'Deleted task')+'</div>';
+        h+='<div class="task-sub"><span>'+U.relTime(tc.completedAt)+'</span></div>';
+        h+='</div></div>';
+      });
+      h+='</div></div>';
+    }
+
+    document.getElementById('panel-tasks').innerHTML=h;
+  },
+  _renderSection(label,cls,items,today){
+    let h='<div class="task-section '+cls+'">';
+    h+='<div class="task-section-header">'+label+' ('+items.length+')</div>';
+    h+='<div class="task-list">';
+    items.forEach(t=>{
+      const m=t.motherId?Store.getById('mothers',t.motherId):null;
+      const days=U.daysBetween(U.parseDate(t.nextDueDate),new Date());
+      let dueLabel='';
+      if(t.nextDueDate===today) dueLabel='Today';
+      else if(days>0) dueLabel=days+'d overdue';
+      else if(days===-1) dueLabel='Tomorrow';
+      else dueLabel='In '+Math.abs(days)+'d';
+      const dueClass=days>0?'overdue':t.nextDueDate===today?'today':'';
+
+      h+='<div class="card task-card" id="task-'+t.id+'">';
+      h+='<div class="task-check"><label><input type="checkbox" onchange="Tasks.handleComplete(\''+t.id+'\')"><span class="checkmark">&#10003;</span></label></div>';
+      h+='<div class="task-body"><div class="task-title">'+taskIcon(t.taskType)+' '+U.esc(t.description)+'</div>';
+      h+='<div class="task-sub">'+(m?'<span>'+U.esc(m.strainName)+'</span>':'<span>Global</span>');
+      h+='<span class="task-due '+dueClass+'">'+dueLabel+'</span>';
+      if(t.scheduleType==='recurring') h+='<span class="task-recurring-badge">&#8635; '+t.intervalDays+'d</span>';
+      h+='</div></div>';
+      h+='<div class="clone-actions">';
+      h+='<button class="btn btn-ghost btn-sm" onclick="Tasks.openEditModal(\''+t.id+'\')">Edit</button>';
+      h+='</div>';
+      h+='</div>';
+    });
+    h+='</div></div>';
+    return h;
+  },
+  _buildForm(t,preselect){
+    t=t||{};
+    const mothers=Store.mothersArray();
+    let h='<div class="form-group"><label class="form-label">Plant (optional)</label><select class="form-select" id="f_taskMother">';
+    h+='<option value="">Global (all plants)</option>';
+    mothers.forEach(m=>{h+='<option value="'+m.id+'"'+((t.motherId===m.id||(preselect===m.id))?' selected':'')+'>'+U.esc(m.strainName)+'</option>'});
+    h+='</select></div>';
+    h+='<div class="form-row">';
+    h+='<div class="form-group"><label class="form-label">Task Type</label><select class="form-select" id="f_taskType">';
+    ['watering','feeding','pruning','ipm','repotting','cleaning','other'].forEach(tp=>{
+      h+='<option value="'+tp+'"'+(t.taskType===tp?' selected':'')+'>'+tp.charAt(0).toUpperCase()+tp.slice(1)+'</option>'});
+    h+='</select></div>';
+    h+='<div class="form-group"><label class="form-label">Due Date</label><input class="form-input" id="f_dueDate" type="date" value="'+(t.nextDueDate||U.today())+'"></div>';
+    h+='</div>';
+    h+='<div class="form-group"><label class="form-label">Description *</label><input class="form-input" id="f_taskDesc" value="'+U.esc(t.description||'')+'"></div>';
+    const isRecurring=t.scheduleType==='recurring';
+    h+='<div class="form-row">';
+    h+='<div class="form-group"><label class="form-label">Schedule</label><select class="form-select" id="f_scheduleType" onchange="document.getElementById(\'intervalGroup\').style.display=this.value===\'recurring\'?\'block\':\'none\'">';
+    h+='<option value="one_time"'+(!isRecurring?' selected':'')+'>One Time</option>';
+    h+='<option value="recurring"'+(isRecurring?' selected':'')+'>Recurring</option>';
+    h+='</select></div>';
+    h+='<div class="form-group" id="intervalGroup" style="display:'+(isRecurring?'block':'none')+'"><label class="form-label">Every X Days</label><input class="form-input" id="f_interval" type="number" min="1" value="'+(t.intervalDays||7)+'"><div class="form-hint">1=daily, 7=weekly, 14=biweekly, 30=monthly</div></div>';
+    h+='</div>';
+    return h;
+  },
+  _readForm(){
+    const desc=document.getElementById('f_taskDesc').value.trim();
+    if(!desc){Toast.show('Description is required.','error');return null}
+    return{
+      motherId:document.getElementById('f_taskMother').value,
+      taskType:document.getElementById('f_taskType').value,
+      description:desc,
+      scheduleType:document.getElementById('f_scheduleType').value,
+      intervalDays:parseInt(document.getElementById('f_interval').value)||7,
+      nextDueDate:document.getElementById('f_dueDate').value||U.today(),
+      enabled:true
+    };
+  },
+  openAddModal(preselect){
+    Modal.open('Add Task',Tasks._buildForm(null,preselect),
+      '<button class="btn btn-ghost" onclick="Modal.close()">Cancel</button><button class="btn btn-primary" id="saveTask">Save</button>'
+    );
+    document.getElementById('saveTask').addEventListener('click',()=>{
+      const data=Tasks._readForm();if(!data) return;
+      const id=U.id('t');data.id=id;data.lastCompletedAt=null;data.createdAt=Date.now();
+      Store.set('tasks',id,data);
+      Store.addActivity('task_created','Created task: '+data.description,id);
+      Modal.close();Toast.show('Task created!');
+      Router.switchTo('tasks');
+    });
+  },
+  openEditModal(id){
+    const t=Store.getById('tasks',id);if(!t) return;
+    Modal.open('Edit Task',Tasks._buildForm(t),
+      '<button class="btn btn-ghost" onclick="Modal.close()">Cancel</button><button class="btn btn-danger" id="deleteTask" style="margin-right:auto">Delete</button><button class="btn btn-primary" id="saveTask">Save</button>'
+    );
+    document.getElementById('saveTask').addEventListener('click',()=>{
+      const data=Tasks._readForm();if(!data) return;
+      const updated=Object.assign({},t,data);
+      Store.set('tasks',id,updated);
+      Store.addActivity('task_updated','Updated task: '+data.description,id);
+      Modal.close();Toast.show('Task updated!');
+    });
+    document.getElementById('deleteTask').addEventListener('click',()=>{
+      Modal.close();
+      setTimeout(()=>{
+        Modal.confirm('Delete Task','Delete "'+U.esc(t.description)+'"? This cannot be undone.',()=>{
+          Store.remove('tasks',id);Toast.show('Task deleted.');
+        });
+      },100);
+    });
+  },
+  handleComplete(taskId){
+    const t=Store.getById('tasks',taskId);if(!t) return;
+    // Slide out animation
+    const el=document.getElementById('task-'+taskId);
+    if(el){el.classList.add('sliding-out');setTimeout(()=>_finish(),350)}
+    else _finish();
+    function _finish(){
+      const tcId=U.id('tc');
+      Store.set('taskCompletions',tcId,{id:tcId,taskId:taskId,motherId:t.motherId,completedAt:Date.now(),notes:''});
+      if(t.scheduleType==='recurring'){
+        const next=new Date();next.setDate(next.getDate()+t.intervalDays);
+        t.nextDueDate=next.toISOString().split('T')[0];
+        t.lastCompletedAt=Date.now();
+        Store.set('tasks',taskId,t);
+      }else{
+        t.enabled=false;t.lastCompletedAt=Date.now();
+        Store.set('tasks',taskId,t);
+      }
+      Store.addActivity('task_completed','Completed: '+t.description,taskId);
+      Toast.show('Task completed!');
+    }
+  }
+};
+window.Tasks=Tasks;
+
+function taskIcon(type){
+  const icons={watering:'&#128167;',feeding:'&#129514;',pruning:'&#9986;',ipm:'&#128737;',repotting:'&#129716;',cleaning:'&#10024;',other:'&#128295;'};
+  return icons[type]||'&#128295;';
+}
+
+/* ═══════════════════════════════════════════════
+   ENVIRONMENT
+   ═══════════════════════════════════════════════ */
+const Environment={
+  _filterPlant:'all',
+  render(){
+    const mothers=Store.mothersArray();
+    let logs=Store.envArray();
+    if(this._filterPlant!=='all') logs=logs.filter(e=>e.motherId===this._filterPlant);
+    const latest=logs[0]||{};
+
+    let h='<div class="toolbar">';
+    h+='<button class="btn btn-primary" onclick="Environment.openLogModal()">+ Log Reading</button>';
+    h+='<select class="filter-select" onchange="Environment._filterPlant=this.value;Environment.render()">';
+    h+='<option value="all">All / Global</option>';
+    mothers.forEach(m=>{h+='<option value="'+m.id+'"'+(this._filterPlant===m.id?' selected':'')+'>'+U.esc(m.strainName)+'</option>'});
+    h+='</select></div>';
+
+    h+='<div class="env-readings">';
+    h+='<div class="card env-reading-card"><div class="env-val">'+(latest.temperature!=null?latest.temperature+'&deg;F':'—')+'</div><div class="env-label">Temperature</div></div>';
+    h+='<div class="card env-reading-card"><div class="env-val">'+(latest.humidity!=null?latest.humidity+'%':'—')+'</div><div class="env-label">Humidity</div></div>';
+    h+='<div class="card env-reading-card"><div class="env-val">'+(latest.lightHours!=null?latest.lightHours+'h':'—')+'</div><div class="env-label">Light Hours</div></div>';
+    h+='<div class="card env-reading-card"><div class="env-val">'+(latest.ph!=null?latest.ph:'—')+'</div><div class="env-label">pH</div></div>';
+    h+='<div class="card env-reading-card"><div class="env-val">'+(latest.ecPpm!=null?latest.ecPpm:'—')+'</div><div class="env-label">EC/PPM</div></div>';
+    h+='</div>';
+
+    if(!logs.length){
+      h+='<div class="empty-state"><div class="empty-icon">&#127777;</div><div class="empty-text">No environment logs yet. Start tracking your grow conditions!</div></div>';
+    }else{
+      // Sparklines
+      const last30=logs.slice(0,30).reverse();
+      h+='<div class="section-title">Trends (last '+last30.length+' readings)</div>';
+
+      h+='<div class="env-table-wrap"><table class="env-table"><thead><tr>';
+      h+='<th>Date</th><th>Temp</th><th>RH</th><th>Light</th><th>pH</th><th>EC/PPM</th><th>Notes</th></tr></thead><tbody>';
+
+      // Sparkline row
+      h+='<tr style="background:var(--bg-card)">';
+      h+='<td style="font-size:.65rem;color:var(--text-tertiary)">Trend</td>';
+      ['temperature','humidity','lightHours','ph','ecPpm'].forEach(key=>{
+        const vals=last30.map(l=>l[key]).filter(v=>v!=null);
+        h+='<td>'+Environment._sparkline(vals)+'</td>';
+      });
+      h+='<td></td></tr>';
+
+      logs.slice(0,30).forEach(e=>{
+        const d=new Date(e.timestamp);
+        h+='<tr>';
+        h+='<td>'+d.toLocaleDateString('en-US',{month:'short',day:'numeric'})+'</td>';
+        h+='<td>'+(e.temperature!=null?e.temperature:'—')+'</td>';
+        h+='<td>'+(e.humidity!=null?e.humidity+'%':'—')+'</td>';
+        h+='<td>'+(e.lightHours!=null?e.lightHours+'h':'—')+'</td>';
+        h+='<td>'+(e.ph!=null?e.ph:'—')+'</td>';
+        h+='<td>'+(e.ecPpm!=null?e.ecPpm:'—')+'</td>';
+        h+='<td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+U.esc(e.notes||'')+'</td>';
+        h+='</tr>';
+      });
+      h+='</tbody></table></div>';
+    }
+
+    document.getElementById('panel-environment').innerHTML=h;
+  },
+  _sparkline(vals){
+    if(vals.length<2) return '<span style="color:var(--text-tertiary);font-size:.7rem">—</span>';
+    const w=80,ht=24,pad=2;
+    const min=Math.min(...vals),max=Math.max(...vals);
+    const range=max-min||1;
+    const points=vals.map((v,i)=>{
+      const x=pad+i*(w-2*pad)/(vals.length-1);
+      const y=pad+(1-(v-min)/range)*(ht-2*pad);
+      return x.toFixed(1)+','+y.toFixed(1);
+    }).join(' ');
+    return '<svg class="sparkline" width="'+w+'" height="'+ht+'" viewBox="0 0 '+w+' '+ht+'"><polyline fill="none" stroke="var(--cyan)" stroke-width="1.5" points="'+points+'"/></svg>';
+  },
+  openLogModal(){
+    const mothers=Store.mothersArray();
+    let h='<div class="form-group"><label class="form-label">Plant (optional)</label><select class="form-select" id="f_envMother">';
+    h+='<option value="">Global</option>';
+    mothers.forEach(m=>{h+='<option value="'+m.id+'">'+U.esc(m.strainName)+'</option>'});
+    h+='</select></div>';
+    h+='<div class="form-row">';
+    h+='<div class="form-group"><label class="form-label">Temperature (&deg;F)</label><input class="form-input" id="f_temp" type="number" step="0.1"></div>';
+    h+='<div class="form-group"><label class="form-label">Humidity (%)</label><input class="form-input" id="f_humidity" type="number" step="1"></div>';
+    h+='</div>';
+    h+='<div class="form-row">';
+    h+='<div class="form-group"><label class="form-label">Light Hours</label><input class="form-input" id="f_lightHours" type="number" step="0.5"></div>';
+    h+='<div class="form-group"><label class="form-label">pH</label><input class="form-input" id="f_ph" type="number" step="0.1"></div>';
+    h+='</div>';
+    h+='<div class="form-group"><label class="form-label">EC/PPM</label><input class="form-input" id="f_ecPpm" type="number" step="1"></div>';
+    h+='<div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="f_envNotes"></textarea></div>';
+    Modal.open('Log Environment Reading',h,
+      '<button class="btn btn-ghost" onclick="Modal.close()">Cancel</button><button class="btn btn-primary" id="saveEnv">Save</button>'
+    );
+    document.getElementById('saveEnv').addEventListener('click',()=>{
+      const id=U.id('e');
+      const entry={
+        id:id,
+        motherId:document.getElementById('f_envMother').value,
+        timestamp:Date.now(),
+        temperature:document.getElementById('f_temp').value?parseFloat(document.getElementById('f_temp').value):null,
+        humidity:document.getElementById('f_humidity').value?parseInt(document.getElementById('f_humidity').value):null,
+        lightHours:document.getElementById('f_lightHours').value?parseFloat(document.getElementById('f_lightHours').value):null,
+        ph:document.getElementById('f_ph').value?parseFloat(document.getElementById('f_ph').value):null,
+        ecPpm:document.getElementById('f_ecPpm').value?parseInt(document.getElementById('f_ecPpm').value):null,
+        notes:document.getElementById('f_envNotes').value.trim()
+      };
+      Store.set('envLogs',id,entry);
+      Store.addActivity('env_logged','Logged environment reading',id);
+      Modal.close();Toast.show('Environment reading logged!');
+      Router.switchTo('environment');
+    });
+  }
+};
+window.Environment=Environment;
+
+/* ═══════════════════════════════════════════════
+   DATA EXPORT / IMPORT
+   ═══════════════════════════════════════════════ */
+const DataIO={
+  init(){
+    document.getElementById('exportBtn').addEventListener('click',()=>this.handleExport());
+    document.getElementById('importBtn').addEventListener('click',()=>document.getElementById('importFile').click());
+    document.getElementById('importFile').addEventListener('change',e=>{
+      if(e.target.files[0]) this.handleImport(e.target.files[0]);
+      e.target.value='';
+    });
+  },
+  handleExport(){
+    const json=Store.exportJSON();
+    const blob=new Blob([json],{type:'application/json'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;a.download='mother-plant-data-'+U.today()+'.json';
+    a.click();URL.revokeObjectURL(url);
+    Toast.show('Data exported!','info');
+  },
+  handleImport(file){
+    const reader=new FileReader();
+    reader.onload=function(e){
+      const ok=Store.importJSON(e.target.result);
+      if(ok){
+        Store.addActivity('data_imported','Imported data from backup');
+        Toast.show('Data imported successfully!');
+        Router.switchTo(Router._current);
+      }else{
+        Toast.show('Invalid backup file.','error');
+      }
+    };
+    reader.readAsText(file);
+  }
+};
+
+/* ═══════════════════════════════════════════════
+   INIT
+   ═══════════════════════════════════════════════ */
+function init(){
+  Store.load();
+  Theme.init();
+  Modal.init();
+  DataIO.init();
+  Store.subscribe(()=>{
+    const tab=Router._current;
+    const renderers={dashboard:Dashboard,plants:Plants,clones:Clones,tasks:Tasks,environment:Environment};
+    if(renderers[tab]) renderers[tab].render();
+  });
+  Router.init();
+}
+
+if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init);
+else init();
+
+})();
+</script>
+</body>
+</html>
