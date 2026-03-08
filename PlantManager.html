@@ -330,6 +330,43 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 .env-type-outdoor{background:rgba(74,158,82,.15);color:var(--leaf)}
 .env-type-closet{background:var(--bg-input);color:var(--text-secondary)}
 .env-type-other{background:var(--bg-input);color:var(--text-tertiary)}
+/* ── Feeding Cards ── */
+.feed-list{display:flex;flex-direction:column;gap:var(--space-md)}
+.feed-card{padding:var(--space-lg)}
+.feed-card .feed-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-sm)}
+.feed-card .feed-nutrient{font-weight:700;font-size:1rem}
+.feed-card .feed-date{font-size:.7rem;color:var(--text-tertiary)}
+.feed-card .feed-details{display:flex;flex-wrap:wrap;gap:var(--space-md);font-size:.8rem;color:var(--text-secondary)}
+.feed-card .feed-detail{display:flex;flex-direction:column;gap:2px}
+.feed-card .feed-detail .fd-label{font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text-tertiary)}
+.feed-card .feed-detail .fd-val{font-weight:600;color:var(--text-primary)}
+.feed-card .feed-tags{display:flex;gap:var(--space-xs);flex-wrap:wrap;margin-top:var(--space-sm)}
+.ph-drift{color:var(--orange)}
+/* ── Photo Journal ── */
+.photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:var(--space-md)}
+.journal-card{cursor:pointer;padding:0;overflow:hidden}
+.journal-card .journal-img{width:100%;height:180px;object-fit:cover;display:block}
+.journal-card .journal-info{padding:var(--space-sm) var(--space-md)}
+.journal-card .journal-plant{font-weight:700;font-size:.8rem}
+.journal-card .journal-date{font-size:.65rem;color:var(--text-tertiary)}
+.journal-card .journal-notes{font-size:.75rem;color:var(--text-secondary);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.journal-detail-img{width:100%;max-height:400px;object-fit:contain;border-radius:var(--radius-sm);margin-bottom:var(--space-md)}
+/* ── IPM Log ── */
+.ipm-list{display:flex;flex-direction:column;gap:var(--space-md)}
+.ipm-card{padding:var(--space-lg)}
+.ipm-card .ipm-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-sm)}
+.ipm-card .ipm-pest{font-weight:700;font-size:1rem}
+.ipm-card .ipm-date{font-size:.7rem;color:var(--text-tertiary)}
+.ipm-card .ipm-details{font-size:.8rem;color:var(--text-secondary);margin-bottom:var(--space-sm)}
+.ipm-card .ipm-treatment{font-size:.8rem;font-style:italic;color:var(--text-secondary)}
+.ipm-card.resolved{opacity:.6}
+.sev-badge{display:inline-flex;padding:.15rem .5rem;border-radius:3px;font-size:.6rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-right:var(--space-xs)}
+.sev-low{background:rgba(45,110,53,.2);color:var(--leaf)}
+.sev-medium{background:rgba(240,180,41,.15);color:var(--gold)}
+.sev-high{background:rgba(224,92,58,.15);color:var(--orange)}
+.sev-critical{background:rgba(200,40,40,.2);color:#e05c3a}
+.issue-type-badge{display:inline-flex;padding:.15rem .5rem;border-radius:3px;font-size:.6rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:var(--bg-input);color:var(--text-secondary)}
+.resolved-badge{display:inline-flex;padding:.15rem .5rem;border-radius:3px;font-size:.6rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:rgba(45,110,53,.2);color:var(--leaf)}
 </style>
 </head>
 <body>
@@ -356,7 +393,10 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
   <button class="tab-btn" data-tab="environments"><span class="tab-icon">&#9978;</span>Environs</button>
   <button class="tab-btn" data-tab="clones"><span class="tab-icon">&#9986;</span>Clones</button>
   <button class="tab-btn" data-tab="tasks"><span class="tab-icon">&#9745;</span>Tasks</button>
-  <button class="tab-btn" data-tab="environment"><span class="tab-icon">&#127777;</span>Environ</button>
+  <button class="tab-btn" data-tab="feeding"><span class="tab-icon">&#129514;</span>Feeding</button>
+  <button class="tab-btn" data-tab="journal"><span class="tab-icon">&#128248;</span>Journal</button>
+  <button class="tab-btn" data-tab="ipm"><span class="tab-icon">&#128737;</span>IPM</button>
+  <button class="tab-btn" data-tab="environment"><span class="tab-icon">&#127777;</span>Readings</button>
 </nav>
 
 <!-- Main Content -->
@@ -372,7 +412,13 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
     <section class="tab-panel" id="panel-clones"></section>
     <!-- Tasks -->
     <section class="tab-panel" id="panel-tasks"></section>
-    <!-- Environment -->
+    <!-- Feeding -->
+    <section class="tab-panel" id="panel-feeding"></section>
+    <!-- Journal -->
+    <section class="tab-panel" id="panel-journal"></section>
+    <!-- IPM -->
+    <section class="tab-panel" id="panel-ipm"></section>
+    <!-- Environment Readings -->
     <section class="tab-panel" id="panel-environment"></section>
   </div>
 </main>
@@ -404,7 +450,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 (function(){
 'use strict';
 
-const APP_VERSION = '1.1.1';
+const APP_VERSION = '1.2.0';
 
 /* ═══════════════════════════════════════════════
    UTILS
@@ -462,13 +508,16 @@ const Store = {
   _key:'motherPlantTracker',
   _data:null,
   _subs:[],
-  _default(){return{version:'1.0.0',settings:{theme:'dark',lastActiveTab:'dashboard',showHero:true},mothers:{},environments:{},clones:{},tasks:{},taskCompletions:{},envLogs:{},activityLog:[]}},
+  _default(){return{version:'1.0.0',settings:{theme:'dark',lastActiveTab:'dashboard',showHero:true},mothers:{},environments:{},clones:{},tasks:{},taskCompletions:{},envLogs:{},feedings:{},photoJournal:{},ipmLogs:{},activityLog:[]}},
   load(){
     try{
       const raw=localStorage.getItem(this._key);
       this._data=raw?JSON.parse(raw):this._default();
       if(!this._data.version) this._data=this._default();
       if(!this._data.environments) this._data.environments={};
+      if(!this._data.feedings) this._data.feedings={};
+      if(!this._data.photoJournal) this._data.photoJournal={};
+      if(!this._data.ipmLogs) this._data.ipmLogs={};
       if(this._data.settings.showHero===undefined) this._data.settings.showHero=true;
     }catch(e){this._data=this._default()}
   },
@@ -514,6 +563,15 @@ const Store = {
   envArray(){return Object.values(this._data.envLogs).sort((a,b)=>b.timestamp-a.timestamp)},
   completionsFor(taskId){return Object.values(this._data.taskCompletions).filter(c=>c.taskId===taskId)},
   clonesForMother(mid){return Object.values(this._data.clones).filter(c=>c.motherId===mid)},
+  feedingsArray(){return Object.values(this._data.feedings).sort((a,b)=>b.timestamp-a.timestamp)},
+  feedingsForMother(mid){return this.feedingsArray().filter(f=>f.motherId===mid)},
+  feedingsForEnv(eid){return this.feedingsArray().filter(f=>f.environmentId===eid)},
+  photosArray(){return Object.values(this._data.photoJournal).sort((a,b)=>b.timestamp-a.timestamp)},
+  photosForMother(mid){return this.photosArray().filter(p=>p.motherId===mid)},
+  ipmArray(){return Object.values(this._data.ipmLogs).sort((a,b)=>b.timestamp-a.timestamp)},
+  ipmForMother(mid){return this.ipmArray().filter(i=>i.motherId===mid)},
+  ipmForEnv(eid){return this.ipmArray().filter(i=>i.environmentId===eid)},
+  activeIpmCount(){return this.ipmArray().filter(i=>!i.resolved).length},
   cloneSuccessRate(mid){
     const batches=this.clonesForMother(mid);
     if(!batches.length) return null;
@@ -621,7 +679,7 @@ const Router={
     Store.setting('lastActiveTab',tab);
     document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
     document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active',p.id==='panel-'+tab));
-    const renderers={dashboard:Dashboard,plants:Plants,environments:Environments,clones:Clones,tasks:Tasks,environment:Environment};
+    const renderers={dashboard:Dashboard,plants:Plants,environments:Environments,clones:Clones,tasks:Tasks,feeding:Feeding,journal:Journal,ipm:IPM,environment:Environment};
     if(renderers[tab]) renderers[tab].render();
   }
 };
@@ -639,6 +697,7 @@ const Dashboard={
     const today=U.today();
     const overdue=allTasks.filter(t=>t.nextDueDate<today);
     const dueToday=allTasks.filter(t=>t.nextDueDate===today);
+    const activeIpm=Store.activeIpmCount();
     const healthCounts={thriving:0,healthy:0,stressed:0,sick:0,quarantine:0};
     mothers.forEach(m=>{if(healthCounts[m.healthStatus]!==undefined)healthCounts[m.healthStatus]++});
     const worstHealth=mothers.length?
@@ -653,6 +712,7 @@ const Dashboard={
     h+='<div class="card stat-card green"><div class="stat-icon">&#9978;</div><div class="stat-value">'+envCount+'</div><div class="stat-label">Environments</div></div>';
     h+='<div class="card stat-card orange"><div class="stat-icon">&#9745;</div><div class="stat-value">'+(dueToday.length+overdue.length)+'</div><div class="stat-label">Tasks Due</div></div>';
     h+='<div class="card stat-card"><div class="stat-icon">&#128154;</div><div class="stat-value" style="font-size:1.1rem">'+worstHealth+'</div><div class="stat-label">Health Overview</div></div>';
+    h+='<div class="card stat-card'+(activeIpm>0?' orange':'')+'"><div class="stat-icon">&#128737;</div><div class="stat-value">'+activeIpm+'</div><div class="stat-label">Active Issues</div></div>';
     h+='</div>';
 
     h+='<div class="quick-actions" style="margin-top:var(--space-xl)">';
@@ -661,6 +721,9 @@ const Dashboard={
     h+='<button class="btn btn-outline" onclick="Clones.openAddModal()">+ Log Clones</button>';
     h+='<button class="btn btn-outline" onclick="Tasks.openAddModal()">+ Add Task</button>';
     h+='<button class="btn btn-outline" onclick="Environment.openLogModal()">+ Log Reading</button>';
+    h+='<button class="btn btn-outline" onclick="Feeding.openAddModal()">+ Log Feeding</button>';
+    h+='<button class="btn btn-outline" onclick="Journal.openAddModal()">+ Add Photo</button>';
+    h+='<button class="btn btn-outline" onclick="IPM.openAddModal()">+ Log Issue</button>';
     h+='</div>';
 
     if(overdue.length){
@@ -752,6 +815,9 @@ const Plants={
         h+='<button class="btn btn-ghost btn-sm" onclick="Plants.openEditModal(\''+m.id+'\')">Edit</button>';
         h+='<button class="btn btn-ghost btn-sm" onclick="Clones.openAddModal(\''+m.id+'\')">+ Clone</button>';
         h+='<button class="btn btn-ghost btn-sm" onclick="Tasks.openAddModal(\''+m.id+'\')">+ Task</button>';
+        h+='<button class="btn btn-ghost btn-sm" onclick="Feeding.openAddModal(\''+m.id+'\')">+ Feed</button>';
+        h+='<button class="btn btn-ghost btn-sm" onclick="Journal.openAddModal(\''+m.id+'\')">+ Photo</button>';
+        h+='<button class="btn btn-ghost btn-sm" onclick="IPM.openAddModal(\''+m.id+'\')">+ IPM</button>';
         h+='<button class="btn btn-danger btn-sm" onclick="Plants.handleDelete(\''+m.id+'\')">Archive</button>';
         h+='</div></div></div>';
       });
@@ -1448,6 +1514,346 @@ const Environment={
 window.Environment=Environment;
 
 /* ═══════════════════════════════════════════════
+   FEEDING / NUTRIENT LOG
+   ═══════════════════════════════════════════════ */
+const Feeding={
+  _filter:'all',
+  render(){
+    const mothers=Store.mothersArray();
+    const envs=Store.environmentsArray();
+    let logs=Store.feedingsArray();
+    if(this._filter!=='all'){
+      logs=logs.filter(f=>f.motherId===this._filter||f.environmentId===this._filter);
+    }
+    let h='<div class="toolbar">';
+    h+='<button class="btn btn-primary" onclick="Feeding.openAddModal()">+ Log Feeding</button>';
+    h+='<select class="filter-select" onchange="Feeding._filter=this.value;Feeding.render()">';
+    h+='<option value="all">All Plants / Envs</option>';
+    mothers.forEach(m=>{h+='<option value="'+m.id+'"'+(this._filter===m.id?' selected':'')+'>'+U.esc(m.strainName)+'</option>'});
+    envs.forEach(e=>{h+='<option value="'+e.id+'"'+(this._filter===e.id?' selected':'')+'>'+U.esc(e.name)+' (env)</option>'});
+    h+='</select></div>';
+    if(!logs.length){
+      h+='<div class="empty-state"><div class="empty-icon">&#129514;</div><div class="empty-text">No feedings logged yet. Track your nutrient schedule!</div></div>';
+    }else{
+      h+='<div class="feed-list">';
+      logs.slice(0,50).forEach(f=>{
+        const m=f.motherId?Store.getById('mothers',f.motherId):null;
+        const env=f.environmentId?Store.getById('environments',f.environmentId):null;
+        const d=new Date(f.timestamp);
+        const phDrift=f.phIn!=null&&f.phOut!=null?Math.abs(f.phOut-f.phIn):0;
+        h+='<div class="card feed-card">';
+        h+='<div class="feed-header"><span class="feed-nutrient">'+U.esc(f.nutrientName||'Water Only')+'</span>';
+        h+='<span class="feed-date">'+d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})+'</span></div>';
+        h+='<div class="feed-details">';
+        if(f.nutrientAmount) h+='<div class="feed-detail"><span class="fd-label">Amount</span><span class="fd-val">'+f.nutrientAmount+' '+U.esc(f.nutrientUnit||'')+'</span></div>';
+        if(f.waterVolume) h+='<div class="feed-detail"><span class="fd-label">Water</span><span class="fd-val">'+f.waterVolume+' '+U.esc(f.waterUnit||'gal')+'</span></div>';
+        if(f.phIn!=null) h+='<div class="feed-detail"><span class="fd-label">pH In/Out</span><span class="fd-val'+(phDrift>.5?' ph-drift':'')+'">'+f.phIn+(f.phOut!=null?' &rarr; '+f.phOut:'')+'</span></div>';
+        if(f.ecPpmIn!=null) h+='<div class="feed-detail"><span class="fd-label">EC In/Out</span><span class="fd-val">'+f.ecPpmIn+(f.ecPpmOut!=null?' &rarr; '+f.ecPpmOut:'')+'</span></div>';
+        h+='</div>';
+        h+='<div class="feed-tags">';
+        if(m) h+='<span class="env-type-badge env-type-tent">'+U.esc(m.strainName)+'</span>';
+        if(env) h+='<span class="env-type-badge env-type-room">'+U.esc(env.name)+'</span>';
+        h+='</div>';
+        if(f.notes) h+='<div style="font-size:.75rem;color:var(--text-tertiary);margin-top:var(--space-xs)">'+U.esc(f.notes)+'</div>';
+        h+='</div>';
+      });
+      h+='</div>';
+    }
+    document.getElementById('panel-feeding').innerHTML=h;
+  },
+  openAddModal(preselect){
+    const mothers=Store.mothersArray();
+    const envs=Store.environmentsArray();
+    const isMother=preselect&&preselect.startsWith('m_');
+    const isEnv=preselect&&preselect.startsWith('env_');
+    let h='<div class="form-row">';
+    h+='<div class="form-group"><label class="form-label">Plant</label><select class="form-select" id="f_feedMother">';
+    h+='<option value="">None</option>';
+    mothers.forEach(m=>{h+='<option value="'+m.id+'"'+(isMother&&preselect===m.id?' selected':'')+'>'+U.esc(m.strainName)+'</option>'});
+    h+='</select></div>';
+    h+='<div class="form-group"><label class="form-label">Environment</label><select class="form-select" id="f_feedEnv">';
+    h+='<option value="">None</option>';
+    envs.forEach(e=>{h+='<option value="'+e.id+'"'+(isEnv&&preselect===e.id?' selected':'')+'>'+U.esc(e.name)+'</option>'});
+    h+='</select></div></div>';
+    h+='<div class="form-group"><label class="form-label">Nutrient / Product Name</label><input class="form-input" id="f_nutrientName" placeholder="e.g. Flora Trio, CalMag, plain water"></div>';
+    h+='<div class="form-row">';
+    h+='<div class="form-group"><label class="form-label">Amount</label><input class="form-input" id="f_nutrientAmount" type="number" step="0.1"></div>';
+    h+='<div class="form-group"><label class="form-label">Unit</label><select class="form-select" id="f_nutrientUnit"><option value="ml/gal">ml/gal</option><option value="tsp/gal">tsp/gal</option><option value="g/L">g/L</option><option value="ml/L">ml/L</option></select></div></div>';
+    h+='<div class="form-row">';
+    h+='<div class="form-group"><label class="form-label">Water Volume</label><input class="form-input" id="f_waterVol" type="number" step="0.1"></div>';
+    h+='<div class="form-group"><label class="form-label">Water Unit</label><select class="form-select" id="f_waterUnit"><option value="gal">Gallons</option><option value="L">Liters</option></select></div></div>';
+    h+='<div class="form-row">';
+    h+='<div class="form-group"><label class="form-label">pH In</label><input class="form-input" id="f_phIn" type="number" step="0.1"></div>';
+    h+='<div class="form-group"><label class="form-label">pH Out (runoff)</label><input class="form-input" id="f_phOut" type="number" step="0.1"></div></div>';
+    h+='<div class="form-row">';
+    h+='<div class="form-group"><label class="form-label">EC/PPM In</label><input class="form-input" id="f_ecIn" type="number" step="1"></div>';
+    h+='<div class="form-group"><label class="form-label">EC/PPM Out</label><input class="form-input" id="f_ecOut" type="number" step="1"></div></div>';
+    h+='<div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="f_feedNotes"></textarea></div>';
+    Modal.open('Log Feeding',h,'<button class="btn btn-ghost" onclick="Modal.close()">Cancel</button><button class="btn btn-primary" id="saveFeed">Save</button>');
+    document.getElementById('saveFeed').addEventListener('click',()=>{
+      const id=U.id('fd');
+      const entry={
+        id:id,
+        motherId:document.getElementById('f_feedMother').value,
+        environmentId:document.getElementById('f_feedEnv').value,
+        timestamp:Date.now(),
+        nutrientName:document.getElementById('f_nutrientName').value.trim(),
+        nutrientAmount:document.getElementById('f_nutrientAmount').value?parseFloat(document.getElementById('f_nutrientAmount').value):null,
+        nutrientUnit:document.getElementById('f_nutrientUnit').value,
+        waterVolume:document.getElementById('f_waterVol').value?parseFloat(document.getElementById('f_waterVol').value):null,
+        waterUnit:document.getElementById('f_waterUnit').value,
+        phIn:document.getElementById('f_phIn').value?parseFloat(document.getElementById('f_phIn').value):null,
+        phOut:document.getElementById('f_phOut').value?parseFloat(document.getElementById('f_phOut').value):null,
+        ecPpmIn:document.getElementById('f_ecIn').value?parseInt(document.getElementById('f_ecIn').value):null,
+        ecPpmOut:document.getElementById('f_ecOut').value?parseInt(document.getElementById('f_ecOut').value):null,
+        notes:document.getElementById('f_feedNotes').value.trim()
+      };
+      Store.set('feedings',id,entry);
+      const name=entry.nutrientName||'Water Only';
+      Store.addActivity('feeding_logged','Logged feeding: '+name,id);
+      Modal.close();Toast.show('Feeding logged!');
+      Router.switchTo('feeding');
+    });
+  }
+};
+window.Feeding=Feeding;
+
+/* ═══════════════════════════════════════════════
+   PHOTO JOURNAL
+   ═══════════════════════════════════════════════ */
+const Journal={
+  _filter:'all',_photoData:'',
+  render(){
+    const mothers=Store.mothersArray();
+    let photos=Store.photosArray();
+    if(this._filter!=='all') photos=photos.filter(p=>p.motherId===this._filter);
+    let h='<div class="toolbar">';
+    h+='<button class="btn btn-primary" onclick="Journal.openAddModal()">+ Add Photo</button>';
+    h+='<select class="filter-select" onchange="Journal._filter=this.value;Journal.render()">';
+    h+='<option value="all">All Plants</option>';
+    mothers.forEach(m=>{h+='<option value="'+m.id+'"'+(this._filter===m.id?' selected':'')+'>'+U.esc(m.strainName)+'</option>'});
+    h+='</select></div>';
+    if(!photos.length){
+      h+='<div class="empty-state"><div class="empty-icon">&#128248;</div><div class="empty-text">No photos yet. Start your visual grow journal!</div></div>';
+    }else{
+      h+='<div class="photo-grid">';
+      photos.slice(0,60).forEach(p=>{
+        const m=p.motherId?Store.getById('mothers',p.motherId):null;
+        const d=new Date(p.timestamp);
+        h+='<div class="card journal-card" onclick="Journal.openDetail(\''+p.id+'\')">';
+        h+='<img class="journal-img" src="'+p.photo+'" alt="'+U.esc(m?m.strainName:'Photo')+'">';
+        h+='<div class="journal-info">';
+        h+='<div class="journal-plant">'+(m?U.esc(m.strainName):'Unlinked')+'</div>';
+        h+='<div class="journal-date">'+d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+        if(p.growthStage) h+=' &middot; '+p.growthStage.charAt(0).toUpperCase()+p.growthStage.slice(1);
+        h+='</div>';
+        if(p.notes) h+='<div class="journal-notes">'+U.esc(p.notes)+'</div>';
+        h+='</div></div>';
+      });
+      h+='</div>';
+    }
+    document.getElementById('panel-journal').innerHTML=h;
+  },
+  openDetail(id){
+    const p=Store.getById('photoJournal',id);if(!p) return;
+    const m=p.motherId?Store.getById('mothers',p.motherId):null;
+    const d=new Date(p.timestamp);
+    let h='<img class="journal-detail-img" src="'+p.photo+'" alt="Photo">';
+    h+='<div style="margin-bottom:var(--space-sm)"><strong>'+(m?U.esc(m.strainName):'Unlinked')+'</strong></div>';
+    h+='<div style="font-size:.8rem;color:var(--text-secondary);margin-bottom:var(--space-xs)">'+d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'})+'</div>';
+    if(p.growthStage) h+='<div style="font-size:.8rem;color:var(--text-secondary);margin-bottom:var(--space-sm)">Stage: '+p.growthStage.charAt(0).toUpperCase()+p.growthStage.slice(1)+'</div>';
+    if(p.notes) h+='<div style="font-size:.85rem;margin-top:var(--space-md)">'+U.esc(p.notes)+'</div>';
+    Modal.open('Photo Detail',h,'<button class="btn btn-danger" onclick="Journal.handleDelete(\''+id+'\')">Delete</button><button class="btn btn-ghost" onclick="Modal.close()">Close</button>');
+  },
+  handleDelete(id){
+    Modal.confirm('Delete Photo','Permanently delete this photo?',()=>{
+      Store.remove('photoJournal',id);
+      Store.addActivity('photo_deleted','Deleted journal photo',id);
+      Toast.show('Photo deleted.');
+    });
+  },
+  _onPhoto(input){
+    if(!input.files[0]) return;
+    U.resizeImage(input.files[0],400,0.6,function(dataUrl){
+      Journal._photoData=dataUrl;
+      const preview=document.getElementById('journalPreview');
+      preview.innerHTML='<img src="'+dataUrl+'" style="width:100%;height:100%;object-fit:cover">';
+    });
+  },
+  openAddModal(preselect){
+    Journal._photoData='';
+    const mothers=Store.mothersArray();
+    let h='<div class="form-group"><label class="form-label">Plant *</label><select class="form-select" id="f_journalMother">';
+    h+='<option value="">Select plant</option>';
+    mothers.forEach(m=>{h+='<option value="'+m.id+'"'+(preselect===m.id?' selected':'')+'>'+U.esc(m.strainName)+'</option>'});
+    h+='</select></div>';
+    h+='<div class="form-group"><label class="form-label">Photo *</label>';
+    h+='<div class="photo-preview" id="journalPreview" onclick="document.getElementById(\'f_journalPhoto\').click()">';
+    h+='<div class="photo-placeholder">Click to upload photo</div></div>';
+    h+='<input type="file" id="f_journalPhoto" accept="image/*" class="sr-only" onchange="Journal._onPhoto(this)"></div>';
+    h+='<div class="form-group"><label class="form-label">Growth Stage</label><select class="form-select" id="f_journalStage">';
+    ['','seedling','vegetative','flowering','harvest','curing'].forEach(s=>{
+      h+='<option value="'+s+'">'+(s?s.charAt(0).toUpperCase()+s.slice(1):'Select stage')+'</option>'
+    });
+    h+='</select></div>';
+    h+='<div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="f_journalNotes"></textarea></div>';
+    Modal.open('Add Journal Photo',h,'<button class="btn btn-ghost" onclick="Modal.close()">Cancel</button><button class="btn btn-primary" id="saveJournal">Save</button>');
+    document.getElementById('saveJournal').addEventListener('click',()=>{
+      const motherId=document.getElementById('f_journalMother').value;
+      if(!motherId){Toast.show('Please select a plant.','error');return}
+      if(!Journal._photoData){Toast.show('Please upload a photo.','error');return}
+      const id=U.id('ph');
+      const entry={
+        id:id,motherId:motherId,timestamp:Date.now(),
+        photo:Journal._photoData,
+        growthStage:document.getElementById('f_journalStage').value,
+        notes:document.getElementById('f_journalNotes').value.trim()
+      };
+      Store.set('photoJournal',id,entry);
+      const m=Store.getById('mothers',motherId);
+      Store.addActivity('photo_added','Added journal photo: '+(m?m.strainName:''),id);
+      Modal.close();Toast.show('Photo added to journal!');
+      Router.switchTo('journal');
+    });
+  }
+};
+window.Journal=Journal;
+
+/* ═══════════════════════════════════════════════
+   IPM LOG (PEST & DISEASE)
+   ═══════════════════════════════════════════════ */
+const IPM={
+  _filterPlant:'all',_filterSev:'all',_filterStatus:'all',
+  _pests:['aphids','spider mites','fungus gnats','whiteflies','thrips','powdery mildew','bud rot','root rot','nutrient burn','nutrient deficiency','other'],
+  render(){
+    const mothers=Store.mothersArray();
+    let logs=Store.ipmArray();
+    if(this._filterPlant!=='all') logs=logs.filter(i=>i.motherId===this._filterPlant||i.environmentId===this._filterPlant);
+    if(this._filterSev!=='all') logs=logs.filter(i=>i.severity===this._filterSev);
+    if(this._filterStatus==='active') logs=logs.filter(i=>!i.resolved);
+    else if(this._filterStatus==='resolved') logs=logs.filter(i=>i.resolved);
+    let h='<div class="toolbar">';
+    h+='<button class="btn btn-primary" onclick="IPM.openAddModal()">+ Log Issue</button>';
+    h+='<select class="filter-select" onchange="IPM._filterPlant=this.value;IPM.render()">';
+    h+='<option value="all">All Plants</option>';
+    mothers.forEach(m=>{h+='<option value="'+m.id+'"'+(this._filterPlant===m.id?' selected':'')+'>'+U.esc(m.strainName)+'</option>'});
+    h+='</select>';
+    h+='<select class="filter-select" onchange="IPM._filterSev=this.value;IPM.render()" style="margin-left:var(--space-xs)">';
+    h+='<option value="all">All Severity</option>';
+    ['low','medium','high','critical'].forEach(s=>{h+='<option value="'+s+'"'+(this._filterSev===s?' selected':'')+'>'+s.charAt(0).toUpperCase()+s.slice(1)+'</option>'});
+    h+='</select>';
+    h+='<select class="filter-select" onchange="IPM._filterStatus=this.value;IPM.render()" style="margin-left:var(--space-xs)">';
+    h+='<option value="all"'+(this._filterStatus==='all'?' selected':'')+'>All Status</option>';
+    h+='<option value="active"'+(this._filterStatus==='active'?' selected':'')+'>Active</option>';
+    h+='<option value="resolved"'+(this._filterStatus==='resolved'?' selected':'')+'>Resolved</option>';
+    h+='</select></div>';
+    if(!logs.length){
+      h+='<div class="empty-state"><div class="empty-icon">&#128737;</div><div class="empty-text">No IPM issues logged. Keep your garden pest-free!</div></div>';
+    }else{
+      h+='<div class="ipm-list">';
+      logs.slice(0,50).forEach(i=>{
+        const m=i.motherId?Store.getById('mothers',i.motherId):null;
+        const env=i.environmentId?Store.getById('environments',i.environmentId):null;
+        const d=new Date(i.timestamp);
+        h+='<div class="card ipm-card'+(i.resolved?' resolved':'')+'">';
+        h+='<div class="ipm-header"><div>';
+        h+='<span class="sev-badge sev-'+i.severity+'">'+i.severity+'</span>';
+        h+='<span class="issue-type-badge">'+U.esc(i.issueType||'pest')+'</span>';
+        if(i.resolved) h+=' <span class="resolved-badge">Resolved</span>';
+        h+='</div><span class="ipm-date">'+d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})+'</span></div>';
+        h+='<div class="ipm-pest">'+U.esc(i.pest||'Unknown')+'</div>';
+        h+='<div class="ipm-details">';
+        if(m) h+='<span>Plant: '+U.esc(m.strainName)+'</span>';
+        if(env) h+=' <span>Env: '+U.esc(env.name)+'</span>';
+        h+='</div>';
+        if(i.treatment) h+='<div class="ipm-treatment">Treatment: '+U.esc(i.treatment)+'</div>';
+        if(i.notes) h+='<div style="font-size:.75rem;color:var(--text-tertiary);margin-top:var(--space-xs)">'+U.esc(i.notes)+'</div>';
+        h+='<div style="margin-top:var(--space-sm);display:flex;gap:var(--space-xs)">';
+        h+='<button class="btn btn-ghost btn-sm" onclick="IPM.openEditModal(\''+i.id+'\')">Edit</button>';
+        if(!i.resolved) h+='<button class="btn btn-primary btn-sm" onclick="IPM.handleResolve(\''+i.id+'\')">Resolve</button>';
+        h+='</div></div>';
+      });
+      h+='</div>';
+    }
+    document.getElementById('panel-ipm').innerHTML=h;
+  },
+  handleResolve(id){
+    const i=Store.getById('ipmLogs',id);if(!i) return;
+    i.resolved=true;i.resolvedDate=U.today();
+    Store.set('ipmLogs',id,i);
+    Store.addActivity('ipm_resolved','Resolved: '+i.pest,id);
+    Toast.show('Issue marked as resolved!');
+  },
+  _buildForm(item){
+    item=item||{};
+    const mothers=Store.mothersArray();
+    const envs=Store.environmentsArray();
+    let h='<div class="form-row">';
+    h+='<div class="form-group"><label class="form-label">Plant</label><select class="form-select" id="f_ipmMother">';
+    h+='<option value="">None</option>';
+    mothers.forEach(m=>{h+='<option value="'+m.id+'"'+(item.motherId===m.id?' selected':'')+'>'+U.esc(m.strainName)+'</option>'});
+    h+='</select></div>';
+    h+='<div class="form-group"><label class="form-label">Environment</label><select class="form-select" id="f_ipmEnv">';
+    h+='<option value="">None</option>';
+    envs.forEach(e=>{h+='<option value="'+e.id+'"'+(item.environmentId===e.id?' selected':'')+'>'+U.esc(e.name)+'</option>'});
+    h+='</select></div></div>';
+    h+='<div class="form-row">';
+    h+='<div class="form-group"><label class="form-label">Issue Type</label><select class="form-select" id="f_issueType">';
+    ['pest','disease','deficiency'].forEach(t=>{h+='<option value="'+t+'"'+(item.issueType===t?' selected':'')+'>'+t.charAt(0).toUpperCase()+t.slice(1)+'</option>'});
+    h+='</select></div>';
+    h+='<div class="form-group"><label class="form-label">Severity</label><select class="form-select" id="f_severity">';
+    ['low','medium','high','critical'].forEach(s=>{h+='<option value="'+s+'"'+(item.severity===s?' selected':'')+'>'+s.charAt(0).toUpperCase()+s.slice(1)+'</option>'});
+    h+='</select></div></div>';
+    h+='<div class="form-group"><label class="form-label">Pest / Problem</label><select class="form-select" id="f_pest">';
+    this._pests.forEach(p=>{h+='<option value="'+p+'"'+(item.pest===p?' selected':'')+'>'+p.charAt(0).toUpperCase()+p.slice(1)+'</option>'});
+    h+='</select></div>';
+    h+='<div class="form-group"><label class="form-label">Treatment</label><textarea class="form-textarea" id="f_treatment">'+U.esc(item.treatment||'')+'</textarea></div>';
+    h+='<div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="f_ipmNotes">'+U.esc(item.notes||'')+'</textarea></div>';
+    return h;
+  },
+  _readForm(){
+    return{
+      motherId:document.getElementById('f_ipmMother').value,
+      environmentId:document.getElementById('f_ipmEnv').value,
+      issueType:document.getElementById('f_issueType').value,
+      severity:document.getElementById('f_severity').value,
+      pest:document.getElementById('f_pest').value,
+      treatment:document.getElementById('f_treatment').value.trim(),
+      notes:document.getElementById('f_ipmNotes').value.trim()
+    };
+  },
+  openAddModal(preselect){
+    const initial=preselect?{motherId:preselect}:{};
+    Modal.open('Log IPM Issue',IPM._buildForm(initial),
+      '<button class="btn btn-ghost" onclick="Modal.close()">Cancel</button><button class="btn btn-primary" id="saveIPM">Save</button>'
+    );
+    document.getElementById('saveIPM').addEventListener('click',()=>{
+      const data=IPM._readForm();
+      const id=U.id('ipm');
+      data.id=id;data.timestamp=Date.now();data.resolved=false;data.resolvedDate='';
+      Store.set('ipmLogs',id,data);
+      Store.addActivity('ipm_logged','Logged IPM issue: '+data.pest,id);
+      Modal.close();Toast.show('IPM issue logged!');
+      Router.switchTo('ipm');
+    });
+  },
+  openEditModal(id){
+    const item=Store.getById('ipmLogs',id);if(!item) return;
+    Modal.open('Edit IPM Issue',IPM._buildForm(item),
+      '<button class="btn btn-ghost" onclick="Modal.close()">Cancel</button><button class="btn btn-primary" id="saveIPM">Save</button>'
+    );
+    document.getElementById('saveIPM').addEventListener('click',()=>{
+      const data=IPM._readForm();
+      const updated=Object.assign({},item,data);
+      Store.set('ipmLogs',id,updated);
+      Store.addActivity('ipm_updated','Updated IPM issue: '+data.pest,id);
+      Modal.close();Toast.show('IPM issue updated!');
+    });
+  }
+};
+window.IPM=IPM;
+
+/* ═══════════════════════════════════════════════
    DATA EXPORT / IMPORT
    ═══════════════════════════════════════════════ */
 const DataIO={
@@ -1496,7 +1902,7 @@ function init(){
   document.getElementById('appVersion').textContent='v'+APP_VERSION;
   Store.subscribe(()=>{
     const tab=Router._current;
-    const renderers={dashboard:Dashboard,plants:Plants,environments:Environments,clones:Clones,tasks:Tasks,environment:Environment};
+    const renderers={dashboard:Dashboard,plants:Plants,environments:Environments,clones:Clones,tasks:Tasks,feeding:Feeding,journal:Journal,ipm:IPM,environment:Environment};
     if(renderers[tab]) renderers[tab].render();
   });
   Router.init();

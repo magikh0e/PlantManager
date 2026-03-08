@@ -3,6 +3,42 @@ CHANGELOG — Tropical Roots Maui - Plant Manager
 https://github.com/magikh0e/PlantManager
 
 
+v1.2.0 — 2026-03-07
+--------------------
+FEATURE: Feeding Log, Photo Journal, IPM Tracking
+
+  Three new high-value features for comprehensive cultivation management.
+
+  Feeding / Nutrient Log
+  - New "Feeding" tab to track nutrient feedings per plant or environment
+  - Log nutrient name, amount, unit, water volume, pH in/out, EC/PPM in/out
+  - pH drift highlighted when runoff deviates more than 0.5
+  - Filter feedings by plant or environment
+  - Plant tags on each feeding card for quick identification
+
+  Photo Journal
+  - New "Journal" tab with visual photo grid timeline
+  - Upload photos linked to a specific plant and growth stage
+  - Click any photo card to view full-size detail with metadata
+  - Filter by plant; photos auto-resized to save localStorage space
+  - Delete photos from the detail view
+
+  IPM Log (Pest & Disease Tracking)
+  - New "IPM" tab to log pest sightings, diseases, and deficiencies
+  - 11 common pest/problem presets (aphids, spider mites, powdery mildew, etc.)
+  - Severity badges: low (green), medium (gold), high (orange), critical (red)
+  - Track treatments and mark issues as resolved
+  - Filter by plant, severity, and active/resolved status
+  - Edit existing issues and update treatments
+
+  Integration
+  - Plant cards now include + Feed, + Photo, + IPM quick action buttons
+  - Dashboard: new "Active Issues" stat card (orange when issues are open)
+  - Dashboard: three new quick actions (+ Log Feeding, + Add Photo, + Log Issue)
+  - Existing "Environ" tab renamed to "Readings" for clarity
+  - All actions logged in the activity feed
+
+
 v1.1.1 — 2026-03-07
 --------------------
 IMPROVEMENTS & FIXES
