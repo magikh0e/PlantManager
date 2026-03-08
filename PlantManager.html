@@ -3263,6 +3263,7 @@ const WhatsNew={
     h+='<ul style="padding-left:var(--space-lg);margin:0;line-height:1.8">';
     notes.forEach(n=>{h+='<li style="font-size:.85rem;margin-bottom:var(--space-xs)">'+n+'</li>'});
     h+='</ul>';
+    h+='<div style="margin-top:var(--space-md)"><a href="https://github.com/magikh0e/PlantManager/blob/main/CHANGELOG.txt" target="_blank" rel="noopener" style="font-size:.8rem;color:var(--cyan)">View full changelog &#8599;</a></div>';
     Modal.open("What's New",h,'<button class="btn btn-primary" onclick="WhatsNew.dismiss()">Got it!</button>');
   },
   dismiss(){
