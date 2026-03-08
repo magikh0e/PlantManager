@@ -342,6 +342,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
   </div>
   <div class="header-right">
     <button class="icon-btn" id="themeToggle" title="Toggle theme">&#9790;</button>
+    <button class="icon-btn" id="heroToggle" title="Toggle banner image">&#9881;</button>
     <button class="icon-btn" id="exportBtn" title="Export data">&#8681;</button>
     <button class="icon-btn" id="importBtn" title="Import data">&#8679;</button>
     <input type="file" id="importFile" accept=".json" class="sr-only">
@@ -461,13 +462,14 @@ const Store = {
   _key:'motherPlantTracker',
   _data:null,
   _subs:[],
-  _default(){return{version:'1.0.0',settings:{theme:'dark',lastActiveTab:'dashboard'},mothers:{},environments:{},clones:{},tasks:{},taskCompletions:{},envLogs:{},activityLog:[]}},
+  _default(){return{version:'1.0.0',settings:{theme:'dark',lastActiveTab:'dashboard',showHero:true},mothers:{},environments:{},clones:{},tasks:{},taskCompletions:{},envLogs:{},activityLog:[]}},
   load(){
     try{
       const raw=localStorage.getItem(this._key);
       this._data=raw?JSON.parse(raw):this._default();
       if(!this._data.version) this._data=this._default();
       if(!this._data.environments) this._data.environments={};
+      if(this._data.settings.showHero===undefined) this._data.settings.showHero=true;
     }catch(e){this._data=this._default()}
   },
   save(){
@@ -554,6 +556,25 @@ const Theme={
 };
 
 /* ═══════════════════════════════════════════════
+   HERO TOGGLE
+   ═══════════════════════════════════════════════ */
+const HeroToggle={
+  init(){
+    this._updateIcon();
+    document.getElementById('heroToggle').addEventListener('click',()=>this.toggle());
+  },
+  toggle(){
+    const cur=Store.setting('showHero');
+    const next=cur===false?true:false;
+    Store.setting('showHero',next);
+    this._updateIcon();
+    if(Router._current==='dashboard') Dashboard.render();
+  },
+  isVisible(){return Store.setting('showHero')!==false},
+  _updateIcon(){document.getElementById('heroToggle').title=this.isVisible()?'Hide banner image':'Show banner image'}
+};
+
+/* ═══════════════════════════════════════════════
    MODAL
    ═══════════════════════════════════════════════ */
 const Modal={
@@ -624,7 +645,8 @@ const Dashboard={
       (healthCounts.sick+healthCounts.quarantine>0?'Needs Attention':
        healthCounts.stressed>0?'Some Stressed':'All Good'):'—';
 
-    let h='<div class="hero-banner"><img src="https://tropicalrootsmaui.com/img/tropical-roots-maui-kanehiwa-alchemical-sanctuary-logo.webp" alt="A Tiki Golem Master named Kānehiwa stands in a misty, futuristic Polynesian lab, gesturing at a glowing holographic projection of a cannabis plant and its golden root zone. The scene is framed by hand-carved Koa wood with the text BUILDING THE MICROBIAL FORTRESS and features a tropical waterfall sunrise in the background." title="Tropical Roots Maui: Kānehiwa Plant Tracker Interface"><div class="hero-caption">Kānehiwa monitors real-time biological data and the Microbial Fortress through the sanctuary\'s holographic Plant Tracker interface.</div></div>';
+    let h='';
+    if(HeroToggle.isVisible()){h+='<div class="hero-banner"><img src="https://tropicalrootsmaui.com/img/tropical-roots-maui-kanehiwa-alchemical-sanctuary-logo.webp" alt="A Tiki Golem Master named Kānehiwa stands in a misty, futuristic Polynesian lab, gesturing at a glowing holographic projection of a cannabis plant and its golden root zone. The scene is framed by hand-carved Koa wood with the text BUILDING THE MICROBIAL FORTRESS and features a tropical waterfall sunrise in the background." title="Tropical Roots Maui: Kānehiwa Plant Tracker Interface"><div class="hero-caption">Kānehiwa monitors real-time biological data and the Microbial Fortress through the sanctuary\'s holographic Plant Tracker interface.</div></div>';}
     h+='<div class="stats-grid">';
     h+='<div class="card stat-card"><div class="stat-icon">&#127793;</div><div class="stat-value">'+mothers.length+'</div><div class="stat-label">Mother Plants</div></div>';
     h+='<div class="card stat-card gold"><div class="stat-icon">&#9986;</div><div class="stat-value">'+activeClones.length+'</div><div class="stat-label">Active Clones</div></div>';
@@ -1467,6 +1489,7 @@ const DataIO={
 function init(){
   Store.load();
   Theme.init();
+  HeroToggle.init();
   Modal.init();
   DataIO.init();
   document.getElementById('appVersion').textContent='v'+APP_VERSION;
