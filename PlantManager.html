@@ -298,6 +298,9 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
   .toolbar .search-input{min-width:0}
   .clone-card .card-body{flex-direction:column;align-items:stretch}
   .clone-card .clone-actions{justify-content:flex-end}
+  .strain-grid{grid-template-columns:1fr}
+  .strain-picker-grid{grid-template-columns:1fr}
+  .analytics-grid{grid-template-columns:1fr}
   .header-title{font-size:.9rem}
   .modal{max-height:95vh;border-radius:var(--radius)}
   .modal-body{padding:var(--space-lg)}
@@ -367,6 +370,46 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 .sev-critical{background:rgba(200,40,40,.2);color:#e05c3a}
 .issue-type-badge{display:inline-flex;padding:.15rem .5rem;border-radius:3px;font-size:.6rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:var(--bg-input);color:var(--text-secondary)}
 .resolved-badge{display:inline-flex;padding:.15rem .5rem;border-radius:3px;font-size:.6rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:rgba(45,110,53,.2);color:var(--leaf)}
+
+/* -- Strain Library -- */
+.strain-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:var(--space-lg)}
+.strain-card .card-body{padding:var(--space-lg)}
+.strain-card .strain-name{font-size:1.05rem;font-weight:700;margin-bottom:var(--space-xs);display:flex;align-items:center;gap:var(--space-sm)}
+.strain-card .strain-meta{display:flex;flex-wrap:wrap;gap:var(--space-xs);margin-bottom:var(--space-sm)}
+.strain-card .strain-details{font-size:.8rem;color:var(--text-secondary);line-height:1.7;margin-bottom:var(--space-md)}
+.strain-card .strain-details span{display:block}
+.strain-card .strain-photo{height:160px;background:linear-gradient(135deg,var(--bg-secondary),rgba(27,58,30,.3));display:flex;align-items:center;justify-content:center;font-size:3rem;overflow:hidden}
+.strain-card .strain-photo img{width:100%;height:100%;object-fit:cover}
+.strain-card .strain-actions{display:flex;gap:var(--space-xs);flex-wrap:wrap}
+.type-badge{display:inline-flex;padding:.15rem .5rem;border-radius:3px;font-size:.6rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.type-sativa{background:rgba(0,200,192,.15);color:var(--cyan)}
+.type-indica{background:rgba(155,107,181,.2);color:#b48cce}
+.type-hybrid{background:rgba(240,180,41,.15);color:var(--gold)}
+.type-ruderalis{background:var(--bg-input);color:var(--text-secondary)}
+.diff-badge{display:inline-flex;padding:.15rem .5rem;border-radius:3px;font-size:.6rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.diff-easy{background:rgba(45,110,53,.2);color:var(--leaf)}
+.diff-moderate{background:rgba(240,180,41,.15);color:var(--gold)}
+.diff-advanced{background:rgba(232,114,26,.15);color:var(--orange)}
+
+/* -- Strain Picker -- */
+.strain-picker-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:var(--space-sm);max-height:320px;overflow-y:auto;padding:var(--space-sm)}
+.strain-pick-card{padding:var(--space-md);cursor:pointer;transition:all var(--duration) var(--ease)}
+.strain-pick-card:hover{border-color:var(--cyan);background:rgba(0,200,192,.06)}
+.strain-pick-card .sp-name{font-size:.85rem;font-weight:700}
+.strain-pick-card .sp-meta{font-size:.7rem;color:var(--text-secondary)}
+
+/* -- Analytics Charts -- */
+.analytics-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(460px,1fr));gap:var(--space-lg)}
+.chart-card{padding:var(--space-lg)}
+.chart-card .chart-title{font-size:.85rem;font-weight:700;margin-bottom:var(--space-sm)}
+.chart-card .chart-subtitle{font-size:.7rem;color:var(--text-secondary);margin-bottom:var(--space-md)}
+.chart-card .chart-filters{display:flex;gap:var(--space-sm);margin-bottom:var(--space-md);flex-wrap:wrap}
+.chart-card svg{width:100%;height:auto}
+.chart-card svg text{font-family:inherit}
+.chart-legend{display:flex;flex-wrap:wrap;gap:var(--space-md);margin-top:var(--space-sm);font-size:.7rem;color:var(--text-secondary)}
+.chart-legend-item{display:flex;align-items:center;gap:var(--space-xs)}
+.chart-legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.chart-no-data{text-align:center;padding:var(--space-xl);color:var(--text-tertiary);font-size:.8rem}
 </style>
 </head>
 <body>
@@ -396,6 +439,8 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
   <button class="tab-btn" data-tab="feeding"><span class="tab-icon">&#129514;</span>Feeding</button>
   <button class="tab-btn" data-tab="journal"><span class="tab-icon">&#128248;</span>Journal</button>
   <button class="tab-btn" data-tab="ipm"><span class="tab-icon">&#128737;</span>IPM</button>
+  <button class="tab-btn" data-tab="strains"><span class="tab-icon">&#129516;</span>Strains</button>
+  <button class="tab-btn" data-tab="analytics"><span class="tab-icon">&#128202;</span>Analytics</button>
   <button class="tab-btn" data-tab="environment"><span class="tab-icon">&#127777;</span>Readings</button>
 </nav>
 
@@ -418,6 +463,10 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
     <section class="tab-panel" id="panel-journal"></section>
     <!-- IPM -->
     <section class="tab-panel" id="panel-ipm"></section>
+    <!-- Strains -->
+    <section class="tab-panel" id="panel-strains"></section>
+    <!-- Analytics -->
+    <section class="tab-panel" id="panel-analytics"></section>
     <!-- Environment Readings -->
     <section class="tab-panel" id="panel-environment"></section>
   </div>
@@ -450,7 +499,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 (function(){
 'use strict';
 
-const APP_VERSION = '1.2.0';
+const APP_VERSION = '1.3.0';
 
 /* ═══════════════════════════════════════════════
    UTILS
@@ -508,7 +557,7 @@ const Store = {
   _key:'motherPlantTracker',
   _data:null,
   _subs:[],
-  _default(){return{version:'1.0.0',settings:{theme:'dark',lastActiveTab:'dashboard',showHero:true},mothers:{},environments:{},clones:{},tasks:{},taskCompletions:{},envLogs:{},feedings:{},photoJournal:{},ipmLogs:{},activityLog:[]}},
+  _default(){return{version:'1.0.0',settings:{theme:'dark',lastActiveTab:'dashboard',showHero:true},mothers:{},environments:{},clones:{},tasks:{},taskCompletions:{},envLogs:{},feedings:{},photoJournal:{},ipmLogs:{},strains:{},activityLog:[]}},
   load(){
     try{
       const raw=localStorage.getItem(this._key);
@@ -518,6 +567,7 @@ const Store = {
       if(!this._data.feedings) this._data.feedings={};
       if(!this._data.photoJournal) this._data.photoJournal={};
       if(!this._data.ipmLogs) this._data.ipmLogs={};
+      if(!this._data.strains) this._data.strains={};
       if(this._data.settings.showHero===undefined) this._data.settings.showHero=true;
     }catch(e){this._data=this._default()}
   },
@@ -578,7 +628,9 @@ const Store = {
     const taken=batches.reduce((s,b)=>s+b.countTaken,0);
     const success=batches.reduce((s,b)=>s+b.successCount,0);
     return taken?Math.round(success/taken*100):0;
-  }
+  },
+  strainsArray(){return Object.values(this._data.strains).filter(s=>!s.archived).sort((a,b)=>a.name.localeCompare(b.name))},
+  strainById(id){return(this._data.strains||{})[id]}
 };
 
 /* ═══════════════════════════════════════════════
@@ -679,7 +731,7 @@ const Router={
     Store.setting('lastActiveTab',tab);
     document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
     document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active',p.id==='panel-'+tab));
-    const renderers={dashboard:Dashboard,plants:Plants,environments:Environments,clones:Clones,tasks:Tasks,feeding:Feeding,journal:Journal,ipm:IPM,environment:Environment};
+    const renderers={dashboard:Dashboard,plants:Plants,environments:Environments,clones:Clones,tasks:Tasks,feeding:Feeding,journal:Journal,ipm:IPM,strains:Strains,analytics:Analytics,environment:Environment};
     if(renderers[tab]) renderers[tab].render();
   }
 };
@@ -713,6 +765,7 @@ const Dashboard={
     h+='<div class="card stat-card orange"><div class="stat-icon">&#9745;</div><div class="stat-value">'+(dueToday.length+overdue.length)+'</div><div class="stat-label">Tasks Due</div></div>';
     h+='<div class="card stat-card"><div class="stat-icon">&#128154;</div><div class="stat-value" style="font-size:1.1rem">'+worstHealth+'</div><div class="stat-label">Health Overview</div></div>';
     h+='<div class="card stat-card'+(activeIpm>0?' orange':'')+'"><div class="stat-icon">&#128737;</div><div class="stat-value">'+activeIpm+'</div><div class="stat-label">Active Issues</div></div>';
+    h+='<div class="card stat-card"><div class="stat-icon">&#129516;</div><div class="stat-value">'+Store.strainsArray().length+'</div><div class="stat-label">Strains</div></div>';
     h+='</div>';
 
     h+='<div class="quick-actions" style="margin-top:var(--space-xl)">';
@@ -724,6 +777,7 @@ const Dashboard={
     h+='<button class="btn btn-outline" onclick="Feeding.openAddModal()">+ Log Feeding</button>';
     h+='<button class="btn btn-outline" onclick="Journal.openAddModal()">+ Add Photo</button>';
     h+='<button class="btn btn-outline" onclick="IPM.openAddModal()">+ Log Issue</button>';
+    h+='<button class="btn btn-outline" onclick="Strains.openAddModal()">+ Add Strain</button>';
     h+='</div>';
 
     if(overdue.length){
@@ -830,6 +884,8 @@ const Plants={
   _buildForm(m){
     m=m||{};
     let h='<div class="form-group"><label class="form-label">Strain Name *</label><input class="form-input" id="f_strainName" value="'+U.esc(m.strainName||'')+'" required></div>';
+    h+='<input type="hidden" id="f_strainId" value="'+(m.strainId||'')+'">';
+    h+='<div style="margin-bottom:var(--space-md)"><button type="button" class="btn btn-outline btn-sm" onclick="Plants._openStrainPicker()">&#129516; Pick from Strain Library</button></div>';
     h+='<div class="form-row">';
     h+='<div class="form-group"><label class="form-label">Type</label><select class="form-select" id="f_strainType">';
     ['hybrid','sativa','indica','ruderalis'].forEach(t=>{h+='<option value="'+t+'"'+(m.strainType===t?' selected':'')+'>'+t.charAt(0).toUpperCase()+t.slice(1)+'</option>'});
@@ -885,9 +941,58 @@ const Plants={
       growthStage:document.getElementById('f_growthStage').value,
       environmentId:document.getElementById('f_environmentId').value,
       notes:document.getElementById('f_notes').value.trim(),
-      photo:Plants._photoData||''
+      photo:Plants._photoData||'',
+      strainId:(document.getElementById('f_strainId')?document.getElementById('f_strainId').value:'')
     };
   },
+
+  _openStrainPicker(){
+    const strains=Store.strainsArray();
+    if(!strains.length){Toast.show('No strains in library yet. Add one in the Strains tab.','info');return}
+    const existing=document.querySelector('.strain-picker-wrap');
+    if(existing){existing.remove();return}
+    let h='<div style="margin-bottom:var(--space-md);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);padding:var(--space-md);background:var(--bg-input)">';
+    h+='<div style="font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text-secondary);margin-bottom:var(--space-sm)">Pick a Strain</div>';
+    h+='<input class="form-input" placeholder="Search strains…" oninput="Plants._filterStrainPicker(this.value)" style="margin-bottom:var(--space-sm)">';
+    h+='<div class="strain-picker-grid" id="strainPickerGrid">';
+    strains.forEach(s=>{
+      h+='<div class="card strain-pick-card" onclick="Plants._selectStrain(\''+s.id+'\')">';
+      h+='<div class="sp-name">'+U.esc(s.name)+'</div>';
+      h+='<div class="sp-meta">'+(s.type?s.type:'')+''+(s.breeder?' &middot; '+U.esc(s.breeder):'')+'</div>';
+      h+='</div>';
+    });
+    h+='</div></div>';
+    const body=document.getElementById('modalBody');
+    const wrap=document.createElement('div');
+    wrap.className='strain-picker-wrap';
+    wrap.innerHTML=h;
+    body.insertBefore(wrap,body.firstChild);
+  },
+
+  _selectStrain(strainId){
+    const s=Store.strainById(strainId);if(!s) return;
+    document.getElementById('f_strainName').value=s.name;
+    document.getElementById('f_strainType').value=s.type||'hybrid';
+    document.getElementById('f_breeder').value=s.breeder||'';
+    document.getElementById('f_strainId').value=strainId;
+    const wrap=document.querySelector('.strain-picker-wrap');
+    if(wrap) wrap.remove();
+    Toast.show('Strain "'+s.name+'" selected!','info');
+  },
+
+  _filterStrainPicker(query){
+    const q=query.toLowerCase();
+    const strains=Store.strainsArray().filter(s=>(s.name+' '+(s.breeder||'')+' '+(s.genetics||'')).toLowerCase().includes(q));
+    let h='';
+    strains.forEach(s=>{
+      h+='<div class="card strain-pick-card" onclick="Plants._selectStrain(\''+s.id+'\')">';
+      h+='<div class="sp-name">'+U.esc(s.name)+'</div>';
+      h+='<div class="sp-meta">'+(s.type?s.type:'')+''+(s.breeder?' &middot; '+U.esc(s.breeder):'')+'</div>';
+      h+='</div>';
+    });
+    document.getElementById('strainPickerGrid').innerHTML=h;
+  },
+
   openAddModal(){
     Plants._photoData='';
     Modal.open('Add Mother Plant',Plants._buildForm(),
@@ -1854,6 +1959,486 @@ const IPM={
 window.IPM=IPM;
 
 /* ═══════════════════════════════════════════════
+   CHART HELPERS (Pure SVG)
+   ═══════════════════════════════════════════════ */
+const Chart={
+  _colors:['#00c8c0','#f0b429','#4a9e52','#e8721a','#9b6bb5','#e05c3a','#2d6e35','#00968f'],
+  _c(i){return this._colors[i%this._colors.length]},
+  _textCol:'rgba(240,234,216,.55)',
+  _gridCol:'rgba(255,255,255,.06)',
+
+  line(datasets,opts){
+    const W=opts.width||560,H=opts.height||200,pad={t:10,r:15,b:30,l:42};
+    const cw=W-pad.l-pad.r,ch=H-pad.t-pad.b;
+    if(!datasets.length||!datasets.some(d=>d.values.length)) return '<div class="chart-no-data">No data available</div>';
+    let allY=[];datasets.forEach(d=>d.values.forEach(v=>allY.push(v.y)));
+    let yMin=opts.yMin!==undefined?opts.yMin:Math.min(...allY);
+    let yMax=opts.yMax!==undefined?opts.yMax:Math.max(...allY);
+    if(yMin===yMax){yMin-=1;yMax+=1}
+    const yRange=yMax-yMin;
+    let allX=[];datasets.forEach(d=>d.values.forEach(v=>allX.push(v.x)));
+    let xMin=Math.min(...allX),xMax=Math.max(...allX);
+    if(xMin===xMax){xMin-=1;xMax+=1}
+    const xRange=xMax-xMin;
+    const sx=x=>pad.l+((x-xMin)/xRange)*cw;
+    const sy=y=>pad.t+ch-((y-yMin)/yRange)*ch;
+    let s='<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">';
+    for(let i=0;i<=4;i++){
+      const yv=yMin+(yRange/4)*i;const yy=sy(yv);
+      s+='<line x1="'+pad.l+'" y1="'+yy+'" x2="'+(W-pad.r)+'" y2="'+yy+'" stroke="'+this._gridCol+'" stroke-width="1"/>';
+      s+='<text x="'+(pad.l-4)+'" y="'+(yy+3)+'" fill="'+this._textCol+'" font-size="9" text-anchor="end">'+(yv%1===0?yv:yv.toFixed(1))+'</text>';
+    }
+    if(opts.xLabels&&opts.xLabels.length){
+      const step=Math.max(1,Math.floor(opts.xLabels.length/6));
+      opts.xLabels.forEach((lbl,i)=>{
+        if(i%step===0){
+          const xp=pad.l+(i/(opts.xLabels.length-1||1))*cw;
+          s+='<text x="'+xp+'" y="'+(H-4)+'" fill="'+this._textCol+'" font-size="8" text-anchor="middle">'+lbl+'</text>';
+        }
+      });
+    }
+    datasets.forEach((d,di)=>{
+      const col=d.color||this._c(di);
+      if(d.values.length<2){
+        if(d.values.length===1) s+='<circle cx="'+sx(d.values[0].x)+'" cy="'+sy(d.values[0].y)+'" r="3" fill="'+col+'"/>';
+        return;
+      }
+      let pts=d.values.map(v=>sx(v.x)+','+sy(v.y)).join(' ');
+      s+='<polyline points="'+pts+'" fill="none" stroke="'+col+'" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>';
+      if(opts.showDots!==false) d.values.forEach(v=>{
+        s+='<circle cx="'+sx(v.x)+'" cy="'+sy(v.y)+'" r="2.5" fill="'+col+'"/>';
+      });
+    });
+    s+='</svg>';
+    return s;
+  },
+
+  bar(data,opts){
+    const W=opts.width||560,H=opts.height||200,pad={t:10,r:15,b:50,l:42};
+    const cw=W-pad.l-pad.r,ch=H-pad.t-pad.b;
+    if(!data.length) return '<div class="chart-no-data">No data available</div>';
+    const vals=data.map(d=>Array.isArray(d.segments)?d.segments.reduce((s,sg)=>s+sg.value,0):d.value);
+    const yMax=Math.max(...vals,1);
+    const barW=Math.min(40,cw/data.length*0.7);
+    const gap=(cw-barW*data.length)/(data.length+1);
+    const sy=v=>pad.t+ch-(v/yMax)*ch;
+    let s='<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">';
+    for(let i=0;i<=4;i++){
+      const yv=(yMax/4)*i;const yy=sy(yv);
+      s+='<line x1="'+pad.l+'" y1="'+yy+'" x2="'+(W-pad.r)+'" y2="'+yy+'" stroke="'+this._gridCol+'" stroke-width="1"/>';
+      s+='<text x="'+(pad.l-4)+'" y="'+(yy+3)+'" fill="'+this._textCol+'" font-size="9" text-anchor="end">'+(yv%1===0?yv:yv.toFixed(1))+'</text>';
+    }
+    data.forEach((d,i)=>{
+      const x=pad.l+gap+(barW+gap)*i;
+      if(Array.isArray(d.segments)){
+        let cumY=0;
+        d.segments.forEach(sg=>{
+          const bh=(sg.value/yMax)*ch;
+          s+='<rect x="'+x+'" y="'+sy(cumY+sg.value)+'" width="'+barW+'" height="'+Math.max(bh,0)+'" fill="'+(sg.color||this._c(i))+'" rx="2"/>';
+          cumY+=sg.value;
+        });
+      }else{
+        const bh=(d.value/yMax)*ch;
+        s+='<rect x="'+x+'" y="'+sy(d.value)+'" width="'+barW+'" height="'+Math.max(bh,0)+'" fill="'+(d.color||this._c(i))+'" rx="2"/>';
+      }
+      s+='<text x="'+(x+barW/2)+'" y="'+(H-pad.b+12)+'" fill="'+this._textCol+'" font-size="8" text-anchor="middle" transform="rotate(-35,'+(x+barW/2)+','+(H-pad.b+12)+')">'+U.esc(d.label.length>12?d.label.slice(0,12)+'…':d.label)+'</text>';
+    });
+    s+='</svg>';
+    return s;
+  },
+
+  donut(data,opts){
+    const size=opts.size||200,cx=size/2,cy=size/2;
+    const outer=size/2-5,inner=opts.innerRadius||size*0.3;
+    const total=data.reduce((s,d)=>s+d.value,0);
+    if(!total) return '<div class="chart-no-data">No data available</div>';
+    let s='<svg viewBox="0 0 '+size+' '+size+'" xmlns="http://www.w3.org/2000/svg">';
+    let angle=-Math.PI/2;
+    data.forEach((d,i)=>{
+      if(d.value<=0) return;
+      const sweep=(d.value/total)*Math.PI*2;
+      const a1=angle,a2=angle+sweep;
+      const large=sweep>Math.PI?1:0;
+      const x1o=cx+outer*Math.cos(a1),y1o=cy+outer*Math.sin(a1);
+      const x2o=cx+outer*Math.cos(a2),y2o=cy+outer*Math.sin(a2);
+      const x2i=cx+inner*Math.cos(a2),y2i=cy+inner*Math.sin(a2);
+      const x1i=cx+inner*Math.cos(a1),y1i=cy+inner*Math.sin(a1);
+      const col=d.color||this._c(i);
+      s+='<path d="M'+x1o+','+y1o+' A'+outer+','+outer+' 0 '+large+' 1 '+x2o+','+y2o+' L'+x2i+','+y2i+' A'+inner+','+inner+' 0 '+large+' 0 '+x1i+','+y1i+' Z" fill="'+col+'"/>';
+      angle=a2;
+    });
+    s+='<text x="'+cx+'" y="'+(cy-4)+'" fill="'+this._textCol+'" font-size="22" font-weight="700" text-anchor="middle" dominant-baseline="auto">'+total+'</text>';
+    s+='<text x="'+cx+'" y="'+(cy+14)+'" fill="'+this._textCol+'" font-size="9" text-anchor="middle">total</text>';
+    s+='</svg>';
+    return s;
+  },
+
+  heatmap(weeks,opts){
+    const cellSize=opts.cellSize||14,gap=2;
+    const numWeeks=weeks.length;
+    if(!numWeeks) return '<div class="chart-no-data">No activity data</div>';
+    const W=numWeeks*(cellSize+gap)+30,H=7*(cellSize+gap)+20;
+    let maxV=0;weeks.forEach(w=>w.forEach(v=>{if(v>maxV) maxV=v}));
+    if(!maxV) maxV=1;
+    const dayLabels=['','Mon','','Wed','','Fri',''];
+    let s='<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">';
+    dayLabels.forEach((lbl,d)=>{
+      if(lbl) s+='<text x="12" y="'+(d*(cellSize+gap)+cellSize/2+10)+'" fill="'+this._textCol+'" font-size="8" text-anchor="end" dominant-baseline="central">'+lbl+'</text>';
+    });
+    weeks.forEach((w,wi)=>{
+      w.forEach((v,d)=>{
+        const x=20+wi*(cellSize+gap),y=d*(cellSize+gap);
+        const alpha=v>0?0.2+(v/maxV)*0.8:0.04;
+        s+='<rect x="'+x+'" y="'+y+'" width="'+cellSize+'" height="'+cellSize+'" rx="2" fill="rgba(0,200,192,'+alpha.toFixed(2)+')"/>';
+      });
+    });
+    s+='</svg>';
+    return s;
+  }
+};
+
+/* ═══════════════════════════════════════════════
+   STRAIN LIBRARY
+   ═══════════════════════════════════════════════ */
+const Strains={
+  _search:'',
+  _filterType:'all',
+
+  render(){
+    let arr=Store.strainsArray();
+    if(this._filterType!=='all') arr=arr.filter(s=>s.type===this._filterType);
+    if(this._search){const q=this._search.toLowerCase();arr=arr.filter(s=>(s.name+' '+(s.breeder||'')+' '+(s.genetics||'')+' '+(s.terpenes||'')+' '+(s.effects||'')).toLowerCase().includes(q))}
+    let h='<div class="toolbar"><button class="btn btn-primary" onclick="Strains.openAddModal()">+ Add Strain</button>';
+    h+='<input class="search-input" placeholder="Search strains…" value="'+U.esc(this._search)+'" oninput="Strains._onSearch(this.value)">';
+    h+='<select class="form-select" style="width:auto;min-width:130px" onchange="Strains._onFilter(this.value)">';
+    h+='<option value="all"'+(this._filterType==='all'?' selected':'')+'>All Types</option>';
+    ['sativa','indica','hybrid','ruderalis'].forEach(t=>{h+='<option value="'+t+'"'+(this._filterType===t?' selected':'')+'>'+t.charAt(0).toUpperCase()+t.slice(1)+'</option>'});
+    h+='</select></div>';
+    if(!arr.length){
+      h+='<div class="empty-state"><div class="empty-icon">&#129516;</div><h3>No strains yet</h3><p>Build your genetics library by adding strains.</p></div>';
+    }else{
+      h+='<div class="strain-grid">';
+      arr.forEach(s=>{
+        h+='<div class="card strain-card">';
+        h+='<div class="strain-photo">';
+        if(s.photo) h+='<img src="'+s.photo+'" alt="'+U.esc(s.name)+'">';
+        else h+='&#129516;';
+        h+='</div><div class="card-body">';
+        h+='<div class="strain-name">'+U.esc(s.name)+'</div>';
+        h+='<div class="strain-meta">';
+        if(s.type) h+='<span class="type-badge type-'+s.type+'">'+s.type+'</span>';
+        if(s.difficulty) h+='<span class="diff-badge diff-'+s.difficulty+'">'+s.difficulty+'</span>';
+        if(s.breeder) h+='<span style="font-size:.7rem;color:var(--text-secondary)">'+U.esc(s.breeder)+'</span>';
+        h+='</div>';
+        h+='<div class="strain-details">';
+        if(s.genetics) h+='<span><b>Genetics:</b> '+U.esc(s.genetics)+'</span>';
+        if(s.floweringTime) h+='<span><b>Flowering:</b> '+U.esc(s.floweringTime)+'</span>';
+        if(s.thcRange||s.cbdRange) h+='<span>'+(s.thcRange?'<b>THC:</b> '+U.esc(s.thcRange):'')+(s.thcRange&&s.cbdRange?' &middot; ':'')+(s.cbdRange?'<b>CBD:</b> '+U.esc(s.cbdRange):'')+'</span>';
+        if(s.terpenes) h+='<span><b>Terps:</b> '+U.esc(s.terpenes)+'</span>';
+        if(s.effects) h+='<span><b>Effects:</b> '+U.esc(s.effects)+'</span>';
+        if(s.flavors) h+='<span><b>Flavors:</b> '+U.esc(s.flavors)+'</span>';
+        if(s.yieldIndoor||s.yieldOutdoor) h+='<span><b>Yield:</b> '+(s.yieldIndoor?'Indoor: '+U.esc(s.yieldIndoor):'')+(s.yieldIndoor&&s.yieldOutdoor?' / ':'')+(s.yieldOutdoor?'Outdoor: '+U.esc(s.yieldOutdoor):'')+'</span>';
+        h+='</div>';
+        h+='<div class="strain-actions">';
+        h+='<button class="btn btn-ghost btn-sm" onclick="Strains.openEditModal(\''+s.id+'\')">Edit</button>';
+        h+='<button class="btn btn-danger btn-sm" onclick="Strains.handleDelete(\''+s.id+'\')">Archive</button>';
+        h+='</div></div></div>';
+      });
+      h+='</div>';
+    }
+    document.getElementById('panel-strains').innerHTML=h;
+  },
+
+  _onSearch:U.debounce(function(v){Strains._search=v;Strains.render()},300),
+  _onFilter(v){this._filterType=v;this.render()},
+
+  _photoData:'',
+  _onPhoto(input){
+    if(!input.files||!input.files[0]) return;
+    U.resizeImage(input.files[0],400,0.7,dataUrl=>{
+      Strains._photoData=dataUrl;
+      const prev=document.getElementById('strainPhotoPreview');
+      if(prev){prev.src=dataUrl;prev.style.display='block'}
+    });
+  },
+
+  _buildForm(s){
+    if(!s) s={};
+    let h='<div class="form-group"><label class="form-label">Strain Name *</label><input class="form-input" id="f_strainName" value="'+U.esc(s.name||'')+'" required></div>';
+    h+='<div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-md)">';
+    h+='<div class="form-group"><label class="form-label">Type</label><select class="form-select" id="f_strainType">';
+    ['hybrid','sativa','indica','ruderalis'].forEach(t=>{h+='<option value="'+t+'"'+(s.type===t?' selected':'')+'>'+t.charAt(0).toUpperCase()+t.slice(1)+'</option>'});
+    h+='</select></div>';
+    h+='<div class="form-group"><label class="form-label">Breeder</label><input class="form-input" id="f_breeder" value="'+U.esc(s.breeder||'')+'"></div></div>';
+    h+='<div class="form-group"><label class="form-label">Genetics / Lineage</label><input class="form-input" id="f_genetics" placeholder="e.g. Blueberry x Haze" value="'+U.esc(s.genetics||'')+'"></div>';
+    h+='<div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-md)">';
+    h+='<div class="form-group"><label class="form-label">Flowering Time</label><input class="form-input" id="f_floweringTime" placeholder="e.g. 9-10 weeks" value="'+U.esc(s.floweringTime||'')+'"></div>';
+    h+='<div class="form-group"><label class="form-label">Difficulty</label><select class="form-select" id="f_difficulty">';
+    h+='<option value="">—</option>';
+    ['easy','moderate','advanced'].forEach(d=>{h+='<option value="'+d+'"'+(s.difficulty===d?' selected':'')+'>'+d.charAt(0).toUpperCase()+d.slice(1)+'</option>'});
+    h+='</select></div></div>';
+    h+='<div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-md)">';
+    h+='<div class="form-group"><label class="form-label">THC Range</label><input class="form-input" id="f_thcRange" placeholder="e.g. 17-24%" value="'+U.esc(s.thcRange||'')+'"></div>';
+    h+='<div class="form-group"><label class="form-label">CBD Range</label><input class="form-input" id="f_cbdRange" placeholder="e.g. <1%" value="'+U.esc(s.cbdRange||'')+'"></div></div>';
+    h+='<div class="form-group"><label class="form-label">Terpenes</label><input class="form-input" id="f_terpenes" placeholder="e.g. Myrcene, Caryophyllene" value="'+U.esc(s.terpenes||'')+'"></div>';
+    h+='<div class="form-group"><label class="form-label">Effects</label><input class="form-input" id="f_effects" placeholder="e.g. Relaxing, Creative" value="'+U.esc(s.effects||'')+'"></div>';
+    h+='<div class="form-group"><label class="form-label">Flavors</label><input class="form-input" id="f_flavors" placeholder="e.g. Berry, Sweet, Herbal" value="'+U.esc(s.flavors||'')+'"></div>';
+    h+='<div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-md)">';
+    h+='<div class="form-group"><label class="form-label">Yield (Indoor)</label><select class="form-select" id="f_yieldIndoor"><option value="">—</option>';
+    ['Low','Medium','Medium-High','High'].forEach(y=>{h+='<option value="'+y+'"'+(s.yieldIndoor===y?' selected':'')+'>'+y+'</option>'});
+    h+='</select></div>';
+    h+='<div class="form-group"><label class="form-label">Yield (Outdoor)</label><select class="form-select" id="f_yieldOutdoor"><option value="">—</option>';
+    ['Low','Medium','Medium-High','High'].forEach(y=>{h+='<option value="'+y+'"'+(s.yieldOutdoor===y?' selected':'')+'>'+y+'</option>'});
+    h+='</select></div></div>';
+    h+='<div class="form-group"><label class="form-label">Grow Notes</label><textarea class="form-textarea" id="f_growNotes" rows="3">'+U.esc(s.growNotes||'')+'</textarea></div>';
+    h+='<div class="form-group"><label class="form-label">Photo</label>';
+    h+='<div style="cursor:pointer;border:1px dashed var(--border-subtle);border-radius:var(--radius-sm);padding:var(--space-md);text-align:center" onclick="document.getElementById(\'strainPhotoInput\').click()">';
+    h+='<img id="strainPhotoPreview" src="'+(s.photo||'')+'" style="max-height:120px;display:'+(s.photo?'block':'none')+';margin:0 auto var(--space-sm)">';
+    h+='<span style="font-size:.8rem;color:var(--text-secondary)">Click to upload photo</span>';
+    h+='<input type="file" id="strainPhotoInput" accept="image/*" style="display:none" onchange="Strains._onPhoto(this)"></div></div>';
+    return h;
+  },
+
+  _readForm(){
+    const name=document.getElementById('f_strainName').value.trim();
+    if(!name){Toast.show('Strain name is required','error');return null}
+    return{
+      name:name,
+      type:document.getElementById('f_strainType').value,
+      breeder:document.getElementById('f_breeder').value.trim(),
+      genetics:document.getElementById('f_genetics').value.trim(),
+      floweringTime:document.getElementById('f_floweringTime').value.trim(),
+      difficulty:document.getElementById('f_difficulty').value,
+      thcRange:document.getElementById('f_thcRange').value.trim(),
+      cbdRange:document.getElementById('f_cbdRange').value.trim(),
+      terpenes:document.getElementById('f_terpenes').value.trim(),
+      effects:document.getElementById('f_effects').value.trim(),
+      flavors:document.getElementById('f_flavors').value.trim(),
+      yieldIndoor:document.getElementById('f_yieldIndoor').value,
+      yieldOutdoor:document.getElementById('f_yieldOutdoor').value,
+      growNotes:document.getElementById('f_growNotes').value.trim(),
+      photo:Strains._photoData||document.getElementById('strainPhotoPreview').src||''
+    };
+  },
+
+  openAddModal(){
+    Strains._photoData='';
+    Modal.open('Add Strain',Strains._buildForm(),
+      '<button class="btn btn-ghost" onclick="Modal.close()">Cancel</button><button class="btn btn-primary" id="saveStrain">Save</button>');
+    document.getElementById('saveStrain').addEventListener('click',()=>{
+      const data=Strains._readForm();if(!data) return;
+      const id=U.id('str');data.id=id;data.archived=false;data.createdAt=Date.now();
+      Store.set('strains',id,data);
+      Store.addActivity('strain_added','Added strain: '+data.name,id);
+      Modal.close();Toast.show('Strain added!');
+    });
+  },
+
+  openEditModal(id){
+    const s=Store.getById('strains',id);if(!s) return;
+    Strains._photoData='';
+    Modal.open('Edit Strain',Strains._buildForm(s),
+      '<button class="btn btn-ghost" onclick="Modal.close()">Cancel</button><button class="btn btn-primary" id="saveStrain">Save</button>');
+    document.getElementById('saveStrain').addEventListener('click',()=>{
+      const data=Strains._readForm();if(!data) return;
+      const merged=Object.assign({},s,data);
+      Store.set('strains',id,merged);
+      Store.addActivity('strain_updated','Updated strain: '+data.name,id);
+      Modal.close();Toast.show('Strain updated!');
+    });
+  },
+
+  handleDelete(id){
+    const s=Store.getById('strains',id);if(!s) return;
+    Modal.confirm('Archive Strain','Archive "'+U.esc(s.name)+'"? You can re-import data to recover it.',()=>{
+      s.archived=true;Store.set('strains',id,s);
+      Store.addActivity('strain_archived','Archived strain: '+s.name,id);
+      Toast.show('Strain archived');
+    });
+  }
+};
+window.Strains=Strains;
+
+/* ═══════════════════════════════════════════════
+   ANALYTICS / CHARTS
+   ═══════════════════════════════════════════════ */
+const Analytics={
+  _dateRange:'30',
+  _envFilter:'all',
+  _plantFilter:'all',
+
+  render(){
+    let h='<div class="toolbar">';
+    h+='<div style="display:flex;gap:var(--space-sm);flex-wrap:wrap">';
+    h+='<select class="form-select" style="width:auto;min-width:110px" onchange="Analytics._onDateRange(this.value)">';
+    ['7','30','90','all'].forEach(v=>{h+='<option value="'+v+'"'+(this._dateRange===v?' selected':'')+'>'+(v==='all'?'All Time':v+' Days')+'</option>'});
+    h+='</select>';
+    // env filter
+    const envs=Store.environmentsArray();
+    h+='<select class="form-select" style="width:auto;min-width:120px" onchange="Analytics._onEnvFilter(this.value)">';
+    h+='<option value="all">All Environs</option>';
+    envs.forEach(e=>{h+='<option value="'+e.id+'"'+(this._envFilter===e.id?' selected':'')+'>'+U.esc(e.name)+'</option>'});
+    h+='</select>';
+    // plant filter
+    const plants=Store.mothersArray();
+    h+='<select class="form-select" style="width:auto;min-width:120px" onchange="Analytics._onPlantFilter(this.value)">';
+    h+='<option value="all">All Plants</option>';
+    plants.forEach(m=>{h+='<option value="'+m.id+'"'+(this._plantFilter===m.id?' selected':'')+'>'+U.esc(m.strainName)+'</option>'});
+    h+='</select></div></div>';
+
+    h+='<div class="analytics-grid">';
+    h+=this._envTrendsCard();
+    h+=this._phDriftCard();
+    h+=this._cloneSuccessCard();
+    h+=this._healthDonutCard();
+    h+=this._ipmOverviewCard();
+    h+=this._activityHeatmapCard();
+    h+='</div>';
+    document.getElementById('panel-analytics').innerHTML=h;
+  },
+
+  _cutoff(){
+    if(this._dateRange==='all') return 0;
+    return Date.now()-parseInt(this._dateRange)*86400000;
+  },
+
+  _onDateRange(v){this._dateRange=v;this.render()},
+  _onEnvFilter(v){this._envFilter=v;this.render()},
+  _onPlantFilter(v){this._plantFilter=v;this.render()},
+
+  /* ── Chart 1: Environment Trends ── */
+  _envTrendsCard(){
+    let h='<div class="card chart-card"><div class="chart-title">Environment Trends</div>';
+    h+='<div class="chart-subtitle">Temperature, Humidity, pH &amp; EC/PPM over time</div>';
+    const cutoff=this._cutoff();
+    let logs=Store.envArray().filter(l=>l.timestamp>=cutoff);
+    if(this._envFilter!=='all') logs=logs.filter(l=>l.environmentId===this._envFilter);
+    logs=logs.slice(0,60).reverse();
+    if(logs.length<2){h+='<div class="chart-no-data">Need at least 2 readings for a trend chart</div></div>';return h}
+    const ds=[];
+    const makeDs=(key,label,color)=>{
+      const vals=logs.filter(l=>l[key]!=null&&l[key]!=='').map(l=>({x:l.timestamp,y:parseFloat(l[key])}));
+      if(vals.length) ds.push({label:label,values:vals,color:color});
+    };
+    makeDs('temperature','Temp (°F)','#e8721a');
+    makeDs('humidity','RH (%)','#00c8c0');
+    makeDs('ph','pH','#4a9e52');
+    makeDs('ecPpm','EC/PPM','#f0b429');
+    const xLabels=logs.map(l=>{const d=new Date(l.timestamp);return(d.getMonth()+1)+'/'+d.getDate()});
+    h+=Chart.line(ds,{width:560,height:200,xLabels:xLabels,showDots:logs.length<=20});
+    h+='<div class="chart-legend">';
+    ds.forEach(d=>{h+='<div class="chart-legend-item"><div class="chart-legend-dot" style="background:'+d.color+'"></div>'+d.label+'</div>'});
+    h+='</div></div>';
+    return h;
+  },
+
+  /* ── Chart 2: Feeding pH Drift ── */
+  _phDriftCard(){
+    let h='<div class="card chart-card"><div class="chart-title">Feeding pH Drift</div>';
+    h+='<div class="chart-subtitle">pH In vs pH Out over time</div>';
+    const cutoff=this._cutoff();
+    let feeds=Store.feedingsArray().filter(f=>f.timestamp>=cutoff);
+    if(this._plantFilter!=='all') feeds=feeds.filter(f=>f.motherId===this._plantFilter);
+    feeds=feeds.filter(f=>f.phIn||f.phOut).slice(0,60).reverse();
+    if(feeds.length<2){h+='<div class="chart-no-data">Need at least 2 feeding records with pH data</div></div>';return h}
+    const ds=[];
+    const phIn=feeds.filter(f=>f.phIn).map(f=>({x:f.timestamp,y:parseFloat(f.phIn)}));
+    const phOut=feeds.filter(f=>f.phOut).map(f=>({x:f.timestamp,y:parseFloat(f.phOut)}));
+    if(phIn.length) ds.push({label:'pH In',values:phIn,color:'#00c8c0'});
+    if(phOut.length) ds.push({label:'pH Out',values:phOut,color:'#f0b429'});
+    const xLabels=feeds.map(f=>{const d=new Date(f.timestamp);return(d.getMonth()+1)+'/'+d.getDate()});
+    h+=Chart.line(ds,{width:560,height:200,xLabels:xLabels,showDots:feeds.length<=20});
+    h+='<div class="chart-legend">';
+    ds.forEach(d=>{h+='<div class="chart-legend-item"><div class="chart-legend-dot" style="background:'+d.color+'"></div>'+d.label+'</div>'});
+    h+='</div></div>';
+    return h;
+  },
+
+  /* ── Chart 3: Clone Success Rate ── */
+  _cloneSuccessCard(){
+    let h='<div class="card chart-card"><div class="chart-title">Clone Success Rate</div>';
+    h+='<div class="chart-subtitle">Success % by mother plant</div>';
+    const mothers=Store.mothersArray();
+    const data=[];
+    mothers.forEach((m,i)=>{
+      const rate=Store.cloneSuccessRate(m.id);
+      if(rate!==null) data.push({label:m.strainName,value:rate,color:Chart._c(i)});
+    });
+    if(!data.length){h+='<div class="chart-no-data">No clone data available</div></div>';return h}
+    h+=Chart.bar(data,{width:560,height:200});
+    h+='</div>';
+    return h;
+  },
+
+  /* ── Chart 4: Plant Health Distribution ── */
+  _healthDonutCard(){
+    let h='<div class="card chart-card"><div class="chart-title">Plant Health Distribution</div>';
+    h+='<div class="chart-subtitle">Current health status of all mother plants</div>';
+    const mothers=Store.mothersArray();
+    const counts={};
+    mothers.forEach(m=>{const hs=m.healthStatus||'healthy';counts[hs]=(counts[hs]||0)+1});
+    const colorMap={thriving:'#2d6e35',healthy:'#4a9e52',stressed:'#f0b429',sick:'#e05c3a',quarantine:'#9b6bb5'};
+    const data=Object.keys(counts).map(k=>({label:k.charAt(0).toUpperCase()+k.slice(1),value:counts[k],color:colorMap[k]||'#888'}));
+    if(!data.length){h+='<div class="chart-no-data">No plants yet</div></div>';return h}
+    h+='<div style="display:flex;align-items:center;gap:var(--space-xl);flex-wrap:wrap;justify-content:center">';
+    h+=Chart.donut(data,{size:180,innerRadius:55});
+    h+='<div class="chart-legend" style="flex-direction:column">';
+    data.forEach(d=>{h+='<div class="chart-legend-item"><div class="chart-legend-dot" style="background:'+d.color+'"></div>'+d.label+' ('+d.value+')</div>'});
+    h+='</div></div></div>';
+    return h;
+  },
+
+  /* ── Chart 5: IPM Overview ── */
+  _ipmOverviewCard(){
+    let h='<div class="card chart-card"><div class="chart-title">IPM Issue Overview</div>';
+    h+='<div class="chart-subtitle">Issues by type and severity</div>';
+    const cutoff=this._cutoff();
+    let logs=Store.ipmArray().filter(l=>l.timestamp>=cutoff);
+    if(!logs.length){h+='<div class="chart-no-data">No IPM data in this period</div></div>';return h}
+    const types=['pest','disease','deficiency'];
+    const sevColors={low:'#4a9e52',medium:'#f0b429',high:'#e8721a',critical:'#e05c3a'};
+    const data=types.map(t=>{
+      const ofType=logs.filter(l=>l.issueType===t);
+      const segments=['low','medium','high','critical'].map(sev=>({value:ofType.filter(l=>l.severity===sev).length,color:sevColors[sev],label:sev}));
+      return{label:t.charAt(0).toUpperCase()+t.slice(1),segments:segments};
+    }).filter(d=>d.segments.some(sg=>sg.value>0));
+    if(!data.length){h+='<div class="chart-no-data">No IPM data in this period</div></div>';return h}
+    h+=Chart.bar(data,{width:560,height:200});
+    h+='<div class="chart-legend">';
+    Object.keys(sevColors).forEach(s=>{h+='<div class="chart-legend-item"><div class="chart-legend-dot" style="background:'+sevColors[s]+'"></div>'+s.charAt(0).toUpperCase()+s.slice(1)+'</div>'});
+    h+='</div></div>';
+    return h;
+  },
+
+  /* ── Chart 6: Activity Timeline ── */
+  _activityHeatmapCard(){
+    let h='<div class="card chart-card"><div class="chart-title">Activity Timeline</div>';
+    h+='<div class="chart-subtitle">Recent activity frequency</div>';
+    const log=Store.get('activityLog');
+    const actArr=Array.isArray(log)?log:[];
+    const numWeeks=this._dateRange==='all'?12:Math.min(Math.ceil(parseInt(this._dateRange)/7),16);
+    const now=new Date();
+    const weeks=[];
+    for(let w=numWeeks-1;w>=0;w--){
+      const days=[];
+      for(let d=0;d<7;d++){
+        const day=new Date(now);
+        day.setDate(day.getDate()-w*7-(6-d));
+        day.setHours(0,0,0,0);
+        const dayEnd=new Date(day);dayEnd.setDate(dayEnd.getDate()+1);
+        const count=actArr.filter(a=>a.ts>=day.getTime()&&a.ts<dayEnd.getTime()).length;
+        days.push(count);
+      }
+      weeks.push(days);
+    }
+    h+=Chart.heatmap(weeks,{cellSize:14});
+    h+='</div>';
+    return h;
+  }
+};
+window.Analytics=Analytics;
+
+/* ═══════════════════════════════════════════════
    DATA EXPORT / IMPORT
    ═══════════════════════════════════════════════ */
 const DataIO={
@@ -1895,6 +2480,13 @@ const DataIO={
    ═══════════════════════════════════════════════ */
 const WhatsNew={
   _notes:{
+    '1.3.0':[
+      'New <b>Strain Library</b> tab — build your personal genetics database with detailed profiles',
+      '<b>Pick from Library</b> when adding plants — auto-fills strain name, type &amp; breeder',
+      'New <b>Analytics</b> tab — 6 visual charts: env trends, pH drift, clone success, health donut, IPM overview, activity heatmap',
+      'All charts are pure SVG — no external libraries, staying single-file',
+      'Dashboard shows <b>Strains</b> count &amp; quick action'
+    ],
     '1.2.0':[
       'New <b>Feeding</b> tab — log nutrients, pH in/out, EC/PPM per plant or environment',
       'New <b>Photo Journal</b> — visual timeline of your grow with photo uploads',
@@ -1943,7 +2535,7 @@ function init(){
   document.getElementById('appVersion').textContent='v'+APP_VERSION;
   Store.subscribe(()=>{
     const tab=Router._current;
-    const renderers={dashboard:Dashboard,plants:Plants,environments:Environments,clones:Clones,tasks:Tasks,feeding:Feeding,journal:Journal,ipm:IPM,environment:Environment};
+    const renderers={dashboard:Dashboard,plants:Plants,environments:Environments,clones:Clones,tasks:Tasks,feeding:Feeding,journal:Journal,ipm:IPM,strains:Strains,analytics:Analytics,environment:Environment};
     if(renderers[tab]) renderers[tab].render();
   });
   Router.init();

@@ -3,6 +3,42 @@ CHANGELOG — Tropical Roots Maui - Plant Manager
 https://github.com/magikh0e/PlantManager
 
 
+v1.3.0 — 2026-03-07
+--------------------
+FEATURE: Strain Library & Analytics Charts
+
+  Strain Library
+  - New "Strains" tab to build a personal genetics database
+  - Track strain name, type, breeder, genetics/lineage, flowering time,
+    difficulty level, THC/CBD ranges, terpenes, effects, flavors, yield
+  - Photo upload for each strain entry
+  - Search by name/breeder/genetics/terpenes, filter by type
+  - Archive/restore strains
+  - "Pick from Library" integration in Plants add/edit modal — auto-fills
+    strain name, type, and breeder from the library
+  - Mothers get an optional strainId linking back to the library
+
+  Analytics Charts
+  - New "Analytics" tab with six visual chart types
+  - Environment Trends: temperature, humidity, pH, EC over time (line chart)
+  - Feeding pH Drift: pH in vs out over time per plant (line chart)
+  - Clone Success Rate: bar chart comparing rates across mothers
+  - Plant Health Distribution: donut chart of health statuses
+  - IPM Overview: issues by type and severity (stacked bar chart)
+  - Activity Timeline: GitHub-style heatmap of recent activity frequency
+  - All charts are pure inline SVG — no external libraries
+  - Responsive viewBox-based rendering, themed with CSS custom properties
+  - Date range filter (7/30/90 days or all), environment and plant filters
+
+  Dashboard
+  - New "Strains" stat card with library count
+  - New "+ Add Strain" quick action button
+
+  Data
+  - New "strains" collection in localStorage with automatic migration
+  - Backward compatible — existing data is unaffected
+
+
 v1.2.0 — 2026-03-07
 --------------------
 FEATURE: Feeding Log, Photo Journal, IPM Tracking
