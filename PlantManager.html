@@ -102,11 +102,11 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 .header-logo{height:36px;width:auto;border-radius:4px}
 .header-title{font-size:1.05rem;font-weight:700;letter-spacing:-.02em}
 .header-right{display:flex;align-items:center;gap:var(--space-xs)}
-.icon-btn{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border-subtle);border-radius:var(--radius-sm);background:transparent;color:var(--text-secondary);font-size:1.1rem;transition:all var(--duration) var(--ease)}
+.icon-btn{width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border-subtle);border-radius:var(--radius-sm);background:transparent;color:var(--text-secondary);font-size:1.1rem;transition:all var(--duration) var(--ease)}
 .icon-btn:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,200,192,.06)}
 
 /* ── Tab Nav ── */
-.tab-nav{position:fixed;top:var(--header-h);left:0;right:0;height:var(--tab-h);background:var(--bg-secondary);border-bottom:1px solid var(--border-subtle);display:flex;overflow-x:auto;z-index:190;transition:background var(--duration) var(--ease);scrollbar-width:none}
+.tab-nav{position:fixed;top:var(--header-h);left:0;right:0;height:var(--tab-h);background:var(--bg-secondary);border-bottom:1px solid var(--border-subtle);display:flex;overflow-x:auto;z-index:190;transition:background var(--duration) var(--ease);scrollbar-width:none;-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 40px),transparent)}
 .tab-nav::-webkit-scrollbar{display:none}
 .tab-btn{flex:1;min-width:72px;max-width:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:.4rem .5rem;border:none;background:none;color:var(--text-tertiary);font-size:.65rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;border-bottom:3px solid transparent;transition:all var(--duration) var(--ease);-webkit-tap-highlight-color:transparent;white-space:nowrap}
 .tab-btn .tab-icon{font-size:1.15rem;line-height:1}
@@ -149,7 +149,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 [data-theme="light"] .form-select option,[data-theme="light"] .filter-select option{background:#fff;color:#1a1a1a}
 
 /* ── Buttons ── */
-.btn{display:inline-flex;align-items:center;gap:var(--space-sm);padding:.6rem 1.2rem;border-radius:var(--radius-sm);font-size:.8rem;font-weight:600;border:none;transition:all var(--duration) var(--ease);white-space:nowrap}
+.btn{display:inline-flex;align-items:center;gap:var(--space-sm);padding:.6rem 1.2rem;border-radius:var(--radius-sm);font-size:.8rem;font-weight:600;border:none;transition:all var(--duration) var(--ease);white-space:nowrap;min-height:44px}
 .btn-primary{background:linear-gradient(135deg,var(--cyan-dim),var(--cyan));color:#0a0c0a}
 .btn-primary:hover{filter:brightness(1.1);transform:translateY(-1px)}
 .btn-outline{background:transparent;border:1px solid var(--cyan);color:var(--cyan)}
@@ -159,7 +159,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 .btn-danger{background:rgba(224,92,58,.1);border:1px solid rgba(224,92,58,.25);color:#e05c3a}
 .btn-danger:hover{background:rgba(224,92,58,.2)}
 .btn-sm{padding:.35rem .75rem;font-size:.72rem}
-.btn-icon{width:36px;height:36px;padding:0;justify-content:center}
+.btn-icon{width:44px;height:44px;padding:0;justify-content:center}
 
 /* ── Quick Actions ── */
 .quick-actions{display:flex;flex-wrap:wrap;gap:var(--space-sm);margin-bottom:var(--space-xl)}
@@ -303,8 +303,13 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
   .strain-picker-grid{grid-template-columns:1fr}
   .analytics-grid{grid-template-columns:1fr}
   .header-title{font-size:.9rem}
+  .header-title-full{display:none}
   .modal{max-height:95vh;border-radius:var(--radius)}
   .modal-body{padding:var(--space-lg)}
+  .stat-card .stat-label,.env-type-badge,.feed-card .feed-detail .fd-label,.env-card .env-stat .es-label,.tab-btn{font-size:.7rem}
+}
+@media(max-width:340px){
+  .stats-grid{grid-template-columns:1fr}
 }
 @media(min-width:900px){
   .plant-grid{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
@@ -450,8 +455,8 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 <!-- Header -->
 <header class="header">
   <div class="header-left">
-    <img class="header-logo" src="/img/tropicalrootslogosmall.jpeg" alt="TRM Logo">
-    <span class="header-title">Tropical Roots Maui - Plant Manager</span>
+    <img class="header-logo" src="/img/tropicalrootslogosmall.jpeg" alt="TRM Logo" width="348" height="294">
+    <span class="header-title"><span class="header-title-full">Tropical Roots Maui - </span>Plant Manager</span>
   </div>
   <div class="header-right">
     <button class="icon-btn" id="notifyBell" title="Notification settings">&#128276;</button>
@@ -536,7 +541,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 (function(){
 'use strict';
 
-const APP_VERSION = '1.6.2';
+const APP_VERSION = '1.6.3';
 
 /* ═══════════════════════════════════════════════
    UTILS
@@ -825,7 +830,7 @@ const Dashboard={
        healthCounts.stressed>0?'Some Stressed':'All Good'):'—';
 
     let h='';
-    if(HeroToggle.isVisible()){h+='<div class="hero-banner"><img src="https://tropicalrootsmaui.com/img/tropical-roots-maui-kanehiwa-alchemical-sanctuary-logo.webp" alt="A Tiki Golem Master named Kānehiwa stands in a misty, futuristic Polynesian lab, gesturing at a glowing holographic projection of a cannabis plant and its golden root zone. The scene is framed by hand-carved Koa wood with the text BUILDING THE MICROBIAL FORTRESS and features a tropical waterfall sunrise in the background." title="Tropical Roots Maui: Kānehiwa Plant Tracker Interface"><div class="hero-caption">Kānehiwa monitors real-time biological data and the Microbial Fortress through the sanctuary\'s holographic Plant Tracker interface.</div></div>';}
+    if(HeroToggle.isVisible()){h+='<div class="hero-banner"><img src="https://tropicalrootsmaui.com/img/tropical-roots-maui-kanehiwa-alchemical-sanctuary-logo.webp" alt="A Tiki Golem Master named Kānehiwa stands in a misty, futuristic Polynesian lab, gesturing at a glowing holographic projection of a cannabis plant and its golden root zone. The scene is framed by hand-carved Koa wood with the text BUILDING THE MICROBIAL FORTRESS and features a tropical waterfall sunrise in the background." title="Tropical Roots Maui: Kānehiwa Plant Tracker Interface" width="1200" height="723"><div class="hero-caption">Kānehiwa monitors real-time biological data and the Microbial Fortress through the sanctuary\'s holographic Plant Tracker interface.</div></div>';}
     h+='<div class="stats-grid">';
     h+='<div class="card stat-card"><div class="stat-icon">&#127793;</div><div class="stat-value">'+mothers.length+'</div><div class="stat-label">Mother Plants</div></div>';
     const floweringCount=mothers.filter(m=>m.growthStage==='flowering').length;

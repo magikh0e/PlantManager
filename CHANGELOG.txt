@@ -3,6 +3,39 @@ CHANGELOG — Tropical Roots Maui - Plant Manager
 https://github.com/magikh0e/PlantManager
 
 
+v1.6.3 — 2026-03-08
+--------------------
+IMPROVEMENT: Mobile Browser Optimization
+
+  Improved usability on phones and small screens.
+
+  Touch Targets
+  - Icon buttons enlarged to 44×44px (from 40px) for reliable tapping
+  - All action buttons now have 44px minimum height
+  - Icon-only buttons (btn-icon) enlarged to 44×44px (from 36px)
+
+  Tab Navigation
+  - Right-edge fade hint signals more tabs are available off-screen
+  - Helps users discover scrollable tab bar on narrow viewports
+
+  Responsive Layout
+  - Stats grid falls to single column below 340px for very narrow devices
+  - Header title shortened to "Plant Manager" on mobile (full title on desktop)
+
+  Readability
+  - Minimum font size for labels bumped to .7rem (11.2px) on mobile
+  - Affects stat labels, environment badges, feed labels, and tab buttons
+
+  Image Dimensions (all static pages)
+  - Explicit width/height on all <img> elements to prevent layout shift (CLS)
+  - Added height:auto to hero images on GrowGuides, RecipesCollection,
+    and PlantDeficiencyGuide to fix sizing with CSS width constraints
+
+  Sitemap
+  - Added 21 missing page entries, removed 1 broken entry
+  - All 71 URLs verified against files on disk
+
+
 v1.6.2 — 2026-03-08
 --------------------
 FEATURE: Environment Alerts / Thresholds on Dashboard
