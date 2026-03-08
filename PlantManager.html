@@ -389,7 +389,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 </div>
 
 <!-- License Footer -->
-<footer class="license-footer">&copy; 2025-2026 <a href="https://www.tropicalrootsmaui.com" target="_blank" rel="noopener">Tropical Roots Maui</a> &mdash; Licensed under <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank" rel="noopener">GPL-3.0</a></footer>
+<footer class="license-footer">&copy; 2025-2026 <a href="https://www.tropicalrootsmaui.com" target="_blank" rel="noopener">Tropical Roots Maui</a> &mdash; Licensed under <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank" rel="noopener">GPL-3.0</a> &mdash; <span id="appVersion"></span></footer>
 
 <!-- Toasts -->
 <div class="toast-container" id="toastContainer"></div>
@@ -402,6 +402,8 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
  */
 (function(){
 'use strict';
+
+const APP_VERSION = '1.1.0';
 
 /* ═══════════════════════════════════════════════
    UTILS
@@ -1467,6 +1469,7 @@ function init(){
   Theme.init();
   Modal.init();
   DataIO.init();
+  document.getElementById('appVersion').textContent='v'+APP_VERSION;
   Store.subscribe(()=>{
     const tab=Router._current;
     const renderers={dashboard:Dashboard,plants:Plants,environments:Environments,clones:Clones,tasks:Tasks,environment:Environment};
