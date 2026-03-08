@@ -3,6 +3,21 @@ CHANGELOG — Tropical Roots Maui - Plant Manager
 https://github.com/magikh0e/PlantManager
 
 
+v1.1.1 — 2026-03-07
+--------------------
+IMPROVEMENTS & FIXES
+
+  - Added toggle button (gear icon) in header to hide/show the dashboard
+    hero banner image; setting persists across sessions
+  - Added version number (v1.1.1) to app footer, linked to changelog
+  - Fixed environment readings not appearing when filtering by a specific
+    environment — log modal was defaulting to "Global" instead of the
+    selected environment
+  - Log modal now auto-selects the environment when only one exists
+  - Environ tab's "+ Log Reading" button now passes current filter as
+    preselect so readings are always linked to the right environment
+
+
 v1.1.0 — 2026-03-07
 --------------------
 FEATURE: Grow Environments
