@@ -37,6 +37,9 @@ FEATURE: Strain Catalog Expansion & Clone Provider Support
     as the strain breeder instead of the provider name ("CloneFreak")
   - Grow notes for clones show full context: "Clone from CloneFreak
     (bred by Runtz Crew)"
+  - Fixed "+ Add" button in catalog adding the wrong strain when filtered
+    by breeder or search — was using filtered list index instead of the
+    original catalog index
 
 
 v1.3.0 — 2026-03-07
