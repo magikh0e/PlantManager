@@ -425,6 +425,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 .cure-curing{background:rgba(0,200,192,.12);color:var(--cyan)}
 .cure-complete{background:rgba(74,158,82,.12);color:var(--leaf)}
 .quality-stars{color:var(--gold);font-size:.9rem;letter-spacing:1px}
+.flower-info{font-size:.72rem;color:var(--leaf);font-weight:600;margin-top:var(--space-xs)}
 @media(max-width:640px){.harvest-grid{grid-template-columns:1fr}}
 </style>
 </head>
@@ -518,7 +519,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 (function(){
 'use strict';
 
-const APP_VERSION = '1.4.0';
+const APP_VERSION = '1.4.1';
 
 /* ═══════════════════════════════════════════════
    UTILS
@@ -890,6 +891,7 @@ const Plants={
         if(_env) h+='<span>Env: '+U.esc(_env.name)+'</span>';
         else if(m.location) h+='<span>Location: '+U.esc(m.location)+'</span>';
         if(m.growthStage) h+='<span>Stage: '+m.growthStage.charAt(0).toUpperCase()+m.growthStage.slice(1)+'</span>';
+        if(m.floweringStart){const _fs=new Date(m.floweringStart+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});const _feEnd=m.floweringEnd?new Date(m.floweringEnd+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}):'present';const _fd=U.daysBetween(U.parseDate(m.floweringStart),m.floweringEnd?U.parseDate(m.floweringEnd):new Date());h+='<span class="flower-info">&#127804; '+_fs+' → '+_feEnd+' ('+_fd+'d)</span>';}
         if(rate!==null) h+='<span>Clone Rate: '+rate+'%</span>';
         h+='</div>';
         h+='<div class="plant-actions">';
@@ -931,8 +933,12 @@ const Plants={
     ['thriving','healthy','stressed','sick','quarantine'].forEach(s=>{h+='<option value="'+s+'"'+(m.healthStatus===s?' selected':'')+'>'+s.charAt(0).toUpperCase()+s.slice(1)+'</option>'});
     h+='</select></div>';
     h+='<div class="form-group"><label class="form-label">Growth Stage</label><select class="form-select" id="f_growthStage">';
-    ['seedling','vegetative','mature','declining'].forEach(s=>{h+='<option value="'+s+'"'+(m.growthStage===s?' selected':'')+'>'+s.charAt(0).toUpperCase()+s.slice(1)+'</option>'});
+    ['seedling','vegetative','flowering','mature','declining'].forEach(s=>{h+='<option value="'+s+'"'+(m.growthStage===s?' selected':'')+'>'+s.charAt(0).toUpperCase()+s.slice(1)+'</option>'});
     h+='</select></div>';
+    h+='</div>';
+    h+='<div class="form-row">';
+    h+='<div class="form-group"><label class="form-label">Flowering Start</label><input class="form-input" id="f_flowerStart" type="date" value="'+(m.floweringStart||'')+'"></div>';
+    h+='<div class="form-group"><label class="form-label">Flowering End</label><input class="form-input" id="f_flowerEnd" type="date" value="'+(m.floweringEnd||'')+'"></div>';
     h+='</div>';
     const _envs=Store.environmentsArray();
     h+='<div class="form-group"><label class="form-label">Environment</label><select class="form-select" id="f_environmentId">';
@@ -967,6 +973,8 @@ const Plants={
       source:document.getElementById('f_source').value,
       healthStatus:document.getElementById('f_healthStatus').value,
       growthStage:document.getElementById('f_growthStage').value,
+      floweringStart:document.getElementById('f_flowerStart').value,
+      floweringEnd:document.getElementById('f_flowerEnd').value,
       environmentId:document.getElementById('f_environmentId').value,
       notes:document.getElementById('f_notes').value.trim(),
       photo:Plants._photoData||'',
@@ -2170,6 +2178,7 @@ const Harvest={
         h+='<div class="harvest-plant">'+(m?U.esc(m.strainName):'Unknown Plant')+'</div>';
         if(m&&m.genetics) h+='<div style="font-size:.7rem;color:var(--text-tertiary)">'+U.esc(m.genetics)+'</div>';
         h+='<div class="harvest-date">'+dStr+(env?' · '+U.esc(env.name):'')+'</div>';
+        if(item.floweringStart){const _fDays=U.daysBetween(U.parseDate(item.floweringStart),item.floweringEnd?U.parseDate(item.floweringEnd):new Date());h+='<div class="flower-info">&#127804; Flower: '+_fDays+' days</div>';}
         h+='<div class="yield-row">';
         h+='<span class="yield-dry">'+dry.toFixed(1)+'g</span>';
         if(wet>0) h+='<span class="yield-wet">wet '+wet.toFixed(1)+'g</span>';
@@ -2214,6 +2223,9 @@ const Harvest={
     ['','wet','dry','both'].forEach(t=>{h+='<option value="'+t+'"'+(item.trimType===t?' selected':'')+'>'+(t?t.charAt(0).toUpperCase()+t.slice(1):'Select…')+'</option>'});
     h+='</select></div></div>';
     h+='<div class="form-row">';
+    h+='<div class="form-group"><label class="form-label">Flowering Start</label><input class="form-input" type="date" id="f_hvFlowerStart" value="'+(item.floweringStart||'')+'"></div>';
+    h+='<div class="form-group"><label class="form-label">Flowering End</label><input class="form-input" type="date" id="f_hvFlowerEnd" value="'+(item.floweringEnd||'')+'"></div></div>';
+    h+='<div class="form-row">';
     h+='<div class="form-group"><label class="form-label">Wet Weight (g)</label><input class="form-input" type="number" step="0.1" min="0" id="f_hvWet" value="'+(item.wetWeight||'')+'"></div>';
     h+='<div class="form-group"><label class="form-label">Dry Weight (g)</label><input class="form-input" type="number" step="0.1" min="0" id="f_hvDry" value="'+(item.dryWeight||'')+'"></div></div>';
     h+='<div class="form-row">';
@@ -2257,6 +2269,14 @@ const Harvest={
       const sel=document.getElementById('f_hvEnv');
       if(sel) sel.value=m.environmentId;
     }
+    if(m&&m.floweringStart){
+      const fs=document.getElementById('f_hvFlowerStart');
+      if(fs&&!fs.value) fs.value=m.floweringStart;
+    }
+    if(m&&m.floweringEnd){
+      const fe=document.getElementById('f_hvFlowerEnd');
+      if(fe&&!fe.value) fe.value=m.floweringEnd;
+    }
   },
   _onPhoto(input){
     if(!input.files||!input.files[0]) return;
@@ -2288,6 +2308,8 @@ const Harvest={
       motherId:document.getElementById('f_hvMother').value,
       environmentId:document.getElementById('f_hvEnv').value,
       harvestDate:document.getElementById('f_hvDate').value,
+      floweringStart:document.getElementById('f_hvFlowerStart').value,
+      floweringEnd:document.getElementById('f_hvFlowerEnd').value,
       trimType:document.getElementById('f_hvTrim').value,
       wetWeight:document.getElementById('f_hvWet').value,
       dryWeight:document.getElementById('f_hvDry').value,
@@ -3184,6 +3206,13 @@ const DataIO={
    ═══════════════════════════════════════════════ */
 const WhatsNew={
   _notes:{
+    '1.4.1':[
+      '<b>Flowering</b> added as a growth stage option for plants',
+      'New <b>Flowering Start / End</b> date fields on plant and harvest forms',
+      'Plant cards show <b>flowering duration</b> with 🌸 icon when dates are set',
+      'Harvest form <b>auto-fills</b> flowering dates from the selected plant',
+      'Harvest cards display <b>flower days</b> when flowering dates are recorded'
+    ],
     '1.4.0':[
       'New <b>Harvest</b> tab — log harvests with wet/dry weight, cure tracking &amp; quality rating',
       'Track <b>cure method</b> (jar, bag, grove bag, hang dry) and <b>cure status</b> (fresh → drying → curing → complete)',

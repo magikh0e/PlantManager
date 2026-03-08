@@ -3,6 +3,24 @@ CHANGELOG — Tropical Roots Maui - Plant Manager
 https://github.com/magikh0e/PlantManager
 
 
+v1.4.1 — 2026-03-08
+--------------------
+FEATURE: Flowering Time Tracking
+
+  Track flowering start and end dates for every plant and harvest.
+
+  Plants
+  - "Flowering" added as a growth stage option
+  - New Flowering Start and Flowering End date fields on plant form
+  - Plant cards display flowering duration with flower icon when dates
+    are set (e.g. "Mar 1 → Mar 28 (27d)")
+
+  Harvest Integration
+  - Flowering Start / End date fields added to harvest form
+  - Selecting a plant auto-fills flowering dates from the mother record
+  - Harvest cards show flower duration in days
+
+
 v1.4.0 — 2026-03-08
 --------------------
 FEATURE: Harvest Tracking
