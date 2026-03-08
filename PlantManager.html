@@ -1343,7 +1343,7 @@ const Environment={
     const latest=logs[0]||{};
 
     let h='<div class="toolbar">';
-    h+='<button class="btn btn-primary" onclick="Environment.openLogModal()">+ Log Reading</button>';
+    h+='<button class="btn btn-primary" onclick="Environment.openLogModal(Environment._filterEnv!==\'all\'?Environment._filterEnv:undefined)">+ Log Reading</button>';
     h+='<select class="filter-select" onchange="Environment._filterEnv=this.value;Environment.render()">';
     h+='<option value="all">All Environments</option>';
     envs.forEach(e=>{h+='<option value="'+e.id+'"'+(this._filterEnv===e.id?' selected':'')+'>'+U.esc(e.name)+'</option>'});
@@ -1407,9 +1407,10 @@ const Environment={
   },
   openLogModal(preselect){
     const envs=Store.environmentsArray();
+    const sel=preselect||(envs.length===1?envs[0].id:'');
     let h='<div class="form-group"><label class="form-label">Environment</label><select class="form-select" id="f_envTarget">';
     h+='<option value="">Global (no environment)</option>';
-    envs.forEach(e=>{h+='<option value="'+e.id+'"'+(preselect===e.id?' selected':'')+'>'+U.esc(e.name)+'</option>'});
+    envs.forEach(e=>{h+='<option value="'+e.id+'"'+(sel===e.id?' selected':'')+'>'+U.esc(e.name)+'</option>'});
     h+='</select></div>';
     h+='<div class="form-row">';
     h+='<div class="form-group"><label class="form-label">Temperature (&deg;F)</label><input class="form-input" id="f_temp" type="number" step="0.1"></div>';
