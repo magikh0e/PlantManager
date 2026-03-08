@@ -2138,7 +2138,49 @@ const Strains={
     {name:'Strawberry Blood',type:'indica',breeder:'Sticky Finger Seeds',genetics:'Strawberry Glue (Strawberry Cough VT Cut x Maui Magilla Glue) + Maui True Blood (Hawaiian Dream x Royal Blood)',floweringTime:'8 weeks+'},
     {name:'Swamp Glue',type:'hybrid',breeder:'Sticky Finger Seeds',genetics:'Helen Back x Maui Magilla Glue'},
     {name:'Tiger\'s Blood',type:'indica',breeder:'Sticky Finger Seeds',genetics:'Maui True Blood (Hawaiian Dream x Royal Blood) + Gas Drip (Gas Face x Frosted Flakes)',floweringTime:'8 weeks+',fem:true},
-    {name:'Wonka x Maui Magilla Glue',type:'hybrid',breeder:'Sticky Finger Seeds',genetics:'Wonka x Maui Magilla Glue'}
+    {name:'Wonka x Maui Magilla Glue',type:'hybrid',breeder:'Sticky Finger Seeds',genetics:'Wonka x Maui Magilla Glue'},
+    /* ── Hawaiian Budline ── */
+    {name:'710 Papaya',type:'hybrid',breeder:'Hawaiian Budline',genetics:'710 Papaya Cut x Secret Hawaiian',fem:true},
+    {name:'Banana Ambergris',type:'hybrid',breeder:'Hawaiian Budline',genetics:''},
+    {name:'Banana Patch',type:'hybrid',breeder:'Hawaiian Budline',genetics:''},
+    {name:'Big Washer',type:'hybrid',breeder:'Hawaiian Budline',genetics:'Purple Ice Water F2 + Strawberry Banana x Grape Cream Cake (90 Micron)'},
+    {name:'Blue Hawaii',type:'hybrid',breeder:'Hawaiian Budline',genetics:''},
+    {name:'Bonanza',type:'hybrid',breeder:'Hawaiian Budline',genetics:'',fem:true},
+    {name:'Chem Kush Shake',type:'hybrid',breeder:'Hawaiian Budline',genetics:''},
+    {name:'Citric Sherb',type:'hybrid',breeder:'Hawaiian Budline',genetics:''},
+    {name:'Citronic',type:'hybrid',breeder:'Hawaiian Budline',genetics:''},
+    {name:'GMO Rainbow',type:'indica',breeder:'Hawaiian Budline',genetics:'(Rainbow Chip x Mint Chip + Ice Cream Cake x Grape Cream Cake) x (Papaya x GMO Papaya)',floweringTime:'63-70 days',thcRange:'24-28%'},
+    {name:'Grape Cream Cake',type:'hybrid',breeder:'Hawaiian Budline',genetics:'Grape Pie x Wedding Crasher x Ice Cream Cake x Secret Hawaiian R1',fem:true},
+    {name:'Guava Lava',type:'hybrid',breeder:'Hawaiian Budline',genetics:''},
+    {name:'Hawaii by Night',type:'hybrid',breeder:'Hawaiian Budline',genetics:'Dirty Little Secret + Tropicana x Zkittlez',floweringTime:'63-70 days',thcRange:'20-25%'},
+    {name:'Hawaii\'s Finest Kush',type:'hybrid',breeder:'Hawaiian Budline',genetics:''},
+    {name:'Hawaiian Gushers',type:'hybrid',breeder:'Hawaiian Budline',genetics:'',fem:true},
+    {name:'Hawaiian Jealousy',type:'hybrid',breeder:'Hawaiian Budline',genetics:'Dosidos x Mint Chocolate Chip x Sunset Sherb x Tropicana Cookies x Secret Hawaiian R1',fem:true},
+    {name:'Island Boy',type:'hybrid',breeder:'Hawaiian Budline',genetics:''},
+    {name:'Island Cookies',type:'indica',breeder:'Hawaiian Budline',genetics:'(Forum Cookies x Animal Cookies) x (Tropicana Cookies x Skittlez)',floweringTime:'63-70 days',thcRange:'20-25%'},
+    {name:'Jah-Waiian Skunk',type:'sativa',breeder:'Hawaiian Budline',genetics:'Lime Skunk (Exotic Genetix) x Lemon Alien Dawg (Alien Genetics) x Tahoe Alien (Alien Genetics)',floweringTime:'49-63 days',thcRange:'~22%'},
+    {name:'Jam Berry OG',type:'indica',breeder:'Hawaiian Budline',genetics:'Blue Steel F1 x Jam Berry OG',floweringTime:'63-70 days',thcRange:'18-22%'},
+    {name:'Maui Mistress',type:'hybrid',breeder:'Hawaiian Budline',genetics:'',fem:true},
+    {name:'MauiMosa',type:'hybrid',breeder:'Hawaiian Budline',genetics:'',fem:true},
+    {name:'Papaya Bloom',type:'hybrid',breeder:'Hawaiian Budline',genetics:''},
+    {name:'Papaya Julius',type:'hybrid',breeder:'Hawaiian Budline',genetics:'GMO Cut x Wedding Cake BX3 + Papaya x GMO Papaya'},
+    {name:'Peach-Paya Chem Skittlez',type:'hybrid',breeder:'Hawaiian Budline',genetics:''},
+    {name:'Peanut Bradda',type:'hybrid',breeder:'Hawaiian Budline',genetics:''},
+    {name:'Pie-Paya F2',type:'hybrid',breeder:'Hawaiian Budline',genetics:''},
+    {name:'Pineapple Skunk Jam',type:'hybrid',breeder:'Hawaiian Budline',genetics:''},
+    {name:'Pineapples and Bananas',type:'hybrid',breeder:'Hawaiian Budline',genetics:''},
+    {name:'Pink Starburst 36',type:'hybrid',breeder:'Hawaiian Budline',genetics:''},
+    {name:'Pink-Paya',type:'hybrid',breeder:'Hawaiian Budline',genetics:''},
+    {name:'Prizefighter',type:'hybrid',breeder:'Hawaiian Budline',genetics:'',fem:true},
+    {name:'Psychedelic Honey',type:'hybrid',breeder:'Hawaiian Budline',genetics:''},
+    {name:'Puna Acid Bath',type:'hybrid',breeder:'Hawaiian Budline',genetics:''},
+    {name:'Puna Cherry D',type:'hybrid',breeder:'Hawaiian Budline',genetics:''},
+    {name:'Purp-Paya',type:'hybrid',breeder:'Hawaiian Budline',genetics:'Purple Dream Ride + Papaya x GMO Papaya'},
+    {name:'Rainbow Cake Grease',type:'hybrid',breeder:'Hawaiian Budline',genetics:''},
+    {name:'Supreme Cream',type:'hybrid',breeder:'Hawaiian Budline',genetics:''},
+    {name:'Tropical Blues',type:'hybrid',breeder:'Hawaiian Budline',genetics:''},
+    {name:'Waikiki Cheesecake',type:'sativa',breeder:'Hawaiian Budline',genetics:'Gouda Berry x Blue Steele',floweringTime:'63-70 days',thcRange:'18-22%'},
+    {name:'Watermelon Punch',type:'hybrid',breeder:'Hawaiian Budline',genetics:'Lime Ice Water x (Peach Crescendo x Watermelon Skittlez)'}
   ],
 
   render(){
@@ -2193,25 +2235,26 @@ const Strains={
   /* ── Catalog browser ── */
   openCatalog(){
     const existing=Store.strainsArray().map(s=>s.name.toLowerCase());
-    let h='<div style="margin-bottom:var(--space-md)"><input class="form-input" placeholder="Search catalog…" oninput="Strains._filterCatalog(this.value)"></div>';
+    let h='<div style="margin-bottom:var(--space-md)"><input class="form-input" placeholder="Search by name, breeder, or genetics…" oninput="Strains._filterCatalog(this.value)"></div>';
     h+='<div id="catalogGrid" style="max-height:55vh;overflow-y:auto">';
     h+=Strains._buildCatalogGrid('');
     h+='</div>';
-    h+='<div style="margin-top:var(--space-sm);font-size:.7rem;color:var(--text-tertiary)">Source: Sticky Finger Seeds via <a href="https://deepgreengenetics.com/sticky-finger-seeds/" target="_blank" rel="noopener" style="color:var(--cyan)">Deep Green Genetics</a></div>';
-    Modal.open('Strain Catalog — Sticky Finger Seeds',h,'<button class="btn btn-ghost" onclick="Modal.close()">Close</button>');
+    h+='<div style="margin-top:var(--space-sm);font-size:.7rem;color:var(--text-tertiary)">Sources: <a href="https://deepgreengenetics.com/sticky-finger-seeds/" target="_blank" rel="noopener" style="color:var(--cyan)">Deep Green Genetics</a> &bull; <a href="https://www.hawaiianbudline.com/store" target="_blank" rel="noopener" style="color:var(--cyan)">Hawaiian Budline</a></div>';
+    Modal.open('Strain Catalog',h,'<button class="btn btn-ghost" onclick="Modal.close()">Close</button>');
   },
 
   _buildCatalogGrid(query){
     const q=query.toLowerCase();
     const existing=Store.strainsArray().map(s=>s.name.toLowerCase());
     let items=Strains._catalog;
-    if(q) items=items.filter(c=>(c.name+' '+(c.genetics||'')+' '+c.type).toLowerCase().includes(q));
+    if(q) items=items.filter(c=>(c.name+' '+(c.breeder||'')+' '+(c.genetics||'')+' '+c.type).toLowerCase().includes(q));
     let h='';
     items.forEach((c,i)=>{
       const added=existing.includes(c.name.toLowerCase());
       h+='<div class="card" style="padding:var(--space-md);margin-bottom:var(--space-sm);'+(added?'opacity:.5':'')+'">';
       h+='<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:var(--space-sm)">';
       h+='<div><div style="font-weight:700;font-size:.9rem">'+U.esc(c.name)+'</div>';
+      h+='<div style="font-size:.68rem;color:var(--text-secondary);margin-bottom:2px">'+U.esc(c.breeder)+'</div>';
       h+='<div style="display:flex;flex-wrap:wrap;gap:var(--space-xs);margin:var(--space-xs) 0">';
       h+='<span class="type-badge type-'+c.type+'">'+c.type+'</span>';
       if(c.fem) h+='<span style="font-size:.6rem;padding:.15rem .4rem;border-radius:3px;background:rgba(155,107,181,.15);color:#b48cce;font-weight:700;letter-spacing:.05em">FEM</span>';
