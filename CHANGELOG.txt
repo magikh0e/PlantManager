@@ -3,6 +3,23 @@ CHANGELOG — Tropical Roots Maui - Plant Manager
 https://github.com/magikh0e/PlantManager
 
 
+v1.6.2 — 2026-03-08
+--------------------
+FEATURE: Environment Alerts / Thresholds on Dashboard
+
+  Dashboard warns when latest readings breach environment thresholds.
+
+  Dashboard
+  - New "Env Alerts" stat card with ⚠ icon — shows count of out-of-range
+    readings, turns orange when alerts are active
+  - Alert banner section lists each breached threshold with environment
+    name and reading details (appears between overdue tasks and activity feed)
+
+  Environments Tab
+  - Temp, humidity, and pH readings on environment cards turn red when
+    the latest value exceeds the configured min/max threshold
+
+
 v1.6.1 — 2026-03-08
 --------------------
 IMPROVEMENT: Dashboard Flowering Card

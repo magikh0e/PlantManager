@@ -536,7 +536,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 (function(){
 'use strict';
 
-const APP_VERSION = '1.6.1';
+const APP_VERSION = '1.6.2';
 
 /* ═══════════════════════════════════════════════
    UTILS
@@ -835,6 +835,8 @@ const Dashboard={
     h+='<div class="card stat-card orange"><div class="stat-icon">&#9745;</div><div class="stat-value">'+(dueToday.length+overdue.length)+'</div><div class="stat-label">Tasks Due</div></div>';
     h+='<div class="card stat-card"><div class="stat-icon">&#128154;</div><div class="stat-value" style="font-size:1.1rem">'+worstHealth+'</div><div class="stat-label">Health Overview</div></div>';
     h+='<div class="card stat-card'+(activeIpm>0?' orange':'')+'"><div class="stat-icon">&#128737;</div><div class="stat-value">'+activeIpm+'</div><div class="stat-label">Active Issues</div></div>';
+    const envAlerts=Dashboard._envAlerts();
+    h+='<div class="card stat-card'+(envAlerts.length?' orange':'')+'"><div class="stat-icon">&#9888;</div><div class="stat-value">'+envAlerts.length+'</div><div class="stat-label">Env Alerts</div></div>';
     h+='<div class="card stat-card"><div class="stat-icon">&#129516;</div><div class="stat-value">'+Store.strainsArray().length+'</div><div class="stat-label">Strains</div></div>';
     const totalYield=Store.totalYield();
     const yieldDisplay=totalYield>=28.35?(totalYield/28.35).toFixed(1)+'oz':totalYield.toFixed(1)+'g';
@@ -869,6 +871,17 @@ const Dashboard={
       h+='</div>';
     }
 
+    if(envAlerts.length){
+      h+='<div class="section-title" style="color:var(--orange)">&#9888; Environment Alerts</div>';
+      h+='<div class="env-alert-list" style="margin-bottom:var(--space-xl);display:flex;flex-direction:column;gap:var(--space-xs)">';
+      envAlerts.forEach(a=>{
+        h+='<div class="card" style="padding:var(--space-sm) var(--space-md);border-left:3px solid var(--orange);font-size:.85rem">';
+        h+='<strong>'+U.esc(a.env)+'</strong> &mdash; '+U.esc(a.msg);
+        h+='</div>';
+      });
+      h+='</div>';
+    }
+
     const activity=Store.get('activityLog');
     const recent=(Array.isArray(activity)?activity:[]).slice(-15).reverse();
     if(recent.length){
@@ -885,6 +898,27 @@ const Dashboard={
     }
 
     document.getElementById('panel-dashboard').innerHTML=h;
+  },
+  _envAlerts(){
+    const alerts=[];
+    Store.environmentsArray().forEach(env=>{
+      const logs=Store.envArray().filter(l=>l.environmentId===env.id);
+      if(!logs.length) return;
+      const r=logs[0];
+      if(env.tempMax!=null&&r.temperature!=null&&r.temperature>env.tempMax)
+        alerts.push({env:env.name,msg:'Temp '+r.temperature+'\u00B0F exceeds max '+env.tempMax+'\u00B0F'});
+      if(env.tempMin!=null&&r.temperature!=null&&r.temperature<env.tempMin)
+        alerts.push({env:env.name,msg:'Temp '+r.temperature+'\u00B0F below min '+env.tempMin+'\u00B0F'});
+      if(env.humidityMax!=null&&r.humidity!=null&&r.humidity>env.humidityMax)
+        alerts.push({env:env.name,msg:'Humidity '+r.humidity+'% exceeds max '+env.humidityMax+'%'});
+      if(env.humidityMin!=null&&r.humidity!=null&&r.humidity<env.humidityMin)
+        alerts.push({env:env.name,msg:'Humidity '+r.humidity+'% below min '+env.humidityMin+'%'});
+      if(env.phMax!=null&&r.ph!=null&&r.ph>env.phMax)
+        alerts.push({env:env.name,msg:'pH '+r.ph+' exceeds max '+env.phMax});
+      if(env.phMin!=null&&r.ph!=null&&r.ph<env.phMin)
+        alerts.push({env:env.name,msg:'pH '+r.ph+' below min '+env.phMin});
+    });
+    return alerts;
   }
 };
 window.Dashboard=Dashboard;
@@ -1162,9 +1196,12 @@ const Environments={
         h+='</div>';
         h+='<div class="env-stats">';
         h+='<div class="env-stat"><div class="es-val" style="color:var(--leaf)">'+plants.length+'</div><div class="es-label">Plants</div></div>';
-        h+='<div class="env-stat"><div class="es-val" style="color:var(--cyan)">'+(latest.temperature!=null?latest.temperature+'&deg;':'—')+'</div><div class="es-label">Temp</div></div>';
-        h+='<div class="env-stat"><div class="es-val" style="color:var(--cyan)">'+(latest.humidity!=null?latest.humidity+'%':'—')+'</div><div class="es-label">RH</div></div>';
-        h+='<div class="env-stat"><div class="es-val" style="color:var(--cyan)">'+(latest.ph!=null?latest.ph:'—')+'</div><div class="es-label">pH</div></div>';
+        const _tOob=latest.temperature!=null&&((env.tempMax!=null&&latest.temperature>env.tempMax)||(env.tempMin!=null&&latest.temperature<env.tempMin));
+        const _hOob=latest.humidity!=null&&((env.humidityMax!=null&&latest.humidity>env.humidityMax)||(env.humidityMin!=null&&latest.humidity<env.humidityMin));
+        const _pOob=latest.ph!=null&&((env.phMax!=null&&latest.ph>env.phMax)||(env.phMin!=null&&latest.ph<env.phMin));
+        h+='<div class="env-stat"><div class="es-val" style="color:'+(_tOob?'#e05c3a':'var(--cyan)')+'">'+(latest.temperature!=null?latest.temperature+'&deg;':'—')+'</div><div class="es-label">Temp</div></div>';
+        h+='<div class="env-stat"><div class="es-val" style="color:'+(_hOob?'#e05c3a':'var(--cyan)')+'">'+(latest.humidity!=null?latest.humidity+'%':'—')+'</div><div class="es-label">RH</div></div>';
+        h+='<div class="env-stat"><div class="es-val" style="color:'+(_pOob?'#e05c3a':'var(--cyan)')+'">'+(latest.ph!=null?latest.ph:'—')+'</div><div class="es-label">pH</div></div>';
         h+='</div>';
         h+='<div class="env-actions">';
         h+='<button class="btn btn-ghost btn-sm" onclick="Environments.openEditModal(\''+env.id+'\')">Edit</button>';
