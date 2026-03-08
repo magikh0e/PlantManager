@@ -3,6 +3,94 @@ CHANGELOG — Tropical Roots Maui - Plant Manager
 https://github.com/magikh0e/PlantManager
 
 
+v1.6.1 — 2026-03-08
+--------------------
+IMPROVEMENT: Dashboard Flowering Card
+
+  Dashboard
+  - New "Flowering" stat card showing count of plants in flowering stage
+  - Pink top border with flower icon (🌼) for quick identification
+  - Positioned after Mother Plants card in the stats grid
+
+
+v1.6.0 — 2026-03-08
+--------------------
+FEATURE: Notification Reminders
+
+  Browser push notifications for overdue tasks, environment alerts,
+  and feeding reminders — fires while the app tab is open.
+
+  Notification Engine
+  - Bell icon in header opens notification settings modal
+  - Red badge on bell shows count of active alerts
+  - Check engine runs every 5 minutes plus 10s after page load
+  - Deduplication suppresses repeat alerts for 4 hours
+  - Notifications only fire when the tab is in the background
+  - Clicking a notification brings the app tab to focus
+
+  Task Reminders
+  - Overdue tasks: notifies when nextDueDate is past today
+  - Due today tasks: notifies when nextDueDate matches today
+  - Both toggleable independently in settings
+
+  Environment Threshold Alerts
+  - New optional threshold fields on environments: Temp Min/Max,
+    Humidity Min/Max, pH Min/Max
+  - Fires immediately when a new reading exceeds a threshold
+  - Also checked on the periodic 5-minute interval
+
+  Feeding Reminders
+  - Global "remind if no feeding in X days" setting (0 = disabled)
+  - Checks each mother plant's most recent feeding timestamp
+  - Alerts for plants that have never been fed (if older than interval)
+
+  Settings
+  - Master enable/disable toggle with browser permission status
+  - Request Permission button when not yet granted
+  - Sub-toggles for each notification category
+  - Configurable feeding reminder interval in days
+
+
+v1.5.0 — 2026-03-08
+--------------------
+FEATURE: Clone Lineage / Family Tree
+
+  Visual SVG family tree tracing genetic lineage across generations.
+
+  Lineage Tracking
+  - New "Parent Mother" dropdown on plant form (visible when Source=Clone)
+  - Links clone-origin mothers back to the mother they were cloned from
+  - Generation tracking (Gen 0=seed, Gen 1=clone of seed, etc.)
+
+  Family Tree Visualization
+  - Pure SVG tree renderer in Analytics tab (full-width chart card)
+  - Nodes show strain name, health color bar, generation, source icon
+  - Dashed connectors between parent and child with clone count badges
+  - Filter dropdown to focus on a specific root mother's lineage
+  - "Full View" button opens large modal for detailed inspection
+  - Archived mothers shown at reduced opacity for complete lineage
+
+  Plant Integration
+  - "Lineage" button on plant cards opens tree modal for that plant
+  - Auto-navigates to the root ancestor's full lineage tree
+  - Clicking any tree node opens that plant's edit form
+
+
+v1.4.2 — 2026-03-08
+--------------------
+IMPROVEMENTS: Export Security & WhatsNew
+
+  Export Integrity
+  - Data exports now include an FNV-1a 32-bit checksum in a signed envelope
+  - Imports verify checksum — tampered files are rejected with a clear error
+  - Export envelope includes origin field (tracker.tropicalrootsmaui.com)
+  - Imports are restricted to files exported from the official tracker origin
+  - Legacy exports without an envelope are no longer accepted
+
+  WhatsNew Modal
+  - Added "View full changelog" link opening the GitHub changelog in a new tab
+
+
 v1.4.1 — 2026-03-08
 --------------------
 FEATURE: Flowering Time Tracking
