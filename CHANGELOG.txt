@@ -3,6 +3,36 @@ CHANGELOG — Tropical Roots Maui - Plant Manager
 https://github.com/magikh0e/PlantManager
 
 
+v1.3.1 — 2026-03-08
+--------------------
+FEATURE: Strain Catalog Expansion & Clone Provider Support
+
+  Strain Catalog
+  - Browse Catalog now contains 363 entries across 7 providers
+  - Breeder filter dropdown with per-breeder strain counts
+  - Search filters by name, breeder, source breeder, and genetics
+
+  Seed Breeders Added
+  - Sticky Finger Seeds (33 strains) — via Deep Green Genetics
+  - Hawaiian Budline (41 strains) — genetics from hawaiianbudline.com,
+    Seeds Here Now, and SeedFinder
+  - Ziplock Seeds (57 strains) — via Deep Green Genetics
+  - Makena Genetics (5 strains) — all feminized ICC #42 crosses
+  - Deep Green Genetics (7 strains) — house genetics
+  - Aloha Island Genetics (4 strains) — Hawaiian-bred genetics
+
+  Clone Providers
+  - New clone provider support with CLONE badge (cyan) on catalog cards
+  - Source breeder attribution shown per clone (e.g. "CloneFreak · by
+    Seed Junky Genetics")
+  - CloneFreak: 216 verified clones with genetics on 16 key cuts
+  - Clone info stored in grow notes when added to library
+
+  Catalog UI
+  - Breeder name displayed on each catalog card
+  - Source links to Deep Green Genetics, Hawaiian Budline, and CloneFreak
+
+
 v1.3.0 — 2026-03-07
 --------------------
 FEATURE: Strain Library & Analytics Charts
