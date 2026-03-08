@@ -618,20 +618,20 @@ const Store = {
   exportJSON(){
     const raw=JSON.stringify(this._data);
     const cs=this._checksum(raw);
-    return JSON.stringify({_trm_export:true,version:APP_VERSION,exportDate:new Date().toISOString(),checksum:cs,data:this._data},null,2);
+    return JSON.stringify({_trm_export:true,origin:'tracker.tropicalrootsmaui.com',version:APP_VERSION,exportDate:new Date().toISOString(),checksum:cs,data:this._data},null,2);
   },
   importJSON(str){
     try{
       const parsed=JSON.parse(str);
       if(parsed._trm_export){
+        if(parsed.origin!=='tracker.tropicalrootsmaui.com') return{ok:false,reason:'origin'};
         const raw=JSON.stringify(parsed.data);
         const cs=this._checksum(raw);
         if(cs!==parsed.checksum) return{ok:false,reason:'tampered'};
         if(!parsed.data.version||!parsed.data.mothers) throw new Error('Invalid');
         this._data=parsed.data;this.save();this.notify();return{ok:true};
       }
-      if(!parsed.version||!parsed.mothers) throw new Error('Invalid');
-      this._data=parsed;this.save();this.notify();return{ok:true};
+      return{ok:false,reason:'origin'};
     }catch(e){return{ok:false,reason:'invalid'}}
   },
   setting(k,v){
@@ -3205,6 +3205,8 @@ const DataIO={
         Store.addActivity('data_imported','Imported data from backup');
         Toast.show('Data imported successfully!');
         Router.switchTo(Router._current);
+      }else if(result.reason==='origin'){
+        Toast.show('Import refused — file was not exported from tracker.tropicalrootsmaui.com','error');
       }else if(result.reason==='tampered'){
         Toast.show('Import refused — file has been modified since export.','error');
       }else{
