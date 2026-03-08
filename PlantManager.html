@@ -2586,11 +2586,11 @@ const Strains={
     const c=Strains._catalog[idx];if(!c) return;
     const id=U.id('str');
     const data={
-      id:id,name:c.name,type:c.type,breeder:c.breeder,
+      id:id,name:c.name,type:c.type,breeder:c.clone&&c.source?c.source:c.breeder,
       genetics:c.genetics||'',floweringTime:c.floweringTime||'',
       difficulty:'',thcRange:c.thcRange||'',cbdRange:'',
       terpenes:'',effects:'',flavors:c.flavors||'',
-      yieldIndoor:'',yieldOutdoor:'',growNotes:c.clone?'Clone'+(c.source?' (bred by '+c.source+')':''):c.fem?'Feminized seed':'Regular seed',
+      yieldIndoor:'',yieldOutdoor:'',growNotes:c.clone?'Clone from '+c.breeder+(c.source?' (bred by '+c.source+')':''):c.fem?'Feminized seed':'Regular seed',
       photo:'',archived:false,createdAt:Date.now()
     };
     Store.set('strains',id,data);
