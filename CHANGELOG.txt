@@ -3,6 +3,34 @@ CHANGELOG — Tropical Roots Maui - Plant Manager
 https://github.com/magikh0e/PlantManager
 
 
+v1.4.0 — 2026-03-08
+--------------------
+FEATURE: Harvest Tracking
+
+  Full harvest lifecycle tracking from chop to cure.
+
+  Harvest Log
+  - New "Harvest" tab to record and manage harvest data
+  - Track wet weight, dry weight, and auto-calculated dry ratio %
+  - Trim type: wet, dry, or both
+  - Cure method: jar, bag, grove bag, bucket, hang dry, other
+  - Cure status: fresh, drying, curing, complete — with colored badges
+  - Cure start/end dates with duration calculation
+  - 5-star quality rating with interactive star selector
+  - Terpene notes, flavor notes, and storage location
+  - Photo upload per harvest entry
+  - Filter harvests by plant and cure status
+  - Link harvests to mother plants and environments
+
+  Dashboard
+  - New "Total Yield" stat card showing sum of all dry weights (g/oz)
+  - New "+ Log Harvest" quick action button
+
+  Plants Integration
+  - "+ Harvest" quick action button on plant cards
+  - Auto-selects environment when plant is linked to one
+
+
 v1.3.1 — 2026-03-08
 --------------------
 FEATURE: Strain Catalog Expansion & Clone Provider Support

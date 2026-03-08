@@ -410,6 +410,22 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 .chart-legend-item{display:flex;align-items:center;gap:var(--space-xs)}
 .chart-legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
 .chart-no-data{text-align:center;padding:var(--space-xl);color:var(--text-tertiary);font-size:.8rem}
+/* Harvest */
+.harvest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:var(--space-lg)}
+.harvest-card .card-body{padding:var(--space-lg)}
+.harvest-card .harvest-plant{font-size:1rem;font-weight:700;margin-bottom:var(--space-xs)}
+.harvest-card .harvest-date{font-size:.72rem;color:var(--text-secondary)}
+.harvest-card .yield-row{display:flex;align-items:baseline;gap:var(--space-sm);margin:var(--space-md) 0}
+.harvest-card .yield-dry{font-size:1.6rem;font-weight:800;color:var(--cyan)}
+.harvest-card .yield-wet{font-size:.75rem;color:var(--text-secondary)}
+.harvest-card .yield-ratio{font-size:.7rem;padding:.15rem .45rem;border-radius:3px;background:rgba(0,200,192,.1);color:var(--cyan);font-weight:600}
+.cure-badge{display:inline-block;padding:.15rem .55rem;border-radius:3px;font-size:.62rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.cure-fresh{background:rgba(255,255,255,.08);color:var(--text-secondary)}
+.cure-drying{background:rgba(240,180,41,.12);color:var(--gold)}
+.cure-curing{background:rgba(0,200,192,.12);color:var(--cyan)}
+.cure-complete{background:rgba(74,158,82,.12);color:var(--leaf)}
+.quality-stars{color:var(--gold);font-size:.9rem;letter-spacing:1px}
+@media(max-width:640px){.harvest-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -439,6 +455,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
   <button class="tab-btn" data-tab="feeding"><span class="tab-icon">&#129514;</span>Feeding</button>
   <button class="tab-btn" data-tab="journal"><span class="tab-icon">&#128248;</span>Journal</button>
   <button class="tab-btn" data-tab="ipm"><span class="tab-icon">&#128737;</span>IPM</button>
+  <button class="tab-btn" data-tab="harvest"><span class="tab-icon">&#127806;</span>Harvest</button>
   <button class="tab-btn" data-tab="strains"><span class="tab-icon">&#129516;</span>Strains</button>
   <button class="tab-btn" data-tab="analytics"><span class="tab-icon">&#128202;</span>Analytics</button>
   <button class="tab-btn" data-tab="environment"><span class="tab-icon">&#127777;</span>Readings</button>
@@ -463,6 +480,8 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
     <section class="tab-panel" id="panel-journal"></section>
     <!-- IPM -->
     <section class="tab-panel" id="panel-ipm"></section>
+    <!-- Harvest -->
+    <section class="tab-panel" id="panel-harvest"></section>
     <!-- Strains -->
     <section class="tab-panel" id="panel-strains"></section>
     <!-- Analytics -->
@@ -499,7 +518,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 (function(){
 'use strict';
 
-const APP_VERSION = '1.3.1';
+const APP_VERSION = '1.4.0';
 
 /* ═══════════════════════════════════════════════
    UTILS
@@ -557,7 +576,7 @@ const Store = {
   _key:'motherPlantTracker',
   _data:null,
   _subs:[],
-  _default(){return{version:'1.0.0',settings:{theme:'dark',lastActiveTab:'dashboard',showHero:true},mothers:{},environments:{},clones:{},tasks:{},taskCompletions:{},envLogs:{},feedings:{},photoJournal:{},ipmLogs:{},strains:{},activityLog:[]}},
+  _default(){return{version:'1.0.0',settings:{theme:'dark',lastActiveTab:'dashboard',showHero:true},mothers:{},environments:{},clones:{},tasks:{},taskCompletions:{},envLogs:{},feedings:{},photoJournal:{},ipmLogs:{},strains:{},harvests:{},activityLog:[]}},
   load(){
     try{
       const raw=localStorage.getItem(this._key);
@@ -568,6 +587,7 @@ const Store = {
       if(!this._data.photoJournal) this._data.photoJournal={};
       if(!this._data.ipmLogs) this._data.ipmLogs={};
       if(!this._data.strains) this._data.strains={};
+      if(!this._data.harvests) this._data.harvests={};
       if(this._data.settings.showHero===undefined) this._data.settings.showHero=true;
     }catch(e){this._data=this._default()}
   },
@@ -622,6 +642,9 @@ const Store = {
   ipmForMother(mid){return this.ipmArray().filter(i=>i.motherId===mid)},
   ipmForEnv(eid){return this.ipmArray().filter(i=>i.environmentId===eid)},
   activeIpmCount(){return this.ipmArray().filter(i=>!i.resolved).length},
+  harvestsArray(){return Object.values(this._data.harvests).sort((a,b)=>(b.harvestDate||'').localeCompare(a.harvestDate||''))},
+  harvestsForMother(mid){return this.harvestsArray().filter(h=>h.motherId===mid)},
+  totalYield(){return this.harvestsArray().reduce((s,h)=>s+(parseFloat(h.dryWeight)||0),0)},
   cloneSuccessRate(mid){
     const batches=this.clonesForMother(mid);
     if(!batches.length) return null;
@@ -731,7 +754,7 @@ const Router={
     Store.setting('lastActiveTab',tab);
     document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
     document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active',p.id==='panel-'+tab));
-    const renderers={dashboard:Dashboard,plants:Plants,environments:Environments,clones:Clones,tasks:Tasks,feeding:Feeding,journal:Journal,ipm:IPM,strains:Strains,analytics:Analytics,environment:Environment};
+    const renderers={dashboard:Dashboard,plants:Plants,environments:Environments,clones:Clones,tasks:Tasks,feeding:Feeding,journal:Journal,ipm:IPM,harvest:Harvest,strains:Strains,analytics:Analytics,environment:Environment};
     if(renderers[tab]) renderers[tab].render();
   }
 };
@@ -766,6 +789,9 @@ const Dashboard={
     h+='<div class="card stat-card"><div class="stat-icon">&#128154;</div><div class="stat-value" style="font-size:1.1rem">'+worstHealth+'</div><div class="stat-label">Health Overview</div></div>';
     h+='<div class="card stat-card'+(activeIpm>0?' orange':'')+'"><div class="stat-icon">&#128737;</div><div class="stat-value">'+activeIpm+'</div><div class="stat-label">Active Issues</div></div>';
     h+='<div class="card stat-card"><div class="stat-icon">&#129516;</div><div class="stat-value">'+Store.strainsArray().length+'</div><div class="stat-label">Strains</div></div>';
+    const totalYield=Store.totalYield();
+    const yieldDisplay=totalYield>=28.35?(totalYield/28.35).toFixed(1)+'oz':totalYield.toFixed(1)+'g';
+    h+='<div class="card stat-card green"><div class="stat-icon">&#127806;</div><div class="stat-value">'+yieldDisplay+'</div><div class="stat-label">Total Yield</div></div>';
     h+='</div>';
 
     h+='<div class="quick-actions" style="margin-top:var(--space-xl)">';
@@ -778,6 +804,7 @@ const Dashboard={
     h+='<button class="btn btn-outline" onclick="Journal.openAddModal()">+ Add Photo</button>';
     h+='<button class="btn btn-outline" onclick="IPM.openAddModal()">+ Log Issue</button>';
     h+='<button class="btn btn-outline" onclick="Strains.openAddModal()">+ Add Strain</button>';
+    h+='<button class="btn btn-outline" onclick="Harvest.openAddModal()">+ Log Harvest</button>';
     h+='</div>';
 
     if(overdue.length){
@@ -872,6 +899,7 @@ const Plants={
         h+='<button class="btn btn-ghost btn-sm" onclick="Feeding.openAddModal(\''+m.id+'\')">+ Feed</button>';
         h+='<button class="btn btn-ghost btn-sm" onclick="Journal.openAddModal(\''+m.id+'\')">+ Photo</button>';
         h+='<button class="btn btn-ghost btn-sm" onclick="IPM.openAddModal(\''+m.id+'\')">+ IPM</button>';
+        h+='<button class="btn btn-ghost btn-sm" onclick="Harvest.openAddModal(\''+m.id+'\')">+ Harvest</button>';
         h+='<button class="btn btn-danger btn-sm" onclick="Plants.handleDelete(\''+m.id+'\')">Archive</button>';
         h+='</div></div></div>';
       });
@@ -2098,6 +2126,234 @@ const Chart={
 };
 
 /* ═══════════════════════════════════════════════
+   HARVEST TRACKING
+   ═══════════════════════════════════════════════ */
+const Harvest={
+  _filterPlant:'all',
+  _filterCure:'all',
+  _photoData:'',
+  render(){
+    const mothers=Store.mothersArray();
+    let list=Store.harvestsArray();
+    if(this._filterPlant!=='all') list=list.filter(h=>h.motherId===this._filterPlant);
+    if(this._filterCure!=='all') list=list.filter(h=>h.cureStatus===this._filterCure);
+    let h='<div class="toolbar">';
+    h+='<button class="btn btn-primary" onclick="Harvest.openAddModal()">+ Log Harvest</button>';
+    h+='<select class="filter-select" onchange="Harvest._filterPlant=this.value;Harvest.render()">';
+    h+='<option value="all">All Plants</option>';
+    mothers.forEach(m=>{h+='<option value="'+m.id+'"'+(this._filterPlant===m.id?' selected':'')+'>'+U.esc(m.strainName)+'</option>'});
+    h+='</select>';
+    h+='<select class="filter-select" onchange="Harvest._filterCure=this.value;Harvest.render()" style="margin-left:var(--space-xs)">';
+    h+='<option value="all"'+(this._filterCure==='all'?' selected':'')+'>All Cure Status</option>';
+    ['fresh','drying','curing','complete'].forEach(s=>{h+='<option value="'+s+'"'+(this._filterCure===s?' selected':'')+'>'+s.charAt(0).toUpperCase()+s.slice(1)+'</option>'});
+    h+='</select></div>';
+    if(!list.length){
+      h+='<div class="empty-state"><div class="empty-icon">&#127806;</div><div class="empty-text">No harvests logged yet. Time to reap what you sow!</div></div>';
+    }else{
+      h+='<div class="harvest-grid">';
+      list.forEach(item=>{
+        const m=item.motherId?Store.getById('mothers',item.motherId):null;
+        const env=item.environmentId?Store.getById('environments',item.environmentId):null;
+        const dry=parseFloat(item.dryWeight)||0;
+        const wet=parseFloat(item.wetWeight)||0;
+        const ratio=wet>0?(dry/wet*100).toFixed(1):'—';
+        const dStr=item.harvestDate?new Date(item.harvestDate+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'—';
+        let cureDays='';
+        if(item.cureStart){
+          const end=item.cureEnd||U.today();
+          cureDays=U.daysBetween(U.parseDate(item.cureStart),U.parseDate(end))+' days';
+        }
+        const stars=parseInt(item.quality)||0;
+        h+='<div class="card harvest-card">';
+        if(item.photo) h+='<img src="'+item.photo+'" alt="Harvest photo" style="width:100%;height:180px;object-fit:cover;border-radius:var(--radius) var(--radius) 0 0">';
+        h+='<div class="card-body">';
+        h+='<div class="harvest-plant">'+(m?U.esc(m.strainName):'Unknown Plant')+'</div>';
+        if(m&&m.genetics) h+='<div style="font-size:.7rem;color:var(--text-tertiary)">'+U.esc(m.genetics)+'</div>';
+        h+='<div class="harvest-date">'+dStr+(env?' · '+U.esc(env.name):'')+'</div>';
+        h+='<div class="yield-row">';
+        h+='<span class="yield-dry">'+dry.toFixed(1)+'g</span>';
+        if(wet>0) h+='<span class="yield-wet">wet '+wet.toFixed(1)+'g</span>';
+        if(wet>0) h+='<span class="yield-ratio">'+ratio+'% dry</span>';
+        h+='</div>';
+        h+='<div style="display:flex;gap:var(--space-sm);align-items:center;flex-wrap:wrap;margin-bottom:var(--space-sm)">';
+        h+='<span class="cure-badge cure-'+(item.cureStatus||'fresh')+'">'+(item.cureStatus||'fresh')+'</span>';
+        if(item.cureMethod) h+='<span style="font-size:.72rem;color:var(--text-secondary)">'+U.esc(item.cureMethod)+'</span>';
+        if(cureDays) h+='<span style="font-size:.7rem;color:var(--text-tertiary)">'+cureDays+'</span>';
+        h+='</div>';
+        if(stars>0){h+='<div class="quality-stars">';for(let i=0;i<5;i++) h+=i<stars?'&#9733;':'&#9734;';h+='</div>';}
+        if(item.trimType) h+='<div style="font-size:.72rem;color:var(--text-secondary);margin-top:var(--space-xs)">Trim: '+U.esc(item.trimType)+'</div>';
+        if(item.terps) h+='<div style="font-size:.72rem;color:var(--text-secondary);margin-top:var(--space-xs)">Terps: '+U.esc(item.terps.substring(0,80))+(item.terps.length>80?'…':'')+'</div>';
+        if(item.flavorNotes) h+='<div style="font-size:.72rem;color:var(--text-secondary);margin-top:var(--space-xs)">Flavor: '+U.esc(item.flavorNotes.substring(0,80))+(item.flavorNotes.length>80?'…':'')+'</div>';
+        if(item.storageLocation) h+='<div style="font-size:.72rem;color:var(--text-secondary);margin-top:var(--space-xs)">Storage: '+U.esc(item.storageLocation)+'</div>';
+        if(item.notes) h+='<div style="font-size:.72rem;color:var(--text-tertiary);margin-top:var(--space-xs)">'+U.esc(item.notes.substring(0,120))+(item.notes.length>120?'…':'')+'</div>';
+        h+='<div style="margin-top:var(--space-sm);display:flex;gap:var(--space-xs)">';
+        h+='<button class="btn btn-ghost btn-sm" onclick="Harvest.openEditModal(\''+item.id+'\')">Edit</button>';
+        h+='<button class="btn btn-danger btn-sm" onclick="Harvest.handleDelete(\''+item.id+'\')">Delete</button>';
+        h+='</div></div></div>';
+      });
+      h+='</div>';
+    }
+    document.getElementById('panel-harvest').innerHTML=h;
+  },
+  _buildForm(item){
+    item=item||{};
+    const mothers=Store.mothersArray();
+    const envs=Store.environmentsArray();
+    let h='<div class="form-row">';
+    h+='<div class="form-group"><label class="form-label">Plant *</label><select class="form-select" id="f_hvMother" onchange="Harvest._autoEnv()">';
+    h+='<option value="">Select plant…</option>';
+    mothers.forEach(m=>{h+='<option value="'+m.id+'"'+(item.motherId===m.id?' selected':'')+'>'+U.esc(m.strainName)+'</option>'});
+    h+='</select></div>';
+    h+='<div class="form-group"><label class="form-label">Environment</label><select class="form-select" id="f_hvEnv">';
+    h+='<option value="">None</option>';
+    envs.forEach(e=>{h+='<option value="'+e.id+'"'+(item.environmentId===e.id?' selected':'')+'>'+U.esc(e.name)+'</option>'});
+    h+='</select></div></div>';
+    h+='<div class="form-row">';
+    h+='<div class="form-group"><label class="form-label">Harvest Date *</label><input class="form-input" type="date" id="f_hvDate" value="'+(item.harvestDate||U.today())+'"></div>';
+    h+='<div class="form-group"><label class="form-label">Trim Type</label><select class="form-select" id="f_hvTrim">';
+    ['','wet','dry','both'].forEach(t=>{h+='<option value="'+t+'"'+(item.trimType===t?' selected':'')+'>'+(t?t.charAt(0).toUpperCase()+t.slice(1):'Select…')+'</option>'});
+    h+='</select></div></div>';
+    h+='<div class="form-row">';
+    h+='<div class="form-group"><label class="form-label">Wet Weight (g)</label><input class="form-input" type="number" step="0.1" min="0" id="f_hvWet" value="'+(item.wetWeight||'')+'"></div>';
+    h+='<div class="form-group"><label class="form-label">Dry Weight (g)</label><input class="form-input" type="number" step="0.1" min="0" id="f_hvDry" value="'+(item.dryWeight||'')+'"></div></div>';
+    h+='<div class="form-row">';
+    h+='<div class="form-group"><label class="form-label">Cure Method</label><select class="form-select" id="f_hvCureMethod">';
+    [['','Select…'],['jar','Jar'],['bag','Bag'],['grove_bag','Grove Bag'],['bucket','Bucket'],['hang','Hang Dry'],['other','Other']].forEach(([v,l])=>{h+='<option value="'+v+'"'+(item.cureMethod===v?' selected':'')+'>'+l+'</option>'});
+    h+='</select></div>';
+    h+='<div class="form-group"><label class="form-label">Cure Status</label><select class="form-select" id="f_hvCureStatus">';
+    ['fresh','drying','curing','complete'].forEach(s=>{h+='<option value="'+s+'"'+(item.cureStatus===s||(! item.cureStatus&&s==='fresh')?' selected':'')+'>'+s.charAt(0).toUpperCase()+s.slice(1)+'</option>'});
+    h+='</select></div></div>';
+    h+='<div class="form-row">';
+    h+='<div class="form-group"><label class="form-label">Cure Start</label><input class="form-input" type="date" id="f_hvCureStart" value="'+(item.cureStart||'')+'"></div>';
+    h+='<div class="form-group"><label class="form-label">Cure End</label><input class="form-input" type="date" id="f_hvCureEnd" value="'+(item.cureEnd||'')+'"></div></div>';
+    h+='<div class="form-row">';
+    h+='<div class="form-group"><label class="form-label">Quality (1-5 stars)</label><div id="f_hvStars" style="font-size:1.4rem;cursor:pointer;color:var(--gold)">';
+    const q=parseInt(item.quality)||0;
+    for(let i=1;i<=5;i++) h+='<span onclick="Harvest._setStars('+i+')" data-star="'+i+'">'+(i<=q?'&#9733;':'&#9734;')+'</span>';
+    h+='</div><input type="hidden" id="f_hvQuality" value="'+(item.quality||'0')+'"></div>';
+    h+='<div class="form-group"><label class="form-label">Storage Location</label><input class="form-input" type="text" id="f_hvStorage" value="'+U.esc(item.storageLocation||'')+'" placeholder="e.g. Jar #3, Shelf B"></div></div>';
+    h+='<div class="form-group"><label class="form-label">Terpene Notes</label><textarea class="form-textarea" id="f_hvTerps" placeholder="e.g. Limonene, Myrcene, gassy…">'+U.esc(item.terps||'')+'</textarea></div>';
+    h+='<div class="form-group"><label class="form-label">Flavor Notes</label><textarea class="form-textarea" id="f_hvFlavors" placeholder="e.g. Citrus, earthy, pine…">'+U.esc(item.flavorNotes||'')+'</textarea></div>';
+    h+='<div class="form-group"><label class="form-label">Photo</label><div style="display:flex;align-items:center;gap:var(--space-sm)">';
+    if(item.photo||Harvest._photoData) h+='<img src="'+(Harvest._photoData||item.photo)+'" style="width:60px;height:60px;object-fit:cover;border-radius:var(--radius)">';
+    h+='<label class="btn btn-outline btn-sm" style="cursor:pointer">'+(item.photo||Harvest._photoData?'Change':'Upload')+'<input type="file" id="f_hvPhoto" accept="image/*" style="display:none" onchange="Harvest._onPhoto(this)"></label>';
+    if(item.photo||Harvest._photoData) h+='<button class="btn btn-ghost btn-sm" onclick="Harvest._photoData=\'\';document.getElementById(\'f_hvPhoto\').value=\'\';Harvest._refreshPhotoPreview()">Remove</button>';
+    h+='</div></div>';
+    h+='<div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="f_hvNotes" placeholder="General harvest notes…">'+U.esc(item.notes||'')+'</textarea></div>';
+    return h;
+  },
+  _setStars(n){
+    document.getElementById('f_hvQuality').value=n;
+    const container=document.getElementById('f_hvStars');
+    if(!container) return;
+    const spans=container.querySelectorAll('span');
+    spans.forEach((s,i)=>{s.innerHTML=i<n?'&#9733;':'&#9734;'});
+  },
+  _autoEnv(){
+    const mid=document.getElementById('f_hvMother').value;
+    if(!mid) return;
+    const m=Store.getById('mothers',mid);
+    if(m&&m.environmentId){
+      const sel=document.getElementById('f_hvEnv');
+      if(sel) sel.value=m.environmentId;
+    }
+  },
+  _onPhoto(input){
+    if(!input.files||!input.files[0]) return;
+    U.resizeImage(input.files[0],400,0.7,function(dataUrl){
+      Harvest._photoData=dataUrl;
+      Harvest._refreshPhotoPreview();
+    });
+  },
+  _refreshPhotoPreview(){
+    const wrapper=document.getElementById('f_hvPhoto');
+    if(!wrapper) return;
+    const group=wrapper.closest('.form-group');
+    if(!group) return;
+    const img=group.querySelector('img');
+    if(Harvest._photoData){
+      if(img) img.src=Harvest._photoData;
+      else{
+        const newImg=document.createElement('img');
+        newImg.src=Harvest._photoData;
+        newImg.style.cssText='width:60px;height:60px;object-fit:cover;border-radius:var(--radius)';
+        group.querySelector('div').prepend(newImg);
+      }
+    }else{
+      if(img) img.remove();
+    }
+  },
+  _readForm(){
+    return{
+      motherId:document.getElementById('f_hvMother').value,
+      environmentId:document.getElementById('f_hvEnv').value,
+      harvestDate:document.getElementById('f_hvDate').value,
+      trimType:document.getElementById('f_hvTrim').value,
+      wetWeight:document.getElementById('f_hvWet').value,
+      dryWeight:document.getElementById('f_hvDry').value,
+      cureMethod:document.getElementById('f_hvCureMethod').value,
+      cureStatus:document.getElementById('f_hvCureStatus').value,
+      cureStart:document.getElementById('f_hvCureStart').value,
+      cureEnd:document.getElementById('f_hvCureEnd').value,
+      quality:document.getElementById('f_hvQuality').value,
+      storageLocation:document.getElementById('f_hvStorage').value.trim(),
+      terps:document.getElementById('f_hvTerps').value.trim(),
+      flavorNotes:document.getElementById('f_hvFlavors').value.trim(),
+      photo:Harvest._photoData,
+      notes:document.getElementById('f_hvNotes').value.trim()
+    };
+  },
+  openAddModal(preselect){
+    Harvest._photoData='';
+    const initial=preselect?{motherId:preselect}:{};
+    Modal.open('Log Harvest',Harvest._buildForm(initial),
+      '<button class="btn btn-ghost" onclick="Modal.close()">Cancel</button><button class="btn btn-primary" id="saveHarvest">Save</button>'
+    );
+    if(preselect) setTimeout(()=>Harvest._autoEnv(),50);
+    document.getElementById('saveHarvest').addEventListener('click',()=>{
+      const data=Harvest._readForm();
+      if(!data.motherId){Toast.show('Please select a plant','error');return;}
+      if(!data.harvestDate){Toast.show('Please enter a harvest date','error');return;}
+      const id=U.id('hv');
+      data.id=id;data.createdAt=Date.now();data.updatedAt=Date.now();
+      if(!data.photo) data.photo='';
+      Store.set('harvests',id,data);
+      const m=Store.getById('mothers',data.motherId);
+      Store.addActivity('harvest_logged','Logged harvest: '+(m?m.strainName:'Unknown')+' — '+data.dryWeight+'g dry',id);
+      Modal.close();Toast.show('Harvest logged!');
+      Router.switchTo('harvest');
+    });
+  },
+  openEditModal(id){
+    const item=Store.getById('harvests',id);if(!item) return;
+    Harvest._photoData=item.photo||'';
+    Modal.open('Edit Harvest',Harvest._buildForm(item),
+      '<button class="btn btn-ghost" onclick="Modal.close()">Cancel</button><button class="btn btn-primary" id="saveHarvest">Save</button>'
+    );
+    document.getElementById('saveHarvest').addEventListener('click',()=>{
+      const data=Harvest._readForm();
+      if(!data.motherId){Toast.show('Please select a plant','error');return;}
+      if(!data.photo&&item.photo&&Harvest._photoData==='') data.photo='';
+      else if(!data.photo&&item.photo) data.photo=item.photo;
+      const updated=Object.assign({},item,data,{updatedAt:Date.now()});
+      Store.set('harvests',id,updated);
+      const m=Store.getById('mothers',updated.motherId);
+      Store.addActivity('harvest_updated','Updated harvest: '+(m?m.strainName:'Unknown'),id);
+      Modal.close();Toast.show('Harvest updated!');
+    });
+  },
+  handleDelete(id){
+    if(!confirm('Delete this harvest record? This cannot be undone.')) return;
+    const item=Store.getById('harvests',id);
+    Store.remove('harvests',id);
+    const m=item&&item.motherId?Store.getById('mothers',item.motherId):null;
+    Store.addActivity('harvest_deleted','Deleted harvest: '+(m?m.strainName:'Unknown'),id);
+    Toast.show('Harvest deleted');
+  }
+};
+window.Harvest=Harvest;
+
+/* ═══════════════════════════════════════════════
    STRAIN LIBRARY
    ═══════════════════════════════════════════════ */
 const Strains={
@@ -2928,6 +3184,15 @@ const DataIO={
    ═══════════════════════════════════════════════ */
 const WhatsNew={
   _notes:{
+    '1.4.0':[
+      'New <b>Harvest</b> tab — log harvests with wet/dry weight, cure tracking &amp; quality rating',
+      'Track <b>cure method</b> (jar, bag, grove bag, hang dry) and <b>cure status</b> (fresh → drying → curing → complete)',
+      '<b>Dry ratio</b> auto-calculated from wet/dry weights',
+      '<b>5-star quality</b> rating, terpene notes, flavor notes &amp; storage location',
+      'Photo upload per harvest, plant &amp; environment linking',
+      'Dashboard shows <b>Total Yield</b> stat card (g/oz) &amp; quick action',
+      'Plant cards now have <b>+ Harvest</b> quick action button'
+    ],
     '1.3.1':[
       '<b>Strain Catalog</b> expanded to <b>363 entries</b> across 7 providers',
       '6 seed breeders: Sticky Finger Seeds, Hawaiian Budline, Ziplock Seeds, Makena Genetics, Deep Green Genetics, Aloha Island Genetics',
@@ -2990,7 +3255,7 @@ function init(){
   document.getElementById('appVersion').textContent='v'+APP_VERSION;
   Store.subscribe(()=>{
     const tab=Router._current;
-    const renderers={dashboard:Dashboard,plants:Plants,environments:Environments,clones:Clones,tasks:Tasks,feeding:Feeding,journal:Journal,ipm:IPM,strains:Strains,analytics:Analytics,environment:Environment};
+    const renderers={dashboard:Dashboard,plants:Plants,environments:Environments,clones:Clones,tasks:Tasks,feeding:Feeding,journal:Journal,ipm:IPM,harvest:Harvest,strains:Strains,analytics:Analytics,environment:Environment};
     if(renderers[tab]) renderers[tab].render();
   });
   Router.init();
