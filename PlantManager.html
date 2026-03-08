@@ -311,6 +311,25 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 .license-footer{text-align:center;padding:var(--space-lg) var(--space-md);font-size:.7rem;color:var(--text-tertiary);border-top:1px solid var(--border-subtle);margin-top:var(--space-xl)}
 .license-footer a{color:var(--cyan);text-decoration:none}
 .license-footer a:hover{text-decoration:underline}
+
+/* ── Environment Cards ── */
+.env-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:var(--space-lg)}
+.env-card .card-body{padding:var(--space-lg)}
+.env-card .env-name{font-size:1.05rem;font-weight:700;margin-bottom:var(--space-xs);display:flex;align-items:center;gap:var(--space-sm)}
+.env-card .env-details{font-size:.8rem;color:var(--text-secondary);line-height:1.7;margin-bottom:var(--space-md)}
+.env-card .env-details span{display:block}
+.env-card .env-stats{display:flex;gap:var(--space-lg);margin-bottom:var(--space-md)}
+.env-card .env-stat{text-align:center}
+.env-card .env-stat .es-val{font-size:1.1rem;font-weight:700;line-height:1}
+.env-card .env-stat .es-label{font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text-secondary)}
+.env-card .env-actions{display:flex;gap:var(--space-xs);flex-wrap:wrap}
+.env-type-badge{display:inline-flex;padding:.15rem .5rem;border-radius:3px;font-size:.6rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.env-type-tent{background:rgba(0,200,192,.15);color:var(--cyan)}
+.env-type-room{background:rgba(45,110,53,.2);color:var(--leaf)}
+.env-type-greenhouse{background:rgba(240,180,41,.15);color:var(--gold)}
+.env-type-outdoor{background:rgba(74,158,82,.15);color:var(--leaf)}
+.env-type-closet{background:var(--bg-input);color:var(--text-secondary)}
+.env-type-other{background:var(--bg-input);color:var(--text-tertiary)}
 </style>
 </head>
 <body>
@@ -333,6 +352,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 <nav class="tab-nav" id="tabNav">
   <button class="tab-btn active" data-tab="dashboard"><span class="tab-icon">&#9638;</span>Dashboard</button>
   <button class="tab-btn" data-tab="plants"><span class="tab-icon">&#127807;</span>Plants</button>
+  <button class="tab-btn" data-tab="environments"><span class="tab-icon">&#9978;</span>Environs</button>
   <button class="tab-btn" data-tab="clones"><span class="tab-icon">&#9986;</span>Clones</button>
   <button class="tab-btn" data-tab="tasks"><span class="tab-icon">&#9745;</span>Tasks</button>
   <button class="tab-btn" data-tab="environment"><span class="tab-icon">&#127777;</span>Environ</button>
@@ -345,6 +365,8 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
     <section class="tab-panel active" id="panel-dashboard"></section>
     <!-- Plants -->
     <section class="tab-panel" id="panel-plants"></section>
+    <!-- Environments -->
+    <section class="tab-panel" id="panel-environments"></section>
     <!-- Clones -->
     <section class="tab-panel" id="panel-clones"></section>
     <!-- Tasks -->
@@ -437,12 +459,13 @@ const Store = {
   _key:'motherPlantTracker',
   _data:null,
   _subs:[],
-  _default(){return{version:'1.0.0',settings:{theme:'dark',lastActiveTab:'dashboard'},mothers:{},clones:{},tasks:{},taskCompletions:{},envLogs:{},activityLog:[]}},
+  _default(){return{version:'1.0.0',settings:{theme:'dark',lastActiveTab:'dashboard'},mothers:{},environments:{},clones:{},tasks:{},taskCompletions:{},envLogs:{},activityLog:[]}},
   load(){
     try{
       const raw=localStorage.getItem(this._key);
       this._data=raw?JSON.parse(raw):this._default();
       if(!this._data.version) this._data=this._default();
+      if(!this._data.environments) this._data.environments={};
     }catch(e){this._data=this._default()}
   },
   save(){
@@ -479,7 +502,9 @@ const Store = {
     if(v===undefined) return this._data.settings[k];
     this._data.settings[k]=v;this.save();
   },
+  environmentsArray(){return Object.values(this._data.environments).filter(e=>!e.archived).sort((a,b)=>a.name.localeCompare(b.name))},
   mothersArray(){return Object.values(this._data.mothers).filter(m=>!m.archived).sort((a,b)=>a.strainName.localeCompare(b.strainName))},
+  mothersInEnv(envId){return this.mothersArray().filter(m=>m.environmentId===envId)},
   clonesArray(){return Object.values(this._data.clones).sort((a,b)=>new Date(b.cloneDate)-new Date(a.cloneDate))},
   tasksArray(){return Object.values(this._data.tasks).sort((a,b)=>a.nextDueDate>b.nextDueDate?1:-1)},
   envArray(){return Object.values(this._data.envLogs).sort((a,b)=>b.timestamp-a.timestamp)},
@@ -573,7 +598,7 @@ const Router={
     Store.setting('lastActiveTab',tab);
     document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
     document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active',p.id==='panel-'+tab));
-    const renderers={dashboard:Dashboard,plants:Plants,clones:Clones,tasks:Tasks,environment:Environment};
+    const renderers={dashboard:Dashboard,plants:Plants,environments:Environments,clones:Clones,tasks:Tasks,environment:Environment};
     if(renderers[tab]) renderers[tab].render();
   }
 };
@@ -584,6 +609,7 @@ const Router={
 const Dashboard={
   render(){
     const mothers=Store.mothersArray();
+    const envCount=Store.environmentsArray().length;
     const allClones=Store.clonesArray();
     const activeClones=allClones.filter(c=>!['transplanted','failed'].includes(c.rootingStatus));
     const allTasks=Store.tasksArray().filter(t=>t.enabled);
@@ -600,15 +626,17 @@ const Dashboard={
     h+='<div class="stats-grid">';
     h+='<div class="card stat-card"><div class="stat-icon">&#127793;</div><div class="stat-value">'+mothers.length+'</div><div class="stat-label">Mother Plants</div></div>';
     h+='<div class="card stat-card gold"><div class="stat-icon">&#9986;</div><div class="stat-value">'+activeClones.length+'</div><div class="stat-label">Active Clones</div></div>';
-    h+='<div class="card stat-card green"><div class="stat-icon">&#9745;</div><div class="stat-value">'+(dueToday.length+overdue.length)+'</div><div class="stat-label">Tasks Due</div></div>';
-    h+='<div class="card stat-card orange"><div class="stat-icon">&#128154;</div><div class="stat-value" style="font-size:1.1rem">'+worstHealth+'</div><div class="stat-label">Health Overview</div></div>';
+    h+='<div class="card stat-card green"><div class="stat-icon">&#9978;</div><div class="stat-value">'+envCount+'</div><div class="stat-label">Environments</div></div>';
+    h+='<div class="card stat-card orange"><div class="stat-icon">&#9745;</div><div class="stat-value">'+(dueToday.length+overdue.length)+'</div><div class="stat-label">Tasks Due</div></div>';
+    h+='<div class="card stat-card"><div class="stat-icon">&#128154;</div><div class="stat-value" style="font-size:1.1rem">'+worstHealth+'</div><div class="stat-label">Health Overview</div></div>';
     h+='</div>';
 
     h+='<div class="quick-actions" style="margin-top:var(--space-xl)">';
     h+='<button class="btn btn-primary" onclick="Plants.openAddModal()">+ Add Mother</button>';
+    h+='<button class="btn btn-outline" onclick="Environments.openAddModal()">+ Add Environ</button>';
     h+='<button class="btn btn-outline" onclick="Clones.openAddModal()">+ Log Clones</button>';
     h+='<button class="btn btn-outline" onclick="Tasks.openAddModal()">+ Add Task</button>';
-    h+='<button class="btn btn-outline" onclick="Environment.openLogModal()">+ Log Env</button>';
+    h+='<button class="btn btn-outline" onclick="Environment.openLogModal()">+ Log Reading</button>';
     h+='</div>';
 
     if(overdue.length){
@@ -655,7 +683,7 @@ const Plants={
     const mothers=Store.mothersArray();
     let filtered=mothers;
     if(this._filter!=='all') filtered=filtered.filter(m=>m.healthStatus===this._filter);
-    if(this._search){const q=this._search.toLowerCase();filtered=filtered.filter(m=>(m.strainName+' '+m.breeder+' '+m.location+' '+m.notes).toLowerCase().includes(q))}
+    if(this._search){const q=this._search.toLowerCase();filtered=filtered.filter(m=>{const env=m.environmentId?Store.getById('environments',m.environmentId):null;return(m.strainName+' '+m.breeder+' '+(env?env.name:m.location||'')+' '+m.notes).toLowerCase().includes(q)})}
 
     let h='<div class="toolbar">';
     h+='<button class="btn btn-primary" onclick="Plants.openAddModal()">+ Add Mother</button>';
@@ -690,7 +718,9 @@ const Plants={
         h+='</div>';
         h+='<div class="plant-details">';
         h+='<span>Age: '+U.age(m.dateAcquired)+'</span>';
-        if(m.location) h+='<span>Location: '+U.esc(m.location)+'</span>';
+        const _env=m.environmentId?Store.getById('environments',m.environmentId):null;
+        if(_env) h+='<span>Env: '+U.esc(_env.name)+'</span>';
+        else if(m.location) h+='<span>Location: '+U.esc(m.location)+'</span>';
         if(m.growthStage) h+='<span>Stage: '+m.growthStage.charAt(0).toUpperCase()+m.growthStage.slice(1)+'</span>';
         if(rate!==null) h+='<span>Clone Rate: '+rate+'%</span>';
         h+='</div>';
@@ -730,7 +760,11 @@ const Plants={
     ['seedling','vegetative','mature','declining'].forEach(s=>{h+='<option value="'+s+'"'+(m.growthStage===s?' selected':'')+'>'+s.charAt(0).toUpperCase()+s.slice(1)+'</option>'});
     h+='</select></div>';
     h+='</div>';
-    h+='<div class="form-group"><label class="form-label">Location</label><input class="form-input" id="f_location" value="'+U.esc(m.location||'')+'"></div>';
+    const _envs=Store.environmentsArray();
+    h+='<div class="form-group"><label class="form-label">Environment</label><select class="form-select" id="f_environmentId">';
+    h+='<option value="">Unassigned</option>';
+    _envs.forEach(e=>{h+='<option value="'+e.id+'"'+(m.environmentId===e.id?' selected':'')+'>'+U.esc(e.name)+'</option>'});
+    h+='</select></div>';
     h+='<div class="form-group"><label class="form-label">Photo</label>';
     h+='<div class="photo-preview" id="photoPreview" onclick="document.getElementById(\'f_photo\').click()">';
     if(m.photo) h+='<img src="'+m.photo+'" id="photoImg">';
@@ -759,7 +793,7 @@ const Plants={
       source:document.getElementById('f_source').value,
       healthStatus:document.getElementById('f_healthStatus').value,
       growthStage:document.getElementById('f_growthStage').value,
-      location:document.getElementById('f_location').value.trim(),
+      environmentId:document.getElementById('f_environmentId').value,
       notes:document.getElementById('f_notes').value.trim(),
       photo:Plants._photoData||''
     };
@@ -806,6 +840,123 @@ const Plants={
   }
 };
 window.Plants=Plants;
+
+/* ═══════════════════════════════════════════════
+   ENVIRONMENTS
+   ═══════════════════════════════════════════════ */
+const Environments={
+  _search:'',
+  render(){
+    const envs=Store.environmentsArray();
+    let filtered=envs;
+    if(this._search){const q=this._search.toLowerCase();filtered=filtered.filter(e=>(e.name+' '+e.type+' '+(e.dimensions||'')+' '+(e.lightType||'')+' '+(e.notes||'')).toLowerCase().includes(q))}
+
+    let h='<div class="toolbar">';
+    h+='<button class="btn btn-primary" onclick="Environments.openAddModal()">+ Add Environment</button>';
+    h+='<input class="search-input" type="text" placeholder="Search environments..." value="'+U.esc(this._search)+'" oninput="Environments._onSearch(this.value)">';
+    h+='</div>';
+
+    if(!filtered.length){
+      h+='<div class="empty-state"><div class="empty-icon">&#9978;</div><div class="empty-text">'+(envs.length?'No environments match your search.':'No grow environments yet. Add your first tent or room!')+'</div>';
+      if(!envs.length) h+='<button class="btn btn-primary" onclick="Environments.openAddModal()">+ Add Environment</button>';
+      h+='</div>';
+    }else{
+      h+='<div class="env-grid">';
+      filtered.forEach(env=>{
+        const plants=Store.mothersInEnv(env.id);
+        const logs=Store.envArray().filter(l=>l.environmentId===env.id);
+        const latest=logs[0]||{};
+        h+='<div class="card env-card"><div class="card-body">';
+        h+='<div class="env-name"><span class="env-type-badge env-type-'+env.type+'">'+env.type+'</span> '+U.esc(env.name)+'</div>';
+        h+='<div class="env-details">';
+        if(env.dimensions) h+='<span>Dimensions: '+U.esc(env.dimensions)+'</span>';
+        if(env.lightType) h+='<span>Light: '+U.esc(env.lightType)+'</span>';
+        if(env.lightSchedule) h+='<span>Schedule: '+U.esc(env.lightSchedule)+'</span>';
+        if(env.notes) h+='<span>'+U.esc(env.notes)+'</span>';
+        h+='</div>';
+        h+='<div class="env-stats">';
+        h+='<div class="env-stat"><div class="es-val" style="color:var(--leaf)">'+plants.length+'</div><div class="es-label">Plants</div></div>';
+        h+='<div class="env-stat"><div class="es-val" style="color:var(--cyan)">'+(latest.temperature!=null?latest.temperature+'&deg;':'—')+'</div><div class="es-label">Temp</div></div>';
+        h+='<div class="env-stat"><div class="es-val" style="color:var(--cyan)">'+(latest.humidity!=null?latest.humidity+'%':'—')+'</div><div class="es-label">RH</div></div>';
+        h+='<div class="env-stat"><div class="es-val" style="color:var(--cyan)">'+(latest.ph!=null?latest.ph:'—')+'</div><div class="es-label">pH</div></div>';
+        h+='</div>';
+        h+='<div class="env-actions">';
+        h+='<button class="btn btn-ghost btn-sm" onclick="Environments.openEditModal(\''+env.id+'\')">Edit</button>';
+        h+='<button class="btn btn-outline btn-sm" onclick="Environment.openLogModal(\''+env.id+'\')">+ Log Reading</button>';
+        h+='<button class="btn btn-danger btn-sm" onclick="Environments.handleDelete(\''+env.id+'\')">Archive</button>';
+        h+='</div></div></div>';
+      });
+      h+='</div>';
+    }
+    document.getElementById('panel-environments').innerHTML=h;
+  },
+  _onSearch:U.debounce(function(v){Environments._search=v;Environments.render()},300),
+  _buildForm(env){
+    env=env||{};
+    let h='<div class="form-group"><label class="form-label">Name *</label><input class="form-input" id="f_envName" value="'+U.esc(env.name||'')+'" placeholder="e.g. Veg Tent 4x4"></div>';
+    h+='<div class="form-row">';
+    h+='<div class="form-group"><label class="form-label">Type</label><select class="form-select" id="f_envType">';
+    [['tent','Tent'],['room','Room'],['greenhouse','Greenhouse'],['outdoor','Outdoor'],['closet','Closet'],['other','Other']].forEach(([v,l])=>{
+      h+='<option value="'+v+'"'+(env.type===v?' selected':'')+'>'+l+'</option>'});
+    h+='</select></div>';
+    h+='<div class="form-group"><label class="form-label">Dimensions</label><input class="form-input" id="f_envDimensions" value="'+U.esc(env.dimensions||'')+'" placeholder="e.g. 4x4x6.5"></div>';
+    h+='</div>';
+    h+='<div class="form-row">';
+    h+='<div class="form-group"><label class="form-label">Light Type</label><input class="form-input" id="f_envLightType" value="'+U.esc(env.lightType||'')+'" placeholder="e.g. LED 600W"></div>';
+    h+='<div class="form-group"><label class="form-label">Light Schedule</label><input class="form-input" id="f_envLightSchedule" value="'+U.esc(env.lightSchedule||'')+'" placeholder="e.g. 18/6"></div>';
+    h+='</div>';
+    h+='<div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="f_envNotes">'+U.esc(env.notes||'')+'</textarea></div>';
+    return h;
+  },
+  _readForm(){
+    const name=document.getElementById('f_envName').value.trim();
+    if(!name){Toast.show('Environment name is required.','error');return null}
+    return{
+      name:name,
+      type:document.getElementById('f_envType').value,
+      dimensions:document.getElementById('f_envDimensions').value.trim(),
+      lightType:document.getElementById('f_envLightType').value.trim(),
+      lightSchedule:document.getElementById('f_envLightSchedule').value.trim(),
+      notes:document.getElementById('f_envNotes').value.trim()
+    };
+  },
+  openAddModal(){
+    Modal.open('Add Environment',Environments._buildForm(),
+      '<button class="btn btn-ghost" onclick="Modal.close()">Cancel</button><button class="btn btn-primary" id="saveEnvItem">Save</button>'
+    );
+    document.getElementById('saveEnvItem').addEventListener('click',()=>{
+      const data=Environments._readForm();if(!data) return;
+      const id=U.id('env');data.id=id;data.archived=false;data.createdAt=Date.now();
+      Store.set('environments',id,data);
+      Store.addActivity('env_added','Added environment: '+data.name,id);
+      Modal.close();Toast.show('Environment added!');
+      Router.switchTo('environments');
+    });
+  },
+  openEditModal(id){
+    const env=Store.getById('environments',id);if(!env) return;
+    Modal.open('Edit Environment',Environments._buildForm(env),
+      '<button class="btn btn-ghost" onclick="Modal.close()">Cancel</button><button class="btn btn-primary" id="saveEnvItem">Save</button>'
+    );
+    document.getElementById('saveEnvItem').addEventListener('click',()=>{
+      const data=Environments._readForm();if(!data) return;
+      const updated=Object.assign({},env,data);
+      Store.set('environments',id,updated);
+      Store.addActivity('env_updated','Updated environment: '+data.name,id);
+      Modal.close();Toast.show('Environment updated!');
+    });
+  },
+  handleDelete(id){
+    const env=Store.getById('environments',id);if(!env) return;
+    Modal.confirm('Archive Environment','Archive "'+U.esc(env.name)+'"? Plants assigned to it will become unassigned.',()=>{
+      env.archived=true;
+      Store.set('environments',id,env);
+      Store.addActivity('env_archived','Archived environment: '+env.name,id);
+      Toast.show('Environment archived.');
+    });
+  }
+};
+window.Environments=Environments;
 
 /* ═══════════════════════════════════════════════
    CLONES
@@ -1160,18 +1311,18 @@ function taskIcon(type){
    ENVIRONMENT
    ═══════════════════════════════════════════════ */
 const Environment={
-  _filterPlant:'all',
+  _filterEnv:'all',
   render(){
-    const mothers=Store.mothersArray();
+    const envs=Store.environmentsArray();
     let logs=Store.envArray();
-    if(this._filterPlant!=='all') logs=logs.filter(e=>e.motherId===this._filterPlant);
+    if(this._filterEnv!=='all') logs=logs.filter(e=>(e.environmentId||e.motherId)===this._filterEnv);
     const latest=logs[0]||{};
 
     let h='<div class="toolbar">';
     h+='<button class="btn btn-primary" onclick="Environment.openLogModal()">+ Log Reading</button>';
-    h+='<select class="filter-select" onchange="Environment._filterPlant=this.value;Environment.render()">';
-    h+='<option value="all">All / Global</option>';
-    mothers.forEach(m=>{h+='<option value="'+m.id+'"'+(this._filterPlant===m.id?' selected':'')+'>'+U.esc(m.strainName)+'</option>'});
+    h+='<select class="filter-select" onchange="Environment._filterEnv=this.value;Environment.render()">';
+    h+='<option value="all">All Environments</option>';
+    envs.forEach(e=>{h+='<option value="'+e.id+'"'+(this._filterEnv===e.id?' selected':'')+'>'+U.esc(e.name)+'</option>'});
     h+='</select></div>';
 
     h+='<div class="env-readings">';
@@ -1230,11 +1381,11 @@ const Environment={
     }).join(' ');
     return '<svg class="sparkline" width="'+w+'" height="'+ht+'" viewBox="0 0 '+w+' '+ht+'"><polyline fill="none" stroke="var(--cyan)" stroke-width="1.5" points="'+points+'"/></svg>';
   },
-  openLogModal(){
-    const mothers=Store.mothersArray();
-    let h='<div class="form-group"><label class="form-label">Plant (optional)</label><select class="form-select" id="f_envMother">';
-    h+='<option value="">Global</option>';
-    mothers.forEach(m=>{h+='<option value="'+m.id+'">'+U.esc(m.strainName)+'</option>'});
+  openLogModal(preselect){
+    const envs=Store.environmentsArray();
+    let h='<div class="form-group"><label class="form-label">Environment</label><select class="form-select" id="f_envTarget">';
+    h+='<option value="">Global (no environment)</option>';
+    envs.forEach(e=>{h+='<option value="'+e.id+'"'+(preselect===e.id?' selected':'')+'>'+U.esc(e.name)+'</option>'});
     h+='</select></div>';
     h+='<div class="form-row">';
     h+='<div class="form-group"><label class="form-label">Temperature (&deg;F)</label><input class="form-input" id="f_temp" type="number" step="0.1"></div>';
@@ -1253,7 +1404,7 @@ const Environment={
       const id=U.id('e');
       const entry={
         id:id,
-        motherId:document.getElementById('f_envMother').value,
+        environmentId:document.getElementById('f_envTarget').value,
         timestamp:Date.now(),
         temperature:document.getElementById('f_temp').value?parseFloat(document.getElementById('f_temp').value):null,
         humidity:document.getElementById('f_humidity').value?parseInt(document.getElementById('f_humidity').value):null,
@@ -1318,7 +1469,7 @@ function init(){
   DataIO.init();
   Store.subscribe(()=>{
     const tab=Router._current;
-    const renderers={dashboard:Dashboard,plants:Plants,clones:Clones,tasks:Tasks,environment:Environment};
+    const renderers={dashboard:Dashboard,plants:Plants,environments:Environments,clones:Clones,tasks:Tasks,environment:Environment};
     if(renderers[tab]) renderers[tab].render();
   });
   Router.init();
