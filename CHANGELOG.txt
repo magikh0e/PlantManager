@@ -3,6 +3,55 @@ CHANGELOG — Tropical Roots Maui - Plant Manager
 https://github.com/magikh0e/PlantManager
 
 
+v1.6.4 — 2026-03-08
+--------------------
+FEATURE: Catalogs, Guide Links, Tips & Quality-of-Life
+
+  Nutrient Product Catalog
+  - "Browse Nutrient Catalog" button on the Feeding log form
+  - Inline picker with search and brand filter dropdown
+  - 76 products across 10 brands: General Hydroponics, Fox Farm,
+    Advanced Nutrients, Botanicare, Canna, Down To Earth, Gaia Green,
+    Neptune's Harvest, Athena, Generic
+  - Selecting a product auto-fills nutrient name, amount, and unit
+
+  IPM Treatment Catalog
+  - "Browse IPM Catalog" button on the IPM log form
+  - Inline picker with search and category filter dropdown
+  - 51 treatments across 6 categories: insecticide, miticide, fungicide,
+    biological, organic, environmental
+  - Treatment stacking — selecting multiple products appends with " + "
+    separator; picker stays open for multi-product entries
+
+  Grow Guide Links
+  - Contextual guide links added below toolbar on all 8 content tabs
+  - Plants: Mother Plants, Plant Training, Deficiency Guide, Pheno-Hunting,
+    Vegetative Stage
+  - Environments: Grow Tent Setup, Temp & Humidity (VPD), Light & DLI
+  - Clones: Cloning Guide, Vertical Germination, Seed Starting
+  - Feeding: Neptune's Harvest, Gaia Green Schedule, DTE Amendments,
+    Top Dressing, Living Soil, Compost Tea
+  - IPM: Pest ID, Diatomaceous Earth, Beauveria Bassiana, Companion
+    Planting, Microbial Fortress, White Oil Spray
+  - Harvest: Harvest Guide, Trichome Guide, Drying Guide, Curing Guide,
+    Natural Fade
+  - Strains: Pheno-Hunting, Terpene Guide, Flavonoid Guide
+  - Readings: Temp & Humidity (VPD), Water Alchemy, Chloramine Guide,
+    Aquifer Protocol (SIP)
+  - Links open in new tabs and wrap responsively on mobile
+
+  Dashboard Tips Rotation
+  - Tip banner between hero image and stats grid
+  - 17 app usage tips with auto-rotation every 30 seconds
+  - Left/right arrows for manual navigation with fade transition
+  - Timer starts on dashboard tab, pauses on other tabs
+
+  Strain Grow Notes
+  - Selecting a strain when adding a plant now auto-fills the notes field
+    with the strain's grow notes (prefixed "[Strain Notes]")
+  - Only fills when the notes field is empty to avoid overwriting
+
+
 v1.6.3 — 2026-03-08
 --------------------
 IMPROVEMENT: Mobile Browser Optimization

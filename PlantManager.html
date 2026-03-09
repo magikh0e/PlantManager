@@ -164,6 +164,21 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 /* ── Quick Actions ── */
 .quick-actions{display:flex;flex-wrap:wrap;gap:var(--space-sm);margin-bottom:var(--space-xl)}
 
+/* ── Tip Banner ── */
+.tip-banner{display:flex;align-items:center;gap:var(--space-md);padding:var(--space-md) var(--space-lg);margin-bottom:var(--space-xl);background:var(--bg-card);border:1px solid var(--border-subtle);border-left:3px solid var(--cyan);border-radius:var(--radius);font-size:.82rem;color:var(--text-secondary);line-height:1.5}
+.tip-banner .tip-icon{font-size:1.3rem;flex-shrink:0}
+.tip-banner .tip-text{flex:1;transition:opacity .3s var(--ease)}
+.tip-banner .tip-text.fading{opacity:0}
+.tip-banner .tip-nav{display:flex;gap:var(--space-xs);flex-shrink:0}
+.tip-banner .tip-nav button{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border-subtle);border-radius:var(--radius-sm);background:transparent;color:var(--text-tertiary);font-size:.7rem;cursor:pointer;transition:all var(--duration) var(--ease)}
+.tip-banner .tip-nav button:hover{border-color:var(--cyan);color:var(--cyan)}
+
+/* ── Guide Links ── */
+.guide-links{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-xs) var(--space-sm);margin-bottom:var(--space-lg);font-size:.72rem}
+.guide-links-label{color:var(--text-tertiary);font-weight:600;text-transform:uppercase;letter-spacing:.04em;font-size:.65rem}
+.guide-link{color:var(--cyan);text-decoration:none;padding:.15rem .5rem;border:1px solid rgba(0,200,192,.2);border-radius:var(--radius-sm);transition:all var(--duration) var(--ease)}
+.guide-link:hover{background:rgba(0,200,192,.08);border-color:var(--cyan)}
+
 /* ── Plant Cards Grid ── */
 .plant-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:var(--space-lg)}
 .plant-card .plant-photo{height:180px;background:linear-gradient(135deg,var(--bg-secondary),rgba(27,58,30,.3));display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative;overflow:hidden}
@@ -541,7 +556,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 (function(){
 'use strict';
 
-const APP_VERSION = '1.6.3';
+const APP_VERSION = '1.6.4';
 
 /* ═══════════════════════════════════════════════
    UTILS
@@ -592,6 +607,13 @@ const U = {
   }
 };
 
+const _GP='/KnowledgeBase/cannabis-grow-guides/';
+function _guideLinks(links){
+  let h='<div class="guide-links"><span class="guide-links-label">&#128214; Guides:</span>';
+  links.forEach(l=>{h+='<a href="'+_GP+l[1]+'" target="_blank" class="guide-link">'+l[0]+'</a>'});
+  return h+'</div>';
+}
+
 /* ═══════════════════════════════════════════════
    STORE
    ═══════════════════════════════════════════════ */
@@ -599,7 +621,7 @@ const Store = {
   _key:'motherPlantTracker',
   _data:null,
   _subs:[],
-  _default(){return{version:'1.0.0',settings:{theme:'dark',lastActiveTab:'dashboard',showHero:true},mothers:{},environments:{},clones:{},tasks:{},taskCompletions:{},envLogs:{},feedings:{},photoJournal:{},ipmLogs:{},strains:{},harvests:{},activityLog:[]}},
+  _default(){return{version:'1.0.0',settings:{theme:'dark',lastActiveTab:'dashboard',showHero:true},mothers:{},environments:{},clones:{},tasks:{},taskCompletions:{},envLogs:{},feedings:{},photoJournal:{},ipmLogs:{},strains:{},harvests:{},nutrientProducts:{},activityLog:[]}},
   load(){
     try{
       const raw=localStorage.getItem(this._key);
@@ -611,6 +633,7 @@ const Store = {
       if(!this._data.ipmLogs) this._data.ipmLogs={};
       if(!this._data.strains) this._data.strains={};
       if(!this._data.harvests) this._data.harvests={};
+      if(!this._data.nutrientProducts) this._data.nutrientProducts={};
       if(this._data.settings.showHero===undefined) this._data.settings.showHero=true;
       if(this._data.settings.notificationsEnabled===undefined) this._data.settings.notificationsEnabled=false;
       if(this._data.settings.notifyOverdueTasks===undefined) this._data.settings.notifyOverdueTasks=true;
@@ -695,6 +718,7 @@ const Store = {
   },
   strainsArray(){return Object.values(this._data.strains).filter(s=>!s.archived).sort((a,b)=>a.name.localeCompare(b.name))},
   strainById(id){return(this._data.strains||{})[id]},
+  nutrientProductsArray(){return Object.values(this._data.nutrientProducts).sort((a,b)=>a.name.localeCompare(b.name))},
   allMothersArray(){return Object.values(this._data.mothers).sort((a,b)=>a.strainName.localeCompare(b.strainName))},
   childMothers(pid){return this.allMothersArray().filter(m=>m.parentMotherId===pid)},
   motherGeneration(mid){let g=0;let c=this.getById('mothers',mid);const seen=new Set();while(c&&c.parentMotherId&&!seen.has(c.id)){seen.add(c.id);g++;c=this.getById('mothers',c.parentMotherId)}return g},
@@ -806,6 +830,7 @@ const Router={
     document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active',p.id==='panel-'+tab));
     const renderers={dashboard:Dashboard,plants:Plants,environments:Environments,clones:Clones,tasks:Tasks,feeding:Feeding,journal:Journal,ipm:IPM,harvest:Harvest,strains:Strains,analytics:Analytics,environment:Environment};
     if(renderers[tab]) renderers[tab].render();
+    if(tab==='dashboard') Dashboard._startTipTimer(); else Dashboard._stopTipTimer();
   }
 };
 
@@ -813,6 +838,44 @@ const Router={
    DASHBOARD
    ═══════════════════════════════════════════════ */
 const Dashboard={
+  _tips:[
+    'Export your data regularly with the \u2193 button in the header \u2014 backups save to a JSON file.',
+    'Use the Lineage button on plant cards to visualize the full clone family tree.',
+    'Set environment thresholds (temp, humidity, pH) to get dashboard alerts when readings drift.',
+    'Add photos in the Journal tab to create a visual timeline of each plant\u2019s growth.',
+    'Mark tasks complete to auto-advance recurring schedules \u2014 no manual date editing needed.',
+    'The Analytics tab has six chart types including environment trends and clone success rates.',
+    'Pick strains from your Library when adding plants \u2014 it auto-fills strain, type, and breeder.',
+    'Use the bell icon to enable browser notifications for overdue tasks and environment alerts.',
+    'Log feedings with pH in/out to track drift \u2014 values over 0.5 difference are highlighted.',
+    'Filter any tab by plant or environment using the toolbar dropdowns.',
+    'The IPM tab tracks pest sightings with severity levels \u2014 mark issues resolved when treated.',
+    'Harvest entries auto-calculate dry ratio % from wet and dry weights.',
+    'Toggle the hero banner on/off with the gear icon in the header.',
+    'Switch between light and dark themes using the moon icon in the header.',
+    'Clone batches track success rates that feed back to each mother plant\u2019s card.',
+    'Star ratings on harvests help you compare quality across different grows.',
+    'The Browse Catalog in Strains has 363+ entries \u2014 use the breeder filter to narrow results.',
+  ],
+  _tipIndex:Math.floor(Math.random()*17),
+  _tipTimer:null,
+  _showTip(dir){
+    const el=document.getElementById('tipText');
+    if(!el)return;
+    el.classList.add('fading');
+    setTimeout(()=>{
+      this._tipIndex=(this._tipIndex+dir+this._tips.length)%this._tips.length;
+      el.textContent=this._tips[this._tipIndex];
+      el.classList.remove('fading');
+    },300);
+  },
+  _startTipTimer(){
+    this._stopTipTimer();
+    this._tipTimer=setInterval(()=>this._showTip(1),30000);
+  },
+  _stopTipTimer(){
+    if(this._tipTimer){clearInterval(this._tipTimer);this._tipTimer=null;}
+  },
   render(){
     const mothers=Store.mothersArray();
     const envCount=Store.environmentsArray().length;
@@ -831,6 +894,7 @@ const Dashboard={
 
     let h='';
     if(HeroToggle.isVisible()){h+='<div class="hero-banner"><img src="https://tropicalrootsmaui.com/img/tropical-roots-maui-kanehiwa-alchemical-sanctuary-logo.webp" alt="A Tiki Golem Master named Kānehiwa stands in a misty, futuristic Polynesian lab, gesturing at a glowing holographic projection of a cannabis plant and its golden root zone. The scene is framed by hand-carved Koa wood with the text BUILDING THE MICROBIAL FORTRESS and features a tropical waterfall sunrise in the background." title="Tropical Roots Maui: Kānehiwa Plant Tracker Interface" width="1200" height="723"><div class="hero-caption">Kānehiwa monitors real-time biological data and the Microbial Fortress through the sanctuary\'s holographic Plant Tracker interface.</div></div>';}
+    h+='<div class="tip-banner"><span class="tip-icon">&#128161;</span><span class="tip-text" id="tipText">'+this._tips[this._tipIndex]+'</span><span class="tip-nav"><button onclick="Dashboard._showTip(-1);Dashboard._startTipTimer()" title="Previous tip">&#9664;</button><button onclick="Dashboard._showTip(1);Dashboard._startTipTimer()" title="Next tip">&#9654;</button></span></div>';
     h+='<div class="stats-grid">';
     h+='<div class="card stat-card"><div class="stat-icon">&#127793;</div><div class="stat-value">'+mothers.length+'</div><div class="stat-label">Mother Plants</div></div>';
     const floweringCount=mothers.filter(m=>m.growthStage==='flowering').length;
@@ -948,6 +1012,7 @@ const Plants={
       h+='<option value="'+s+'"'+(this._filter===s?' selected':'')+'>'+s.charAt(0).toUpperCase()+s.slice(1)+'</option>';
     });
     h+='</select></div>';
+    h+=_guideLinks([['Mother Plants','mother-plant-guide.html'],['Plant Training (LST)','plant-training-guide.html'],['Deficiency Guide','plant-deficiency-guide.html'],['Pheno-Hunting','pheno-hunting-guide.html'],['Vegetative Stage','vegetative-stage-guide.html']]);
 
     if(!filtered.length){
       h+='<div class="empty-state"><div class="empty-icon">&#127807;</div><div class="empty-text">'+(mothers.length?'No plants match your search.':'No mother plants yet. Add your first one!')+'</div>';
@@ -1105,6 +1170,10 @@ const Plants={
     document.getElementById('f_strainType').value=s.type||'hybrid';
     document.getElementById('f_breeder').value=s.breeder||'';
     document.getElementById('f_strainId').value=strainId;
+    const notesEl=document.getElementById('f_notes');
+    if(notesEl&&s.growNotes&&!notesEl.value.trim()){
+      notesEl.value='[Strain Notes] '+s.growNotes;
+    }
     const wrap=document.querySelector('.strain-picker-wrap');
     if(wrap) wrap.remove();
     Toast.show('Strain "'+s.name+'" selected!','info');
@@ -1180,6 +1249,7 @@ const Environments={
     h+='<button class="btn btn-primary" onclick="Environments.openAddModal()">+ Add Environment</button>';
     h+='<input class="search-input" type="text" placeholder="Search environments..." value="'+U.esc(this._search)+'" oninput="Environments._onSearch(this.value)">';
     h+='</div>';
+    h+=_guideLinks([['Grow Tent Setup','grow-tent-setup-guide.html'],['Temp & Humidity (VPD)','temperature-humidity-vpd-guide.html'],['Light & DLI','dli-light-schedule-guide.html']]);
 
     if(!filtered.length){
       h+='<div class="empty-state"><div class="empty-icon">&#9978;</div><div class="empty-text">'+(envs.length?'No environments match your search.':'No grow environments yet. Add your first tent or room!')+'</div>';
@@ -1331,6 +1401,7 @@ const Clones={
     ['cutting','callusing','rooting','rooted','transplanted','failed'].forEach(s=>{
       h+='<option value="'+s+'"'+(this._filterStatus===s?' selected':'')+'>'+s.charAt(0).toUpperCase()+s.slice(1)+'</option>'});
     h+='</select></div>';
+    h+=_guideLinks([['Cloning Guide','cannabis-cloning-guide.html'],['Vertical Germination','Vertical_Germination_Guide.html'],['Seed Starting','seed-starting-guide.html']]);
 
     h+='<div class="stats-grid" style="margin-bottom:var(--space-xl)">';
     h+='<div class="card stat-card"><div class="stat-value">'+totalBatches+'</div><div class="stat-label">Batches</div></div>';
@@ -1669,6 +1740,7 @@ const Environment={
     h+='<option value="all">All Environments</option>';
     envs.forEach(e=>{h+='<option value="'+e.id+'"'+(this._filterEnv===e.id?' selected':'')+'>'+U.esc(e.name)+'</option>'});
     h+='</select></div>';
+    h+=_guideLinks([['Temp & Humidity (VPD)','temperature-humidity-vpd-guide.html'],['Water Alchemy','water-alchemy-guide.html'],['Chloramine Guide','chloramine-neutralization-guide.html'],['Aquifer Protocol (SIP)','aquifer-protocol-sip-guide.html']]);
 
     h+='<div class="env-readings">';
     h+='<div class="card env-reading-card"><div class="env-val">'+(latest.temperature!=null?latest.temperature+'&deg;F':'—')+'</div><div class="env-label">Temperature</div></div>';
@@ -1774,6 +1846,96 @@ window.Environment=Environment;
    ═══════════════════════════════════════════════ */
 const Feeding={
   _filter:'all',
+  _catalogBrand:'all',
+  _catalog:[
+    /* ── General Hydroponics ── */
+    {name:'FloraMicro',brand:'General Hydroponics',line:'Flora Series',type:'base',defaultAmount:5,defaultUnit:'ml/gal'},
+    {name:'FloraGro',brand:'General Hydroponics',line:'Flora Series',type:'grow',defaultAmount:5,defaultUnit:'ml/gal'},
+    {name:'FloraBloom',brand:'General Hydroponics',line:'Flora Series',type:'bloom',defaultAmount:5,defaultUnit:'ml/gal'},
+    {name:'CaliMagic',brand:'General Hydroponics',line:'',type:'cal-mag',defaultAmount:5,defaultUnit:'ml/gal'},
+    {name:'Armor Si',brand:'General Hydroponics',line:'',type:'supplement',defaultAmount:2.5,defaultUnit:'ml/gal'},
+    {name:'Diamond Nectar',brand:'General Hydroponics',line:'',type:'supplement',defaultAmount:2.5,defaultUnit:'ml/gal'},
+    {name:'Liquid KoolBloom',brand:'General Hydroponics',line:'',type:'bloom',defaultAmount:2.5,defaultUnit:'ml/gal'},
+    {name:'Dry KoolBloom',brand:'General Hydroponics',line:'',type:'bloom',defaultAmount:0.25,defaultUnit:'tsp/gal'},
+    {name:'Floralicious Plus',brand:'General Hydroponics',line:'',type:'supplement',defaultAmount:1,defaultUnit:'ml/gal'},
+    {name:'RapidStart',brand:'General Hydroponics',line:'',type:'supplement',defaultAmount:2.5,defaultUnit:'ml/gal'},
+    /* ── Fox Farm ── */
+    {name:'Big Bloom',brand:'Fox Farm',line:'Dirty Dozen',type:'bloom',defaultAmount:15,defaultUnit:'ml/gal'},
+    {name:'Grow Big',brand:'Fox Farm',line:'Dirty Dozen',type:'grow',defaultAmount:10,defaultUnit:'ml/gal'},
+    {name:'Tiger Bloom',brand:'Fox Farm',line:'Dirty Dozen',type:'bloom',defaultAmount:10,defaultUnit:'ml/gal'},
+    {name:'Cha Ching',brand:'Fox Farm',line:'Dirty Dozen',type:'bloom',defaultAmount:0.5,defaultUnit:'tsp/gal'},
+    {name:'Beastie Bloomz',brand:'Fox Farm',line:'Dirty Dozen',type:'bloom',defaultAmount:0.25,defaultUnit:'tsp/gal'},
+    {name:'Open Sesame',brand:'Fox Farm',line:'Dirty Dozen',type:'bloom',defaultAmount:0.5,defaultUnit:'tsp/gal'},
+    {name:'Sledgehammer',brand:'Fox Farm',line:'',type:'additive',defaultAmount:10,defaultUnit:'ml/gal'},
+    {name:'Bush Doctor Cal-Mag',brand:'Fox Farm',line:'',type:'cal-mag',defaultAmount:5,defaultUnit:'ml/gal'},
+    /* ── Advanced Nutrients ── */
+    {name:'pH Perfect Micro',brand:'Advanced Nutrients',line:'pH Perfect',type:'base',defaultAmount:4,defaultUnit:'ml/L'},
+    {name:'pH Perfect Grow',brand:'Advanced Nutrients',line:'pH Perfect',type:'grow',defaultAmount:4,defaultUnit:'ml/L'},
+    {name:'pH Perfect Bloom',brand:'Advanced Nutrients',line:'pH Perfect',type:'bloom',defaultAmount:4,defaultUnit:'ml/L'},
+    {name:'Big Bud',brand:'Advanced Nutrients',line:'',type:'bloom',defaultAmount:2,defaultUnit:'ml/L'},
+    {name:'Bud Candy',brand:'Advanced Nutrients',line:'',type:'supplement',defaultAmount:2,defaultUnit:'ml/L'},
+    {name:'Overdrive',brand:'Advanced Nutrients',line:'',type:'bloom',defaultAmount:2,defaultUnit:'ml/L'},
+    {name:'B-52',brand:'Advanced Nutrients',line:'',type:'supplement',defaultAmount:2,defaultUnit:'ml/L'},
+    {name:'Voodoo Juice',brand:'Advanced Nutrients',line:'',type:'supplement',defaultAmount:2,defaultUnit:'ml/L'},
+    {name:'Sensi Cal-Mag Xtra',brand:'Advanced Nutrients',line:'',type:'cal-mag',defaultAmount:2,defaultUnit:'ml/L'},
+    /* ── Botanicare ── */
+    {name:'Pure Blend Pro Grow',brand:'Botanicare',line:'Pure Blend',type:'grow',defaultAmount:12.5,defaultUnit:'ml/gal'},
+    {name:'Pure Blend Pro Bloom',brand:'Botanicare',line:'Pure Blend',type:'bloom',defaultAmount:12.5,defaultUnit:'ml/gal'},
+    {name:'Cal-Mag Plus',brand:'Botanicare',line:'',type:'cal-mag',defaultAmount:5,defaultUnit:'ml/gal'},
+    {name:'Hydroguard',brand:'Botanicare',line:'',type:'supplement',defaultAmount:2,defaultUnit:'ml/gal'},
+    {name:'Liquid Karma',brand:'Botanicare',line:'',type:'supplement',defaultAmount:10,defaultUnit:'ml/gal'},
+    {name:'Sweet Raw',brand:'Botanicare',line:'',type:'supplement',defaultAmount:5,defaultUnit:'ml/gal'},
+    /* ── Canna ── */
+    {name:'Canna A',brand:'Canna',line:'Canna',type:'base',defaultAmount:4,defaultUnit:'ml/L'},
+    {name:'Canna B',brand:'Canna',line:'Canna',type:'base',defaultAmount:4,defaultUnit:'ml/L'},
+    {name:'Cannazym',brand:'Canna',line:'',type:'supplement',defaultAmount:2.5,defaultUnit:'ml/L'},
+    {name:'PK 13/14',brand:'Canna',line:'',type:'bloom',defaultAmount:1.5,defaultUnit:'ml/L'},
+    {name:'Rhizotonic',brand:'Canna',line:'',type:'supplement',defaultAmount:2.5,defaultUnit:'ml/L'},
+    {name:'Boost',brand:'Canna',line:'',type:'bloom',defaultAmount:2,defaultUnit:'ml/L'},
+    {name:'CalMag Agent',brand:'Canna',line:'',type:'cal-mag',defaultAmount:5,defaultUnit:'ml/L'},
+    /* ── Down To Earth (dry amendments) ── */
+    {name:'Bio-Live 5-4-2',brand:'Down To Earth',line:'',type:'base',defaultAmount:3,defaultUnit:'tsp/gal'},
+    {name:'Bio-Fish 7-7-2',brand:'Down To Earth',line:'',type:'base',defaultAmount:2,defaultUnit:'tsp/gal'},
+    {name:'Neem Meal 6-1-2',brand:'Down To Earth',line:'',type:'additive',defaultAmount:1,defaultUnit:'tsp/gal'},
+    {name:'Kelp Meal 1-0.1-2',brand:'Down To Earth',line:'',type:'supplement',defaultAmount:1,defaultUnit:'tsp/gal'},
+    {name:'Oyster Shell',brand:'Down To Earth',line:'',type:'pH',defaultAmount:1,defaultUnit:'tsp/gal'},
+    {name:'Langbeinite 0-0-22',brand:'Down To Earth',line:'',type:'supplement',defaultAmount:1,defaultUnit:'tsp/gal'},
+    /* ── Athena ── */
+    {name:'Core',brand:'Athena',line:'Pro Line',type:'base',defaultAmount:3,defaultUnit:'ml/gal'},
+    {name:'Grow A',brand:'Athena',line:'Pro Line',type:'grow',defaultAmount:4,defaultUnit:'ml/gal'},
+    {name:'Grow B',brand:'Athena',line:'Pro Line',type:'grow',defaultAmount:4,defaultUnit:'ml/gal'},
+    {name:'Bloom A',brand:'Athena',line:'Pro Line',type:'bloom',defaultAmount:5,defaultUnit:'ml/gal'},
+    {name:'Bloom B',brand:'Athena',line:'Pro Line',type:'bloom',defaultAmount:5,defaultUnit:'ml/gal'},
+    {name:'Cleanse',brand:'Athena',line:'',type:'additive',defaultAmount:2,defaultUnit:'ml/gal'},
+    {name:'Fade',brand:'Athena',line:'',type:'additive',defaultAmount:3,defaultUnit:'ml/gal'},
+    /* ── Gaia Green Organics ── */
+    {name:'All Purpose 4-4-4',brand:'Gaia Green',line:'',type:'base',defaultAmount:2,defaultUnit:'tsp/gal'},
+    {name:'Power Bloom 2-8-4',brand:'Gaia Green',line:'',type:'bloom',defaultAmount:2,defaultUnit:'tsp/gal'},
+    {name:'Worm Castings',brand:'Gaia Green',line:'',type:'supplement',defaultAmount:3,defaultUnit:'tsp/gal'},
+    {name:'Glacial Rock Dust',brand:'Gaia Green',line:'',type:'supplement',defaultAmount:2,defaultUnit:'tsp/gal'},
+    {name:'Insect Frass',brand:'Gaia Green',line:'',type:'supplement',defaultAmount:1,defaultUnit:'tsp/gal'},
+    {name:'Kelp Meal 1-0-2',brand:'Gaia Green',line:'',type:'supplement',defaultAmount:1,defaultUnit:'tsp/gal'},
+    {name:'Bone Meal 2-14-0',brand:'Gaia Green',line:'',type:'bloom',defaultAmount:1,defaultUnit:'tsp/gal'},
+    {name:'Blood Meal 12-0-0',brand:'Gaia Green',line:'',type:'grow',defaultAmount:1,defaultUnit:'tsp/gal'},
+    {name:'Oyster Shell Flour',brand:'Gaia Green',line:'',type:'pH',defaultAmount:1,defaultUnit:'tsp/gal'},
+    {name:'Minerite Rock Dust',brand:'Gaia Green',line:'',type:'supplement',defaultAmount:2,defaultUnit:'tsp/gal'},
+    /* ── Neptune's Harvest ── */
+    {name:'Fish Fertilizer 2-4-1',brand:"Neptune's Harvest",line:'',type:'base',defaultAmount:1,defaultUnit:'tsp/gal'},
+    {name:'Fish & Seaweed 2-3-1',brand:"Neptune's Harvest",line:'',type:'base',defaultAmount:1,defaultUnit:'tsp/gal'},
+    {name:'Seaweed Plant Food 0-0-1',brand:"Neptune's Harvest",line:'',type:'supplement',defaultAmount:1,defaultUnit:'tsp/gal'},
+    {name:'Crab Shell 5-3-0',brand:"Neptune's Harvest",line:'',type:'supplement',defaultAmount:1,defaultUnit:'tsp/gal'},
+    {name:'Kelp Meal 1-0-2',brand:"Neptune's Harvest",line:'',type:'supplement',defaultAmount:1,defaultUnit:'tsp/gal'},
+    {name:'Tomato & Veg 2-4-2',brand:"Neptune's Harvest",line:'',type:'base',defaultAmount:1,defaultUnit:'tsp/gal'},
+    {name:'Rose & Flowering 2-6-4',brand:"Neptune's Harvest",line:'',type:'bloom',defaultAmount:1,defaultUnit:'tsp/gal'},
+    {name:'Hydrolyzed Fish 2-4-0.5',brand:"Neptune's Harvest",line:'',type:'base',defaultAmount:1,defaultUnit:'tsp/gal'},
+    /* ── Generic / Common ── */
+    {name:'pH Up',brand:'Generic',line:'',type:'pH',defaultAmount:1,defaultUnit:'ml/gal'},
+    {name:'pH Down',brand:'Generic',line:'',type:'pH',defaultAmount:1,defaultUnit:'ml/gal'},
+    {name:'Epsom Salt (MgSO4)',brand:'Generic',line:'',type:'supplement',defaultAmount:1,defaultUnit:'tsp/gal'},
+    {name:'Molasses',brand:'Generic',line:'',type:'supplement',defaultAmount:5,defaultUnit:'ml/gal'},
+    {name:'Hydrogen Peroxide 3%',brand:'Generic',line:'',type:'additive',defaultAmount:10,defaultUnit:'ml/gal'},
+    {name:'Plain Water',brand:'Generic',line:'',type:'base',defaultAmount:0,defaultUnit:'ml/gal'},
+  ],
   render(){
     const mothers=Store.mothersArray();
     const envs=Store.environmentsArray();
@@ -1788,6 +1950,7 @@ const Feeding={
     mothers.forEach(m=>{h+='<option value="'+m.id+'"'+(this._filter===m.id?' selected':'')+'>'+U.esc(m.strainName)+'</option>'});
     envs.forEach(e=>{h+='<option value="'+e.id+'"'+(this._filter===e.id?' selected':'')+'>'+U.esc(e.name)+' (env)</option>'});
     h+='</select></div>';
+    h+=_guideLinks([["Neptune's Harvest",'neptunes-harvest-feeding-schedule.html'],['Gaia Green Schedule','gaia-green-amendment-schedule.html'],['DTE Amendments','dte-amendment-schedule.html'],['Top Dressing','top-dress-guide.html'],['Living Soil','living-soil-guide.html'],['Compost Tea','compost-tea-guide.html']]);
     if(!logs.length){
       h+='<div class="empty-state"><div class="empty-icon">&#129514;</div><div class="empty-text">No feedings logged yet. Track your nutrient schedule!</div></div>';
     }else{
@@ -1832,6 +1995,7 @@ const Feeding={
     envs.forEach(e=>{h+='<option value="'+e.id+'"'+(isEnv&&preselect===e.id?' selected':'')+'>'+U.esc(e.name)+'</option>'});
     h+='</select></div></div>';
     h+='<div class="form-group"><label class="form-label">Nutrient / Product Name</label><input class="form-input" id="f_nutrientName" placeholder="e.g. Flora Trio, CalMag, plain water"></div>';
+    h+='<div style="margin-bottom:var(--space-md)"><button type="button" class="btn btn-outline btn-sm" onclick="Feeding._openCatalog()">&#129514; Browse Nutrient Catalog</button></div>';
     h+='<div class="form-row">';
     h+='<div class="form-group"><label class="form-label">Amount</label><input class="form-input" id="f_nutrientAmount" type="number" step="0.1"></div>';
     h+='<div class="form-group"><label class="form-label">Unit</label><select class="form-select" id="f_nutrientUnit"><option value="ml/gal">ml/gal</option><option value="tsp/gal">tsp/gal</option><option value="g/L">g/L</option><option value="ml/L">ml/L</option></select></div></div>';
@@ -1870,6 +2034,75 @@ const Feeding={
       Modal.close();Toast.show('Feeding logged!');
       Router.switchTo('feeding');
     });
+  },
+
+  /* ── Nutrient Catalog Picker ── */
+  _openCatalog(){
+    const existing=document.querySelector('.nutrient-picker-wrap');
+    if(existing){existing.remove();return}
+    let h='<div style="margin-bottom:var(--space-md);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);padding:var(--space-md);background:var(--bg-input)">';
+    h+='<div style="font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text-secondary);margin-bottom:var(--space-sm)">Nutrient Catalog</div>';
+    h+='<div style="display:flex;gap:var(--space-sm);margin-bottom:var(--space-sm);flex-wrap:wrap">';
+    h+='<input class="form-input" placeholder="Search products\u2026" oninput="Feeding._filterCatalog()" id="nutrientCatalogSearch" style="flex:1;min-width:140px">';
+    const brands=[...new Set(this._catalog.map(c=>c.brand))].sort();
+    h+='<select class="form-select" id="nutrientBrandFilter" onchange="Feeding._catalogBrand=this.value;Feeding._filterCatalog()" style="min-width:120px">';
+    h+='<option value="all">All Brands</option>';
+    brands.forEach(b=>{const ct=this._catalog.filter(c=>c.brand===b).length;h+='<option value="'+b+'">'+U.esc(b)+' ('+ct+')</option>'});
+    h+='</select></div>';
+    h+='<div id="nutrientCatalogGrid" style="max-height:260px;overflow-y:auto">'+this._buildCatalogGrid()+'</div>';
+    h+='</div>';
+    const wrap=document.createElement('div');
+    wrap.className='nutrient-picker-wrap';
+    wrap.innerHTML=h;
+    const btn=document.querySelector('.nutrient-picker-wrap')
+      ||document.querySelector('[onclick="Feeding._openCatalog()"]');
+    if(btn) btn.parentElement.after(wrap);
+  },
+
+  _buildCatalogGrid(query,brand){
+    query=(query||'').toLowerCase();
+    brand=brand||this._catalogBrand||'all';
+    let items=this._catalog.map((c,idx)=>({...c,_idx:idx}));
+    if(brand!=='all') items=items.filter(c=>c.brand===brand);
+    if(query) items=items.filter(c=>(c.name+' '+c.brand+' '+(c.line||'')+' '+c.type).toLowerCase().includes(query));
+    if(!items.length) return '<div style="padding:var(--space-md);color:var(--text-tertiary);font-size:.8rem;text-align:center">No products found</div>';
+    let h='<div style="display:grid;grid-template-columns:1fr;gap:var(--space-xs)">';
+    items.forEach(c=>{
+      const typeColors={base:'var(--cyan)',grow:'var(--leaf)',bloom:'var(--orange)','cal-mag':'var(--gold)',supplement:'var(--text-secondary)',additive:'var(--text-tertiary)',pH:'#9b6bb5'};
+      const color=typeColors[c.type]||'var(--text-secondary)';
+      h+='<div class="card" style="padding:var(--space-sm) var(--space-md);cursor:pointer" onclick="Feeding._selectProduct('+c._idx+')">';
+      h+='<div style="display:flex;justify-content:space-between;align-items:center;gap:var(--space-sm)">';
+      h+='<div style="min-width:0">';
+      h+='<div style="font-weight:700;font-size:.85rem">'+U.esc(c.name)+'</div>';
+      h+='<div style="font-size:.68rem;color:var(--text-tertiary)">'+U.esc(c.brand)+(c.line?' \u00b7 '+U.esc(c.line):'')+'</div>';
+      h+='<div style="display:flex;gap:var(--space-xs);flex-wrap:wrap;margin-top:2px">';
+      h+='<span style="font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:.1rem .4rem;border-radius:3px;background:rgba(255,255,255,.06);color:'+color+'">'+c.type+'</span>';
+      if(c.defaultAmount) h+='<span style="font-size:.65rem;color:var(--text-secondary)">'+c.defaultAmount+' '+c.defaultUnit+'</span>';
+      h+='</div></div>';
+      h+='<div style="flex-shrink:0;font-size:.7rem;color:var(--cyan);font-weight:600">Select</div>';
+      h+='</div></div>';
+    });
+    h+='</div>';
+    return h;
+  },
+
+  _filterCatalog(){
+    const q=document.getElementById('nutrientCatalogSearch')?document.getElementById('nutrientCatalogSearch').value:'';
+    const grid=document.getElementById('nutrientCatalogGrid');
+    if(grid) grid.innerHTML=this._buildCatalogGrid(q);
+  },
+
+  _selectProduct(idx){
+    const c=this._catalog[idx];if(!c) return;
+    const nameEl=document.getElementById('f_nutrientName');
+    const amtEl=document.getElementById('f_nutrientAmount');
+    const unitEl=document.getElementById('f_nutrientUnit');
+    if(nameEl) nameEl.value=c.brand!=='Generic'?c.brand+' '+c.name:c.name;
+    if(amtEl&&c.defaultAmount) amtEl.value=c.defaultAmount;
+    if(unitEl&&c.defaultUnit) unitEl.value=c.defaultUnit;
+    const wrap=document.querySelector('.nutrient-picker-wrap');
+    if(wrap) wrap.remove();
+    Toast.show('Product selected: '+c.name,'info');
   }
 };
 window.Feeding=Feeding;
@@ -1981,6 +2214,65 @@ window.Journal=Journal;
 const IPM={
   _filterPlant:'all',_filterSev:'all',_filterStatus:'all',
   _pests:['aphids','spider mites','fungus gnats','whiteflies','thrips','powdery mildew','bud rot','root rot','nutrient burn','nutrient deficiency','other'],
+  _catalogCat:'all',
+  _ipmCatalog:[
+    /* ── Insecticides ── */
+    {name:'Neem Oil',brand:'Generic',category:'insecticide',targets:'aphids, mites, whiteflies, thrips, fungus gnats'},
+    {name:'Cold-Pressed Neem Oil',brand:'Ahimsa',category:'insecticide',targets:'aphids, mites, whiteflies, broad mites'},
+    {name:'Spinosad (Captain Jack\'s)',brand:'Bonide',category:'insecticide',targets:'thrips, caterpillars, fungus gnats, leaf miners'},
+    {name:'Pyrethrin Spray',brand:'PyGanic',category:'insecticide',targets:'aphids, whiteflies, thrips, beetles, mites'},
+    {name:'Azadirachtin (AzaMax)',brand:'General Hydroponics',category:'insecticide',targets:'aphids, thrips, whiteflies, fungus gnats, mites'},
+    {name:'Insecticidal Soap',brand:'Safer Brand',category:'insecticide',targets:'aphids, whiteflies, mealybugs, spider mites, thrips'},
+    {name:'Dr. Bronner\'s Peppermint',brand:'Dr. Bronner\'s',category:'insecticide',targets:'soft-bodied insects, aphids, whiteflies'},
+    {name:'SNS 203',brand:'Sierra Natural Science',category:'insecticide',targets:'fungus gnats, root aphids, thrips, whiteflies'},
+    {name:'Mosquito Bits (BTI)',brand:'Summit',category:'insecticide',targets:'fungus gnats, mosquito larvae'},
+    {name:'Diatomaceous Earth',brand:'Generic',category:'insecticide',targets:'fungus gnats, ants, crawling insects'},
+    /* ── Miticides ── */
+    {name:'SNS 217',brand:'Sierra Natural Science',category:'miticide',targets:'spider mites, broad mites, russet mites'},
+    {name:'Suffoil-X',brand:'BioWorks',category:'miticide',targets:'spider mites, broad mites, whiteflies, powdery mildew'},
+    {name:'Forbid 4F',brand:'OHP',category:'miticide',targets:'spider mites, broad mites, russet mites'},
+    {name:'Avid 0.15EC',brand:'Syngenta',category:'miticide',targets:'spider mites, leaf miners'},
+    {name:'Green Cleaner',brand:'Central Coast Garden',category:'miticide',targets:'spider mites, broad mites, powdery mildew, aphids'},
+    {name:'Plant Therapy',brand:'Lost Coast',category:'miticide',targets:'spider mites, broad mites, russet mites, aphids, whiteflies'},
+    {name:'Predatory Mites (Persimilis)',brand:'Biocontrol',category:'miticide',targets:'spider mites'},
+    {name:'Predatory Mites (Amblyseius)',brand:'Biocontrol',category:'miticide',targets:'broad mites, russet mites, thrips'},
+    /* ── Fungicides ── */
+    {name:'Copper Fungicide',brand:'Bonide',category:'fungicide',targets:'powdery mildew, bud rot, downy mildew, leaf spot'},
+    {name:'Sulfur Spray',brand:'Generic',category:'fungicide',targets:'powdery mildew, rust, spider mites'},
+    {name:'Regalia',brand:'Marrone Bio',category:'fungicide',targets:'powdery mildew, downy mildew, bud rot, grey mold'},
+    {name:'Cease (Bacillus subtilis)',brand:'BioWorks',category:'fungicide',targets:'powdery mildew, botrytis, root rot'},
+    {name:'GreenCure',brand:'GreenCure',category:'fungicide',targets:'powdery mildew, black spot, downy mildew'},
+    {name:'Oxidate 2.0 (H2O2)',brand:'BioSafe',category:'fungicide',targets:'powdery mildew, botrytis, algae, root rot'},
+    {name:'Nuke Em',brand:'Flying Skull',category:'fungicide',targets:'powdery mildew, spider mites, aphids'},
+    {name:'Potassium Bicarbonate',brand:'Generic',category:'fungicide',targets:'powdery mildew'},
+    {name:'Trichoderma (RootShield)',brand:'BioWorks',category:'fungicide',targets:'root rot, pythium, fusarium'},
+    {name:'Mycostop (Streptomyces)',brand:'Verdera',category:'fungicide',targets:'root rot, damping off, fusarium, botrytis'},
+    /* ── Biologicals ── */
+    {name:'BT (Bacillus thuringiensis)',brand:'Monterey',category:'biological',targets:'caterpillars, budworms, leaf rollers'},
+    {name:'Beauveria bassiana (BotaniGard)',brand:'BioWorks',category:'biological',targets:'whiteflies, aphids, thrips, mites'},
+    {name:'Beneficial Nematodes (Sf)',brand:'Biocontrol',category:'biological',targets:'fungus gnats, root aphids, flea larvae'},
+    {name:'Lacewing Larvae',brand:'Biocontrol',category:'biological',targets:'aphids, mealybugs, whiteflies, thrips, mites'},
+    {name:'Ladybugs',brand:'Biocontrol',category:'biological',targets:'aphids, mealybugs, whiteflies, mites'},
+    {name:'Stratiolaelaps (Hypoaspis)',brand:'Biocontrol',category:'biological',targets:'fungus gnats, thrips pupae, root mites'},
+    {name:'Rove Beetles (Dalotia)',brand:'Biocontrol',category:'biological',targets:'fungus gnats, shore flies, thrips pupae'},
+    /* ── Organic / Home Remedies ── */
+    {name:'Isopropyl Alcohol Spray (70%)',brand:'Generic',category:'organic',targets:'mealybugs, aphids, scale, spider mites'},
+    {name:'Hydrogen Peroxide Drench (3%)',brand:'Generic',category:'organic',targets:'fungus gnats, root rot, algae'},
+    {name:'Apple Cider Vinegar Trap',brand:'Generic',category:'organic',targets:'fungus gnats'},
+    {name:'Yellow Sticky Traps',brand:'Generic',category:'organic',targets:'fungus gnats, whiteflies, thrips, aphids'},
+    {name:'Castile Soap Spray',brand:'Generic',category:'organic',targets:'aphids, whiteflies, spider mites'},
+    {name:'Garlic Spray',brand:'Generic',category:'organic',targets:'aphids, whiteflies, caterpillars'},
+    {name:'Cinnamon Powder',brand:'Generic',category:'organic',targets:'damping off, fungus gnats, surface mold'},
+    {name:'Milk Spray (40%)',brand:'Generic',category:'organic',targets:'powdery mildew'},
+    /* ── Environmental Controls ── */
+    {name:'Increase Airflow / Fans',brand:'Environmental',category:'environmental',targets:'powdery mildew, bud rot, high humidity'},
+    {name:'Dehumidifier',brand:'Environmental',category:'environmental',targets:'bud rot, powdery mildew, high humidity'},
+    {name:'Reduce Watering Frequency',brand:'Environmental',category:'environmental',targets:'root rot, fungus gnats, overwatering'},
+    {name:'Lower Temperature',brand:'Environmental',category:'environmental',targets:'heat stress, spider mites (slow reproduction)'},
+    {name:'Raise Temperature',brand:'Environmental',category:'environmental',targets:'cold stress, slow growth'},
+    {name:'Defoliation / Lollipopping',brand:'Environmental',category:'environmental',targets:'powdery mildew, bud rot, poor airflow'},
+    {name:'Quarantine Plant',brand:'Environmental',category:'environmental',targets:'any pest or disease (prevent spread)'},
+  ],
   render(){
     const mothers=Store.mothersArray();
     let logs=Store.ipmArray();
@@ -2003,6 +2295,7 @@ const IPM={
     h+='<option value="active"'+(this._filterStatus==='active'?' selected':'')+'>Active</option>';
     h+='<option value="resolved"'+(this._filterStatus==='resolved'?' selected':'')+'>Resolved</option>';
     h+='</select></div>';
+    h+=_guideLinks([['Pest Identification','pest-identification-guide.html'],['Diatomaceous Earth','diatomaceous-earth-guide.html'],['Beauveria Bassiana','beauveria-bassiana-guide.html'],['Companion Planting','companion-cultivation-guide.html'],['Microbial Fortress','microbial-fortress-guide.html'],['White Oil Spray','white-oil-pest-spray-recipe.html']]);
     if(!logs.length){
       h+='<div class="empty-state"><div class="empty-icon">&#128737;</div><div class="empty-text">No IPM issues logged. Keep your garden pest-free!</div></div>';
     }else{
@@ -2064,6 +2357,7 @@ const IPM={
     this._pests.forEach(p=>{h+='<option value="'+p+'"'+(item.pest===p?' selected':'')+'>'+p.charAt(0).toUpperCase()+p.slice(1)+'</option>'});
     h+='</select></div>';
     h+='<div class="form-group"><label class="form-label">Treatment</label><textarea class="form-textarea" id="f_treatment">'+U.esc(item.treatment||'')+'</textarea></div>';
+    h+='<div style="margin-bottom:var(--space-md)"><button type="button" class="btn btn-outline btn-sm" onclick="IPM._openIpmCatalog()">&#128737; Browse IPM Catalog</button></div>';
     h+='<div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="f_ipmNotes">'+U.esc(item.notes||'')+'</textarea></div>';
     return h;
   },
@@ -2105,6 +2399,75 @@ const IPM={
       Store.addActivity('ipm_updated','Updated IPM issue: '+data.pest,id);
       Modal.close();Toast.show('IPM issue updated!');
     });
+  },
+
+  /* ── IPM Product Catalog Picker ── */
+  _openIpmCatalog(){
+    const existing=document.querySelector('.ipm-picker-wrap');
+    if(existing){existing.remove();return}
+    let h='<div style="margin-bottom:var(--space-md);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);padding:var(--space-md);background:var(--bg-input)">';
+    h+='<div style="font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text-secondary);margin-bottom:var(--space-sm)">IPM Product Catalog</div>';
+    h+='<div style="display:flex;gap:var(--space-sm);margin-bottom:var(--space-sm);flex-wrap:wrap">';
+    h+='<input class="form-input" placeholder="Search treatments\u2026" oninput="IPM._filterIpmCatalog()" id="ipmCatalogSearch" style="flex:1;min-width:140px">';
+    const cats=[...new Set(this._ipmCatalog.map(c=>c.category))].sort();
+    h+='<select class="form-select" id="ipmCatFilter" onchange="IPM._catalogCat=this.value;IPM._filterIpmCatalog()" style="min-width:120px">';
+    h+='<option value="all">All Categories</option>';
+    cats.forEach(c=>{const ct=this._ipmCatalog.filter(p=>p.category===c).length;h+='<option value="'+c+'">'+c.charAt(0).toUpperCase()+c.slice(1)+' ('+ct+')</option>'});
+    h+='</select></div>';
+    h+='<div id="ipmCatalogGrid" style="max-height:260px;overflow-y:auto">'+this._buildIpmCatalogGrid()+'</div>';
+    h+='</div>';
+    const wrap=document.createElement('div');
+    wrap.className='ipm-picker-wrap';
+    wrap.innerHTML=h;
+    const btn=document.querySelector('[onclick="IPM._openIpmCatalog()"]');
+    if(btn) btn.parentElement.after(wrap);
+  },
+
+  _buildIpmCatalogGrid(query,cat){
+    query=(query||'').toLowerCase();
+    cat=cat||this._catalogCat||'all';
+    let items=this._ipmCatalog.map((c,idx)=>({...c,_idx:idx}));
+    if(cat!=='all') items=items.filter(c=>c.category===cat);
+    if(query) items=items.filter(c=>(c.name+' '+c.brand+' '+c.targets+' '+c.category).toLowerCase().includes(query));
+    if(!items.length) return '<div style="padding:var(--space-md);color:var(--text-tertiary);font-size:.8rem;text-align:center">No treatments found</div>';
+    let h='<div style="display:grid;grid-template-columns:1fr;gap:var(--space-xs)">';
+    items.forEach(c=>{
+      const catColors={insecticide:'var(--orange)',miticide:'#e05c3a',fungicide:'var(--gold)',biological:'var(--leaf)',organic:'var(--cyan)',environmental:'var(--text-secondary)'};
+      const color=catColors[c.category]||'var(--text-secondary)';
+      h+='<div class="card" style="padding:var(--space-sm) var(--space-md);cursor:pointer" onclick="IPM._selectIpmProduct('+c._idx+')">';
+      h+='<div style="display:flex;justify-content:space-between;align-items:center;gap:var(--space-sm)">';
+      h+='<div style="min-width:0">';
+      h+='<div style="font-weight:700;font-size:.85rem">'+U.esc(c.name)+'</div>';
+      if(c.brand!=='Generic'&&c.brand!=='Environmental'&&c.brand!=='Biocontrol') h+='<div style="font-size:.68rem;color:var(--text-tertiary)">'+U.esc(c.brand)+'</div>';
+      h+='<div style="display:flex;gap:var(--space-xs);flex-wrap:wrap;margin-top:2px">';
+      h+='<span style="font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:.1rem .4rem;border-radius:3px;background:rgba(255,255,255,.06);color:'+color+'">'+c.category+'</span>';
+      h+='</div>';
+      h+='<div style="font-size:.65rem;color:var(--text-secondary);margin-top:2px">Targets: '+U.esc(c.targets)+'</div>';
+      h+='</div>';
+      h+='<div style="flex-shrink:0;font-size:.7rem;color:var(--cyan);font-weight:600">+ Add</div>';
+      h+='</div></div>';
+    });
+    h+='</div>';
+    return h;
+  },
+
+  _filterIpmCatalog(){
+    const q=document.getElementById('ipmCatalogSearch')?document.getElementById('ipmCatalogSearch').value:'';
+    const grid=document.getElementById('ipmCatalogGrid');
+    if(grid) grid.innerHTML=this._buildIpmCatalogGrid(q);
+  },
+
+  _selectIpmProduct(idx){
+    const c=this._ipmCatalog[idx];if(!c) return;
+    const el=document.getElementById('f_treatment');
+    if(!el) return;
+    const product=c.brand!=='Generic'&&c.brand!=='Environmental'&&c.brand!=='Biocontrol'?c.name+' ('+c.brand+')':c.name;
+    if(el.value.trim()){
+      el.value=el.value.trim()+' + '+product;
+    }else{
+      el.value=product;
+    }
+    Toast.show('Added: '+c.name,'info');
   }
 };
 window.IPM=IPM;
@@ -2329,6 +2692,7 @@ const Harvest={
     h+='<option value="all"'+(this._filterCure==='all'?' selected':'')+'>All Cure Status</option>';
     ['fresh','drying','curing','complete'].forEach(s=>{h+='<option value="'+s+'"'+(this._filterCure===s?' selected':'')+'>'+s.charAt(0).toUpperCase()+s.slice(1)+'</option>'});
     h+='</select></div>';
+    h+=_guideLinks([['Harvest Guide','cannabis-harvest-guide.html'],['Trichome Guide','TrichomeHarvestGuide.html'],['Drying Guide','tropical-roots-maui-drying-guide.html'],['Curing Guide','cannabis-curing-guide.html'],['Natural Fade','natural-fade-guide.html']]);
     if(!list.length){
       h+='<div class="empty-state"><div class="empty-icon">&#127806;</div><div class="empty-text">No harvests logged yet. Time to reap what you sow!</div></div>';
     }else{
@@ -2940,6 +3304,7 @@ const Strains={
     h+='<option value="all"'+(this._filterType==='all'?' selected':'')+'>All Types</option>';
     ['sativa','indica','hybrid','ruderalis'].forEach(t=>{h+='<option value="'+t+'"'+(this._filterType===t?' selected':'')+'>'+t.charAt(0).toUpperCase()+t.slice(1)+'</option>'});
     h+='</select></div>';
+    h+=_guideLinks([['Pheno-Hunting','pheno-hunting-guide.html'],['Terpene Guide','cannabis-terpene-guide.html'],['Flavonoid Guide','cannabis-flavonoid-guide.html']]);
     if(!arr.length){
       h+='<div class="empty-state"><div class="empty-icon">&#129516;</div><h3>No strains yet</h3><p>Build your genetics library by adding strains.</p></div>';
     }else{
