@@ -108,7 +108,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 .icon-btn{width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border-subtle);border-radius:var(--radius-sm);background:transparent;color:var(--text-secondary);font-size:1.1rem;transition:all var(--duration) var(--ease)}
 .icon-btn:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,200,192,.06)}
 .settings-wrap{position:relative}
-.settings-menu{display:none;position:absolute;top:100%;right:0;margin-top:6px;min-width:180px;background:var(--bg-secondary);border:1px solid var(--border-subtle);border-radius:var(--radius-md);box-shadow:0 8px 24px rgba(0,0,0,.25);z-index:210;padding:4px 0}
+.settings-menu{display:none;position:absolute;top:100%;right:0;margin-top:6px;min-width:180px;max-height:calc(100vh - 70px);overflow-y:auto;background:var(--bg-secondary);border:1px solid var(--border-subtle);border-radius:var(--radius-md);box-shadow:0 8px 24px rgba(0,0,0,.25);z-index:210;padding:4px 0}
 .settings-menu.open{display:block}
 .settings-menu-item{display:flex;align-items:center;gap:var(--space-sm);width:100%;padding:10px 14px;border:none;background:none;color:var(--text-secondary);font-size:.85rem;cursor:pointer;transition:all var(--duration) var(--ease);text-align:left}
 .settings-menu-item:hover{background:rgba(0,200,192,.08);color:var(--cyan)}
@@ -331,6 +331,8 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
   .modal{max-height:95vh;border-radius:var(--radius)}
   .modal-body{padding:var(--space-lg)}
   .stat-card .stat-label,.env-type-badge,.feed-card .feed-detail .fd-label,.env-card .env-stat .es-label,.tab-btn{font-size:.7rem}
+  .grid-cell{min-height:60px;font-size:.6rem}
+  .room-summary{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:340px){
   .stats-grid{grid-template-columns:1fr}
@@ -698,10 +700,19 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 .fleet-table td{padding:var(--space-xs) var(--space-sm);border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle}
 .fleet-table tr:hover{background:rgba(0,200,192,.04)}
 /* Grow room diagram */
-.grid-cell{border:1px dashed var(--border-subtle);border-radius:var(--radius-sm);min-height:56px;display:flex;align-items:center;justify-content:center;font-size:.7rem;text-align:center;padding:4px;cursor:pointer;transition:background .2s}
+.grid-cell{border:1px dashed var(--border-subtle);border-radius:var(--radius-sm);min-height:72px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.7rem;text-align:center;padding:4px;cursor:pointer;transition:background .2s;gap:1px;position:relative}
 .grid-cell:hover{background:rgba(0,200,192,.06)}
 .grid-cell.occupied{background:rgba(74,158,82,.1);border-color:var(--leaf);border-style:solid}
 .grid-cell .gc-health{font-size:.55rem;display:block;margin-top:2px}
+.gc-pot{font-size:.58rem;color:var(--cyan);font-weight:600}
+.gc-medium{font-size:.52rem;display:inline-block;padding:0 .3rem;border-radius:2px;background:rgba(255,255,255,.06);color:var(--text-tertiary);font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+.gc-name{font-size:.65rem;font-weight:600;color:var(--text-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+.gc-empty-label{font-size:.55rem;color:var(--text-tertiary)}
+.room-summary{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:var(--space-xs);padding:var(--space-sm);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);background:rgba(255,255,255,.03);margin-bottom:var(--space-md)}
+.room-summary .rs-stat{text-align:center}
+.room-summary .rs-val{font-size:1rem;font-weight:700;color:var(--cyan)}
+.room-summary .rs-lbl{font-size:.62rem;color:var(--text-tertiary);margin-top:1px}
+.room-dims{display:flex;gap:var(--space-sm);align-items:center;font-size:.72rem;color:var(--text-tertiary);margin-bottom:var(--space-sm)}
 /* Batch/Run manager */
 .run-stat{text-align:center;padding:var(--space-sm)}
 .run-stat .run-val{font-size:1.2rem;font-weight:700;color:var(--cyan)}
@@ -904,7 +915,7 @@ const Store = {
   _key:'motherPlantTracker',
   _data:null,
   _subs:[],
-  _default(){return{version:'1.0.0',settings:{theme:'dark',lastActiveTab:'dashboard',showHero:true},mothers:{},environments:{},clones:{},tasks:{},taskCompletions:{},envLogs:{},feedings:{},photoJournal:{},ipmLogs:{},strains:{},harvests:{},nutrientProducts:{},seeds:{},healthChecks:{},strainReviews:{},dryBacks:{},expenses:{},soilMixRecipes:{},trichomeReadings:{},trainingLogs:{},growRuns:{},breedingLogs:{},calibrationLogs:{},activityLog:[]}},
+  _default(){return{version:'1.0.0',settings:{theme:'dark',lastActiveTab:'dashboard',showHero:true},mothers:{},environments:{},clones:{},tasks:{},taskCompletions:{},envLogs:{},feedings:{},photoJournal:{},ipmLogs:{},strains:{},harvests:{},nutrientProducts:{},seeds:{},healthChecks:{},strainReviews:{},dryBacks:{},expenses:{},soilMixRecipes:{},trichomeReadings:{},trainingLogs:{},growRuns:{},breedingLogs:{},calibrationLogs:{},meters:{},activityLog:[]}},
   load(){
     try{
       const raw=localStorage.getItem(this._key);
@@ -928,6 +939,7 @@ const Store = {
       if(!this._data.growRuns) this._data.growRuns={};
       if(!this._data.breedingLogs) this._data.breedingLogs={};
       if(!this._data.calibrationLogs) this._data.calibrationLogs={};
+      if(!this._data.meters) this._data.meters={};
       if(this._data.settings.showHero===undefined) this._data.settings.showHero=true;
       if(this._data.settings.notificationsEnabled===undefined) this._data.settings.notificationsEnabled=false;
       if(this._data.settings.notifyOverdueTasks===undefined) this._data.settings.notifyOverdueTasks=true;
@@ -1056,6 +1068,8 @@ const Store = {
   breedingLogsArray(){return Object.values(this._data.breedingLogs).sort((a,b)=>b.timestamp-a.timestamp)},
   breedingForMother(mid){return this.breedingLogsArray().filter(b=>b.motherId===mid||b.fatherId===mid)},
   calibrationLogsArray(){return Object.values(this._data.calibrationLogs).sort((a,b)=>b.timestamp-a.timestamp)},
+  metersArray(){return Object.values(this._data.meters).filter(function(m){return!m.archived}).sort(function(a,b){return a.name.localeCompare(b.name)})},
+  calibrationLogsForMeter(meterId){return this.calibrationLogsArray().filter(function(l){return l.meterId===meterId})},
   completionsForMother(mid){return Object.values(this._data.taskCompletions).filter(c=>c.motherId===mid)}
 };
 
@@ -4531,7 +4545,8 @@ const Calendar={
     });
     Store.calibrationLogsArray().forEach(function(c){
       var d=new Date(c.timestamp);
-      add(_ds(d),'calibration','⚗️ '+(c.meterType||'pH/EC')+' calibration',_tm(d));
+      var mn=c.meterId?Store.getById('meters',c.meterId):null;
+      add(_ds(d),'calibration','⚗️ '+(mn?mn.name+' ':'')+(c.meterType||'pH/EC')+' calibration',_tm(d));
     });
     return index;
   },
@@ -6345,12 +6360,20 @@ const HarvestEstimate={
   },
   estimate(m){
     if(!m||m.growthStage!=='flowering'||!m.floweringStart) return null;
-    const ftStr=this._findFloweringTime(m);
-    const ft=this._parseFloweringTime(ftStr);
-    if(!ft) return null;
     const start=U.parseDate(m.floweringStart);
     const today=new Date();
     const daysElapsed=U.daysBetween(start,today);
+    if(m.floweringEnd){
+      const end=U.parseDate(m.floweringEnd);
+      const totalDays=Math.max(1,U.daysBetween(start,end));
+      const daysRemaining=Math.max(0,U.daysBetween(today,end));
+      const progress=Math.min(1,daysElapsed/totalDays);
+      const ds=end.toISOString().split('T')[0];
+      return{minDate:ds,maxDate:ds,daysElapsed,daysRemaining,minDays:totalDays,maxDays:totalDays,progress};
+    }
+    const ftStr=this._findFloweringTime(m);
+    const ft=this._parseFloweringTime(ftStr);
+    if(!ft) return null;
     const minDate=new Date(start);minDate.setDate(minDate.getDate()+ft.minDays);
     const maxDate=new Date(start);maxDate.setDate(maxDate.getDate()+ft.maxDays);
     const daysRemaining=Math.max(0,ft.maxDays-daysElapsed);
@@ -6360,7 +6383,8 @@ const HarvestEstimate={
   badgeHtml(m){
     const est=this.estimate(m);
     if(!est) return '';
-    let h='<div class="harvest-est-badge">&#127800; ~'+est.daysRemaining+'d left ('+Math.round(est.minDays/7)+'-'+Math.round(est.maxDays/7)+' wks)</div>';
+    const wkLabel=est.minDays===est.maxDays?Math.round(est.minDays/7)+' wks':Math.round(est.minDays/7)+'-'+Math.round(est.maxDays/7)+' wks';
+    let h='<div class="harvest-est-badge">&#127800; ~'+est.daysRemaining+'d left ('+wkLabel+')</div>';
     h+='<div class="harvest-est-bar"><div class="harvest-est-bar-fill" style="width:'+Math.round(est.progress*100)+'%"></div></div>';
     return h;
   }
@@ -7893,58 +7917,240 @@ window.BreedingTracker=BreedingTracker;
    PH/EC CALIBRATION LOG
    ═══════════════════════════════════════════════ */
 const CalibrationLog={
+  _TYPES:['pH','EC','pH/EC Combo','DO','TDS','Other'],
+  /* ── Per-meter status helpers ── */
+  daysSinceForMeter(meterId){
+    var logs=Store.calibrationLogsForMeter(meterId);
+    if(!logs.length) return null;
+    return U.daysBetween(new Date(logs[0].timestamp),new Date());
+  },
+  isMeterOverdue(meterId){
+    var meter=Store.getById('meters',meterId);if(!meter) return true;
+    var days=this.daysSinceForMeter(meterId);
+    if(days===null) return true;
+    return days>(meter.intervalDays||30);
+  },
+  /* ── Global fallback (backward compat + no meters) ── */
   daysSinceCalibration(){
+    var meters=Store.metersArray();
+    if(meters.length){
+      var worst=null;
+      meters.forEach(function(m){var d=CalibrationLog.daysSinceForMeter(m.id);if(d===null||worst===null||d>worst) worst=d});
+      return worst;
+    }
     var last=Store.setting('lastCalibrationDate');
     if(!last) return null;
     return U.daysBetween(U.parseDate(last),new Date());
   },
   isOverdue(){
+    var meters=Store.metersArray();
+    if(meters.length){
+      for(var i=0;i<meters.length;i++){if(this.isMeterOverdue(meters[i].id)) return true}
+      return false;
+    }
     var days=this.daysSinceCalibration();
     if(days===null) return true;
     return days>(Store.setting('calibrationIntervalDays')||30);
   },
+  /* ── Badge ── */
+  _meterBadge(meterId){
+    var days=this.daysSinceForMeter(meterId);
+    var overdue=this.isMeterOverdue(meterId);
+    var color=overdue?'#e05c3a':'var(--leaf)';
+    var text=days===null?'Never calibrated':days+'d since cal';
+    return '<span style="font-size:.65rem;padding:2px 6px;border-radius:3px;background:rgba('+(overdue?'224,92,58':'74,158,82')+',.1);color:'+color+'">'+text+'</span>';
+  },
   badgeHtml(){
+    var meters=Store.metersArray();
+    if(meters.length){
+      var worst=null,worstDays=-1,worstName='';
+      var self=this;
+      meters.forEach(function(m){
+        var d=self.daysSinceForMeter(m.id);
+        var ov=self.isMeterOverdue(m.id);
+        if(ov&&(d===null||d>worstDays)){worst=m;worstDays=d===null?9999:d;worstName=m.name}
+      });
+      if(worst){
+        var text=worstDays===9999?U.esc(worstName)+' never cal':U.esc(worstName)+' '+worstDays+'d';
+        return '<span style="font-size:.65rem;padding:2px 6px;border-radius:3px;background:rgba(224,92,58,.1);color:#e05c3a">&#9879; '+text+'</span>';
+      }
+      /* All current — show most recent */
+      var best=null,bestDays=9999;
+      meters.forEach(function(m){var d=self.daysSinceForMeter(m.id);if(d!==null&&d<bestDays){best=m;bestDays=d}});
+      if(best) return '<span style="font-size:.65rem;padding:2px 6px;border-radius:3px;background:rgba(74,158,82,.1);color:var(--leaf)">&#9879; '+bestDays+'d since cal</span>';
+    }
     var days=this.daysSinceCalibration();
     var overdue=this.isOverdue();
     var color=overdue?'#e05c3a':'var(--leaf)';
     var text=days===null?'Never calibrated':days+'d since cal';
     return '<span style="font-size:.65rem;padding:2px 6px;border-radius:3px;background:rgba('+(overdue?'224,92,58':'74,158,82')+',.1);color:'+color+'">&#9879; '+text+'</span>';
   },
+  /* ── Meter CRUD ── */
+  _buildMeterForm(m){
+    if(!m) m={};
+    var h='<div class="form-group"><label class="form-label">Name *</label>';
+    h+='<input class="form-input" id="f_meterName" value="'+U.esc(m.name||'')+'" placeholder="e.g. Bluelab pH Pen"></div>';
+    h+='<div class="form-row"><div class="form-group"><label class="form-label">Type</label><select class="form-select" id="f_meterType">';
+    this._TYPES.forEach(function(t){h+='<option value="'+t+'"'+(t===(m.type||'pH')?' selected':'')+'>'+t+'</option>'});
+    h+='</select></div><div class="form-group"><label class="form-label">Cal Interval (days)</label>';
+    h+='<input class="form-input" type="number" id="f_meterInterval" value="'+(m.intervalDays||30)+'" min="1" max="365"></div></div>';
+    h+='<div class="form-row"><div class="form-group"><label class="form-label">Model</label>';
+    h+='<input class="form-input" id="f_meterModel" value="'+U.esc(m.model||'')+'" placeholder="Optional"></div>';
+    h+='<div class="form-group"><label class="form-label">Serial #</label>';
+    h+='<input class="form-input" id="f_meterSN" value="'+U.esc(m.serialNumber||'')+'" placeholder="Optional"></div></div>';
+    h+='<div class="form-group"><label class="form-label">Notes</label>';
+    h+='<input class="form-input" id="f_meterNotes" value="'+U.esc(m.notes||'')+'" placeholder="Optional"></div>';
+    return h;
+  },
+  _readMeterForm(){
+    var name=document.getElementById('f_meterName').value.trim();
+    if(!name){Toast.show('Meter name is required','error');return null}
+    return{name:name,type:document.getElementById('f_meterType').value,
+      intervalDays:parseInt(document.getElementById('f_meterInterval').value)||30,
+      model:document.getElementById('f_meterModel').value.trim(),
+      serialNumber:document.getElementById('f_meterSN').value.trim(),
+      notes:document.getElementById('f_meterNotes').value.trim()};
+  },
+  openAddMeter(){
+    var h=this._buildMeterForm();
+    Modal.open('&#9879; Add Meter',h,
+      '<button class="btn btn-ghost" onclick="CalibrationLog.open()">Cancel</button><button class="btn btn-primary" id="saveMeter">Save</button>');
+    document.getElementById('saveMeter').addEventListener('click',function(){
+      var data=CalibrationLog._readMeterForm();if(!data) return;
+      var id=U.id('met');data.id=id;data.archived=false;data.createdAt=Date.now();
+      Store.set('meters',id,data);
+      Store.addActivity('meter_added','Added meter: '+data.name,id);
+      Toast.show('Meter added!');CalibrationLog.open();
+    });
+  },
+  openEditMeter(id){
+    var m=Store.getById('meters',id);if(!m) return;
+    var h=this._buildMeterForm(m);
+    Modal.open('&#9879; Edit Meter',h,
+      '<button class="btn btn-ghost" onclick="CalibrationLog.open()">Cancel</button><button class="btn btn-primary" id="saveMeter">Save</button>');
+    document.getElementById('saveMeter').addEventListener('click',function(){
+      var data=CalibrationLog._readMeterForm();if(!data) return;
+      var merged=Object.assign({},m,data);
+      Store.set('meters',id,merged);
+      Store.addActivity('meter_updated','Updated meter: '+data.name,id);
+      Toast.show('Meter updated!');CalibrationLog.open();
+    });
+  },
+  _archiveMeter(id){
+    var m=Store.getById('meters',id);if(!m) return;
+    if(!confirm('Archive "'+m.name+'"? Calibration history is kept.')) return;
+    m.archived=true;Store.set('meters',id,m);
+    Store.addActivity('meter_archived','Archived meter: '+m.name,id);
+    Toast.show('Meter archived');this.open();
+  },
+  /* ── Calibrate a specific meter ── */
+  openCalibrate(meterId){
+    var meter=Store.getById('meters',meterId);if(!meter) return;
+    var h='<p style="font-size:.85rem;margin-bottom:var(--space-md)">Calibrating: <strong>'+U.esc(meter.name)+'</strong> ('+U.esc(meter.type)+')</p>';
+    h+='<div class="form-row"><div class="form-group"><label class="form-label">Buffers Used</label>';
+    h+='<input class="form-input" id="f_calBuffers" placeholder="e.g. 4.0, 7.0"></div></div>';
+    h+='<div class="form-group"><label class="form-label">Notes</label><input class="form-input" id="f_calNotes" placeholder="Optional"></div>';
+    Modal.open('&#9879; Log Calibration',h,
+      '<button class="btn btn-ghost" onclick="CalibrationLog.open()">Cancel</button><button class="btn btn-primary" id="calSaveBtn">Log Calibration</button>');
+    document.getElementById('calSaveBtn').addEventListener('click',function(){
+      var id=U.id('cal');
+      Store.set('calibrationLogs',id,{id:id,timestamp:Date.now(),meterId:meterId,meterType:meter.type,buffers:document.getElementById('f_calBuffers').value.trim(),notes:document.getElementById('f_calNotes').value.trim()});
+      Store.setting('lastCalibrationDate',U.today());
+      Store.addActivity('calibration','Calibrated '+meter.name+' ('+meter.type+')');
+      Toast.show('Calibration logged!');CalibrationLog.open();
+    });
+  },
+  /* ── Main modal ── */
   open(){
+    var meters=Store.metersArray();
     var logs=Store.calibrationLogsArray();
-    var interval=Store.setting('calibrationIntervalDays')||30;
-    var h='<div style="text-align:center;margin-bottom:var(--space-md)">'+this.badgeHtml()+'</div>';
-    h+='<div class="form-row"><div class="form-group"><label class="form-label">Reminder Interval (days)</label>';
-    h+='<input class="form-input" type="number" id="f_calInterval" value="'+interval+'" min="1" max="365"></div></div>';
-    h+='<div style="padding:var(--space-md);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius-sm);margin-bottom:var(--space-md)">';
-    h+='<div style="font-size:.72rem;font-weight:700;text-transform:uppercase;color:var(--cyan);margin-bottom:var(--space-sm)">Log Calibration</div>';
+    var self=this;
+    var h='';
+    /* My Meters section */
+    h+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-sm)">';
+    h+='<div class="section-title" style="margin-bottom:0">My Meters</div>';
+    h+='<button class="btn btn-primary btn-sm" onclick="CalibrationLog.openAddMeter()">+ Add Meter</button></div>';
+    if(meters.length){
+      meters.forEach(function(m){
+        var overdue=self.isMeterOverdue(m.id);
+        h+='<div style="padding:var(--space-sm);border:1px solid '+(overdue?'rgba(224,92,58,.3)':'rgba(255,255,255,.06)')+';border-radius:var(--radius-sm);margin-bottom:var(--space-xs);background:'+(overdue?'rgba(224,92,58,.04)':'rgba(255,255,255,.02)')+'">';
+        h+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">';
+        h+='<div><strong style="font-size:.85rem">'+U.esc(m.name)+'</strong> <span style="font-size:.68rem;color:var(--text-tertiary)">'+U.esc(m.type)+'</span>';
+        if(m.model) h+=' <span style="font-size:.62rem;color:var(--text-tertiary)">&middot; '+U.esc(m.model)+'</span>';
+        h+='</div>';
+        h+=self._meterBadge(m.id)+'</div>';
+        h+='<div style="display:flex;gap:var(--space-xs);margin-top:4px">';
+        h+='<button class="btn btn-primary btn-sm" onclick="CalibrationLog.openCalibrate(\''+m.id+'\')">&#9879; Calibrate</button>';
+        h+='<button class="btn btn-ghost btn-sm" onclick="CalibrationLog.openEditMeter(\''+m.id+'\')">Edit</button>';
+        h+='<button class="btn btn-ghost btn-sm" style="color:#e05c3a" onclick="CalibrationLog._archiveMeter(\''+m.id+'\')">Archive</button>';
+        h+='</div></div>';
+      });
+    }else{
+      h+='<div style="font-size:.78rem;color:var(--text-tertiary);padding:var(--space-md) 0;text-align:center">No meters yet. Add your pH/EC pens to track each one separately.</div>';
+    }
+    /* Quick Log (for users without meters or quick logging) */
+    h+='<div style="padding:var(--space-md);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius-sm);margin:var(--space-md) 0">';
+    h+='<div style="font-size:.72rem;font-weight:700;text-transform:uppercase;color:var(--cyan);margin-bottom:var(--space-sm)">Quick Log</div>';
     h+='<div class="form-row"><div class="form-group"><label class="form-label">Meter</label><select class="form-select" id="f_calMeter">';
-    ['pH','EC','Both'].forEach(function(t){h+='<option value="'+t+'">'+t+'</option>'});
+    if(meters.length){
+      meters.forEach(function(m){h+='<option value="'+m.id+'">'+U.esc(m.name)+' ('+U.esc(m.type)+')</option>'});
+      h+='<option value="">— Unspecified —</option>';
+    }else{
+      ['pH','EC','Both'].forEach(function(t){h+='<option value="'+t+'">'+t+'</option>'});
+    }
     h+='</select></div><div class="form-group"><label class="form-label">Buffers Used</label><input class="form-input" id="f_calBuffers" placeholder="e.g. 4.0, 7.0"></div></div>';
     h+='<div class="form-group"><label class="form-label">Notes</label><input class="form-input" id="f_calNotes" placeholder="Optional"></div>';
     h+='<button class="btn btn-primary btn-sm" onclick="CalibrationLog._save()">Log Calibration</button></div>';
+    /* Global interval (only when no meters) */
+    if(!meters.length){
+      var interval=Store.setting('calibrationIntervalDays')||30;
+      h+='<div class="form-row" style="margin-top:var(--space-md)"><div class="form-group"><label class="form-label">Reminder Interval (days)</label>';
+      h+='<input class="form-input" type="number" id="f_calInterval" value="'+interval+'" min="1" max="365"></div></div>';
+    }
+    /* History */
     if(logs.length){
-      h+='<div class="section-title">History</div>';
-      logs.slice(0,10).forEach(function(l){
+      h+='<div class="section-title" style="margin-top:var(--space-md)">History</div>';
+      logs.slice(0,15).forEach(function(l){
+        var meterName='';
+        if(l.meterId){var mt=Store.getById('meters',l.meterId);if(mt) meterName=mt.name+' — '}
         h+='<div style="display:flex;justify-content:space-between;padding:var(--space-xs) 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.78rem">';
-        h+='<span>'+U.relTime(l.timestamp)+' — <strong>'+U.esc(l.meterType)+'</strong>';
+        h+='<span>'+U.relTime(l.timestamp)+' — <strong>'+U.esc(meterName)+U.esc(l.meterType||'')+'</strong>';
         if(l.buffers) h+=' ('+U.esc(l.buffers)+')';
+        if(l.notes) h+=' <span style="color:var(--text-tertiary)">'+U.esc(l.notes)+'</span>';
         h+='</span>';
         h+='<button class="btn btn-ghost btn-sm" onclick="Store.remove(\'calibrationLogs\',\''+l.id+'\');CalibrationLog.open()">&#10005;</button></div>';
       });
     }
-    Modal.open('&#9879; pH/EC Calibration',h,
-      '<button class="btn btn-ghost" onclick="Modal.close()">Cancel</button><button class="btn btn-primary" id="calSave">Save Interval</button>');
-    document.getElementById('calSave').addEventListener('click',function(){
-      Store.setting('calibrationIntervalDays',parseInt(document.getElementById('f_calInterval').value)||30);
-      Toast.show('Calibration interval saved!');Modal.close();
-    });
+    var footer='<button class="btn btn-ghost" onclick="Modal.close()">Close</button>';
+    if(!meters.length) footer+='<button class="btn btn-primary" id="calSave">Save Interval</button>';
+    Modal.open('&#9879; pH/EC Calibration',h,footer);
+    if(!meters.length){
+      document.getElementById('calSave').addEventListener('click',function(){
+        Store.setting('calibrationIntervalDays',parseInt(document.getElementById('f_calInterval').value)||30);
+        Toast.show('Calibration interval saved!');Modal.close();
+      });
+    }
   },
   _save(){
+    var meters=Store.metersArray();
+    var meterSelect=document.getElementById('f_calMeter').value;
     var id=U.id('cal');
-    Store.set('calibrationLogs',id,{id:id,timestamp:Date.now(),meterType:document.getElementById('f_calMeter').value,buffers:document.getElementById('f_calBuffers').value.trim(),notes:document.getElementById('f_calNotes').value.trim()});
+    var entry={id:id,timestamp:Date.now(),buffers:document.getElementById('f_calBuffers').value.trim(),notes:document.getElementById('f_calNotes').value.trim()};
+    if(meters.length){
+      /* Meter-based: meterSelect is a meter ID or empty */
+      if(meterSelect){
+        var meter=Store.getById('meters',meterSelect);
+        entry.meterId=meterSelect;
+        entry.meterType=meter?meter.type:'';
+      }else{entry.meterType='Unspecified'}
+    }else{
+      /* Legacy: meterSelect is pH/EC/Both */
+      entry.meterType=meterSelect;
+    }
+    Store.set('calibrationLogs',id,entry);
     Store.setting('lastCalibrationDate',U.today());
-    Store.addActivity('calibration','Logged '+document.getElementById('f_calMeter').value+' calibration');
+    var label=entry.meterId&&Store.getById('meters',entry.meterId)?Store.getById('meters',entry.meterId).name+' ('+entry.meterType+')':entry.meterType;
+    Store.addActivity('calibration','Logged '+label+' calibration');
     Toast.show('Calibration logged!');this.open();
   }
 };
@@ -8027,6 +8233,15 @@ window.FleetView=FleetView;
    ═══════════════════════════════════════════════ */
 const RoomDiagram={
   _envId:null,_rows:4,_cols:4,_layout:{},
+  _roomWidth:'',_roomLength:'',
+  _POT_SIZES:[1,2,3,5,7,10,15,20,25,30],
+  _MEDIA:['Soil','Coco','Hydro','Perlite','Rockwool','Living Soil','Other'],
+  _DEFAULT_POT:'5',_DEFAULT_MEDIUM:'Soil',
+  _migrateCell(val){
+    if(typeof val==='string') return{motherId:val,potSize:this._DEFAULT_POT,medium:this._DEFAULT_MEDIUM};
+    if(val&&typeof val==='object') return{motherId:val.motherId||'',potSize:val.potSize||this._DEFAULT_POT,medium:val.medium||this._DEFAULT_MEDIUM};
+    return null;
+  },
   open(envId){
     if(!envId){
       var envs=Store.environmentsArray();
@@ -8040,60 +8255,145 @@ const RoomDiagram={
     }
     this._envId=envId;
     var saved=(Store.setting('roomLayouts')||{})[envId];
-    if(saved){this._rows=saved.rows||4;this._cols=saved.cols||4;this._layout=Object.assign({},saved.cells||{})}
-    else{this._rows=4;this._cols=4;this._layout={}}
+    if(saved){
+      this._rows=saved.rows||4;this._cols=saved.cols||4;
+      this._roomWidth=saved.roomWidth||'';this._roomLength=saved.roomLength||'';
+      this._layout={};
+      var rawCells=saved.cells||{};
+      for(var k in rawCells){if(rawCells.hasOwnProperty(k)){var mc=this._migrateCell(rawCells[k]);if(mc) this._layout[k]=mc}}
+    }else{this._rows=4;this._cols=4;this._roomWidth='';this._roomLength='';this._layout={}}
     this._render();
   },
   _render(){
     var env=Store.getById('environments',this._envId);
     var self=this;
-    var h='<div class="form-row" style="margin-bottom:var(--space-md)"><div class="form-group"><label class="form-label">Rows</label>';
+    /* Grid dimensions */
+    var h='<div class="form-row" style="margin-bottom:var(--space-sm)"><div class="form-group" style="margin-bottom:0"><label class="form-label">Rows</label>';
     h+='<input class="form-input" type="number" id="f_gridRows" value="'+this._rows+'" min="1" max="10" onchange="RoomDiagram._rows=parseInt(this.value)||4;RoomDiagram._render()"></div>';
-    h+='<div class="form-group"><label class="form-label">Columns</label>';
+    h+='<div class="form-group" style="margin-bottom:0"><label class="form-label">Columns</label>';
     h+='<input class="form-input" type="number" id="f_gridCols" value="'+this._cols+'" min="1" max="10" onchange="RoomDiagram._cols=parseInt(this.value)||4;RoomDiagram._render()"></div></div>';
+    /* Room dimensions */
+    h+='<div class="form-row" style="margin-bottom:var(--space-md)"><div class="form-group" style="margin-bottom:0"><label class="form-label">Room Width (ft)</label>';
+    h+='<input class="form-input" type="number" id="f_roomWidth" value="'+U.esc(this._roomWidth)+'" min="1" max="100" step="0.5" placeholder="optional" onchange="RoomDiagram._roomWidth=this.value"></div>';
+    h+='<div class="form-group" style="margin-bottom:0"><label class="form-label">Room Length (ft)</label>';
+    h+='<input class="form-input" type="number" id="f_roomLength" value="'+U.esc(this._roomLength)+'" min="1" max="100" step="0.5" placeholder="optional" onchange="RoomDiagram._roomLength=this.value"></div></div>';
+    if(this._roomWidth&&this._roomLength){
+      var sqft=(parseFloat(this._roomWidth)*parseFloat(this._roomLength)).toFixed(1);
+      h+='<div class="room-dims">Room: '+U.esc(this._roomWidth)+' ft &times; '+U.esc(this._roomLength)+' ft = '+sqft+' sq ft</div>';
+    }
+    /* Grid */
     h+='<div style="display:grid;grid-template-columns:repeat('+this._cols+',1fr);gap:4px;margin-bottom:var(--space-md)">';
-    var plantsInEnv=Store.mothersArray().filter(function(m){return m.environmentId===self._envId});
     for(var r=0;r<this._rows;r++){
       for(var c=0;c<this._cols;c++){
         var key=r+','+c;
-        var pid=this._layout[key];
-        var m=pid?Store.getById('mothers',pid):null;
+        var cell=this._layout[key];
+        var mid=cell?cell.motherId:'';
+        var m=mid?Store.getById('mothers',mid):null;
+        var potLabel=cell?(cell.potSize||self._DEFAULT_POT)+'g':'';
+        var medLabel=cell?(cell.medium||self._DEFAULT_MEDIUM):'';
         if(m){
-          h+='<div class="grid-cell occupied" onclick="RoomDiagram._cellClick('+r+','+c+')" title="Click to remove">';
-          h+='<div>'+U.esc(m.strainName)+'<span class="gc-health badge-'+m.healthStatus+'">'+m.healthStatus+'</span></div></div>';
+          h+='<div class="grid-cell occupied" onclick="RoomDiagram._cellClick('+r+','+c+')" title="'+U.esc(m.strainName)+' — Click to edit">';
+          h+='<div class="gc-name">'+U.esc(m.strainName)+'</div>';
+          h+='<span class="gc-health badge-'+m.healthStatus+'">'+m.healthStatus+'</span>';
+          h+='<div class="gc-pot">'+U.esc(potLabel)+'</div>';
+          h+='<div class="gc-medium">'+U.esc(medLabel)+'</div></div>';
+        }else if(cell){
+          h+='<div class="grid-cell" onclick="RoomDiagram._cellClick('+r+','+c+')" title="Click to edit">';
+          h+='<div class="gc-pot">'+U.esc(potLabel)+'</div>';
+          h+='<div class="gc-medium">'+U.esc(medLabel)+'</div>';
+          h+='<div class="gc-empty-label">empty</div></div>';
         }else{
-          h+='<div class="grid-cell" onclick="RoomDiagram._cellClick('+r+','+c+')" title="Click to assign plant">+</div>';
+          h+='<div class="grid-cell" onclick="RoomDiagram._cellClick('+r+','+c+')" title="Click to configure">+</div>';
         }
       }
     }
     h+='</div>';
-    var assigned=Object.values(this._layout);
-    var unassigned=plantsInEnv.filter(function(m){return assigned.indexOf(m.id)===-1});
+    /* Summary */
+    h+=this._summaryHtml();
+    /* Unplaced plants */
+    var assignedIds=[];
+    for(var k in this._layout){if(this._layout[k]&&this._layout[k].motherId) assignedIds.push(this._layout[k].motherId)}
+    var unassigned=Store.mothersArray().filter(function(m){return m.environmentId===self._envId&&assignedIds.indexOf(m.id)===-1});
     if(unassigned.length){
       h+='<div style="font-size:.72rem;color:var(--text-tertiary);margin-bottom:var(--space-xs)">Unplaced: '+unassigned.map(function(m){return U.esc(m.strainName)}).join(', ')+'</div>';
     }
-    Modal.open('&#128208; Room Layout'+(env?' — '+U.esc(env.name):''),h,
+    Modal.open('&#128208; Room Layout'+(env?' &mdash; '+U.esc(env.name):''),h,
       '<button class="btn btn-ghost" onclick="Modal.close()">Close</button><button class="btn btn-primary" onclick="RoomDiagram._save()">Save Layout</button>');
+  },
+  _summaryHtml(){
+    var totalPlants=0,totalPotVol=0,mediumCounts={};
+    for(var k in this._layout){
+      var cell=this._layout[k];if(!cell) continue;
+      var ps=parseFloat(cell.potSize||this._DEFAULT_POT)||0;
+      totalPotVol+=ps;
+      var med=cell.medium||this._DEFAULT_MEDIUM;
+      mediumCounts[med]=(mediumCounts[med]||0)+1;
+      if(cell.motherId) totalPlants++;
+    }
+    if(!totalPlants&&!totalPotVol) return '';
+    var h='<div class="room-summary">';
+    h+='<div class="rs-stat"><div class="rs-val">'+totalPlants+'</div><div class="rs-lbl">Plants Placed</div></div>';
+    h+='<div class="rs-stat"><div class="rs-val">'+totalPotVol+' gal</div><div class="rs-lbl">Total Pot Volume</div></div>';
+    var medParts=[];for(var m in mediumCounts){medParts.push(U.esc(m)+': '+mediumCounts[m])}
+    if(medParts.length){
+      h+='<div class="rs-stat"><div class="rs-val" style="font-size:.78rem">'+medParts.join(', ')+'</div><div class="rs-lbl">By Medium</div></div>';
+    }
+    h+='</div>';
+    return h;
   },
   _cellClick(r,c){
     var key=r+','+c;
-    if(this._layout[key]){delete this._layout[key];this._render();return}
-    var assigned=Object.values(this._layout);
-    var available=Store.mothersArray().filter(function(m){return m.environmentId===RoomDiagram._envId&&assigned.indexOf(m.id)===-1});
-    if(!available.length){Toast.show('All plants in this environment are placed');return}
-    /* Quick-pick: if only one, auto-assign */
-    if(available.length===1){this._layout[key]=available[0].id;this._render();return}
-    /* Show picker */
+    var cell=this._layout[key]||{motherId:'',potSize:this._DEFAULT_POT,medium:this._DEFAULT_MEDIUM};
+    var mid=cell.motherId||'';
+    var m=mid?Store.getById('mothers',mid):null;
     var self=this;
-    var h='<p style="font-size:.82rem;margin-bottom:var(--space-sm)">Select plant for row '+(r+1)+', col '+(c+1)+':</p>';
-    available.forEach(function(m){
-      h+='<button class="btn btn-outline btn-sm" style="display:block;width:100%;margin-bottom:var(--space-xs);text-align:left" onclick="RoomDiagram._layout[\''+key+'\']=\''+m.id+'\';RoomDiagram._render()">'+U.esc(m.strainName)+' ('+m.healthStatus+')</button>';
-    });
-    Modal.open('Place Plant',h,'<button class="btn btn-ghost" onclick="RoomDiagram._render()">Back</button>');
+    var h='<p style="font-size:.82rem;color:var(--text-secondary);margin-bottom:var(--space-md)">Cell: Row '+(r+1)+', Column '+(c+1)+'</p>';
+    /* Pot size */
+    h+='<div class="form-row"><div class="form-group"><label class="form-label">Pot Size (gal)</label><select class="form-select" id="f_cellPot">';
+    this._POT_SIZES.forEach(function(s){h+='<option value="'+s+'"'+(String(s)===String(cell.potSize)?' selected':'')+'>'+s+' gal</option>'});
+    h+='</select></div>';
+    /* Medium */
+    h+='<div class="form-group"><label class="form-label">Growing Medium</label><select class="form-select" id="f_cellMedium">';
+    this._MEDIA.forEach(function(med){h+='<option value="'+med+'"'+(med===cell.medium?' selected':'')+'>'+med+'</option>'});
+    h+='</select></div></div>';
+    /* Plant info or picker */
+    if(m){
+      h+='<div style="padding:var(--space-sm);border:1px solid rgba(74,158,82,.3);border-radius:var(--radius-sm);background:rgba(74,158,82,.06);margin-bottom:var(--space-md)">';
+      h+='<span style="font-weight:600">'+U.esc(m.strainName)+'</span>';
+      h+=' <span class="badge-'+m.healthStatus+'" style="font-size:.6rem;padding:1px 6px;border-radius:3px">'+m.healthStatus+'</span></div>';
+      h+='<button class="btn btn-danger btn-sm" style="margin-bottom:var(--space-sm)" onclick="RoomDiagram._removeFromCell(\''+key+'\')">Remove Plant</button>';
+    }else{
+      var assignedIds=[];for(var ak in self._layout){if(self._layout[ak]&&self._layout[ak].motherId) assignedIds.push(self._layout[ak].motherId)}
+      var available=Store.mothersArray().filter(function(p){return p.environmentId===self._envId&&assignedIds.indexOf(p.id)===-1});
+      if(available.length){
+        h+='<div class="form-group"><label class="form-label">Assign Plant</label><select class="form-select" id="f_cellPlant"><option value="">— None —</option>';
+        available.forEach(function(p){h+='<option value="'+p.id+'">'+U.esc(p.strainName)+' ('+p.healthStatus+')</option>'});
+        h+='</select></div>';
+      }else{
+        h+='<div style="font-size:.78rem;color:var(--text-tertiary);margin-bottom:var(--space-sm)">All plants in this environment are placed.</div>';
+      }
+    }
+    Modal.open('Edit Cell',h,
+      '<button class="btn btn-ghost" onclick="RoomDiagram._render()">Back</button><button class="btn btn-primary" onclick="RoomDiagram._saveCellEdit(\''+key+'\')">Apply</button>');
+  },
+  _saveCellEdit(key){
+    var potEl=document.getElementById('f_cellPot');
+    var medEl=document.getElementById('f_cellMedium');
+    var plantEl=document.getElementById('f_cellPlant');
+    var existing=this._layout[key]||{};
+    var newCell={motherId:existing.motherId||'',potSize:potEl?potEl.value:this._DEFAULT_POT,medium:medEl?medEl.value:this._DEFAULT_MEDIUM};
+    if(plantEl&&plantEl.value) newCell.motherId=plantEl.value;
+    this._layout[key]=newCell;
+    this._render();
+  },
+  _removeFromCell(key){
+    var cell=this._layout[key];
+    if(cell) cell.motherId='';
+    this._render();
   },
   _save(){
     var layouts=Store.setting('roomLayouts')||{};
-    layouts[this._envId]={rows:this._rows,cols:this._cols,cells:this._layout};
+    layouts[this._envId]={rows:this._rows,cols:this._cols,roomWidth:this._roomWidth,roomLength:this._roomLength,cells:this._layout};
     Store.setting('roomLayouts',layouts);
     Toast.show('Room layout saved!');Modal.close();
   }

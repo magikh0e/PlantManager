@@ -85,6 +85,32 @@ FEATURE: 11 New Features — VPD, Trichome, Training, Deficiency Wizard, DLI, Ru
       harvest countdown badge was never displaying since v2.1.0
     - Growth Stage dropdown now auto-fills Flowering Start date when set to "Flowering"
       and auto-fills Flowering End date when changed away from "Flowering"
+    - Harvest countdown now works with manually defined Flowering End dates — no longer
+      requires a strain flowering time to calculate the countdown
+    - Badge shows clean week label ("8 wks") instead of redundant range ("8-8 wks") when
+      using a fixed end date
+    - Gear menu dropdown now scrolls when items exceed viewport height (was clipping bottom items)
+
+  Enhancements
+    - Room Layout upgraded to full grow room planner:
+      · Per-cell pot size selector (1–30 gal) and growing medium dropdown
+        (Soil, Coco, Hydro, Perlite, Rockwool, Living Soil, Other)
+      · Cells can be pre-configured with pot/medium before assigning a plant
+      · Room dimensions inputs (width × length in feet) with square footage display
+      · Summary footer showing plants placed, total pot volume, and medium breakdown
+      · Click any cell to open Edit Cell panel with pot, medium, and plant controls
+      · Occupied cells show plant name, health badge, pot size, and medium label
+      · Backward-compatible: old saved layouts auto-migrate on open
+    - Calibration Log upgraded to multi-meter/pen tracking:
+      · Add, edit, and archive individual meters/pens (pH, EC, pH/EC Combo, DO, TDS, Other)
+      · Per-meter fields: name, type, model, serial number, calibration interval, notes
+      · Each meter tracks calibration status independently (days since cal, overdue detection)
+      · Per-meter "Calibrate" button opens dedicated log form linked to that device
+      · Meter cards show name, type, model, status badge, and Calibrate/Edit/Archive controls
+      · Quick Log dropdown lists defined meters for fast logging
+      · Environment card badge shows the most overdue meter as a warning
+      · Calendar events now include meter name in calibration entries
+      · Backward-compatible: works with legacy global settings when no meters defined
 
 ---
 
