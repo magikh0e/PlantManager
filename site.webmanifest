@@ -2,7 +2,7 @@
   "name": "Tropical Roots Plant Manager",
   "short_name": "Plant Manager",
   "description": "Track mother plants, clones, feedings, environments, and KNF grow schedules.",
-  "start_url": "/PlantManager.html",
+  "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "any",

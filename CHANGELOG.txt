@@ -3,6 +3,343 @@ CHANGELOG — Tropical Roots Maui - Plant Manager
 https://github.com/magikh0e/PlantManager
 
 
+v2.4.0 — 2026-03-10
+--------------------
+FEATURE: 11 New Features — VPD, Trichome, Training, Deficiency Wizard, DLI, Runs, Breeding, Calibration, Fleet View, Room Diagram, Cost/Gram
+
+  VPD Calculator & Chart
+    - Calculate vapor pressure deficit from temperature and humidity
+    - Auto-fills from latest environment reading
+    - Color-coded zone indicators for seedling, veg, early flower, and late flower
+    - VPD trend chart (#13) on Analytics tab using environment log history
+    - Accessible from Dashboard, gear menu, and environment cards
+
+  Trichome Harvest Tracker
+    - Log clear/cloudy/amber percentages per plant
+    - Linked sliders auto-adjust to keep total at 100%
+    - Harvest-window recommendations: Too early, Peak THC, Balanced/couch lock
+    - Stacked bar chart history with color-coded segments
+    - Compact trichome badge shown on flowering plant cards
+
+  Training Log
+    - Track 10 techniques: Topping, FIM, LST, HST, Supercrop, Mainline, SCROG, Lollipop, Defoliation, Other
+    - Per-plant training history with technique badges
+    - Integrates with Plant Timeline and Calendar
+
+  Nutrient Deficiency Wizard
+    - 3-step diagnostic decision tree (location → symptom → pattern)
+    - Identifies 8+ deficiencies: Nitrogen, Magnesium, Iron, Potassium, Calcium, Phosphorus, Manganese, Nutrient Burn
+    - "Log as IPM Issue" button pre-fills the IPM form
+    - Linked from IPM form and accessible from Dashboard/gear menu
+
+  DLI Calculator
+    - Daily Light Integral calculation from PPFD and photoperiod
+    - PPFD estimation from light type (LED, HPS, CMH, Fluorescent, Sunlight) and wattage
+    - Optimal DLI ranges for seedling (12–18), veg (18–30), flower (30–45)
+
+  Grow Run Manager
+    - Group plants into named grow runs with start/end dates
+    - Active and completed run tracking with status management
+    - Aggregate stats: plant count, total yield, total cost, average health
+    - Run comparison: select 2 runs for side-by-side stat comparison
+
+  Breeding / Pollen Tracker
+    - 3 entry types: Pollen Collection, Cross, Seed Harvest
+    - Track mother × father crosses, pollen dates, seed counts, offspring strains
+    - Per-plant breeding history via 🧬 Breed button on plant cards
+
+  pH/EC Calibration Reminders
+    - Calibration log with meter type, buffer solutions, and notes
+    - Configurable interval (default 30 days) with overdue detection
+    - Warning badge on environment cards when calibration is overdue
+
+  Fleet View / Table Mode
+    - Sortable table toggle on Plants tab (Grid ↔ Table button)
+    - 9 columns: Strain, Type, Stage, Health, Age, Environment, Last Fed, Days Since IPM, Yield
+    - Click column headers to sort ascending/descending
+
+  Grow Room Diagram
+    - Visual grid layout per environment (configurable rows × columns)
+    - Click cells to assign/unassign plants from a picker
+    - Persists to settings per environment
+    - Accessible from environment cards (📐 Layout) and gear menu
+
+  Harvest Cost Breakdown
+    - New Analytics chart (#14): Cost per Gram by Strain
+    - Allocates direct expenses per plant + proportional unattributed costs
+    - Plant Report now includes expenses table with total and cost/gram
+
+  Integration Points
+    - Gear menu: +7 items (VPD Calculator, DLI Calculator, Deficiency Wizard, Grow Runs, Breeding Tracker, Calibration Log, Room Layout)
+    - Dashboard: +7 quick action buttons
+    - Plant cards: +3 buttons (🔬 Trichome, ✂️ Training, 🧬 Breed) + trichome badge
+    - Environment cards: +2 buttons (VPD, 📐 Layout) + calibration badge
+    - Analytics: +2 charts (VPD Trends, Cost per Gram by Strain) — 14 total
+    - Calendar: +3 event types (training, trichome, calibration)
+    - Plant Timeline: +2 event types (training, trichome)
+    - IPM form: Deficiency Wizard link
+    - Dashboard tips: 42 → 53
+
+  Bug Fixes
+    - Fixed HarvestEstimate checking wrong field (m.stage → m.growthStage) — flowering
+      harvest countdown badge was never displaying since v2.1.0
+    - Growth Stage dropdown now auto-fills Flowering Start date when set to "Flowering"
+      and auto-fills Flowering End date when changed away from "Flowering"
+
+---
+
+v2.3.0 — 2026-03-10
+--------------------
+FEATURE: Pest Identification (Vision AI + Google Lens + Visual Pest Guide)
+
+  Pest Identification Tool
+    - Snap or upload a photo of plant damage to identify pests and diseases
+    - Google Cloud Vision API integration with LABEL_DETECTION + WEB_DETECTION
+    - Fuzzy label matching against 10 known cannabis pests/diseases
+    - Confidence scoring with match percentage display
+    - Google Lens fallback for manual identification without an API key
+    - One-tap "Log as IPM Issue" pre-fills the IPM form from identification result
+
+  Visual Pest Guide
+    - Built-in reference cards for 10 common pests and diseases
+    - Each card shows: emoji icon, symptom descriptions, and recommended treatments
+    - Covers: aphids, spider mites, fungus gnats, whiteflies, thrips,
+      powdery mildew, bud rot, root rot, nutrient burn, nutrient deficiency
+    - Accessible from Dashboard, gear menu, IPM form, and Pest ID tool
+
+  Inline IPM Form Integration
+    - "Snap Photo" + "Auto-ID" buttons embedded directly in the IPM log form
+    - Photo preview with one-click analysis using Vision API
+    - "Apply" button auto-fills pest type, issue type, and severity from result
+    - Lens and Guide buttons available inline without leaving the form
+
+  Pest ID Settings
+    - Google Cloud Vision API key management (same pattern as Weather API)
+    - Test API Key button validates key with a test image
+    - Helpful setup link to Google Cloud Console with free tier info (1,000 images/month)
+    - Graceful degradation: Lens + Guide available without API key
+
+  Integration
+    - Plant card: new "🔍 Identify" button (16 action buttons total)
+    - Dashboard: 2 new quick actions (🔎 Pest ID, 📚 Pest Guide) — 22 total
+    - Gear menu: 2 new items (🔎 Pest Identifier, 🤖 Pest ID Settings) — 14 total
+    - 3 new dashboard tips (42 total)
+    - What's New v2.3.0 modal with 6 feature bullets
+
+
+v2.2.0 — 2026-03-09
+--------------------
+FEATURE: Grow Cycles, Plant Comparison, Soil Mix Calculator & Export Report
+
+  Grow Cycle Templates
+  - 4 built-in grow cycle templates: Indoor Photoperiod (16 wks / 9 phases),
+    Indoor Autoflower (12 wks / 7 phases), Outdoor Tropical Maui (21 wks /
+    6 phases), Clone to Flower (12 wks / 7 phases)
+  - Each phase includes week range, phase name, light schedule, and task list
+  - Preview phases in a table before applying to a plant
+  - "Apply to Plant" auto-creates one-time tasks per phase task with
+    calculated due dates based on today's date
+  - Access from Dashboard quick actions, Settings gear menu, or plant cards
+
+  Soil Mix Calculator
+  - 4 pre-built soil recipes: Coots Mix (1:1:1 living soil), BuildASoil 3.0,
+    Simple Coco Mix, Tropical Living Soil (Maui-style)
+  - Custom Mix option to build recipes from scratch
+  - 14 components across 3 categories: Base Mix (3), Aeration (3),
+    Amendments (8) — each with description and editable ratio/amount
+  - Adjustable total volume with gallon/liter unit toggle
+  - Live recalculation of all amounts when volume or ratios change
+  - Save custom recipes to the Store for later use
+  - Load and delete saved recipes from the recipe grid
+  - Access from Dashboard quick actions and Settings gear menu
+
+  Plant Comparison
+  - Compare 2-3 plants side-by-side with checkboxes (requires 2+ plants)
+  - 11 comparison metrics: strain, type, age, stage, health, environment,
+    feedings, IPM issues, clone rate, total yield, avg health score
+  - Best values highlighted in cyan in the comparison table
+  - Mini bar charts (Feedings, Yield, Health) using Chart.bar() below table
+  - Access from Dashboard quick actions or plant card Compare button
+
+  Export Report (Print-to-PDF)
+  - Two report modes: Plant Report (single plant) and Garden Report (full garden)
+  - Plant Report: header with strain info, stat grid (8 metrics), feeding
+    history table (last 20), harvests, IPM log, health checks
+  - Garden Report: garden stats (plants, envs, flowering, yield, expenses,
+    cost/gram), plant roster table, environments, harvest summary, expenses
+    by category
+  - Reports open in a new browser window via window.open() + document.write()
+  - Dual CSS: dark theme on screen (@media screen), clean B&W with borders
+    on print (@media print) — hidden print button in print mode
+  - "Print / Save PDF" button at top-right calls window.print()
+  - Access from plant card Report button, Dashboard, or Settings gear menu
+
+  Integration
+  - Dashboard: 4 new quick action buttons (Grow Cycles, Compare Plants,
+    Soil Mix Calc, Export Report)
+  - Settings gear menu: 3 new items (Grow Cycles, Soil Mix Calc, Export Report)
+  - Plant cards: 2 new buttons (Report, Compare) — 15 action buttons total
+
+  Housekeeping
+  - New soilMixRecipes:{} Store collection with migration support
+  - 4 new dashboard tips (39 total)
+  - What's New dialog for v2.2.0 with 6 bullet points
+  - Service worker cache version bumped to 2.2.0
+
+
+v2.1.0 — 2026-03-09
+--------------------
+FEATURE: Plant Timeline, Feed Schedules, Dry-Back Tracking, Harvest Estimate
+         & Cost Tracker
+
+  Plant Timeline
+  - Chronological event history for each plant combining 8 data sources:
+    feedings, photos, IPM, harvests, health checks, dry-backs, clones,
+    and task completions
+  - Color-coded dots per event type (green=feed, cyan=photo, red=IPM, etc.)
+  - Access via Timeline button on plant cards
+
+  Feed Schedule Templates
+  - 4 built-in nutrient schedule templates: GH Flora Series (10 wks),
+    Fox Farm Trio (8 wks), Gaia Green Organic (5 wks), KNF Inputs (8 wks)
+  - Preview weekly schedule with product, amount, and notes per week
+  - "Apply to Plant" creates one-time tasks for each week's feeding
+  - Access from Dashboard quick actions and Settings gear menu
+
+  Dry-Back Tracking
+  - Log dry-back weight readings per plant with wet/dry weight, unit, notes
+  - Line chart showing weight over time using Chart.line()
+  - History table with delete support
+  - Access via Dry-Back button on plant cards
+
+  Harvest Estimate
+  - Parses flowering time from strain data ("8-9 weeks", "56 days", "10 weeks+")
+  - Calculates estimated harvest window based on flowering start date
+  - Progress bar badge displayed on plant cards for flowering plants
+  - Harvest estimate events shown on the Calendar tab
+
+  Cost Tracker
+  - Log expenses across 7 categories: Nutrients, Equipment, Soil/Media,
+    Seeds/Clones, IPM, Utilities, Other
+  - Summary stats: total spent, this month, average per month
+  - Add, edit, and delete expenses with date, amount, category, description
+  - Cost Breakdown donut chart with legend added to Analytics tab
+  - Access from Dashboard quick actions and Settings gear menu
+
+  Integration
+  - Dashboard: 2 new quick action buttons (Feed Schedule, Costs)
+  - Settings gear menu: 2 new items (Feed Schedules, Cost Tracker)
+  - Plant cards: 2 new buttons (Timeline, Dry-Back)
+  - Analytics: Cost Breakdown donut chart at bottom
+
+  Housekeeping
+  - New Store collections: dryBacks:{}, expenses:{} with migration support
+  - 5 new Store helpers: dryBacksArray, dryBacksForMother, expensesArray,
+    totalExpenses, completionsForMother
+  - 5 new dashboard tips (35 total)
+  - What's New dialog for v2.1.0 with 9 bullet points
+  - Service worker cache version bumped to 2.1.0
+
+
+v2.0.2 — 2026-03-09
+--------------------
+FEATURE: Strain Reviews (Local Grow Journal)
+
+  Strain Reviews
+  - New ⭐ Reviews button on every strain card in the Strain Library
+  - Write detailed grow reviews with 1–5 star rating system
+  - Track grow difficulty (easy/moderate/hard), yield rating, actual
+    flowering time, and grow method (soil/coco/hydro/living soil/KNF)
+  - Log effects experienced, terpene and flavor notes, grow tips
+  - Upload photos per review to document results visually
+  - Edit and delete reviews from the review modal
+  - Average rating and review count displayed on strain cards
+  - New strainReviews:{} Store collection with migration support
+  - Store helpers: strainReviewsArray(), reviewsForStrain(id),
+    strainAvgRating(id)
+
+  Housekeeping
+  - 1 new tip (30 total)
+  - What's New dialog for v2.0.2 with 7 bullet points
+  - Service worker cache version bumped to 2.0.2
+
+
+v2.0.1 — 2026-03-09
+--------------------
+FEATURE: Harvest Yield Analytics & QR Code Plant Tags
+
+  Harvest Yield Analytics (4 new charts in Analytics tab)
+  - Yield Over Time — line chart with individual and cumulative dry weight
+  - Yield By Strain — bar chart comparing total dry weight across strains
+  - Quality Distribution — donut chart of 1-5 star ratings with average
+  - Flowering Duration vs Yield — bar chart correlating flower days with
+    dry weight output
+  - All harvest charts respect the date range and plant filters
+  - Charts only appear when harvest data with dry weight exists
+
+  QR Code Plant Tags
+  - New 🏷 Tag button on each plant card generates a printable QR tag
+  - Tag includes QR code, strain name, breeder, stage, environment, date,
+    and health status badge
+  - QR encodes: plant ID, strain, breeder, stage, and date
+  - Batch print from Select mode or Settings gear → Print Plant Tags
+  - Print-optimized CSS hides app chrome and formats tags for paper
+  - Pure JavaScript QR code generator (byte-mode, V1-4, ECC-M) with SVG
+    output — no external libraries
+
+  Housekeeping
+  - 2 new tips (29 total)
+  - What's New dialog for v2.0.1 with 10 bullet points
+  - Service worker cache version bumped to 2.0.1
+
+
+v2.0.0 — 2026-03-09
+--------------------
+FEATURE: Seed Bank, Quick Water, Health Score, Batch Ops & Daily Snapshot
+
+  Seed Bank
+  - New modal-based seed inventory tracker accessible from Strains tab and
+    Dashboard quick actions
+  - Track strain name, breeder, seed count, type (feminized/regular/auto),
+    source (breeder pack/trade/gift/saved), purchase date, germination rate
+  - Add, edit, and delete seed packets with running totals
+
+  Quick Water Log
+  - Stripped-down modal for fast plain-water logging on Feeding tab and
+    Dashboard quick actions
+  - Tracks water volume, unit, pH in/out, water source (Tap/Filtered/Rain/
+    RO/Well), and optional notes
+  - Saves as regular feeding entry with nutrientName "Water Only"
+
+  Plant Health Score Tracker
+  - Log quick 1–5 health scores per plant via ♥ Health button on plant cards
+  - Colored dot trend (last 5 scores) displayed below health badge on cards
+  - Auto-logs health check when plant health status changes on edit
+  - Score history with timestamps and notes visible in the health modal
+
+  Batch Operations
+  - Select mode toggle on Plants tab toolbar with checkboxes on each card
+  - Select All / Deselect buttons with count indicator
+  - Batch update health status, growth stage, or environment for all
+    selected plants
+  - Batch archive multiple plants at once with confirmation
+  - Auto-logs health checks when batch-updating health status
+
+  Daily Snapshot
+  - Auto-generated daily report accessible from Dashboard quick actions
+  - Includes date, moon phase with KNF guidance, weather conditions
+  - Lists overdue and due-today tasks, active IPM issues, environment alerts
+  - Shows recent feedings from the last 24 hours
+  - Copy to clipboard or save as journal entry
+
+  Housekeeping
+  - 5 new tips (27 total) covering all new features
+  - What's New dialog for v2.0.0 with 10 bullet points
+  - Service worker cache version bumped to 2.0.0
+  - New Store collections: seeds, healthChecks with migration support
+  - Water source field displayed on feeding cards when present
+
+
 v1.9.0 — 2026-03-09
 --------------------
 FEATURE: PWA Install, KNF Input Calculator & Grow Calendar

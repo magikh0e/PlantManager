@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plant Manager Help Guide — Tropical Roots Maui</title>
+<meta name="description" content="Complete help guide for the Tropical Roots Maui Plant Manager app. Learn how to track mother plants, clones, feedings, harvests, analytics, and more.">
+<meta name="keywords" content="Plant Manager help, Tropical Roots Maui, grow journal, cannabis tracker, plant manager guide">
+<meta name="author" content="Tropical Roots Maui">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://tracker.tropicalrootsmaui.com/PlantManagerHelp.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Tropical Roots Maui">
+<meta property="og:title" content="Plant Manager Help Guide — Tropical Roots Maui">
+<meta property="og:description" content="Complete help guide for the Tropical Roots Maui Plant Manager app — covering all 13 tabs, tools, and features.">
+<meta property="og:url" content="https://tracker.tropicalrootsmaui.com/PlantManagerHelp.html">
+<meta property="og:image" content="https://tropicalrootsmaui.com/img/tropical-roots-maui-kanehiwa-alchemical-sanctuary-logo.webp">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Space+Mono&display=swap" rel="stylesheet">
+<link rel="preload" href="https://tropicalrootsmaui.com/site-components.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://tropicalrootsmaui.com/site-components.css"></noscript>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --black: #0a0c0a; --dark: #111a10; --jungle: #1b3a1e; --green: #2d6e35;
+  --leaf: #4a9e52; --cyan: #00c8c0; --cyan-dim: #00968f; --gold: #f0b429;
+  --orange: #e8721a; --cream: #f4edd8; --sand: #e0ceaa;
+  --text: #f0ead8; --muted: rgba(240,234,216,0.62); --nav-h: 68px;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Lora', serif; background: var(--black); color: var(--text);
+  overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column;
+}
+body::after {
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9998;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  opacity: 0.5;
+}
+.bg-ambience {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse at 10% 30%, rgba(45,110,53,0.14) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 70%, rgba(0,200,192,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, rgba(240,180,41,0.05) 0%, transparent 45%),
+    linear-gradient(180deg, #0a0c0a 0%, #0c1a0c 50%, #0a0c0a 100%);
+}
+.orb { position: fixed; border-radius: 50%; pointer-events: none; animation: pulse-orb 7s ease-in-out infinite; }
+.orb-1 { width: 500px; height: 500px; top: 10%; right: -150px; background: radial-gradient(circle, rgba(45,110,53,0.12) 0%, transparent 70%); }
+.orb-2 { width: 350px; height: 350px; bottom: 20%; left: -100px; background: radial-gradient(circle, rgba(0,200,192,0.07) 0%, transparent 70%); animation-delay: -3.5s; }
+@keyframes pulse-orb { 0%,100% { transform: scale(1); opacity: 0.6; } 50% { transform: scale(1.1); opacity: 1; } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes grow-line { from { transform: scaleY(0); opacity: 0; } to { transform: scaleY(1); opacity: 1; } }
+
+main { flex: 1; padding-top: var(--nav-h); position: relative; z-index: 1; }
+
+/* Hero */
+.recipe-hero { text-align: center; padding: 4.5rem 2rem 3rem; position: relative; }
+.recipe-hero::after {
+  content: ''; display: block; width: 1px; height: 60px;
+  background: linear-gradient(to bottom, var(--cyan), transparent);
+  margin: 2.5rem auto 0; animation: grow-line 1.2s 0.6s ease both; transform-origin: top;
+}
+.hero-eyebrow {
+  display: inline-block; background: rgba(0,200,192,0.08); border: 1px solid rgba(0,200,192,0.25);
+  color: var(--cyan); font-family: 'Cinzel', serif; font-size: 0.62rem;
+  letter-spacing: 0.22em; text-transform: uppercase; padding: 0.38rem 1.1rem; margin-bottom: 1.4rem;
+  animation: fadeUp 0.8s ease both;
+}
+.hero-title {
+  font-family: 'Cinzel Decorative', serif; font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1.15; animation: fadeUp 0.8s 0.1s ease both;
+}
+.hero-title .gold { color: var(--gold); }
+.hero-byline {
+  font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--muted); margin-top: 0.8rem;
+  animation: fadeUp 0.8s 0.15s ease both;
+}
+.hero-sub {
+  font-style: italic; color: var(--muted); font-size: 0.92rem;
+  margin-top: 0.5rem; max-width: 750px; margin-left: auto; margin-right: auto;
+  animation: fadeUp 0.8s 0.2s ease both;
+}
+
+/* Table of Contents */
+.toc {
+  max-width: 760px; margin: 0 auto 2rem; padding: 0 2rem;
+  animation: fadeUp 0.8s 0.3s ease both;
+}
+.toc-box {
+  background: rgba(27,58,30,0.2); border: 1px solid rgba(0,200,192,0.15);
+  padding: 1.6rem 2rem; position: relative;
+}
+.toc-box::before {
+  content: ''; position: absolute; top: -1px; left: -1px; width: 16px; height: 16px;
+  border-top: 2px solid var(--cyan); border-left: 2px solid var(--cyan);
+}
+.toc-box::after {
+  content: ''; position: absolute; bottom: -1px; right: -1px; width: 16px; height: 16px;
+  border-bottom: 2px solid var(--gold); border-right: 2px solid var(--gold);
+}
+.toc-title {
+  font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--cyan); margin-bottom: 0.8rem;
+}
+.toc-list { list-style: none; columns: 2; column-gap: 2rem; }
+.toc-list li { margin-bottom: 0.4rem; break-inside: avoid; }
+.toc-list a {
+  color: var(--sand); text-decoration: none; font-size: 0.85rem;
+  transition: color 0.25s ease; display: flex; align-items: center; gap: 0.5rem;
+}
+.toc-list a:hover { color: var(--cyan); }
+.toc-list .toc-icon { font-size: 1rem; width: 1.4rem; text-align: center; }
+@media (max-width: 600px) { .toc-list { columns: 1; } }
+
+/* Section Divider */
+.section-divider {
+  display: flex; align-items: center; gap: 1.2rem;
+  max-width: 760px; margin: 3rem auto 1.5rem; padding: 0 2rem;
+}
+.divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(0,200,192,0.25), transparent); }
+.divider-label {
+  font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--cyan); white-space: nowrap;
+}
+
+/* Phase Sections */
+.phase-section { max-width: 760px; margin: 0 auto; padding: 0 2rem 1.5rem; }
+.phase-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.8rem; }
+.phase-number { font-size: 1.4rem; flex-shrink: 0; }
+.phase-title {
+  font-family: 'Cinzel', serif; font-size: 1.05rem;
+  letter-spacing: 0.06em; color: var(--text);
+}
+.phase-title .gold { color: var(--gold); }
+.phase-body { font-size: 0.92rem; line-height: 1.85; color: var(--text); }
+.phase-body p { margin-bottom: 1rem; }
+.phase-body p:last-child { margin-bottom: 0; }
+.phase-body strong { color: var(--cyan); font-style: normal; }
+.phase-body a { color: var(--cyan); text-decoration: underline; text-underline-offset: 2px; }
+.detail-label {
+  display: block; font-family: 'Cinzel', serif; font-size: 0.62rem;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold);
+  margin: 1.2rem 0 0.4rem;
+}
+
+/* Island Tip */
+.island-tip {
+  max-width: 760px; margin: 0.5rem auto 1.5rem; padding: 0.85rem 1.1rem;
+  background: rgba(0,200,192,0.04); border-left: 3px solid var(--cyan);
+  font-size: 0.86rem; line-height: 1.75; color: var(--sand);
+  margin-left: auto; margin-right: auto;
+}
+.island-tip .it-label {
+  font-family: 'Cinzel', serif; font-size: 0.56rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--cyan); display: block; margin-bottom: 0.35rem;
+}
+.island-tip strong { color: var(--text); }
+
+/* Feature Grid */
+.feature-grid {
+  max-width: 760px; margin: 0 auto 1.5rem; padding: 0 2rem;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.8rem;
+}
+.feature-pill {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.5rem 0.8rem; background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(0,200,192,0.12); font-size: 0.8rem; color: var(--sand);
+}
+.feature-pill .fp-icon { font-size: 1rem; }
+
+/* Key shortcut */
+kbd {
+  display: inline-block; padding: 0.15rem 0.45rem; background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15); border-radius: 3px; font-family: 'Space Mono', monospace;
+  font-size: 0.78rem; color: var(--cyan); line-height: 1.4;
+}
+
+/* Back-to-top */
+.back-top {
+  display: block; text-align: center; padding: 2rem; font-family: 'Cinzel', serif;
+  font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--cyan); text-decoration: none; transition: color 0.25s ease;
+}
+.back-top:hover { color: var(--gold); }
+
+/* Recipe notes (closing box) */
+.recipe-notes { max-width: 760px; margin: 0 auto; padding: 0 2rem 2rem; }
+.notes-box {
+  background: rgba(240,180,41,0.04); border: 1px solid rgba(240,180,41,0.25);
+  padding: 1.4rem 1.8rem; position: relative;
+}
+.notes-box::before {
+  content: ''; position: absolute; top: -1px; left: -1px; width: 16px; height: 16px;
+  border-top: 2px solid var(--gold); border-left: 2px solid var(--gold);
+}
+.notes-box::after {
+  content: ''; position: absolute; bottom: -1px; right: -1px; width: 16px; height: 16px;
+  border-bottom: 2px solid var(--cyan); border-right: 2px solid var(--cyan);
+}
+.notes-title {
+  font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem;
+}
+.notes-text { font-size: 0.92rem; line-height: 1.85; color: var(--sand); font-style: italic; }
+
+/* ul inside phase-body */
+.phase-body ul { list-style: none; padding-left: 0; margin-bottom: 1rem; }
+.phase-body ul li { position: relative; padding-left: 1.2rem; margin-bottom: 0.35rem; }
+.phase-body ul li::before {
+  content: ''; position: absolute; left: 0; top: 0.65rem;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--cyan);
+}
+</style>
+</head>
+<body>
+<div class="bg-ambience"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<main>
+
+<!-- ═══ HERO ═══ -->
+<div class="recipe-hero">
+  <div class="hero-eyebrow">Tropical Roots Maui</div>
+  <h1 class="hero-title">Plant Manager<br><span class="gold">Help Guide</span></h1>
+  <div class="hero-byline">v2.4.0 &mdash; Complete Feature Reference</div>
+  <p class="hero-sub">Everything you need to know about tracking plants, clones, feedings, harvests, and more in the Tropical Roots Maui Plant Manager.</p>
+</div>
+
+<!-- ═══ TABLE OF CONTENTS ═══ -->
+<div class="toc" id="top">
+  <div class="toc-box">
+    <div class="toc-title">Table of Contents</div>
+    <ul class="toc-list">
+      <li><a href="#getting-started"><span class="toc-icon">&#9889;</span> Getting Started</a></li>
+      <li><a href="#header"><span class="toc-icon">&#9881;</span> Header &amp; Settings</a></li>
+      <li><a href="#dashboard"><span class="toc-icon">&#9638;</span> Dashboard</a></li>
+      <li><a href="#plants"><span class="toc-icon">&#127807;</span> Plants</a></li>
+      <li><a href="#environments"><span class="toc-icon">&#9978;</span> Environments</a></li>
+      <li><a href="#clones"><span class="toc-icon">&#9986;</span> Clones</a></li>
+      <li><a href="#tasks"><span class="toc-icon">&#9745;</span> Tasks</a></li>
+      <li><a href="#feeding"><span class="toc-icon">&#129514;</span> Feeding</a></li>
+      <li><a href="#journal"><span class="toc-icon">&#128248;</span> Photo Journal</a></li>
+      <li><a href="#ipm"><span class="toc-icon">&#128737;</span> IPM (Pest &amp; Disease)</a></li>
+      <li><a href="#harvest"><span class="toc-icon">&#127806;</span> Harvest</a></li>
+      <li><a href="#strains"><span class="toc-icon">&#129516;</span> Strains &amp; Catalog</a></li>
+      <li><a href="#analytics"><span class="toc-icon">&#128202;</span> Analytics</a></li>
+      <li><a href="#calendar"><span class="toc-icon">&#128197;</span> Calendar</a></li>
+      <li><a href="#readings"><span class="toc-icon">&#127777;</span> Environment Readings</a></li>
+      <li><a href="#tools"><span class="toc-icon">&#128295;</span> Tools &amp; Extras</a></li>
+      <li><a href="#data"><span class="toc-icon">&#128190;</span> Data &amp; Backup</a></li>
+      <li><a href="#pwa"><span class="toc-icon">&#128241;</span> Install as App (PWA)</a></li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ═══ GETTING STARTED ═══ -->
+<div class="section-divider" id="getting-started">
+  <div class="divider-line"></div>
+  <div class="divider-label">Getting Started</div>
+  <div class="divider-line"></div>
+</div>
+
+<div class="phase-section">
+  <div class="phase-header">
+    <div class="phase-number">&#9889;</div>
+    <h2 class="phase-title">First Steps</h2>
+  </div>
+  <div class="phase-body">
+    <p>Plant Manager is an offline-first, single-page app that stores all data in your browser's <strong>localStorage</strong>. No account is required to get started. Simply open <a href="https://tracker.tropicalrootsmaui.com" style="color:var(--cyan)">tracker.tropicalrootsmaui.com</a> and begin adding plants.</p>
+    <p>The recommended first steps are:</p>
+    <ul>
+      <li><strong>Add an Environment</strong> &mdash; create your grow tent, room, or outdoor space on the Environs tab.</li>
+      <li><strong>Add a Mother Plant</strong> &mdash; go to the Plants tab and tap <strong>+ Add Mother</strong>. Pick a strain from the catalog or type one in.</li>
+      <li><strong>Set up Tasks</strong> &mdash; schedule watering, feeding, or pruning reminders so nothing slips through the cracks.</li>
+      <li><strong>Export your data</strong> &mdash; once you have entries, use the gear menu to export a JSON backup file.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="island-tip">
+  <span class="it-label">Tip</span>
+  All data lives in your browser. Clearing browser data or switching browsers will remove it unless you <strong>export</strong> a backup or enable <strong>Cloud Sync</strong>.
+</div>
+
+
+<!-- ═══ HEADER & SETTINGS ═══ -->
+<div class="section-divider" id="header">
+  <div class="divider-line"></div>
+  <div class="divider-label">Header &amp; Settings</div>
+  <div class="divider-line"></div>
+</div>
+
+<div class="phase-section">
+  <div class="phase-header">
+    <div class="phase-number">&#9881;</div>
+    <h2 class="phase-title">Header <span class="gold">Toolbar</span></h2>
+  </div>
+  <div class="phase-body">
+    <p>The fixed header at the top of the app contains quick-access buttons:</p>
+    <ul>
+      <li><strong>&#127780; Weather</strong> &mdash; set your location to auto-fill temperature and humidity when logging environment readings.</li>
+      <li><strong>&#127769; Moon Phase</strong> &mdash; view the current lunar phase, illumination percentage, KNF planting guidance, and upcoming phases.</li>
+      <li><strong>&#9729; Cloud Sync</strong> &mdash; back up your data to Firebase. Syncs across devices and prevents data loss if the browser is cleared.</li>
+      <li><strong>&#9790; Theme Toggle</strong> &mdash; switch between dark and light modes.</li>
+      <li><strong>&#9881; Gear Menu</strong> &mdash; opens the settings dropdown with additional tools.</li>
+    </ul>
+    <span class="detail-label">Gear Menu Options</span>
+    <ul>
+      <li><strong>&#128276; Notifications</strong> &mdash; enable browser notifications for overdue tasks and environment alerts.</li>
+      <li><strong>&#127956; Toggle Banner</strong> &mdash; show or hide the hero banner image on the Dashboard.</li>
+      <li><strong>&#8681; Export Data</strong> &mdash; download all your data as a JSON backup file.</li>
+      <li><strong>&#8679; Import Data</strong> &mdash; restore from a previously exported JSON file.</li>
+      <li><strong>&#129514; KNF Calculator</strong> &mdash; dilution calculator for Korean Natural Farming inputs.</li>
+      <li><strong>&#127991; Print Plant Tags</strong> &mdash; generate printable QR code tags for all plants.</li>
+      <li><strong>&#128195; Feed Schedules</strong> &mdash; apply nutrient schedule templates to auto-create feeding tasks.</li>
+      <li><strong>&#128176; Cost Tracker</strong> &mdash; log and track grow expenses across 7 categories.</li>
+      <li><strong>&#128260; Grow Cycles</strong> &mdash; apply phased grow cycle templates that auto-create tasks from seed to harvest.</li>
+      <li><strong>&#127793; Soil Mix Calc</strong> &mdash; calculate soil mix recipes with adjustable volume and components.</li>
+      <li><strong>&#128196; Export Report</strong> &mdash; generate printable Plant Reports or Garden Reports.</li>
+      <li><strong>&#128270; Pest Identifier</strong> &mdash; open the Pest ID tool to identify pests from a photo.</li>
+      <li><strong>&#129302; Pest ID Settings</strong> &mdash; configure your Google Cloud Vision API key for auto-identification.</li>
+      <li><strong>&#127777; VPD Calculator</strong> &mdash; calculate vapor pressure deficit with auto-fill from environment readings.</li>
+      <li><strong>&#9728; DLI Calculator</strong> &mdash; estimate Daily Light Integral from light type, wattage, and photoperiod.</li>
+      <li><strong>&#129657; Deficiency Wizard</strong> &mdash; 3-step diagnostic tree to identify nutrient deficiencies.</li>
+      <li><strong>&#128230; Grow Runs</strong> &mdash; group plants into grow runs, track aggregate stats, and compare runs.</li>
+      <li><strong>&#129516; Breeding Tracker</strong> &mdash; log pollen collection, crosses, and seed harvests.</li>
+      <li><strong>&#9879; Calibration Log</strong> &mdash; track pH/EC meter calibrations with overdue reminders.</li>
+      <li><strong>&#128208; Room Layout</strong> &mdash; visual grid diagram of plant positions per environment.</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ═══ DASHBOARD ═══ -->
+<div class="section-divider" id="dashboard">
+  <div class="divider-line"></div>
+  <div class="divider-label">Dashboard</div>
+  <div class="divider-line"></div>
+</div>
+
+<div class="phase-section">
+  <div class="phase-header">
+    <div class="phase-number">&#9638;</div>
+    <h2 class="phase-title">Dashboard <span class="gold">Overview</span></h2>
+  </div>
+  <div class="phase-body">
+    <p>The Dashboard is your home screen. It provides a bird's-eye view of your entire garden.</p>
+    <span class="detail-label">Stat Cards</span>
+    <p>The top row shows live stat cards: <strong>Mother Plants</strong>, <strong>Flowering Count</strong>, <strong>Active Clones</strong>, <strong>Environments</strong>, <strong>Tasks Due</strong>, <strong>Health Overview</strong>, <strong>Active IPM Issues</strong>, <strong>Environment Alerts</strong>, <strong>Strains</strong>, <strong>Total Yield</strong>, plus <strong>Weather</strong> and <strong>Moon Phase</strong> widgets.</p>
+    <span class="detail-label">Rotating Tips</span>
+    <p>A tip banner cycles through 53 helpful tips. Use the arrow buttons to navigate tips manually, or let them auto-rotate every 30 seconds.</p>
+    <span class="detail-label">Quick Actions</span>
+    <p>29 quick action buttons let you jump directly to any feature without switching tabs: Add Mother, Add Environ, Log Clones, Add Task, Log Reading, Log Feeding, Add Photo, Log Issue, Add Strain, Log Harvest, KNF Calculator, Seed Bank, Quick Water, Daily Snapshot, Feed Schedule, Costs, Grow Cycles, Compare Plants, Soil Mix Calc, Export Report, Pest ID, Pest Guide, VPD Calc, DLI Calc, Deficiency Wizard, Grow Runs, Breeding, Calibration, and Room Layout.</p>
+    <span class="detail-label">Overdue Tasks &amp; Environment Alerts</span>
+    <p>If any tasks are overdue, they appear at the top of the dashboard with a red warning indicator. You can check them off right from the dashboard. Environment alerts display when any reading exceeds the thresholds you set (temp, humidity, pH).</p>
+    <span class="detail-label">Activity Feed</span>
+    <p>The bottom of the dashboard shows your 15 most recent actions (adding plants, logging feedings, completing tasks, etc.) with relative timestamps.</p>
+  </div>
+</div>
+
+
+<!-- ═══ PLANTS ═══ -->
+<div class="section-divider" id="plants">
+  <div class="divider-line"></div>
+  <div class="divider-label">Plants</div>
+  <div class="divider-line"></div>
+</div>
+
+<div class="phase-section">
+  <div class="phase-header">
+    <div class="phase-number">&#127807;</div>
+    <h2 class="phase-title">Mother <span class="gold">Plants</span></h2>
+  </div>
+  <div class="phase-body">
+    <p>The Plants tab is where you manage your mother plants. Each plant has a card showing its photo, health status badge, strain name, type, breeder, age, environment, growth stage, flowering dates, and clone success rate.</p>
+    <span class="detail-label">Adding a Plant</span>
+    <p>Tap <strong>+ Add Mother</strong> and fill in the form. You can pick a strain from your Strain Library (which auto-fills strain, type, and breeder) or enter details manually. Fields include: strain name, strain type (indica/sativa/hybrid), breeder, genetics, source (seed/clone/tissue culture), date acquired, environment, growth stage, health status, photo, and notes.</p>
+    <span class="detail-label">Health Status</span>
+    <p>Each plant has a health status: <strong>Thriving</strong>, <strong>Healthy</strong>, <strong>Stressed</strong>, <strong>Sick</strong>, or <strong>Quarantine</strong>. This status appears as a colored badge on the card and is used for filtering.</p>
+    <span class="detail-label">Plant Card Actions</span>
+    <p>Each card has action buttons along the bottom:</p>
+    <ul>
+      <li><strong>Edit</strong> &mdash; modify any field. If you change the health status, a health check is auto-logged.</li>
+      <li><strong>+ Clone</strong> &mdash; log a clone batch from this mother.</li>
+      <li><strong>+ Task</strong> &mdash; create a task linked to this plant.</li>
+      <li><strong>+ Feed</strong> &mdash; log a feeding entry.</li>
+      <li><strong>+ Photo</strong> &mdash; add a journal photo.</li>
+      <li><strong>+ IPM</strong> &mdash; log a pest or disease issue.</li>
+      <li><strong>&#128270; Identify</strong> &mdash; open the Pest Identification tool to snap a photo and identify pests or diseases.</li>
+      <li><strong>+ Harvest</strong> &mdash; record a harvest.</li>
+      <li><strong>&#10084; Health</strong> &mdash; log a 1&ndash;5 health score (see Health Check below).</li>
+      <li><strong>&#127991; Tag</strong> &mdash; generate a printable QR code tag for this plant.</li>
+      <li><strong>&#128197; Timeline</strong> &mdash; view the full chronological event history combining feedings, photos, IPM, harvests, health checks, dry-backs, clones, and task completions.</li>
+      <li><strong>&#9878; Dry-Back</strong> &mdash; log dry-back weight readings and view a line chart of weight over time.</li>
+      <li><strong>&#127795; Lineage</strong> &mdash; view the full clone family tree visualization.</li>
+      <li><strong>&#128196; Report</strong> &mdash; generate a printable Plant Report with full grow history, stats, feedings, harvests, IPM log, and health checks.</li>
+      <li><strong>&#128200; Compare</strong> &mdash; select this plant for side-by-side comparison with 1&ndash;2 other plants.</li>
+      <li><strong>&#128300; Trichome</strong> &mdash; log trichome readings (clear/cloudy/amber percentages) with harvest-window recommendations.</li>
+      <li><strong>&#9986; Training</strong> &mdash; log training events (topping, LST, SCROG, etc.) with technique badges and notes.</li>
+      <li><strong>&#129516; Breed</strong> &mdash; log pollen collection, crosses, or seed harvests for this plant.</li>
+      <li><strong>Archive</strong> &mdash; soft-delete the plant (can be restored via import).</li>
+    </ul>
+    <span class="detail-label">Search &amp; Filter</span>
+    <p>Use the search bar to find plants by strain name, breeder, environment, or notes. The dropdown filter narrows results by health status.</p>
+    <span class="detail-label">Health Check Dots</span>
+    <p>Colored dots appear below each plant's name showing recent health scores at a glance: green (4&ndash;5), gold (3), orange (2), and red (1).</p>
+    <span class="detail-label">Batch Operations (Select Mode)</span>
+    <p>Tap <strong>Select</strong> to enter batch mode. Check multiple plants, then use the batch bar to:</p>
+    <ul>
+      <li><strong>Update Health</strong> &mdash; set the same health status on all selected plants.</li>
+      <li><strong>Update Stage</strong> &mdash; change growth stage for all selected.</li>
+      <li><strong>Move Environ</strong> &mdash; reassign all selected to a different environment.</li>
+      <li><strong>Print Tags</strong> &mdash; generate QR tags for all selected plants.</li>
+      <li><strong>Archive Selected</strong> &mdash; archive multiple plants at once.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="island-tip">
+  <span class="it-label">Tip</span>
+  The <strong>Flowering</strong> field on plant cards tracks flowering start/end dates and auto-calculates days in flower. Fill in the flowering start date when you flip to 12/12. If the strain has a flowering time set, plant cards will show a <strong>harvest estimate badge</strong> with a progress bar and estimated harvest window.
+</div>
+
+
+<!-- ═══ ENVIRONMENTS ═══ -->
+<div class="section-divider" id="environments">
+  <div class="divider-line"></div>
+  <div class="divider-label">Environments</div>
+  <div class="divider-line"></div>
+</div>
+
+<div class="phase-section">
+  <div class="phase-header">
+    <div class="phase-number">&#9978;</div>
+    <h2 class="phase-title">Grow <span class="gold">Environments</span></h2>
+  </div>
+  <div class="phase-body">
+    <p>Environments represent your physical grow spaces &mdash; tents, rooms, greenhouses, or outdoor areas.</p>
+    <span class="detail-label">Environment Fields</span>
+    <ul>
+      <li><strong>Name</strong> &mdash; a descriptive name like "Veg Tent 4x4" or "Flower Room".</li>
+      <li><strong>Type</strong> &mdash; Tent, Room, Greenhouse, Outdoor, Closet, or Other.</li>
+      <li><strong>Dimensions</strong> &mdash; e.g., 4x4x6.5.</li>
+      <li><strong>Light Type &amp; Schedule</strong> &mdash; e.g., LED 600W, 18/6.</li>
+      <li><strong>Alert Thresholds</strong> &mdash; set min/max for temperature, humidity, and pH. When readings exceed these limits, the Dashboard will show environment alerts.</li>
+    </ul>
+    <span class="detail-label">Environment Cards</span>
+    <p>Each card shows the environment type badge, name, dimensions, light info, plant count, and the latest reading values (temp, humidity, pH). Values that exceed your thresholds appear in red. A pH/EC calibration badge shows days since last calibration (with a warning color if overdue).</p>
+    <span class="detail-label">Environment Card Actions</span>
+    <p>Each environment card has: <strong>Edit</strong>, <strong>+ Log Reading</strong>, <strong>&#127777; VPD</strong> (open VPD Calculator pre-filled with this environment&rsquo;s latest reading), <strong>&#128208; Layout</strong> (open the Room Diagram for this environment), and <strong>Archive</strong>.</p>
+  </div>
+</div>
+
+
+<!-- ═══ CLONES ═══ -->
+<div class="section-divider" id="clones">
+  <div class="divider-line"></div>
+  <div class="divider-label">Clones</div>
+  <div class="divider-line"></div>
+</div>
+
+<div class="phase-section">
+  <div class="phase-header">
+    <div class="phase-number">&#9986;</div>
+    <h2 class="phase-title">Clone <span class="gold">Tracking</span></h2>
+  </div>
+  <div class="phase-body">
+    <p>The Clones tab tracks clone batches taken from your mother plants. Each batch records how many cuttings were taken, how many rooted successfully, and how many failed.</p>
+    <span class="detail-label">Clone Batch Fields</span>
+    <ul>
+      <li><strong>Mother Plant</strong> &mdash; the source mother.</li>
+      <li><strong>Date Taken</strong> &mdash; when cuttings were made.</li>
+      <li><strong>Total Taken / Rooted / Failed</strong> &mdash; numeric counts.</li>
+      <li><strong>Rooting Status</strong> &mdash; Rooting, Rooted, Transplanted, or Failed.</li>
+      <li><strong>Medium</strong> &mdash; Rockwool, Rapid Rooter, Soil, Perlite, Aero, or Water.</li>
+      <li><strong>Notes</strong> &mdash; free-text observations.</li>
+    </ul>
+    <span class="detail-label">Stats &amp; Progress</span>
+    <p>The top of the tab shows aggregate stats: total taken, total rooted, total failed, total batches, and overall success rate. Each batch card shows a color-coded progress bar (green = rooted, red = failed, gray = pending).</p>
+    <p>Clone success rates automatically appear on the corresponding mother plant cards on the Plants tab.</p>
+  </div>
+</div>
+
+
+<!-- ═══ TASKS ═══ -->
+<div class="section-divider" id="tasks">
+  <div class="divider-line"></div>
+  <div class="divider-label">Tasks</div>
+  <div class="divider-line"></div>
+</div>
+
+<div class="phase-section">
+  <div class="phase-header">
+    <div class="phase-number">&#9745;</div>
+    <h2 class="phase-title">Task <span class="gold">Scheduler</span></h2>
+  </div>
+  <div class="phase-body">
+    <p>Create tasks to remind yourself of watering, feeding, pruning, IPM treatments, repotting, or cleaning. Tasks can be linked to a specific plant or set as global (all plants).</p>
+    <span class="detail-label">Task Types</span>
+    <p>Watering, Feeding, Pruning, IPM, Repotting, Cleaning, and Other. Each type has a unique icon for easy scanning.</p>
+    <span class="detail-label">One-Time vs Recurring</span>
+    <p>One-time tasks disappear after completion. Recurring tasks automatically re-schedule at your chosen interval (e.g., every 3 days). Completing a recurring task advances the due date to the next interval.</p>
+    <span class="detail-label">Task Sections</span>
+    <p>Tasks are organized into sections: <strong>Overdue</strong> (red), <strong>Due Today</strong> (gold), <strong>Upcoming</strong> (default), and <strong>Recently Completed</strong> (faded). Tap the circular checkbox to complete a task.</p>
+    <span class="detail-label">Filters</span>
+    <p>Filter by plant or by task type to focus on what matters.</p>
+  </div>
+</div>
+
+<div class="island-tip">
+  <span class="it-label">Tip</span>
+  Overdue tasks also appear on the Dashboard. Completing them from either location works the same way.
+</div>
+
+
+<!-- ═══ FEEDING ═══ -->
+<div class="section-divider" id="feeding">
+  <div class="divider-line"></div>
+  <div class="divider-label">Feeding</div>
+  <div class="divider-line"></div>
+</div>
+
+<div class="phase-section">
+  <div class="phase-header">
+    <div class="phase-number">&#129514;</div>
+    <h2 class="phase-title">Feeding <span class="gold">Log</span></h2>
+  </div>
+  <div class="phase-body">
+    <p>Log every feeding and watering event with detailed nutrient tracking.</p>
+    <span class="detail-label">Feeding Entry Fields</span>
+    <ul>
+      <li><strong>Plant &amp; Environment</strong> &mdash; link the feeding to a plant and environment.</li>
+      <li><strong>Products</strong> &mdash; add one or more nutrient products with amounts and units. The built-in catalog includes 75+ products from major brands: General Hydroponics, Fox Farm, Advanced Nutrients, Botanicare, Canna, Down To Earth, Athena, Gaia Green, Neptune's Harvest, and KNF inputs.</li>
+      <li><strong>Volume &amp; Unit</strong> &mdash; total solution volume in gallons or liters.</li>
+      <li><strong>pH In / pH Out</strong> &mdash; track pH drift. The card highlights drift greater than 0.5.</li>
+      <li><strong>EC/PPM</strong> &mdash; electrical conductivity measurement.</li>
+      <li><strong>Water Source</strong> &mdash; Tap, Filtered, Rain, RO, or Well.</li>
+      <li><strong>Notes</strong> &mdash; any observations.</li>
+    </ul>
+    <span class="detail-label">Quick Water</span>
+    <p>The <strong>Quick Water</strong> button (on the Feeding toolbar and Dashboard) opens a streamlined form for plain water events. It captures plant, environment, volume, pH in/out, water source, and notes &mdash; skipping the full nutrient product selector.</p>
+    <span class="detail-label">Custom Products</span>
+    <p>If a nutrient isn't in the catalog, tap <strong>+ Add Custom Product</strong> to save your own. Custom products persist in your data and appear in the product picker going forward.</p>
+  </div>
+</div>
+
+
+<!-- ═══ PHOTO JOURNAL ═══ -->
+<div class="section-divider" id="journal">
+  <div class="divider-line"></div>
+  <div class="divider-label">Photo Journal</div>
+  <div class="divider-line"></div>
+</div>
+
+<div class="phase-section">
+  <div class="phase-header">
+    <div class="phase-number">&#128248;</div>
+    <h2 class="phase-title">Photo <span class="gold">Journal</span></h2>
+  </div>
+  <div class="phase-body">
+    <p>Build a visual timeline of each plant's growth. Upload photos with growth stage tags and notes. Photos are stored locally as compressed base64 images (auto-resized to 400px max dimension).</p>
+    <span class="detail-label">Adding a Photo</span>
+    <p>Tap <strong>+ Add Photo</strong>, select a plant, upload an image, choose the growth stage (Seedling, Vegetative, Flowering, Harvest, Curing), and add optional notes.</p>
+    <span class="detail-label">Photo Grid</span>
+    <p>Photos display in a grid with the plant name, date, and growth stage. Tap any photo to view full-size with details, or delete it.</p>
+    <span class="detail-label">Filter</span>
+    <p>Use the plant dropdown to filter photos to a single plant.</p>
+  </div>
+</div>
+
+
+<!-- ═══ IPM ═══ -->
+<div class="section-divider" id="ipm">
+  <div class="divider-line"></div>
+  <div class="divider-label">IPM &mdash; Pest &amp; Disease</div>
+  <div class="divider-line"></div>
+</div>
+
+<div class="phase-section">
+  <div class="phase-header">
+    <div class="phase-number">&#128737;</div>
+    <h2 class="phase-title">IPM <span class="gold">Log</span></h2>
+  </div>
+  <div class="phase-body">
+    <p>The IPM (Integrated Pest Management) tab tracks pest sightings, disease outbreaks, and treatment applications.</p>
+    <span class="detail-label">Issue Fields</span>
+    <ul>
+      <li><strong>Pest/Disease</strong> &mdash; choose from 11 common types: aphids, spider mites, fungus gnats, whiteflies, thrips, powdery mildew, bud rot, root rot, nutrient burn, nutrient deficiency, or other.</li>
+      <li><strong>Severity</strong> &mdash; Low, Medium, High, or Critical.</li>
+      <li><strong>Plant &amp; Environment</strong> &mdash; link to the affected plant and/or environment.</li>
+      <li><strong>Treatment Applied</strong> &mdash; pick from a catalog of 60+ IPM products organized by category: insecticides, miticides, fungicides, biologicals, organic remedies, KNF treatments, and environmental controls.</li>
+      <li><strong>Photo &amp; Notes</strong> &mdash; document what you observe.</li>
+    </ul>
+    <span class="detail-label">Inline Pest Identification</span>
+    <p>The IPM form includes a built-in <strong>Pest Identification</strong> section with 4 buttons: <strong>Snap Photo</strong> (camera/upload), <strong>Auto-ID</strong> (Google Cloud Vision AI &mdash; requires API key), <strong>Lens</strong> (opens Google Lens for manual lookup), and <strong>Guide</strong> (opens the Visual Pest Guide). When Auto-ID identifies a pest, tap <strong>Apply</strong> to auto-fill the pest dropdown, issue type, and severity without leaving the form.</p>
+    <span class="detail-label">Active vs Resolved</span>
+    <p>Issues start as <strong>Active</strong> and can be marked <strong>Resolved</strong> when the problem is handled. Use the status filter to view only active or resolved issues.</p>
+    <span class="detail-label">Dashboard Integration</span>
+    <p>Active IPM issues show as a count on the Dashboard stat cards. The number helps you track unresolved pest pressure at a glance.</p>
+  </div>
+</div>
+
+
+<!-- ═══ HARVEST ═══ -->
+<div class="section-divider" id="harvest">
+  <div class="divider-line"></div>
+  <div class="divider-label">Harvest</div>
+  <div class="divider-line"></div>
+</div>
+
+<div class="phase-section">
+  <div class="phase-header">
+    <div class="phase-number">&#127806;</div>
+    <h2 class="phase-title">Harvest <span class="gold">Log</span></h2>
+  </div>
+  <div class="phase-body">
+    <p>Record harvest data for each plant including weights, cure tracking, and quality ratings.</p>
+    <span class="detail-label">Harvest Fields</span>
+    <ul>
+      <li><strong>Plant &amp; Environment</strong> &mdash; which plant and where it grew.</li>
+      <li><strong>Harvest Date</strong> and <strong>Flowering Start/End</strong> &mdash; calculates total flowering days.</li>
+      <li><strong>Wet Weight &amp; Dry Weight (g)</strong> &mdash; auto-calculates dry ratio percentage.</li>
+      <li><strong>Trim Type</strong> &mdash; Wet, Dry, or Both.</li>
+      <li><strong>Cure Method</strong> &mdash; Jar, Bag, Grove Bag, Bucket, Hang Dry, or Other.</li>
+      <li><strong>Cure Status</strong> &mdash; Fresh, Drying, Curing, or Complete.</li>
+      <li><strong>Quality Rating</strong> &mdash; 1&ndash;5 stars.</li>
+      <li><strong>Terpene Notes, Flavor Notes, Storage Location</strong> &mdash; detailed record keeping.</li>
+      <li><strong>Photo &amp; Notes</strong> &mdash; document the final product.</li>
+    </ul>
+    <span class="detail-label">Yield Tracking</span>
+    <p>Total yield appears on the Dashboard in grams or ounces (auto-converts at 28.35g/oz). Harvest data feeds into the Analytics tab's yield charts.</p>
+  </div>
+</div>
+
+
+<!-- ═══ STRAINS ═══ -->
+<div class="section-divider" id="strains">
+  <div class="divider-line"></div>
+  <div class="divider-label">Strains &amp; Catalog</div>
+  <div class="divider-line"></div>
+</div>
+
+<div class="phase-section">
+  <div class="phase-header">
+    <div class="phase-number">&#129516;</div>
+    <h2 class="phase-title">Strain <span class="gold">Library</span></h2>
+  </div>
+  <div class="phase-body">
+    <p>The Strains tab is your personal strain library plus a built-in catalog of 360+ strains from Maui-based breeders.</p>
+    <span class="detail-label">Your Strains</span>
+    <p>Manually add strains or import them from the catalog. Each strain card shows name, type (indica/sativa/hybrid), breeder, genetics, flowering time, and average review rating if you have reviews.</p>
+    <span class="detail-label">Browse Catalog</span>
+    <p>The built-in catalog includes strains from 7 breeders: Sticky Finger Seeds, Hawaiian Budline, Ziplock Seeds, Makena Genetics, Deep Green Genetics, Aloha Island Genetics, and CloneFreak (clones only). Filter by breeder, search by name, and quick-add strains to your library.</p>
+    <span class="detail-label">Seed Bank</span>
+    <p>Access the Seed Bank from the Strains toolbar or the Dashboard. Track seed packets with strain name, breeder, count, type (feminized/regular/autoflower), source, purchase date, germination rate, and notes. The <strong>Browse Catalog</strong> button inside the Seed Bank lets you quick-add seed entries from the strain catalog (excludes clone-only providers).</p>
+    <span class="detail-label">Strain Reviews</span>
+    <p>Tap the <strong>&#11088; Reviews</strong> button on any strain card to write a personal grow review. Reviews capture:</p>
+    <ul>
+      <li>Overall rating (1&ndash;5 stars)</li>
+      <li>Grow difficulty, yield rating, and actual flowering time</li>
+      <li>Grow method, effects, terpene/flavor notes</li>
+      <li>Grow tips and general notes</li>
+      <li>Optional photo</li>
+    </ul>
+    <p>Average ratings display directly on strain cards so you can compare strains at a glance.</p>
+  </div>
+</div>
+
+<div class="island-tip">
+  <span class="it-label">Tip</span>
+  When adding a plant on the Plants tab, the strain picker auto-fills type and breeder from your library. Build your strain library first for faster plant entry.
+</div>
+
+
+<!-- ═══ ANALYTICS ═══ -->
+<div class="section-divider" id="analytics">
+  <div class="divider-line"></div>
+  <div class="divider-label">Analytics</div>
+  <div class="divider-line"></div>
+</div>
+
+<div class="phase-section">
+  <div class="phase-header">
+    <div class="phase-number">&#128202;</div>
+    <h2 class="phase-title">Analytics <span class="gold">Charts</span></h2>
+  </div>
+  <div class="phase-body">
+    <p>The Analytics tab renders 14 interactive SVG charts from your data. All charts are pure SVG &mdash; no external libraries required.</p>
+    <span class="detail-label">Filters</span>
+    <p>Use the date range (7 days, 30 days, 90 days, All Time), environment, and plant dropdowns to narrow chart data.</p>
+    <span class="detail-label">Charts</span>
+    <ul>
+      <li><strong>Environment Trends</strong> &mdash; line chart of temperature, humidity, pH, and EC/PPM over time.</li>
+      <li><strong>Feeding pH Drift</strong> &mdash; line chart comparing pH In vs pH Out across feedings.</li>
+      <li><strong>Clone Success Rates</strong> &mdash; bar chart comparing rooted vs failed counts per mother.</li>
+      <li><strong>Family Tree</strong> &mdash; visual lineage tree showing mother-clone relationships.</li>
+      <li><strong>Health Distribution</strong> &mdash; donut chart of plant health statuses.</li>
+      <li><strong>IPM Overview</strong> &mdash; bar chart of pest/disease types by severity.</li>
+      <li><strong>Activity Heatmap</strong> &mdash; calendar heatmap showing daily activity levels.</li>
+      <li><strong>Harvest Yield Timeline</strong> &mdash; line chart of individual and cumulative dry weight over time.</li>
+      <li><strong>Yield by Strain</strong> &mdash; bar chart ranking total yield per strain (top 12).</li>
+      <li><strong>Quality Distribution</strong> &mdash; donut chart of harvest star ratings with average score.</li>
+      <li><strong>Flowering Days vs Yield</strong> &mdash; bar chart correlating flowering duration with dry weight.</li>
+      <li><strong>Cost Breakdown</strong> &mdash; donut chart showing expense distribution across 7 categories with dollar totals and a color-coded legend.</li>
+      <li><strong>VPD Trends</strong> &mdash; line chart tracking vapor pressure deficit over time with zone bands for each growth stage.</li>
+      <li><strong>Cost per Gram by Strain</strong> &mdash; bar chart showing dollar cost per gram of dried flower, allocated by strain (direct + proportional shared expenses).</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ═══ CALENDAR ═══ -->
+<div class="section-divider" id="calendar">
+  <div class="divider-line"></div>
+  <div class="divider-label">Calendar</div>
+  <div class="divider-line"></div>
+</div>
+
+<div class="phase-section">
+  <div class="phase-header">
+    <div class="phase-number">&#128197;</div>
+    <h2 class="phase-title">Grow <span class="gold">Calendar</span></h2>
+  </div>
+  <div class="phase-body">
+    <p>A month-view calendar that overlays all your events: tasks, feedings, journal photos, harvests, IPM entries, and harvest estimate windows. Each day cell shows colored dots for event types and the moon phase icon.</p>
+    <span class="detail-label">Navigation</span>
+    <p>Use the left/right arrows to navigate months, or tap <strong>Today</strong> to jump back to the current month.</p>
+    <span class="detail-label">Day Detail</span>
+    <p>Tap any day to see a full list of events for that date, plus the moon phase name and KNF planting guidance for that day.</p>
+    <span class="detail-label">Color Legend</span>
+    <ul>
+      <li><strong>Cyan dot</strong> &mdash; Tasks</li>
+      <li><strong>Green dot</strong> &mdash; Feedings</li>
+      <li><strong>Gold dot</strong> &mdash; Journal entries</li>
+      <li><strong>Orange dot</strong> &mdash; Harvests</li>
+      <li><strong>Red dot</strong> &mdash; IPM issues</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ═══ READINGS ═══ -->
+<div class="section-divider" id="readings">
+  <div class="divider-line"></div>
+  <div class="divider-label">Environment Readings</div>
+  <div class="divider-line"></div>
+</div>
+
+<div class="phase-section">
+  <div class="phase-header">
+    <div class="phase-number">&#127777;</div>
+    <h2 class="phase-title">Environment <span class="gold">Readings</span></h2>
+  </div>
+  <div class="phase-body">
+    <p>The Readings tab shows logged environment data and lets you record new readings.</p>
+    <span class="detail-label">Reading Fields</span>
+    <ul>
+      <li><strong>Environment</strong> &mdash; select which grow space.</li>
+      <li><strong>Temperature (&deg;F)</strong>, <strong>Humidity (%)</strong>, <strong>pH</strong>, <strong>EC/PPM</strong> &mdash; core environment metrics.</li>
+      <li><strong>Notes</strong> &mdash; any observations.</li>
+    </ul>
+    <span class="detail-label">Weather Auto-Fill</span>
+    <p>If you set up Weather via the header button, outdoor temp and humidity can auto-populate when logging readings.</p>
+    <span class="detail-label">Latest Readings</span>
+    <p>The tab shows the latest reading values at the top, plus a historical table with sparkline trend indicators.</p>
+  </div>
+</div>
+
+
+<!-- ═══ TOOLS & EXTRAS ═══ -->
+<div class="section-divider" id="tools">
+  <div class="divider-line"></div>
+  <div class="divider-label">Tools &amp; Extras</div>
+  <div class="divider-line"></div>
+</div>
+
+<div class="phase-section">
+  <div class="phase-header">
+    <div class="phase-number">&#128295;</div>
+    <h2 class="phase-title">Additional <span class="gold">Tools</span></h2>
+  </div>
+  <div class="phase-body">
+
+    <span class="detail-label">KNF Input Calculator</span>
+    <p>Open from the Dashboard or gear menu. Enter your water volume, select a KNF input (FPJ, FFJ, FAA, OHN, LABS, IMO, WCA, WCA-P, BRV, or Molasses), and toggle between <strong>Foliar Spray</strong> (1:1000) and <strong>Soil Drench</strong> (1:500) dilution rates. The calculator shows the exact amount needed.</p>
+
+    <span class="detail-label">Moon Phase Tracker</span>
+    <p>The moon widget on the Dashboard shows the current phase, illumination, and time until the next phase. Tap it for a detailed modal with KNF planting guidance for each of the 8 lunar phases, upcoming phase dates, and a visual cycle overview.</p>
+
+    <span class="detail-label">QR Code Plant Tags</span>
+    <p>Generate printable QR code labels for any plant. Each tag includes a QR code (encoding strain, breeder, stage, and date), the plant name, breeder, type, stage, environment, date acquired, and health status. Print single tags from a plant card or batch-print all tags from the gear menu or select mode.</p>
+
+    <span class="detail-label">Daily Snapshot</span>
+    <p>Open from the Dashboard to generate a full daily report. The snapshot includes the date, current weather, moon phase with KNF guidance, pending tasks, active IPM issues, environment alerts, and recent feedings. You can <strong>copy to clipboard</strong> for pasting elsewhere or <strong>save to journal</strong> as a text note.</p>
+
+    <span class="detail-label">Health Check / Score Tracker</span>
+    <p>Tap <strong>&#10084; Health</strong> on any plant card to log a quick 1&ndash;5 score with optional notes. Scores are: 1 = Critical, 2 = Poor, 3 = Fair, 4 = Good, 5 = Excellent. Recent scores appear as colored dots on plant cards, and health changes during plant edits are automatically logged.</p>
+
+    <span class="detail-label">Lineage Tree</span>
+    <p>Tap <strong>&#127795; Lineage</strong> on a plant card to view a visual family tree showing the mother plant and all clone batches branching from it. The tree is rendered as an interactive SVG on the Analytics tab.</p>
+
+    <span class="detail-label">Plant Timeline</span>
+    <p>Tap <strong>&#128197; Timeline</strong> on any plant card to view a chronological event history combining 8 data sources: feedings, photos, IPM logs, harvests, health checks, dry-back readings, clone batches, and task completions. Events are sorted by date with color-coded dots for each type.</p>
+
+    <span class="detail-label">Feed Schedule Templates</span>
+    <p>Open from the Dashboard or gear menu. Choose from 4 built-in nutrient schedules: <strong>GH Flora Series</strong> (10 weeks), <strong>Fox Farm Trio</strong> (8 weeks), <strong>Gaia Green Organic</strong> (5 weeks), or <strong>KNF Inputs</strong> (8 weeks). Preview the weekly schedule, then apply it to a plant to auto-create one-time feeding tasks for each week.</p>
+
+    <span class="detail-label">Dry-Back Tracking</span>
+    <p>Tap <strong>&#9878; Dry-Back</strong> on a plant card to log weight readings over time. Enter the weight, unit (g/oz/lb), and optional notes. A line chart tracks the dry-back curve and a history table lets you review or delete past entries.</p>
+
+    <span class="detail-label">Harvest Estimate</span>
+    <p>If a plant's strain has a flowering time set and the plant has a flowering start date, a harvest estimate badge appears on the plant card. It shows a progress bar, estimated harvest window, and days remaining. Harvest estimate events also appear on the Calendar.</p>
+
+    <span class="detail-label">Cost Tracker</span>
+    <p>Open from the Dashboard or gear menu. Log grow expenses across 7 categories: Nutrients, Equipment, Soil/Media, Seeds/Clones, IPM, Utilities, and Other. The summary shows total spent, spending this month, and average per month. A Cost Breakdown donut chart appears on the Analytics tab.</p>
+
+    <span class="detail-label">Grow Cycle Templates</span>
+    <p>Open from the Dashboard, gear menu, or plant cards. Choose from 4 built-in grow cycle templates: <strong>Indoor Photoperiod</strong> (16 weeks / 9 phases), <strong>Indoor Autoflower</strong> (12 weeks / 7 phases), <strong>Outdoor Tropical Maui</strong> (21 weeks / 6 phases), or <strong>Clone to Flower</strong> (12 weeks / 7 phases). Each phase includes week range, phase name, light schedule, and a list of tasks. Preview all phases in a table, then apply to a plant &mdash; this auto-creates one-time tasks with calculated due dates from seedling through harvest.</p>
+
+    <span class="detail-label">Soil Mix Calculator</span>
+    <p>Open from the Dashboard or gear menu. Choose from 4 pre-built soil recipes: <strong>Coots Mix</strong> (classic 1:1:1 living soil), <strong>BuildASoil 3.0</strong>, <strong>Simple Coco Mix</strong>, or <strong>Tropical Living Soil</strong> (Maui-style). You can also start a <strong>Custom Mix</strong> from scratch. The calculator has 14 components across 3 categories: Base Mix (Peat Moss, Coco Coir, Compost), Aeration (Perlite, Pumice, Rice Hulls), and Amendments (Worm Castings, Bone Meal, Blood Meal, Kelp Meal, Gypsum, Dolomite Lime, Rock Phosphate, Azomite). Adjust the total volume and unit (gallons or liters), edit any ratio or amount, and calculated quantities update live. Save custom recipes for later use.</p>
+
+    <span class="detail-label">Plant Comparison</span>
+    <p>Open from the Dashboard or a plant card's <strong>&#128200; Compare</strong> button. Select 2&ndash;3 plants with checkboxes, then tap Compare. A comparison table shows 11 metrics side-by-side: strain, type, age, stage, health, environment, feedings, IPM issues, clone rate, total yield, and average health score. Best values are highlighted in cyan. Mini bar charts below the table compare feedings, yield, and health scores visually.</p>
+
+    <span class="detail-label">Export Report (Print-to-PDF)</span>
+    <p>Open from the Dashboard, gear menu, or a plant card's <strong>&#128196; Report</strong> button. Choose between two report modes:</p>
+    <ul>
+      <li><strong>Plant Report</strong> &mdash; full grow history for a single plant including strain info, stat grid (8 metrics), feeding history (last 20), harvests, IPM log, and health checks.</li>
+      <li><strong>Garden Report</strong> &mdash; overall summary of your entire garden including plant count, environments, flowering count, total yield, total expenses, cost per gram, plant roster, environment list, harvest summary, and expense breakdown by category.</li>
+    </ul>
+    <p>Reports open in a new browser window with a dark theme on screen and clean black-and-white formatting for printing. Tap <strong>Print / Save PDF</strong> to open your browser's print dialog and save as PDF.</p>
+
+    <span class="detail-label">Pest Identification Tool</span>
+    <p>Open from the Dashboard (<strong>&#128270; Pest ID</strong>), gear menu (<strong>&#128270; Pest Identifier</strong>), or a plant card's <strong>&#128270; Identify</strong> button. The tool offers three identification methods:</p>
+    <ul>
+      <li><strong>Google Cloud Vision AI</strong> &mdash; snap or upload a photo and the app sends it to the Vision API for automatic analysis. It uses LABEL_DETECTION and WEB_DETECTION to match against 10 known cannabis pests and diseases, displaying the result with a confidence percentage. Tap <strong>Log as IPM Issue</strong> to pre-fill the IPM form with the identified pest, issue type, and suggested severity. Requires a Vision API key (free tier: 1,000 images/month).</li>
+      <li><strong>Google Lens</strong> &mdash; opens Google Lens in a new tab for manual visual identification. No API key required.</li>
+      <li><strong>Visual Pest Guide</strong> &mdash; a built-in reference with detailed cards for all 10 supported pests and diseases. Each card shows an emoji icon, symptom descriptions, and recommended treatments.</li>
+    </ul>
+
+    <span class="detail-label">Visual Pest Guide</span>
+    <p>Open from the Dashboard (<strong>&#128218; Pest Guide</strong>), the Pest ID tool, or the IPM form. The guide covers 10 common cannabis issues: <strong>Aphids</strong>, <strong>Spider Mites</strong>, <strong>Fungus Gnats</strong>, <strong>Whiteflies</strong>, <strong>Thrips</strong>, <strong>Powdery Mildew</strong>, <strong>Bud Rot</strong>, <strong>Root Rot</strong>, <strong>Nutrient Burn</strong>, and <strong>Nutrient Deficiency</strong>. Each card includes visual identification signs and treatment options.</p>
+
+    <span class="detail-label">Pest ID Settings</span>
+    <p>Open from the gear menu (<strong>&#129302; Pest ID Settings</strong>) or the link in the Pest ID tool. Enter your Google Cloud Vision API key &mdash; get one free at <a href="https://console.cloud.google.com/apis/library/vision.googleapis.com" style="color:var(--cyan)">Google Cloud Console</a> (enable the Vision API, then create a key). Use the <strong>Test API Key</strong> button to verify your key works before saving. Without a key, Google Lens and the Visual Pest Guide remain fully functional.</p>
+
+    <span class="detail-label">VPD Calculator</span>
+    <p>Open from the Dashboard, gear menu, or the <strong>&#127777; VPD</strong> button on environment cards. The calculator auto-fills temperature and humidity from the latest environment reading. Enter an optional leaf temperature offset (default: air temp &minus; 2&deg;F). The result shows your VPD in kPa with color-coded zone indicators for seedling (0.4&ndash;0.8), vegetative (0.8&ndash;1.2), early flower (1.0&ndash;1.5), and late flower (1.2&ndash;1.6). A VPD trend chart also appears on the Analytics tab.</p>
+
+    <span class="detail-label">DLI Calculator</span>
+    <p>Open from the Dashboard or gear menu. Select your light type (LED, HPS, CMH, Fluorescent, or Sunlight), enter wattage, and set photoperiod hours. The calculator estimates PPFD from light efficiency and computes Daily Light Integral (DLI) in mol/m&sup2;/day. Optimal ranges are shown for each growth stage: seedling (12&ndash;18), veg (18&ndash;30), and flower (30&ndash;45).</p>
+
+    <span class="detail-label">Trichome Harvest Tracker</span>
+    <p>Open from the <strong>&#128300; Trichome</strong> button on plant cards. Log trichome development readings with linked sliders for clear, cloudy, and amber percentages (always totaling 100%). The tracker provides harvest-window recommendations: &ldquo;Too early&rdquo; when clear &gt; 50%, &ldquo;Peak THC window&rdquo; when cloudy &ge; 50% and amber &lt; 20%, and &ldquo;Balanced / couch-lock&rdquo; when amber &ge; 20%. A stacked bar chart shows reading history, and a compact trichome badge appears on flowering plant cards.</p>
+
+    <span class="detail-label">Training Log</span>
+    <p>Open from the <strong>&#9986; Training</strong> button on plant cards. Choose from 10 techniques: Topping, FIM, LST, HST, Supercrop, Mainline, SCROG, Lollipop, Defoliation, or Other. Add optional position info, a photo, and notes. Training entries appear on the Plant Timeline and Calendar.</p>
+
+    <span class="detail-label">Nutrient Deficiency Wizard</span>
+    <p>Open from the Dashboard, gear menu, or the <strong>&#129657; Deficiency Wizard</strong> button in the IPM form. The wizard walks you through 3 steps: (1) Where are symptoms? (old growth, new growth, all), (2) What do you see? (yellowing, browning, spots, curling, purple), (3) What pattern? (interveinal, edges, tips, uniform). Based on your answers, it identifies the most likely deficiency (Nitrogen, Magnesium, Iron, Potassium, Calcium, Phosphorus, Manganese, or Nutrient Burn) and provides fix instructions. A <strong>Log as IPM Issue</strong> button pre-fills the IPM form.</p>
+
+    <span class="detail-label">Grow Run Manager</span>
+    <p>Open from the Dashboard or gear menu. Create named grow runs, assign plants, and track start/end dates. Each run shows aggregate statistics: plant count, total yield, total cost, and average health. Mark runs as completed when finished. Use <strong>Compare Runs</strong> to select two runs and view side-by-side stats.</p>
+
+    <span class="detail-label">Breeding / Pollen Tracker</span>
+    <p>Open from the Dashboard, gear menu, or the <strong>&#129516; Breed</strong> button on plant cards. Log three entry types: <strong>Pollen Collection</strong> (date, storage method, viability notes), <strong>Cross</strong> (mother &times; father, method, notes), and <strong>Seed Harvest</strong> (parents, seed count, offspring strain name). Filter entries by plant or type.</p>
+
+    <span class="detail-label">pH/EC Calibration Log</span>
+    <p>Open from the gear menu (<strong>&#9879; Calibration Log</strong>). Log meter calibrations with meter type (pH, EC, or both), buffer solutions used, and notes. Set a calibration interval (default: 30 days). A badge on environment cards shows days since last calibration and turns orange/red when overdue.</p>
+
+    <span class="detail-label">Fleet View / Table Mode</span>
+    <p>Toggle between Grid and Table view on the Plants tab using the <strong>&#9776; Table / &#9638; Grid</strong> button in the toolbar. Table mode shows a sortable table with 9 columns: Strain, Type, Stage, Health, Age, Environment, Last Fed, Days Since IPM, and Yield. Click any column header to sort ascending or descending.</p>
+
+    <span class="detail-label">Grow Room Diagram</span>
+    <p>Open from the <strong>&#128208; Layout</strong> button on environment cards or the gear menu. Set grid dimensions (rows &times; columns) for your grow space. Click any cell to assign a plant from a picker, or click an occupied cell to unassign. Layouts save per environment.</p>
+
+    <span class="detail-label">Notifications</span>
+    <p>Enable browser notifications from the gear menu. The app will send alerts for overdue tasks and environment readings that exceed your thresholds.</p>
+
+    <span class="detail-label">Theme Toggle</span>
+    <p>Switch between <strong>dark mode</strong> (default &mdash; dark green/black) and <strong>light mode</strong> (cream/white) using the moon icon in the header.</p>
+  </div>
+</div>
+
+
+<!-- ═══ DATA & BACKUP ═══ -->
+<div class="section-divider" id="data">
+  <div class="divider-line"></div>
+  <div class="divider-label">Data &amp; Backup</div>
+  <div class="divider-line"></div>
+</div>
+
+<div class="phase-section">
+  <div class="phase-header">
+    <div class="phase-number">&#128190;</div>
+    <h2 class="phase-title">Data <span class="gold">Management</span></h2>
+  </div>
+  <div class="phase-body">
+    <span class="detail-label">Local Storage</span>
+    <p>All data is stored in your browser's localStorage under the key <strong>_trm_pm</strong>. This means data persists between sessions but is tied to the specific browser and device you use.</p>
+
+    <span class="detail-label">Export</span>
+    <p>Go to gear menu &#8594; <strong>Export Data</strong> to download a complete JSON backup. The file includes a checksum for integrity verification. Export regularly &mdash; it only takes a second and protects all your grow records.</p>
+
+    <span class="detail-label">Import</span>
+    <p>Go to gear menu &#8594; <strong>Import Data</strong> to restore from a JSON backup. This replaces all current data with the imported file. The import validates the checksum to ensure the file hasn't been corrupted.</p>
+
+    <span class="detail-label">Cloud Sync (Firebase)</span>
+    <p>Tap the <strong>&#9729; Cloud Sync</strong> button in the header to connect with Firebase. Cloud sync provides automatic backup and cross-device synchronization. Your data is encrypted and stored securely. Log in with your email to enable sync.</p>
+  </div>
+</div>
+
+<div class="island-tip">
+  <span class="it-label">Tip</span>
+  <strong>Export before clearing browser data!</strong> Clearing cookies, site data, or cache will permanently delete your Plant Manager data unless you have a backup or Cloud Sync enabled.
+</div>
+
+
+<!-- ═══ PWA ═══ -->
+<div class="section-divider" id="pwa">
+  <div class="divider-line"></div>
+  <div class="divider-label">Install as App</div>
+  <div class="divider-line"></div>
+</div>
+
+<div class="phase-section">
+  <div class="phase-header">
+    <div class="phase-number">&#128241;</div>
+    <h2 class="phase-title">PWA <span class="gold">Install</span></h2>
+  </div>
+  <div class="phase-body">
+    <p>Plant Manager is a Progressive Web App (PWA). You can install it on your phone or computer for a native app-like experience:</p>
+    <ul>
+      <li><strong>iOS Safari</strong> &mdash; tap the Share button &#8594; "Add to Home Screen".</li>
+      <li><strong>Android Chrome</strong> &mdash; tap the three-dot menu &#8594; "Install app" or "Add to Home Screen".</li>
+      <li><strong>Desktop Chrome/Edge</strong> &mdash; click the install icon in the address bar, or go to the three-dot menu &#8594; "Install Tropical Roots Maui - Plant Manager".</li>
+    </ul>
+    <p>Once installed, the app opens in its own window without browser chrome and works offline thanks to the service worker cache.</p>
+  </div>
+</div>
+
+
+<!-- ═══ CLOSING ═══ -->
+<div class="recipe-notes" style="margin-top: 3rem;">
+  <div class="notes-box">
+    <div class="notes-title">Final Notes</div>
+    <div class="notes-text">
+      Plant Manager is built and maintained by Tropical Roots Maui. It is free and open-source under the GNU General Public License v3. All processing happens locally in your browser &mdash; no data is collected or sent to external servers unless you opt into Cloud Sync. For questions, feedback, or feature requests, visit tropicalrootsmaui.com. Happy growing!
+    </div>
+  </div>
+</div>
+
+<a href="#top" class="back-top">&uarr; Back to Top</a>
+
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  /* site-components nav toggle if loaded */
+  if(window.initSiteNav) window.initSiteNav();
+});
+</script>
+</body>
+</html>
