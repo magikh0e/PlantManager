@@ -54,6 +54,9 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#0a0c0a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -104,6 +107,12 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 .header-right{display:flex;align-items:center;gap:var(--space-xs)}
 .icon-btn{width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border-subtle);border-radius:var(--radius-sm);background:transparent;color:var(--text-secondary);font-size:1.1rem;transition:all var(--duration) var(--ease)}
 .icon-btn:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,200,192,.06)}
+.settings-wrap{position:relative}
+.settings-menu{display:none;position:absolute;top:100%;right:0;margin-top:6px;min-width:180px;background:var(--bg-secondary);border:1px solid var(--border-subtle);border-radius:var(--radius-md);box-shadow:0 8px 24px rgba(0,0,0,.25);z-index:210;padding:4px 0}
+.settings-menu.open{display:block}
+.settings-menu-item{display:flex;align-items:center;gap:var(--space-sm);width:100%;padding:10px 14px;border:none;background:none;color:var(--text-secondary);font-size:.85rem;cursor:pointer;transition:all var(--duration) var(--ease);text-align:left}
+.settings-menu-item:hover{background:rgba(0,200,192,.08);color:var(--cyan)}
+.settings-menu-item .smi-icon{font-size:1.05rem;width:22px;text-align:center;flex-shrink:0}
 
 /* ── Tab Nav ── */
 .tab-nav{position:fixed;top:var(--header-h);left:0;right:0;height:var(--tab-h);background:var(--bg-secondary);border-bottom:1px solid var(--border-subtle);display:flex;overflow-x:auto;z-index:190;transition:background var(--duration) var(--ease);scrollbar-width:none;-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 40px),transparent)}
@@ -451,7 +460,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 .tree-node{cursor:pointer}
 .tree-node:hover rect{stroke:var(--cyan)!important;stroke-width:2.5!important}
 .chart-card-wide{grid-column:1/-1}
-#notifyBell{position:relative}
+#settingsBtn{position:relative}
 .notify-badge{position:absolute;top:2px;right:2px;min-width:16px;height:16px;background:#e05c3a;color:#fff;font-size:.55rem;font-weight:700;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px;pointer-events:none}
 .notify-toggle{display:flex;align-items:center;gap:var(--space-sm);padding:var(--space-xs) 0;font-size:.85rem;cursor:pointer}
 .notify-toggle input[type="checkbox"]{width:18px;height:18px;accent-color:var(--cyan)}
@@ -463,6 +472,58 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 .notify-status.default{color:var(--gold)}
 .threshold-row{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-sm)}
 @media(max-width:640px){.harvest-grid{grid-template-columns:1fr}}
+/* Weather & Cloud Sync */
+#weatherBtn{position:relative}
+#cloudSyncBtn{position:relative}
+.sync-badge{position:absolute;top:2px;right:2px;width:8px;height:8px;border-radius:50%;pointer-events:none}
+.sync-badge.synced{background:var(--leaf)}
+.sync-badge.stale{background:var(--gold)}
+.sync-badge.error{background:#e05c3a}
+.wx-test-result{font-size:.8rem;margin-left:var(--space-sm)}
+/* ── KNF Calculator ── */
+.knf-controls{display:flex;flex-wrap:wrap;gap:var(--space-sm);align-items:center;margin-bottom:var(--space-lg);padding-bottom:var(--space-md);border-bottom:1px solid var(--border-subtle)}
+.knf-vol-input{width:80px;padding:.4rem .6rem;background:var(--bg-input);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);color:var(--text-primary);font-size:.9rem;text-align:center}
+.knf-vol-input:focus{outline:none;border-color:var(--border-focus)}
+.knf-mode-btn{padding:.4rem .8rem;border:1px solid var(--border-subtle);border-radius:var(--radius-sm);background:transparent;color:var(--text-secondary);font-size:.75rem;font-weight:600;cursor:pointer;transition:all var(--duration) var(--ease)}
+.knf-mode-btn.active{background:rgba(0,200,192,.12);border-color:var(--cyan);color:var(--cyan)}
+.knf-table{width:100%;border-collapse:collapse;font-size:.82rem}
+.knf-table th{text-align:left;padding:var(--space-sm) var(--space-md);font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-tertiary);border-bottom:1px solid var(--border-subtle)}
+.knf-table td{padding:var(--space-sm) var(--space-md);border-bottom:1px solid var(--border-subtle);vertical-align:top}
+.knf-table tr:hover{background:rgba(0,200,192,.04)}
+.knf-input-name{font-weight:600;color:var(--text-primary)}
+.knf-amount{font-weight:700;color:var(--cyan);font-size:.9rem}
+.knf-ratio{font-size:.72rem;color:var(--text-tertiary)}
+.knf-use{font-size:.7rem;color:var(--text-secondary)}
+.knf-tip{font-size:.7rem;color:var(--text-tertiary);font-style:italic;margin-top:2px}
+@media(max-width:640px){.knf-table th:nth-child(4),.knf-table td:nth-child(4){display:none}}
+/* ── Calendar ── */
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-lg);flex-wrap:wrap;gap:var(--space-sm)}
+.cal-title{font-size:1.1rem;font-weight:700}
+.cal-nav{display:flex;gap:var(--space-xs)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:var(--space-lg)}
+.cal-dow{text-align:center;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);padding:var(--space-xs) 0}
+.cal-day{min-height:72px;padding:var(--space-xs);background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);cursor:pointer;transition:all var(--duration) var(--ease);position:relative}
+.cal-day:hover{border-color:rgba(0,200,192,.3);background:var(--bg-card-hover)}
+.cal-day.today{border-color:var(--cyan);box-shadow:inset 0 0 0 1px var(--cyan)}
+.cal-day.selected{background:rgba(0,200,192,.1);border-color:var(--cyan)}
+.cal-day.other-month{opacity:.35}
+.cal-day-num{font-size:.75rem;font-weight:600;margin-bottom:2px}
+.cal-moon{font-size:.6rem;position:absolute;top:3px;right:4px;opacity:.6}
+.cal-dots{display:flex;flex-wrap:wrap;gap:2px}
+.cal-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.cal-dot.task{background:var(--leaf)}
+.cal-dot.feed{background:var(--orange)}
+.cal-dot.journal{background:var(--cyan)}
+.cal-dot.harvest{background:#b48cce}
+.cal-dot.ipm{background:#e05c3a}
+.cal-badge{position:absolute;bottom:3px;right:4px;font-size:.55rem;font-weight:700;color:var(--text-tertiary)}
+.cal-detail{margin-top:var(--space-md)}
+.cal-detail-header{font-size:.85rem;font-weight:700;margin-bottom:var(--space-sm);display:flex;align-items:center;gap:var(--space-sm)}
+.cal-event{display:flex;align-items:center;gap:var(--space-sm);padding:var(--space-xs) var(--space-sm);margin-bottom:var(--space-xs);background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);font-size:.8rem}
+.cal-event-icon{font-size:.9rem;flex-shrink:0}
+.cal-event-text{flex:1;min-width:0}
+.cal-event-time{font-size:.7rem;color:var(--text-tertiary);flex-shrink:0}
+@media(max-width:640px){.cal-day{min-height:48px}.cal-day-num{font-size:.65rem}.cal-moon{display:none}.cal-dot{width:5px;height:5px}.cal-badge{display:none}}
 </style>
 </head>
 <body>
@@ -470,15 +531,24 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 <!-- Header -->
 <header class="header">
   <div class="header-left">
-    <img class="header-logo" src="/img/tropicalrootslogosmall.jpeg" alt="TRM Logo" width="348" height="294">
+    <img class="header-logo" src="/img/tropicalrootslogosmall.jpeg" alt="The small version of the Tropical Roots Maui brand logo. It features a cheerful leafy tree-man character, styled like a nature spirit, holding small plant-based entities. The business name, 'Tropical Roots' in green wavy text and 'Maui' in black text, is displayed below the graphic." title="Tropical Roots Maui - Alchemist's Small Logo" width="348" height="294">
     <span class="header-title"><span class="header-title-full">Tropical Roots Maui - </span>Plant Manager</span>
   </div>
   <div class="header-right">
-    <button class="icon-btn" id="notifyBell" title="Notification settings">&#128276;</button>
+    <button class="icon-btn" id="weatherBtn" title="Weather">&#127780;</button>
+    <button class="icon-btn" id="moonBtn" title="Moon phase">&#127769;</button>
+    <button class="icon-btn" id="cloudSyncBtn" title="Cloud sync">&#9729;</button>
     <button class="icon-btn" id="themeToggle" title="Toggle theme">&#9790;</button>
-    <button class="icon-btn" id="heroToggle" title="Toggle banner image">&#9881;</button>
-    <button class="icon-btn" id="exportBtn" title="Export data">&#8681;</button>
-    <button class="icon-btn" id="importBtn" title="Import data">&#8679;</button>
+    <div class="settings-wrap">
+      <button class="icon-btn" id="settingsBtn" title="More settings">&#9881;</button>
+      <div class="settings-menu" id="settingsMenu">
+        <button class="settings-menu-item" id="notifyBell"><span class="smi-icon">&#128276;</span>Notifications</button>
+        <button class="settings-menu-item" id="heroToggle"><span class="smi-icon">&#127956;</span>Toggle Banner</button>
+        <button class="settings-menu-item" id="exportBtn"><span class="smi-icon">&#8681;</span>Export Data</button>
+        <button class="settings-menu-item" id="importBtn"><span class="smi-icon">&#8679;</span>Import Data</button>
+        <button class="settings-menu-item" onclick="KNFCalc.openCalculator()"><span class="smi-icon">&#129514;</span>KNF Calculator</button>
+      </div>
+    </div>
     <input type="file" id="importFile" accept=".json" class="sr-only">
   </div>
 </header>
@@ -496,6 +566,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
   <button class="tab-btn" data-tab="harvest"><span class="tab-icon">&#127806;</span>Harvest</button>
   <button class="tab-btn" data-tab="strains"><span class="tab-icon">&#129516;</span>Strains</button>
   <button class="tab-btn" data-tab="analytics"><span class="tab-icon">&#128202;</span>Analytics</button>
+  <button class="tab-btn" data-tab="calendar"><span class="tab-icon">&#128197;</span>Calendar</button>
   <button class="tab-btn" data-tab="environment"><span class="tab-icon">&#127777;</span>Readings</button>
 </nav>
 
@@ -524,6 +595,8 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
     <section class="tab-panel" id="panel-strains"></section>
     <!-- Analytics -->
     <section class="tab-panel" id="panel-analytics"></section>
+    <!-- Calendar -->
+    <section class="tab-panel" id="panel-calendar"></section>
     <!-- Environment Readings -->
     <section class="tab-panel" id="panel-environment"></section>
   </div>
@@ -556,7 +629,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 (function(){
 'use strict';
 
-const APP_VERSION = '1.6.4';
+const APP_VERSION = '1.9.0';
 
 /* ═══════════════════════════════════════════════
    UTILS
@@ -607,11 +680,20 @@ const U = {
   }
 };
 
-const _GP='/KnowledgeBase/cannabis-grow-guides/';
+const _GP='https://www.tropicalrootsmaui.com/KnowledgeBase/cannabis-grow-guides/';
 function _guideLinks(links){
   let h='<div class="guide-links"><span class="guide-links-label">&#128214; Guides:</span>';
   links.forEach(l=>{h+='<a href="'+_GP+l[1]+'" target="_blank" class="guide-link">'+l[0]+'</a>'});
   return h+'</div>';
+}
+
+/* Lazy script loader (shared utility for CDN libs) */
+function _loadScript(src,cb){
+  if(document.querySelector('script[src="'+src+'"]')){cb();return}
+  var s=document.createElement('script');s.src=src;
+  s.onload=function(){cb()};
+  s.onerror=function(){cb(new Error('Failed to load '+src))};
+  document.head.appendChild(s);
 }
 
 /* ═══════════════════════════════════════════════
@@ -640,12 +722,22 @@ const Store = {
       if(this._data.settings.notifyDueTodayTasks===undefined) this._data.settings.notifyDueTodayTasks=true;
       if(this._data.settings.notifyEnvThresholds===undefined) this._data.settings.notifyEnvThresholds=true;
       if(this._data.settings.feedingReminderDays===undefined) this._data.settings.feedingReminderDays=0;
+      if(this._data.settings.weatherApiKey===undefined) this._data.settings.weatherApiKey='';
+      if(this._data.settings.weatherLocation===undefined) this._data.settings.weatherLocation='';
+      if(this._data.settings.weatherLat===undefined) this._data.settings.weatherLat=null;
+      if(this._data.settings.weatherLon===undefined) this._data.settings.weatherLon=null;
+      if(this._data.settings.weatherLastData===undefined) this._data.settings.weatherLastData=null;
+      if(this._data.settings.firebaseConfig===undefined) this._data.settings.firebaseConfig=null;
+      if(this._data.settings.cloudLastBackup===undefined) this._data.settings.cloudLastBackup=null;
+      if(this._data.settings.cloudAutoBackup===undefined) this._data.settings.cloudAutoBackup=false;
+      if(this._data.settings.cloudStripPhotos===undefined) this._data.settings.cloudStripPhotos=true;
       if(this._data.mothers) Object.values(this._data.mothers).forEach(m=>{if(m.parentMotherId===undefined) m.parentMotherId=''});
     }catch(e){this._data=this._default()}
   },
   save(){
     if(this._data.activityLog.length>100) this._data.activityLog=this._data.activityLog.slice(-100);
     try{localStorage.setItem(this._key,JSON.stringify(this._data))}catch(e){Toast.show('Storage full! Export and clear old data.','error')}
+    if(typeof CloudSync!=='undefined'&&CloudSync.scheduleAutoBackup) CloudSync.scheduleAutoBackup();
   },
   get(col){return this._data[col]||{}},
   getById(col,id){return(this._data[col]||{})[id]},
@@ -828,7 +920,7 @@ const Router={
     Store.setting('lastActiveTab',tab);
     document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
     document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active',p.id==='panel-'+tab));
-    const renderers={dashboard:Dashboard,plants:Plants,environments:Environments,clones:Clones,tasks:Tasks,feeding:Feeding,journal:Journal,ipm:IPM,harvest:Harvest,strains:Strains,analytics:Analytics,environment:Environment};
+    const renderers={dashboard:Dashboard,plants:Plants,environments:Environments,clones:Clones,tasks:Tasks,feeding:Feeding,journal:Journal,ipm:IPM,harvest:Harvest,strains:Strains,analytics:Analytics,calendar:Calendar,environment:Environment};
     if(renderers[tab]) renderers[tab].render();
     if(tab==='dashboard') Dashboard._startTipTimer(); else Dashboard._stopTipTimer();
   }
@@ -856,8 +948,13 @@ const Dashboard={
     'Clone batches track success rates that feed back to each mother plant\u2019s card.',
     'Star ratings on harvests help you compare quality across different grows.',
     'The Browse Catalog in Strains has 363+ entries \u2014 use the breeder filter to narrow results.',
+    'Set up Weather in the header to auto-fill temperature and humidity when logging environment readings.',
+    'Use Cloud Sync to back up your data to Firebase \u2014 never lose your grow records if the browser is cleared.',
+    'The Moon Phase tracker shows KNF planting guidance for each lunar phase \u2014 click the moon widget on the dashboard for details.',
+    'Use the KNF Calculator (dashboard button or gear menu) to get exact dilution amounts for any volume \u2014 toggle between foliar and soil drench.',
+    'The Calendar tab shows all your tasks, feedings, journal entries, harvests, and IPM events on a month view with moon phases.',
   ],
-  _tipIndex:Math.floor(Math.random()*17),
+  _tipIndex:Math.floor(Math.random()*22),
   _tipTimer:null,
   _showTip(dir){
     const el=document.getElementById('tipText');
@@ -910,6 +1007,8 @@ const Dashboard={
     const totalYield=Store.totalYield();
     const yieldDisplay=totalYield>=28.35?(totalYield/28.35).toFixed(1)+'oz':totalYield.toFixed(1)+'g';
     h+='<div class="card stat-card green"><div class="stat-icon">&#127806;</div><div class="stat-value">'+yieldDisplay+'</div><div class="stat-label">Total Yield</div></div>';
+    h+=Weather.dashboardWidget();
+    h+=Moon.dashboardWidget();
     h+='</div>';
 
     h+='<div class="quick-actions" style="margin-top:var(--space-xl)">';
@@ -923,6 +1022,7 @@ const Dashboard={
     h+='<button class="btn btn-outline" onclick="IPM.openAddModal()">+ Log Issue</button>';
     h+='<button class="btn btn-outline" onclick="Strains.openAddModal()">+ Add Strain</button>';
     h+='<button class="btn btn-outline" onclick="Harvest.openAddModal()">+ Log Harvest</button>';
+    h+='<button class="btn btn-outline" onclick="KNFCalc.openCalculator()">\ud83e\uddea KNF Calculator</button>';
     h+='</div>';
 
     if(overdue.length){
@@ -1758,7 +1858,7 @@ const Environment={
       h+='<div class="section-title">Trends (last '+last30.length+' readings)</div>';
 
       h+='<div class="env-table-wrap"><table class="env-table"><thead><tr>';
-      h+='<th>Date</th><th>Temp</th><th>RH</th><th>Light</th><th>pH</th><th>EC/PPM</th><th>Notes</th></tr></thead><tbody>';
+      h+='<th>Date</th><th>Temp</th><th>RH</th><th>Light</th><th>pH</th><th>EC/PPM</th><th>Moon</th><th>Notes</th></tr></thead><tbody>';
 
       // Sparkline row
       h+='<tr style="background:var(--bg-card)">';
@@ -1767,7 +1867,7 @@ const Environment={
         const vals=last30.map(l=>l[key]).filter(v=>v!=null);
         h+='<td>'+Environment._sparkline(vals)+'</td>';
       });
-      h+='<td></td></tr>';
+      h+='<td></td><td></td></tr>';
 
       logs.slice(0,30).forEach(e=>{
         const d=new Date(e.timestamp);
@@ -1778,6 +1878,8 @@ const Environment={
         h+='<td>'+(e.lightHours!=null?e.lightHours+'h':'—')+'</td>';
         h+='<td>'+(e.ph!=null?e.ph:'—')+'</td>';
         h+='<td>'+(e.ecPpm!=null?e.ecPpm:'—')+'</td>';
+        var mp=e.moonPhase||Moon.phase(new Date(e.timestamp)).name;var mi=Moon._PHASES.find(function(p){return p.name===mp});
+        h+='<td style="font-size:.85rem" title="'+U.esc(mp)+'">'+(mi?mi.icon:'')+'</td>';
         h+='<td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+U.esc(e.notes||'')+'</td>';
         h+='</tr>';
       });
@@ -1809,6 +1911,7 @@ const Environment={
     h+='<div class="form-group"><label class="form-label">Temperature (&deg;F)</label><input class="form-input" id="f_temp" type="number" step="0.1"></div>';
     h+='<div class="form-group"><label class="form-label">Humidity (%)</label><input class="form-input" id="f_humidity" type="number" step="1"></div>';
     h+='</div>';
+    if(Weather.isConfigured()){h+='<div style="margin-bottom:var(--space-md)"><button type="button" class="btn btn-outline btn-sm" onclick="Weather.fillEnvForm()">&#127780; Fetch Weather</button></div>'}
     h+='<div class="form-row">';
     h+='<div class="form-group"><label class="form-label">Light Hours</label><input class="form-input" id="f_lightHours" type="number" step="0.5"></div>';
     h+='<div class="form-group"><label class="form-label">pH</label><input class="form-input" id="f_ph" type="number" step="0.1"></div>';
@@ -1829,7 +1932,8 @@ const Environment={
         lightHours:document.getElementById('f_lightHours').value?parseFloat(document.getElementById('f_lightHours').value):null,
         ph:document.getElementById('f_ph').value?parseFloat(document.getElementById('f_ph').value):null,
         ecPpm:document.getElementById('f_ecPpm').value?parseInt(document.getElementById('f_ecPpm').value):null,
-        notes:document.getElementById('f_envNotes').value.trim()
+        notes:document.getElementById('f_envNotes').value.trim(),
+        moonPhase:Moon.phase(new Date()).name
       };
       Store.set('envLogs',id,entry);
       Store.addActivity('env_logged','Logged environment reading',id);
@@ -1935,6 +2039,17 @@ const Feeding={
     {name:'Molasses',brand:'Generic',line:'',type:'supplement',defaultAmount:5,defaultUnit:'ml/gal'},
     {name:'Hydrogen Peroxide 3%',brand:'Generic',line:'',type:'additive',defaultAmount:10,defaultUnit:'ml/gal'},
     {name:'Plain Water',brand:'Generic',line:'',type:'base',defaultAmount:0,defaultUnit:'ml/gal'},
+    /* ── KNF (Korean Natural Farming) ── */
+    {name:'FPJ (Fermented Plant Juice)',brand:'KNF',line:'Inputs',type:'grow',defaultAmount:2,defaultUnit:'ml/gal'},
+    {name:'FFJ (Fermented Fruit Juice)',brand:'KNF',line:'Inputs',type:'bloom',defaultAmount:2,defaultUnit:'ml/gal'},
+    {name:'FAA (Fish Amino Acid)',brand:'KNF',line:'Inputs',type:'grow',defaultAmount:2,defaultUnit:'ml/gal'},
+    {name:'OHN (Oriental Herbal Nutrient)',brand:'KNF',line:'Inputs',type:'supplement',defaultAmount:1,defaultUnit:'ml/gal'},
+    {name:'LABS (Lactic Acid Bacteria)',brand:'KNF',line:'Inputs',type:'supplement',defaultAmount:2,defaultUnit:'ml/gal'},
+    {name:'IMO (Indigenous Microorganisms)',brand:'KNF',line:'Inputs',type:'supplement',defaultAmount:0,defaultUnit:'tbsp/sq ft'},
+    {name:'WCA (Water-soluble Calcium)',brand:'KNF',line:'Minerals',type:'cal-mag',defaultAmount:2,defaultUnit:'ml/gal'},
+    {name:'WCA-P (Calcium Phosphate)',brand:'KNF',line:'Minerals',type:'bloom',defaultAmount:2,defaultUnit:'ml/gal'},
+    {name:'BRV (Brown Rice Vinegar)',brand:'KNF',line:'Inputs',type:'pH',defaultAmount:1,defaultUnit:'ml/gal'},
+    {name:'Sea Water Dilution (1:30)',brand:'KNF',line:'Minerals',type:'supplement',defaultAmount:1,defaultUnit:'ml/gal'},
   ],
   render(){
     const mothers=Store.mothersArray();
@@ -2258,12 +2373,22 @@ const IPM={
     /* ── Organic / Home Remedies ── */
     {name:'Isopropyl Alcohol Spray (70%)',brand:'Generic',category:'organic',targets:'mealybugs, aphids, scale, spider mites'},
     {name:'Hydrogen Peroxide Drench (3%)',brand:'Generic',category:'organic',targets:'fungus gnats, root rot, algae'},
-    {name:'Apple Cider Vinegar Trap',brand:'Generic',category:'organic',targets:'fungus gnats'},
     {name:'Yellow Sticky Traps',brand:'Generic',category:'organic',targets:'fungus gnats, whiteflies, thrips, aphids'},
     {name:'Castile Soap Spray',brand:'Generic',category:'organic',targets:'aphids, whiteflies, spider mites'},
     {name:'Garlic Spray',brand:'Generic',category:'organic',targets:'aphids, whiteflies, caterpillars'},
     {name:'Cinnamon Powder',brand:'Generic',category:'organic',targets:'damping off, fungus gnats, surface mold'},
     {name:'Milk Spray (40%)',brand:'Generic',category:'organic',targets:'powdery mildew'},
+    /* ── KNF (Korean Natural Farming) ── */
+    {name:'OHN (Oriental Herbal Nutrient)',brand:'KNF',category:'knf',targets:'aphids, whiteflies, powdery mildew, bud rot, general pest repellent'},
+    {name:'LABS (Lactic Acid Bacteria)',brand:'KNF',category:'knf',targets:'powdery mildew, root rot, bud rot, pathogen suppression'},
+    {name:'IMO (Indigenous Microorganisms)',brand:'KNF',category:'knf',targets:'root rot, damping off, soil pathogen suppression, soil vitality'},
+    {name:'BRV (Brown Rice Vinegar)',brand:'KNF',category:'knf',targets:'powdery mildew, fungal diseases, pH adjustment'},
+    {name:'FPJ (Fermented Plant Juice)',brand:'KNF',category:'knf',targets:'plant vigor, immune boost, stress recovery'},
+    {name:'FAA (Fish Amino Acid)',brand:'KNF',category:'knf',targets:'plant vigor, nitrogen boost, beneficial microbe food'},
+    {name:'WCA-P (Calcium Phosphate)',brand:'KNF',category:'knf',targets:'cell wall strength, disease resistance, flowering support'},
+    {name:'OHN + BRV Foliar Spray',brand:'KNF',category:'knf',targets:'powdery mildew, botrytis, general fungal prevention'},
+    {name:'LABS + IMO Soil Drench',brand:'KNF',category:'knf',targets:'root rot, fungus gnats, soil-borne pathogens'},
+    {name:'OHN + LABS Pest Deterrent',brand:'KNF',category:'knf',targets:'aphids, mites, whiteflies, thrips, general pest deterrent'},
     /* ── Environmental Controls ── */
     {name:'Increase Airflow / Fans',brand:'Environmental',category:'environmental',targets:'powdery mildew, bud rot, high humidity'},
     {name:'Dehumidifier',brand:'Environmental',category:'environmental',targets:'bud rot, powdery mildew, high humidity'},
@@ -2432,7 +2557,7 @@ const IPM={
     if(!items.length) return '<div style="padding:var(--space-md);color:var(--text-tertiary);font-size:.8rem;text-align:center">No treatments found</div>';
     let h='<div style="display:grid;grid-template-columns:1fr;gap:var(--space-xs)">';
     items.forEach(c=>{
-      const catColors={insecticide:'var(--orange)',miticide:'#e05c3a',fungicide:'var(--gold)',biological:'var(--leaf)',organic:'var(--cyan)',environmental:'var(--text-secondary)'};
+      const catColors={insecticide:'var(--orange)',miticide:'#e05c3a',fungicide:'var(--gold)',biological:'var(--leaf)',organic:'var(--cyan)',knf:'#a78bfa',environmental:'var(--text-secondary)'};
       const color=catColors[c.category]||'var(--text-secondary)';
       h+='<div class="card" style="padding:var(--space-sm) var(--space-md);cursor:pointer" onclick="IPM._selectIpmProduct('+c._idx+')">';
       h+='<div style="display:flex;justify-content:space-between;align-items:center;gap:var(--space-sm)">';
@@ -3705,6 +3830,170 @@ const Analytics={
 window.Analytics=Analytics;
 
 /* ═══════════════════════════════════════════════
+   CALENDAR
+   ═══════════════════════════════════════════════ */
+const Calendar={
+  _year:new Date().getFullYear(),
+  _month:new Date().getMonth(),
+  _selectedDate:null,
+
+  render:function(){
+    var self=this;
+    var now=new Date();
+    var monthNames=['January','February','March','April','May','June','July','August','September','October','November','December'];
+    var dowNames=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    var h='';
+
+    /* ── Header ── */
+    h+='<div class="cal-header">';
+    h+='<div class="cal-nav">';
+    h+='<button class="btn btn-ghost btn-sm" onclick="Calendar._prev()">&laquo;</button>';
+    h+='<button class="btn btn-ghost btn-sm" onclick="Calendar._today()">Today</button>';
+    h+='<button class="btn btn-ghost btn-sm" onclick="Calendar._next()">&raquo;</button>';
+    h+='</div>';
+    h+='<div class="cal-title">'+monthNames[this._month]+' '+this._year+'</div>';
+    h+='<div style="font-size:.75rem;color:var(--text-secondary);display:flex;flex-wrap:wrap;gap:6px">';
+    h+='<span style="display:inline-flex;align-items:center;gap:3px"><span class="cal-dot task" style="display:inline-block"></span>Tasks</span>';
+    h+='<span style="display:inline-flex;align-items:center;gap:3px"><span class="cal-dot feed" style="display:inline-block"></span>Feed</span>';
+    h+='<span style="display:inline-flex;align-items:center;gap:3px"><span class="cal-dot journal" style="display:inline-block"></span>Journal</span>';
+    h+='<span style="display:inline-flex;align-items:center;gap:3px"><span class="cal-dot harvest" style="display:inline-block"></span>Harvest</span>';
+    h+='<span style="display:inline-flex;align-items:center;gap:3px"><span class="cal-dot ipm" style="display:inline-block"></span>IPM</span>';
+    h+='</div></div>';
+
+    /* ── Grid: day-of-week headers ── */
+    h+='<div class="cal-grid">';
+    dowNames.forEach(function(d){h+='<div class="cal-dow">'+d+'</div>'});
+
+    /* ── Calculate grid start (Sunday before or on 1st) ── */
+    var first=new Date(this._year,this._month,1);
+    var startDay=first.getDay();
+    var gridStart=new Date(this._year,this._month,1-startDay);
+
+    /* ── Build event index for visible range ── */
+    var events=this._buildEventIndex();
+    var todayStr=U.today();
+
+    /* ── 42 day cells (6 weeks) ── */
+    for(var i=0;i<42;i++){
+      var d=new Date(gridStart.getTime()+i*86400000);
+      var ds=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+      var isMonth=d.getMonth()===this._month;
+      var cls='cal-day';
+      if(!isMonth) cls+=' other-month';
+      if(ds===todayStr) cls+=' today';
+      if(ds===this._selectedDate) cls+=' selected';
+      var dayEvts=events[ds]||[];
+      h+='<div class="'+cls+'" onclick="Calendar._selectDay(\''+ds+'\')">';
+      h+='<div class="cal-day-num">'+d.getDate()+'</div>';
+      var mp=Moon.phase(d);
+      h+='<div class="cal-moon">'+mp.icon+'</div>';
+      if(dayEvts.length){
+        h+='<div class="cal-dots">';
+        var types={};
+        dayEvts.forEach(function(e){types[e.type]=true});
+        if(types.task) h+='<span class="cal-dot task"></span>';
+        if(types.feed) h+='<span class="cal-dot feed"></span>';
+        if(types.journal) h+='<span class="cal-dot journal"></span>';
+        if(types.harvest) h+='<span class="cal-dot harvest"></span>';
+        if(types.ipm) h+='<span class="cal-dot ipm"></span>';
+        h+='</div>';
+        if(dayEvts.length>2) h+='<div class="cal-badge">'+dayEvts.length+'</div>';
+      }
+      h+='</div>';
+    }
+    h+='</div>';
+
+    /* ── Selected day detail ── */
+    if(this._selectedDate){
+      var selEvts=events[this._selectedDate]||[];
+      var selDate=U.parseDate(this._selectedDate);
+      var selMoon=Moon.phase(selDate);
+      h+='<div class="cal-detail">';
+      h+='<div class="cal-detail-header">';
+      h+=selDate.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+      h+=' <span style="font-size:.8rem">'+selMoon.icon+' '+selMoon.name+'</span></div>';
+      if(!selEvts.length){
+        h+='<div style="font-size:.82rem;color:var(--text-tertiary);padding:var(--space-sm)">No events on this day.</div>';
+      }else{
+        var groups={task:[],feed:[],journal:[],harvest:[],ipm:[]};
+        selEvts.forEach(function(e){if(groups[e.type]) groups[e.type].push(e)});
+        if(groups.task.length){
+          h+='<div class="section-title" style="margin-top:var(--space-sm)">&#9745; Tasks Due ('+groups.task.length+')</div>';
+          groups.task.forEach(function(e){h+='<div class="cal-event"><span class="cal-event-icon">&#9745;</span><span class="cal-event-text">'+U.esc(e.label)+'</span></div>'});
+        }
+        if(groups.feed.length){
+          h+='<div class="section-title" style="margin-top:var(--space-sm)">&#129514; Feedings ('+groups.feed.length+')</div>';
+          groups.feed.forEach(function(e){h+='<div class="cal-event"><span class="cal-event-icon">&#129514;</span><span class="cal-event-text">'+U.esc(e.label)+'</span>'+(e.time?'<span class="cal-event-time">'+e.time+'</span>':'')+'</div>'});
+        }
+        if(groups.journal.length){
+          h+='<div class="section-title" style="margin-top:var(--space-sm)">&#128248; Journal ('+groups.journal.length+')</div>';
+          groups.journal.forEach(function(e){h+='<div class="cal-event"><span class="cal-event-icon">&#128248;</span><span class="cal-event-text">'+U.esc(e.label)+'</span>'+(e.time?'<span class="cal-event-time">'+e.time+'</span>':'')+'</div>'});
+        }
+        if(groups.harvest.length){
+          h+='<div class="section-title" style="margin-top:var(--space-sm)">&#127806; Harvests ('+groups.harvest.length+')</div>';
+          groups.harvest.forEach(function(e){h+='<div class="cal-event"><span class="cal-event-icon">&#127806;</span><span class="cal-event-text">'+U.esc(e.label)+'</span></div>'});
+        }
+        if(groups.ipm.length){
+          h+='<div class="section-title" style="margin-top:var(--space-sm)">&#128737; IPM Issues ('+groups.ipm.length+')</div>';
+          groups.ipm.forEach(function(e){h+='<div class="cal-event"><span class="cal-event-icon">&#128737;</span><span class="cal-event-text">'+U.esc(e.label)+'</span>'+(e.time?'<span class="cal-event-time">'+e.time+'</span>':'')+'</div>'});
+        }
+      }
+      /* Moon guidance */
+      h+='<div style="margin-top:var(--space-md);padding:var(--space-sm) var(--space-md);background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-sm)">';
+      h+='<div style="font-size:.7rem;font-weight:600;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:var(--space-xs)">'+selMoon.icon+' KNF Lunar Guidance</div>';
+      h+='<div style="font-size:.8rem;color:var(--text-secondary);line-height:1.5">'+selMoon.guidance+'</div></div>';
+      h+='</div>';
+    }
+
+    document.getElementById('panel-calendar').innerHTML=h;
+  },
+
+  _buildEventIndex:function(){
+    var index={};
+    var add=function(ds,type,label,time){
+      if(!index[ds]) index[ds]=[];
+      index[ds].push({type:type,label:label,time:time||''});
+    };
+    var _ds=function(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+    var _tm=function(d){return d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'})};
+
+    Store.tasksArray().filter(function(t){return t.enabled}).forEach(function(t){
+      if(!t.nextDueDate) return;
+      var m=t.motherId?Store.getById('mothers',t.motherId):null;
+      add(t.nextDueDate,'task',t.description+(m?' ('+m.strainName+')':''));
+    });
+    Store.feedingsArray().forEach(function(f){
+      var d=new Date(f.timestamp);
+      var m=f.motherId?Store.getById('mothers',f.motherId):null;
+      add(_ds(d),'feed',(f.nutrientName||'Water Only')+(m?' \u2014 '+m.strainName:''),_tm(d));
+    });
+    Store.photosArray().forEach(function(p){
+      var d=new Date(p.timestamp);
+      var m=p.motherId?Store.getById('mothers',p.motherId):null;
+      add(_ds(d),'journal',(p.notes||'Photo entry')+(m?' \u2014 '+m.strainName:''),_tm(d));
+    });
+    Store.harvestsArray().forEach(function(hv){
+      if(!hv.harvestDate) return;
+      var m=hv.motherId?Store.getById('mothers',hv.motherId):null;
+      var lbl='Harvest'+(m?' \u2014 '+m.strainName:'');
+      if(hv.dryWeight) lbl+=' ('+hv.dryWeight+'g)';
+      add(hv.harvestDate,'harvest',lbl);
+    });
+    Store.ipmArray().forEach(function(ipm){
+      var d=new Date(ipm.timestamp);
+      add(_ds(d),'ipm',(ipm.pestName||'Issue')+(ipm.resolved?' (resolved)':''),_tm(d));
+    });
+    return index;
+  },
+
+  _prev:function(){if(this._month===0){this._month=11;this._year--}else{this._month--}this._selectedDate=null;this.render()},
+  _next:function(){if(this._month===11){this._month=0;this._year++}else{this._month++}this._selectedDate=null;this.render()},
+  _today:function(){var n=new Date();this._year=n.getFullYear();this._month=n.getMonth();this._selectedDate=U.today();this.render()},
+  _selectDay:function(ds){this._selectedDate=(this._selectedDate===ds)?null:ds;this.render()}
+};
+window.Calendar=Calendar;
+
+/* ═══════════════════════════════════════════════
    LINEAGE / FAMILY TREE
    ═══════════════════════════════════════════════ */
 const Lineage={
@@ -3804,6 +4093,36 @@ const DataIO={
    ═══════════════════════════════════════════════ */
 const WhatsNew={
   _notes:{
+    '1.9.0':[
+      '<b>PWA Support</b> \u2014 install Plant Manager as an app on mobile or desktop with offline capability',
+      'Service worker caches the app shell, fonts, and images for fast offline loading',
+      'New <b>KNF Input Calculator</b> \u2014 calculate exact dilution amounts for all Korean Natural Farming inputs',
+      'Toggle between Foliar Spray and Soil Drench modes with adjustable volume (gal/L)',
+      'Preparation tips for each KNF input (FPJ, FFJ, FAA, OHN, LABS, IMO, WCA, WCA-P, BRV, Sea Water)',
+      'New <b>Calendar</b> tab \u2014 month view of all tasks, feedings, journal entries, harvests, and IPM events',
+      'Calendar cells show moon phase icons and colored event dots with day-detail expansion',
+      'Click any day to see all events and KNF lunar planting guidance for that date',
+    ],
+    '1.8.0':[
+      'New <b>Moon Phase Tracker</b> \u2014 algorithmic lunar phase calculation, fully offline, no API needed',
+      '<b>Dashboard widget</b> shows current phase, illumination %, and days to next phase',
+      '<b>KNF planting guidance</b> for each of the 8 lunar phases (planting, pruning, rest periods)',
+      '<b>Upcoming phases</b> calendar with dates for the next 6 transitions',
+      'Moon phase icon automatically recorded with each environment reading',
+      'Interactive <b>lunar cycle overview</b> highlighting the current phase'
+    ],
+    '1.7.0':[
+      'New <b>Weather Integration</b> \u2014 auto-fill temperature &amp; humidity from OpenWeatherMap when logging environment readings',
+      '<b>Weather widget</b> on Dashboard shows current outdoor conditions',
+      '<b>Fetch Weather</b> button in the env log form (requires free OWM API key)',
+      'GPS location detection or manual city entry for weather data',
+      'New <b>Cloud Sync</b> \u2014 back up and restore your data to Firebase',
+      '<b>Google sign-in</b> for secure cloud access',
+      'One-click <b>Backup</b> and <b>Restore</b> with checksum validation',
+      'Optional <b>auto-backup</b> every 5 minutes',
+      'Smart photo stripping keeps backups under Firestore 1MB limit',
+      'Sync status badge on the cloud icon shows backup freshness'
+    ],
     '1.6.0':[
       'New <b>Notification Reminders</b> — browser alerts for overdue tasks, due-today tasks &amp; out-of-range environment readings',
       '<b>Environment Thresholds</b> — set min/max for temperature, humidity &amp; pH per environment',
@@ -4031,13 +4350,13 @@ const Notify={
   },
 
   _updateBadge(){
-    const bell=document.getElementById('notifyBell');
-    if(!bell) return;
-    let badge=bell.querySelector('.notify-badge');
+    const gear=document.getElementById('settingsBtn');
+    if(!gear) return;
+    let badge=gear.querySelector('.notify-badge');
     if(!Store.setting('notificationsEnabled')){if(badge) badge.remove();return}
     const c=this._alertCount();
     if(c>0){
-      if(!badge){badge=document.createElement('span');badge.className='notify-badge';bell.appendChild(badge)}
+      if(!badge){badge=document.createElement('span');badge.className='notify-badge';gear.appendChild(badge)}
       badge.textContent=c>99?'99+':c;
     }else{if(badge) badge.remove()}
   },
@@ -4091,21 +4410,643 @@ const Notify={
 window.Notify=Notify;
 
 /* ═══════════════════════════════════════════════
+   WEATHER (OpenWeatherMap)
+   ═══════════════════════════════════════════════ */
+const Weather={
+  _API:'https://api.openweathermap.org/data/2.5/weather',
+  _cache:null,
+  _CACHE_TTL:600000, // 10 min
+
+  init(){this._cache=Store.setting('weatherLastData')||null},
+
+  isConfigured(){
+    return !!(Store.setting('weatherApiKey')&&(Store.setting('weatherLocation')||(Store.setting('weatherLat')&&Store.setting('weatherLon'))));
+  },
+
+  fetch(cb){
+    if(!this.isConfigured()){cb('Weather not configured. Set API key and location in Weather Settings.',null);return}
+    if(this._cache&&(Date.now()-this._cache.ts)<this._CACHE_TTL){cb(null,this._cache);return}
+    var key=Store.setting('weatherApiKey'),lat=Store.setting('weatherLat'),lon=Store.setting('weatherLon'),loc=Store.setting('weatherLocation');
+    var url=this._API+'?units=imperial&appid='+encodeURIComponent(key);
+    if(lat&&lon) url+='&lat='+lat+'&lon='+lon;
+    else if(loc) url+='&q='+encodeURIComponent(loc);
+    var xhr=new XMLHttpRequest();
+    xhr.timeout=8000;
+    xhr.onload=function(){
+      if(xhr.status===200){
+        try{
+          var r=JSON.parse(xhr.responseText);
+          var data={temp:Math.round(r.main.temp),humidity:r.main.humidity,description:r.weather[0].description,icon:r.weather[0].icon,name:r.name,ts:Date.now()};
+          Weather._cache=data;Store.setting('weatherLastData',data);cb(null,data);
+        }catch(e){cb('Invalid response from weather service.',null)}
+      }else if(xhr.status===401) cb('Invalid API key. Check your OpenWeatherMap key in settings.',null);
+      else if(xhr.status===404) cb('Location not found. Check your city name or coordinates.',null);
+      else if(xhr.status===429) cb('API rate limit reached. Free tier allows 1,000 calls/day.',null);
+      else cb('Weather fetch failed (HTTP '+xhr.status+').',null);
+    };
+    xhr.onerror=function(){cb('Network error \u2014 are you offline?',null)};
+    xhr.ontimeout=function(){cb('Weather request timed out.',null)};
+    xhr.open('GET',url);xhr.send();
+  },
+
+  detectLocation(cb){
+    if(!navigator.geolocation){cb('Geolocation not supported by your browser.');return}
+    navigator.geolocation.getCurrentPosition(
+      function(pos){Store.setting('weatherLat',pos.coords.latitude);Store.setting('weatherLon',pos.coords.longitude);Store.setting('weatherLocation','');cb(null)},
+      function(){cb('Location access denied. Enter city name manually.')},
+      {timeout:10000}
+    );
+  },
+
+  openSettings(){
+    var apiKey=Store.setting('weatherApiKey')||'',loc=Store.setting('weatherLocation')||'',lat=Store.setting('weatherLat'),lon=Store.setting('weatherLon'),cached=Store.setting('weatherLastData');
+    var h='';
+    h+='<div class="form-group"><label class="form-label">OpenWeatherMap API Key</label>';
+    h+='<input class="form-input" id="f_wxKey" type="password" value="'+U.esc(apiKey)+'" placeholder="Paste your free API key">';
+    h+='<div class="form-hint">Get a free key at <a href="https://openweathermap.org/api" target="_blank" rel="noopener" style="color:var(--cyan)">openweathermap.org</a> (1,000 calls/day)</div></div>';
+    h+='<div class="form-group"><label class="form-label">Location</label>';
+    h+='<input class="form-input" id="f_wxCity" value="'+U.esc(loc)+'" placeholder="City name (e.g. Kahului, HI)" style="margin-bottom:var(--space-xs)">';
+    h+='<button class="btn btn-outline btn-sm" onclick="Weather._detectFromModal()">&#128205; Use GPS</button>';
+    if(lat&&lon) h+='<div class="form-hint">GPS: '+parseFloat(lat).toFixed(4)+', '+parseFloat(lon).toFixed(4)+'</div>';
+    h+='</div>';
+    if(cached){
+      h+='<div style="margin-top:var(--space-md);padding:var(--space-md);background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-sm)">';
+      h+='<div style="font-size:.75rem;font-weight:600;text-transform:uppercase;color:var(--text-secondary)">Last Reading</div>';
+      h+='<div style="font-size:1.2rem;font-weight:700">'+cached.temp+'\u00b0F &nbsp; '+cached.humidity+'% RH</div>';
+      h+='<div style="font-size:.75rem;color:var(--text-tertiary)">'+U.esc(cached.description||'')+' \u2014 '+U.relTime(cached.ts)+'</div>';
+      h+='</div>';
+    }
+    h+='<div style="margin-top:var(--space-md)"><button class="btn btn-outline btn-sm" id="wxTestBtn">&#9729; Test Connection</button> <span id="wxTestResult" class="wx-test-result"></span></div>';
+    Modal.open('Weather Settings',h,
+      '<button class="btn btn-ghost" onclick="Modal.close()">Cancel</button><button class="btn btn-primary" id="wxSave">Save</button>'
+    );
+    document.getElementById('wxSave').addEventListener('click',function(){
+      Store.setting('weatherApiKey',document.getElementById('f_wxKey').value.trim());
+      var city=document.getElementById('f_wxCity').value.trim();
+      if(city){Store.setting('weatherLocation',city);Store.setting('weatherLat',null);Store.setting('weatherLon',null)}
+      Weather._cache=null;
+      Modal.close();Toast.show('Weather settings saved!');
+    });
+    document.getElementById('wxTestBtn').addEventListener('click',function(){
+      var el=document.getElementById('wxTestResult');
+      el.textContent='Fetching...';el.style.color='var(--text-secondary)';
+      var origKey=Store.setting('weatherApiKey'),origLoc=Store.setting('weatherLocation');
+      Store.setting('weatherApiKey',document.getElementById('f_wxKey').value.trim());
+      var city=document.getElementById('f_wxCity').value.trim();
+      if(city) Store.setting('weatherLocation',city);
+      Weather._cache=null;
+      Weather.fetch(function(err,data){
+        if(err){el.textContent='\u2717 '+err;el.style.color='#e05c3a'}
+        else{el.textContent='\u2713 '+data.temp+'\u00b0F, '+data.humidity+'% RH ('+data.name+')';el.style.color='var(--leaf)'}
+        Store.setting('weatherApiKey',origKey);Store.setting('weatherLocation',origLoc);
+      });
+    });
+  },
+
+  _detectFromModal(){
+    Weather.detectLocation(function(err){
+      if(err){Toast.show(err);return}
+      Toast.show('GPS location detected!');
+      var cityEl=document.getElementById('f_wxCity');if(cityEl) cityEl.value='';
+      Modal.close();Weather.openSettings();
+    });
+  },
+
+  dashboardWidget(){
+    if(!this.isConfigured()) return '';
+    var d=this._cache||Store.setting('weatherLastData');
+    if(!d) return '';
+    var stale=(Date.now()-d.ts)>3600000;
+    var h='<div class="card stat-card" style="border-top-color:var(--cyan)" id="wxDashWidget">';
+    h+='<div class="stat-icon">&#127780;</div>';
+    h+='<div class="stat-value">'+d.temp+'\u00b0F</div>';
+    h+='<div class="stat-label">Weather ('+d.humidity+'% RH)</div>';
+    if(d.description) h+='<div style="font-size:.65rem;color:var(--text-tertiary);margin-top:1px">'+U.esc(d.description)+'</div>';
+    if(stale) h+='<div style="font-size:.6rem;color:var(--text-tertiary);margin-top:2px">'+U.relTime(d.ts)+'</div>';
+    h+='</div>';
+    return h;
+  },
+
+  fillEnvForm(){
+    Weather.fetch(function(err,data){
+      if(err){Toast.show(err);return}
+      var tempEl=document.getElementById('f_temp'),humEl=document.getElementById('f_humidity');
+      if(tempEl&&!tempEl.value) tempEl.value=data.temp;
+      if(humEl&&!humEl.value) humEl.value=data.humidity;
+      Toast.show('Weather filled: '+data.temp+'\u00b0F, '+data.humidity+'% RH');
+    });
+  }
+};
+window.Weather=Weather;
+
+/* ═══════════════════════════════════════════════
+   MOON PHASE (algorithmic — no API)
+   ═══════════════════════════════════════════════ */
+const Moon={
+  _SYNODIC:29.53058770576,
+  _KNOWN:new Date(2000,0,6,18,14,0).getTime(),
+  _PHASES:[
+    {name:'New Moon',icon:'\ud83c\udf11',maxAge:1.85,
+     guidance:'Rest period \u2014 prepare soil, amend beds, plan your next cycle. Minimal disturbance to roots.'},
+    {name:'Waxing Crescent',icon:'\ud83c\udf12',maxAge:7.38,
+     guidance:'Plant leafy greens and above-ground crops with external seeds (lettuce, spinach, celery, broccoli). Rising sap encourages leaf growth.'},
+    {name:'First Quarter',icon:'\ud83c\udf13',maxAge:11.07,
+     guidance:'Plant above-ground crops with internal seeds (tomatoes, peppers, beans, squash). Strong upward energy supports fruiting.'},
+    {name:'Waxing Gibbous',icon:'\ud83c\udf14',maxAge:14.77,
+     guidance:'Continue planting fruit-bearing crops. Sap is rising strongly \u2014 excellent growth period. Apply FPJ and FFJ foliar sprays.'},
+    {name:'Full Moon',icon:'\ud83c\udf15',maxAge:16.61,
+     guidance:'Transplant seedlings \u2014 peak soil moisture aids root establishment. Harvest above-ground crops. Apply LAB and IMO to soil.'},
+    {name:'Waning Gibbous',icon:'\ud83c\udf16',maxAge:22.14,
+     guidance:'Plant root crops (taro, sweet potato, ginger, turmeric). Energy moves downward \u2014 roots develop strongly.'},
+    {name:'Last Quarter',icon:'\ud83c\udf17',maxAge:25.84,
+     guidance:'Prune, weed, turn compost, and apply KNF soil inputs (OHN, BRV, FAA). Good time for pest management.'},
+    {name:'Waning Crescent',icon:'\ud83c\udf18',maxAge:29.53,
+     guidance:'Rest period \u2014 no planting, minimal disturbance. Prepare inputs, sharpen tools, and plan the next lunar cycle.'}
+  ],
+
+  age(d){
+    var diff=(d.getTime()-this._KNOWN)/86400000;
+    return((diff%this._SYNODIC)+this._SYNODIC)%this._SYNODIC;
+  },
+
+  illumination(age){
+    return Math.round(50*(1-Math.cos(2*Math.PI*age/this._SYNODIC)));
+  },
+
+  phase(d){
+    d=d||new Date();
+    var a=this.age(d);
+    var p=this._PHASES[0];
+    for(var i=0;i<this._PHASES.length;i++){if(a<this._PHASES[i].maxAge){p=this._PHASES[i];break}}
+    var daysToNext=p.maxAge-a;
+    var nextIdx=(this._PHASES.indexOf(p)+1)%this._PHASES.length;
+    return{name:p.name,icon:p.icon,illumination:this.illumination(a),age:a,guidance:p.guidance,daysToNext:Math.ceil(daysToNext),nextName:this._PHASES[nextIdx].name,nextIcon:this._PHASES[nextIdx].icon};
+  },
+
+  upcoming(count){
+    count=count||4;
+    var now=new Date();
+    var a=this.age(now);
+    var results=[];
+    var curIdx=0;
+    for(var i=0;i<this._PHASES.length;i++){if(a<this._PHASES[i].maxAge){curIdx=i;break}}
+    var nextIdx=(curIdx+1)%this._PHASES.length;
+    var daysAhead=this._PHASES[curIdx].maxAge-a;
+    for(var c=0;c<count;c++){
+      var d=new Date(now.getTime()+daysAhead*86400000);
+      results.push({name:this._PHASES[nextIdx].name,icon:this._PHASES[nextIdx].icon,date:d});
+      var span=nextIdx<this._PHASES.length-1?this._PHASES[nextIdx+1>7?0:nextIdx+1].maxAge-this._PHASES[nextIdx].maxAge:this._SYNODIC-this._PHASES[nextIdx].maxAge+this._PHASES[0].maxAge;
+      if(span<=0) span=this._SYNODIC/8;
+      daysAhead+=span;
+      nextIdx=(nextIdx+1)%this._PHASES.length;
+    }
+    return results;
+  },
+
+  dashboardWidget(){
+    var p=this.phase();
+    var h='<div class="card stat-card" style="border-top-color:var(--gold);cursor:pointer" onclick="Moon.openDetail()">';
+    h+='<div class="stat-icon" style="font-size:1.6rem">'+p.icon+'</div>';
+    h+='<div class="stat-value" style="font-size:.95rem">'+p.name+'</div>';
+    h+='<div class="stat-label">'+p.illumination+'% illuminated</div>';
+    h+='<div style="font-size:.6rem;color:var(--text-tertiary);margin-top:2px">'+p.nextIcon+' '+p.nextName+' in '+p.daysToNext+'d</div>';
+    h+='</div>';
+    return h;
+  },
+
+  openDetail(){
+    var p=this.phase();
+    var up=this.upcoming(6);
+    var h='';
+    h+='<div style="text-align:center;padding:var(--space-md) 0">';
+    h+='<div style="font-size:3.5rem;line-height:1">'+p.icon+'</div>';
+    h+='<div style="font-size:1.3rem;font-weight:700;margin-top:var(--space-sm)">'+p.name+'</div>';
+    h+='<div style="font-size:.85rem;color:var(--text-secondary)">'+p.illumination+'% illuminated \u00b7 Day '+Math.floor(p.age)+' of 29</div>';
+    h+='</div>';
+
+    h+='<div class="notify-section"><div class="notify-section-title">KNF Planting Guidance</div>';
+    h+='<div style="font-size:.85rem;line-height:1.5;color:var(--text-primary)">'+p.guidance+'</div>';
+    h+='</div>';
+
+    h+='<div class="notify-section"><div class="notify-section-title">Upcoming Phases</div>';
+    h+='<div style="display:flex;flex-direction:column;gap:var(--space-xs)">';
+    up.forEach(function(u){
+      var dateStr=u.date.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+      h+='<div style="display:flex;justify-content:space-between;align-items:center;padding:var(--space-xs) var(--space-sm);background:var(--bg-card);border-radius:var(--radius-sm)">';
+      h+='<span style="font-size:.85rem">'+u.icon+' '+u.name+'</span>';
+      h+='<span style="font-size:.75rem;color:var(--text-secondary)">'+dateStr+'</span>';
+      h+='</div>';
+    });
+    h+='</div></div>';
+
+    h+='<div class="notify-section"><div class="notify-section-title">Lunar Cycle Overview</div>';
+    h+='<div style="display:flex;justify-content:space-around;padding:var(--space-sm) 0;font-size:1.4rem">';
+    this._PHASES.forEach(function(ph,i){
+      var isCurrent=p.name===ph.name;
+      h+='<span title="'+ph.name+'" style="opacity:'+(isCurrent?'1':'0.35')+';'+(isCurrent?'text-shadow:0 0 8px var(--gold);transform:scale(1.3);display:inline-block':'')+'">'+ph.icon+'</span>';
+    });
+    h+='</div></div>';
+
+    Modal.open('Moon Phase',h,'<button class="btn btn-ghost" onclick="Modal.close()">Close</button>');
+  }
+};
+window.Moon=Moon;
+
+/* ═══════════════════════════════════════════════
+   KNF INPUT CALCULATOR
+   ═══════════════════════════════════════════════ */
+const KNFCalc={
+  _volume:1,
+  _unit:'gal',
+  _mode:'foliar',
+  _inputs:[
+    {abbr:'FPJ',name:'Fermented Plant Juice',foliar:1000,drench:500,stage:'Veg / early bloom',
+     tip:'Use young, vigorous shoot tips harvested before sunrise. Mix with equal weight brown sugar.'},
+    {abbr:'FFJ',name:'Fermented Fruit Juice',foliar:1000,drench:500,stage:'Bloom / fruiting',
+     tip:'Use ripe, sweet fruits. Papaya, banana, and mango work well in tropical climates.'},
+    {abbr:'FAA',name:'Fish Amino Acid',foliar:1000,drench:500,stage:'Veg (nitrogen boost)',
+     tip:'Use fresh fish scraps with equal weight brown sugar. Ferment 6+ months.'},
+    {abbr:'OHN',name:'Oriental Herbal Nutrient',foliar:1000,drench:500,stage:'All stages / IPM',
+     tip:'Garlic, ginger, cinnamon, licorice, angelica root extracted in alcohol + brown sugar.'},
+    {abbr:'LABS',name:'Lactic Acid Bacteria',foliar:1000,drench:500,stage:'All stages / soil health',
+     tip:'Collect from rice wash \u2192 milk culture. Use 1:20 for heavy soil treatments. Refrigerate.'},
+    {abbr:'IMO',name:'Indigenous Microorganisms',foliar:null,drench:null,stage:'Soil amendment',
+     tip:'Apply directly to soil. Collect from local forest floor using cooked rice.',special:'1\u20132 tbsp / sq ft'},
+    {abbr:'WCA',name:'Water-soluble Calcium',foliar:1000,drench:500,stage:'All stages (calcium)',
+     tip:'Eggshells or oyster shells dissolved in brown rice vinegar. Use within 6 months.'},
+    {abbr:'WCA-P',name:'Water-soluble Calcium Phosphate',foliar:1000,drench:500,stage:'Bloom / flowering',
+     tip:'Roast bones until white, dissolve in BRV. Key input for flower and fruit development.'},
+    {abbr:'BRV',name:'Brown Rice Vinegar',foliar:1000,drench:500,stage:'pH adjust / antifungal',
+     tip:'Fermented from brown rice. Also the solvent used to make WCA and WCA-P.'},
+    {abbr:'Sea Water',name:'Sea Water Dilution',foliar:null,drench:30,stage:'Mineral supplement',
+     tip:'Collect clean ocean water. 1:30 soil drench only. Provides trace minerals.',noFoliar:true}
+  ],
+
+  _calcAmount:function(ratio,vol,unit){
+    var ml=unit==='gal'?vol*3785.41:vol*1000;
+    var amt=ml/ratio;
+    if(amt>=15) return amt.toFixed(1)+' ml';
+    if(amt>=1) return amt.toFixed(2)+' ml';
+    return (amt*1000).toFixed(0)+' \u00b5L';
+  },
+
+  openCalculator:function(){
+    var self=this;
+    var h='<div class="knf-controls">';
+    h+='<label style="font-size:.8rem;color:var(--text-secondary)">Volume:</label>';
+    h+='<input type="number" class="knf-vol-input" id="knfVolume" value="'+this._volume+'" min="0.1" step="0.5">';
+    h+='<select class="filter-select" id="knfUnit" style="padding:.4rem .6rem;min-width:60px">';
+    h+='<option value="gal"'+(this._unit==='gal'?' selected':'')+'>gal</option>';
+    h+='<option value="L"'+(this._unit==='L'?' selected':'')+'>L</option></select>';
+    h+='<span style="flex:1"></span>';
+    h+='<button class="knf-mode-btn'+(this._mode==='foliar'?' active':'')+'" data-mode="foliar" onclick="KNFCalc._setMode(\'foliar\')">Foliar Spray</button>';
+    h+='<button class="knf-mode-btn'+(this._mode==='drench'?' active':'')+'" data-mode="drench" onclick="KNFCalc._setMode(\'drench\')">Soil Drench</button>';
+    h+='</div>';
+    h+='<table class="knf-table"><thead><tr><th>Input</th><th>Ratio</th><th>Amount</th><th>Stage / Use</th></tr></thead>';
+    h+='<tbody id="knfTableBody">'+this._buildRows()+'</tbody></table>';
+    h+='<div style="margin-top:var(--space-md);font-size:.72rem;color:var(--text-tertiary);line-height:1.5">';
+    h+='<strong>Note:</strong> Ratios are general KNF guidelines. Adjust based on plant response and local conditions. Foliar sprays best applied early morning or late afternoon.</div>';
+    Modal.open('\ud83e\uddea KNF Input Calculator',h,'');
+    setTimeout(function(){
+      var volEl=document.getElementById('knfVolume'),unitEl=document.getElementById('knfUnit');
+      if(volEl) volEl.addEventListener('input',function(){self._volume=parseFloat(this.value)||1;self._refreshTable()});
+      if(unitEl) unitEl.addEventListener('change',function(){self._unit=this.value;self._refreshTable()});
+    },120);
+  },
+
+  _buildRows:function(){
+    var self=this,h='';
+    this._inputs.forEach(function(inp){
+      var ratio=self._mode==='foliar'?inp.foliar:inp.drench;
+      var ratioStr,amountStr;
+      if(inp.special&&(self._mode==='foliar'?!inp.foliar:!inp.drench)){
+        ratioStr='\u2014';amountStr=inp.special;
+      }else if(inp.noFoliar&&self._mode==='foliar'){
+        ratioStr='N/A';amountStr='<span style="font-size:.72rem;color:var(--text-tertiary)">Soil drench only</span>';
+      }else if(ratio){
+        ratioStr='1:'+ratio;amountStr='<span class="knf-amount">'+self._calcAmount(ratio,self._volume,self._unit)+'</span>';
+      }else{
+        ratioStr='\u2014';amountStr=inp.special||'\u2014';
+      }
+      h+='<tr><td><div class="knf-input-name">'+inp.abbr+'</div><div class="knf-tip">'+inp.tip+'</div></td>';
+      h+='<td><span class="knf-ratio">'+ratioStr+'</span></td>';
+      h+='<td>'+amountStr+'</td>';
+      h+='<td><span class="knf-use">'+inp.stage+'</span></td></tr>';
+    });
+    return h;
+  },
+
+  _setMode:function(mode){
+    this._mode=mode;
+    document.querySelectorAll('.knf-mode-btn').forEach(function(b){b.classList.toggle('active',b.dataset.mode===mode)});
+    this._refreshTable();
+  },
+
+  _refreshTable:function(){
+    var body=document.getElementById('knfTableBody');
+    if(body) body.innerHTML=this._buildRows();
+  }
+};
+window.KNFCalc=KNFCalc;
+
+/* ═══════════════════════════════════════════════
+   CLOUD SYNC (Firebase)
+   ═══════════════════════════════════════════════ */
+const CloudSync={
+  _fb:null,_auth:null,_db:null,
+  _loaded:false,_loading:false,
+  _autoTimer:null,
+  _AUTO_DEBOUNCE:300000, // 5 min
+
+  _loadSDK(cb){
+    if(this._loaded){cb();return}
+    if(this._loading){setTimeout(function(){CloudSync._loadSDK(cb)},500);return}
+    this._loading=true;
+    var base='https://www.gstatic.com/firebasejs/10.12.0/';
+    _loadScript(base+'firebase-app-compat.js',function(e1){
+      if(e1){CloudSync._loading=false;cb(e1);return}
+      _loadScript(base+'firebase-auth-compat.js',function(e2){
+        if(e2){CloudSync._loading=false;cb(e2);return}
+        _loadScript(base+'firebase-firestore-compat.js',function(e3){
+          CloudSync._loading=false;
+          if(e3){cb(e3);return}
+          CloudSync._loaded=true;cb();
+        });
+      });
+    });
+  },
+
+  _initFirebase(){
+    var config=Store.setting('firebaseConfig');
+    if(!config) return false;
+    if(this._fb) return true;
+    try{
+      this._fb=firebase.initializeApp(config);
+      this._auth=firebase.auth();
+      this._db=firebase.firestore();
+      return true;
+    }catch(e){Toast.show('Firebase init failed: '+e.message);return false}
+  },
+
+  signIn(cb){
+    if(!this._auth){cb('Firebase not initialized.');return}
+    var provider=new firebase.auth.GoogleAuthProvider();
+    this._auth.signInWithPopup(provider).then(function(result){
+      cb(null,result.user);
+    }).catch(function(err){
+      if(err.code==='auth/popup-closed-by-user') cb('Sign-in cancelled.');
+      else if(err.code==='auth/network-request-failed') cb('Network error \u2014 are you offline?');
+      else cb('Sign-in failed: '+err.message);
+    });
+  },
+
+  signOut(cb){
+    if(!this._auth){cb();return}
+    this._auth.signOut().then(function(){cb()});
+  },
+
+  _prepareData(){
+    var data=JSON.parse(JSON.stringify(Store._data));
+    if(Store.setting('cloudStripPhotos')){
+      if(data.mothers) Object.values(data.mothers).forEach(function(m){if(m.photo&&m.photo.indexOf('data:')===0) m.photo='[stripped]'});
+      if(data.photoJournal) Object.values(data.photoJournal).forEach(function(p){if(p.photoData&&p.photoData.indexOf('data:')===0) p.photoData='[stripped]'});
+      if(data.harvests) Object.values(data.harvests).forEach(function(h){if(h.photoData&&h.photoData.indexOf('data:')===0) h.photoData='[stripped]'});
+    }
+    return data;
+  },
+
+  _estimateSize(data){return JSON.stringify(data).length},
+
+  backup(cb){
+    if(!this._db||!this._auth||!this._auth.currentUser){cb('Not signed in.');return}
+    var uid=this._auth.currentUser.uid;
+    var data=this._prepareData();
+    var size=this._estimateSize(data);
+    if(size>1040000){cb('Data exceeds Firestore 1MB limit. Enable "Strip photos" in sync settings.');return}
+    var raw=JSON.stringify(data);
+    var payload={data:data,checksum:Store._checksum(raw),version:APP_VERSION,updatedAt:firebase.firestore.FieldValue.serverTimestamp(),userEmail:this._auth.currentUser.email||''};
+    this._db.collection('plantManager').doc(uid).set(payload).then(function(){
+      var ts=Date.now();
+      Store.setting('cloudLastBackup',ts);
+      Store.addActivity('cloud_backup','Data backed up to cloud');
+      cb(null,ts);
+    }).catch(function(err){
+      if(err.code==='permission-denied') cb('Permission denied. Check Firestore security rules.');
+      else if(err.code==='unavailable') cb('Cloud unavailable \u2014 are you offline?');
+      else cb('Backup failed: '+err.message);
+    });
+  },
+
+  restore(cb){
+    if(!this._db||!this._auth||!this._auth.currentUser){cb('Not signed in.');return}
+    var uid=this._auth.currentUser.uid;
+    this._db.collection('plantManager').doc(uid).get().then(function(doc){
+      if(!doc.exists){cb('No cloud backup found for this account.');return}
+      var payload=doc.data();
+      var raw=JSON.stringify(payload.data);
+      var cs=Store._checksum(raw);
+      if(cs!==payload.checksum){cb('Cloud data checksum mismatch. Backup may be corrupted.');return}
+      var backupDate=payload.updatedAt?payload.updatedAt.toDate().toLocaleString():'unknown date';
+      Modal.confirm('Restore from Cloud','Replace all local data with cloud backup from '+backupDate+'?<br><br><strong>This will overwrite your current local data.</strong>',function(){
+        Store._data=payload.data;Store.save();Store.notify();
+        Store.addActivity('cloud_restore','Data restored from cloud backup');
+        Toast.show('Data restored from cloud!');
+        Router.switchTo(Router._current);
+        cb(null);
+      });
+    }).catch(function(err){
+      if(err.code==='unavailable') cb('Cloud unavailable \u2014 are you offline?');
+      else cb('Restore failed: '+err.message);
+    });
+  },
+
+  scheduleAutoBackup(){
+    if(!Store.setting('cloudAutoBackup')) return;
+    if(!this._auth||!this._auth.currentUser) return;
+    clearTimeout(this._autoTimer);
+    this._autoTimer=setTimeout(function(){
+      CloudSync.backup(function(err){if(err) console.warn('Auto-backup failed:',err)});
+    },this._AUTO_DEBOUNCE);
+  },
+
+  _updateBadge(){
+    var btn=document.getElementById('cloudSyncBtn');if(!btn) return;
+    var badge=btn.querySelector('.sync-badge');
+    var lastBackup=Store.setting('cloudLastBackup');
+    if(!Store.setting('firebaseConfig')||!lastBackup){if(badge) badge.remove();return}
+    if(!badge){badge=document.createElement('span');badge.className='sync-badge';btn.appendChild(badge)}
+    var age=Date.now()-lastBackup;
+    if(age<3600000) badge.className='sync-badge synced';
+    else if(age<86400000) badge.className='sync-badge stale';
+    else badge.className='sync-badge error';
+  },
+
+  openSettings(){
+    var self=this;
+    if(!this._loaded){
+      Toast.show('Loading cloud sync...');
+      this._loadSDK(function(err){
+        if(err){Toast.show('Failed to load Firebase SDK. Check your internet connection.');return}
+        self.openSettings();
+      });
+      return;
+    }
+    this._initFirebase();
+    var config=Store.setting('firebaseConfig');
+    var user=this._auth?this._auth.currentUser:null;
+    var lastBackup=Store.setting('cloudLastBackup');
+    var stripPhotos=Store.setting('cloudStripPhotos')!==false;
+    var autoBackup=Store.setting('cloudAutoBackup')===true;
+    var h='';
+
+    /* Firebase Config */
+    h+='<div class="notify-section" style="margin-top:0;border-top:none">';
+    h+='<div class="notify-section-title">Firebase Project</div>';
+    if(config){
+      h+='<div style="font-size:.8rem;color:var(--leaf);margin-bottom:var(--space-sm)">\u2713 Configured ('+U.esc(config.projectId||'unknown')+')</div>';
+      h+='<button class="btn btn-ghost btn-sm" id="csChangeConfig">Change Config</button>';
+    }else{
+      h+='<div class="form-group"><label class="form-label">Paste Firebase config (JS or JSON)</label>';
+      h+='<textarea class="form-textarea" id="f_fbConfig" rows="6" placeholder=\'Paste the firebaseConfig from Firebase Console.\nAccepts both JS object and JSON format.\'></textarea>';
+      h+='<div class="form-hint">Firebase Console \u2192 Project Settings \u2192 Web App \u2192 copy the config snippet</div></div>';
+    }
+    h+='</div>';
+
+    /* Auth */
+    h+='<div class="notify-section"><div class="notify-section-title">Account</div>';
+    if(user){
+      h+='<div style="font-size:.85rem;margin-bottom:var(--space-sm)">Signed in as <strong>'+U.esc(user.email||'anonymous')+'</strong></div>';
+      h+='<button class="btn btn-ghost btn-sm" id="csSignOut">Sign Out</button>';
+    }else if(config){
+      h+='<button class="btn btn-primary btn-sm" id="csSignIn">&#128274; Sign in with Google</button>';
+    }else{
+      h+='<div style="font-size:.8rem;color:var(--text-tertiary)">Configure Firebase project first</div>';
+    }
+    h+='</div>';
+
+    /* Backup / Restore */
+    if(user){
+      h+='<div class="notify-section"><div class="notify-section-title">Backup &amp; Restore</div>';
+      h+='<div style="display:flex;gap:var(--space-sm);margin-bottom:var(--space-md)">';
+      h+='<button class="btn btn-primary btn-sm" id="csBackup">&#9729; Backup Now</button>';
+      h+='<button class="btn btn-outline btn-sm" id="csRestore">&#8681; Restore</button>';
+      h+='</div>';
+      if(lastBackup) h+='<div style="font-size:.75rem;color:var(--text-secondary)">Last backup: '+new Date(lastBackup).toLocaleString()+'</div>';
+      h+='</div>';
+
+      /* Options */
+      h+='<div class="notify-section"><div class="notify-section-title">Options</div>';
+      h+='<label class="notify-toggle"><input type="checkbox" id="cs_stripPhotos"'+(stripPhotos?' checked':'')+'>Strip photos from backup (recommended)</label>';
+      h+='<div class="form-hint" style="margin-left:26px">Keeps backup under Firestore 1MB limit</div>';
+      h+='<label class="notify-toggle"><input type="checkbox" id="cs_autoBackup"'+(autoBackup?' checked':'')+'>Auto-backup every 5 minutes</label>';
+      h+='</div>';
+    }
+
+    /* Size estimate */
+    var estData=user?this._prepareData():Store._data;
+    var sizeEst=this._estimateSize(estData);
+    h+='<div style="margin-top:var(--space-md);font-size:.72rem;color:var(--text-tertiary)">Estimated backup size: '+(sizeEst/1024).toFixed(0)+' KB'+(sizeEst>900000?' \u26a0 near limit':'')+'</div>';
+
+    /* Firestore rules hint */
+    h+='<details style="margin-top:var(--space-md);font-size:.72rem;color:var(--text-tertiary)"><summary style="cursor:pointer">Firestore security rules</summary>';
+    h+='<pre style="margin-top:var(--space-xs);padding:var(--space-sm);background:var(--bg-input);border-radius:var(--radius-sm);font-size:.65rem;overflow-x:auto">match /plantManager/{userId} {\n  allow read, write: if request.auth != null\n    &amp;&amp; request.auth.uid == userId;\n}</pre></details>';
+
+    Modal.open('Cloud Sync',h,
+      '<button class="btn btn-ghost" onclick="Modal.close()">Cancel</button><button class="btn btn-primary" id="csSave">Save</button>'
+    );
+
+    /* Wire up events */
+    var saveBtn=document.getElementById('csSave');
+    if(saveBtn) saveBtn.addEventListener('click',function(){
+      var configTA=document.getElementById('f_fbConfig');
+      if(configTA&&configTA.value.trim()){
+        try{
+          var raw=configTA.value.trim();
+          /* Strip "const firebaseConfig = " or "var firebaseConfig = " wrapper */
+          raw=raw.replace(/^(?:const|let|var)\s+\w+\s*=\s*/,'').replace(/;\s*$/,'');
+          /* Convert JS object literal to valid JSON (quote unquoted keys) */
+          raw=raw.replace(/([{,]\s*)(\w+)\s*:/g,'$1"$2":');
+          var parsed=JSON.parse(raw);
+          if(!parsed.apiKey||!parsed.projectId) throw new Error('Missing apiKey or projectId');
+          Store.setting('firebaseConfig',parsed);
+          self._fb=null;self._auth=null;self._db=null;
+          self._initFirebase();
+        }catch(e){Toast.show('Invalid Firebase config: '+e.message);return}
+      }
+      var spEl=document.getElementById('cs_stripPhotos'),abEl=document.getElementById('cs_autoBackup');
+      if(spEl) Store.setting('cloudStripPhotos',spEl.checked);
+      if(abEl) Store.setting('cloudAutoBackup',abEl.checked);
+      self._updateBadge();
+      Modal.close();Toast.show('Cloud sync settings saved!');
+    });
+
+    var signInBtn=document.getElementById('csSignIn');
+    if(signInBtn) signInBtn.addEventListener('click',function(){
+      signInBtn.disabled=true;signInBtn.textContent='Signing in...';
+      self.signIn(function(err,user){
+        if(err){Toast.show(err);signInBtn.disabled=false;signInBtn.innerHTML='&#128274; Sign in with Google';return}
+        Toast.show('Signed in as '+user.email);Modal.close();self.openSettings();
+      });
+    });
+
+    var signOutBtn=document.getElementById('csSignOut');
+    if(signOutBtn) signOutBtn.addEventListener('click',function(){
+      self.signOut(function(){Toast.show('Signed out.');Modal.close();self.openSettings()});
+    });
+
+    var backupBtn=document.getElementById('csBackup');
+    if(backupBtn) backupBtn.addEventListener('click',function(){
+      backupBtn.disabled=true;backupBtn.textContent='Backing up...';
+      self.backup(function(err,ts){
+        backupBtn.disabled=false;backupBtn.innerHTML='&#9729; Backup Now';
+        if(err){Toast.show(err);return}
+        Toast.show('Backup complete!');self._updateBadge();Modal.close();self.openSettings();
+      });
+    });
+
+    var restoreBtn=document.getElementById('csRestore');
+    if(restoreBtn) restoreBtn.addEventListener('click',function(){
+      Modal.close();
+      self.restore(function(err){if(err) Toast.show(err)});
+    });
+
+    var changeBtn=document.getElementById('csChangeConfig');
+    if(changeBtn) changeBtn.addEventListener('click',function(){
+      Store.setting('firebaseConfig',null);
+      self._fb=null;self._auth=null;self._db=null;
+      Modal.close();self.openSettings();
+    });
+  }
+};
+window.CloudSync=CloudSync;
+
+/* ═══════════════════════════════════════════════
    INIT
    ═══════════════════════════════════════════════ */
 function init(){
   Store.load();
+  if('serviceWorker' in navigator) navigator.serviceWorker.register('/service-worker.js').catch(function(){});
   Theme.init();
   HeroToggle.init();
   Modal.init();
   DataIO.init();
   Notify.init();
+  Weather.init();
+  document.getElementById('weatherBtn').addEventListener('click',()=>Weather.openSettings());
+  document.getElementById('moonBtn').addEventListener('click',()=>Moon.openDetail());
+  document.getElementById('cloudSyncBtn').addEventListener('click',()=>CloudSync.openSettings());
+  /* Settings overflow menu */
+  var sBtn=document.getElementById('settingsBtn'),sMenu=document.getElementById('settingsMenu');
+  sBtn.addEventListener('click',function(e){e.stopPropagation();sMenu.classList.toggle('open')});
+  document.addEventListener('click',function(){sMenu.classList.remove('open')});
+  sMenu.addEventListener('click',function(){sMenu.classList.remove('open')});
   document.getElementById('appVersion').textContent='v'+APP_VERSION;
   Store.subscribe(()=>{
     const tab=Router._current;
-    const renderers={dashboard:Dashboard,plants:Plants,environments:Environments,clones:Clones,tasks:Tasks,feeding:Feeding,journal:Journal,ipm:IPM,harvest:Harvest,strains:Strains,analytics:Analytics,environment:Environment};
+    const renderers={dashboard:Dashboard,plants:Plants,environments:Environments,clones:Clones,tasks:Tasks,feeding:Feeding,journal:Journal,ipm:IPM,harvest:Harvest,strains:Strains,analytics:Analytics,calendar:Calendar,environment:Environment};
     if(renderers[tab]) renderers[tab].render();
     Notify._updateBadge();
+    CloudSync._updateBadge();
   });
   Router.init();
   WhatsNew.check();

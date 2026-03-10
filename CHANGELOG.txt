@@ -3,6 +3,123 @@ CHANGELOG — Tropical Roots Maui - Plant Manager
 https://github.com/magikh0e/PlantManager
 
 
+v1.9.0 — 2026-03-09
+--------------------
+FEATURE: PWA Install, KNF Input Calculator & Grow Calendar
+
+  Progressive Web App (PWA)
+  - App can now be installed to home screen on mobile and desktop
+  - Service worker caches the app shell, fonts, icons, and hero image
+    for full offline capability
+  - Cache-first strategy for local assets, stale-while-revalidate for
+    Google Fonts, network-only for API calls (weather, Firebase)
+  - Cache version tied to APP_VERSION — old caches automatically purged
+    on update
+  - Web manifest with proper name, icons, theme color, and start URL
+  - Apple mobile web app meta tags for iOS Safari support
+
+  KNF Input Calculator
+  - New calculator modal accessible from dashboard quick actions and
+    the gear settings menu
+  - 10 Korean Natural Farming inputs: FPJ, FFJ, FAA, OHN, LABS, IMO,
+    WCA, WCA-P, BRV, Sea Water Dilution
+  - Toggle between Foliar Spray and Soil Drench modes (different ratios)
+  - Adjustable volume input with gallon/liter unit toggle
+  - Calculated amounts update live as volume or mode changes
+  - Standard dilution ratios: 1:1000 foliar, 1:500 soil drench
+  - Special handling for IMO (tbsp/sq ft) and Sea Water (1:30 drench only)
+  - Preparation tips for each input with tropical/Maui-relevant guidance
+
+  Grow Calendar
+  - New "Calendar" tab (13th tab) with full month grid view
+  - Navigation: previous/next month arrows and Today button
+  - Moon phase icon displayed on every day cell
+  - Color-coded event dots per day:
+    green = tasks due, orange = feedings, cyan = journal entries,
+    purple = harvests, red = IPM issues
+  - Event count badge on days with 3+ events
+  - Click any day to expand a detail panel showing:
+    all events grouped by type with timestamps
+  - KNF Lunar Guidance panel shows planting advice for the selected day
+  - Pulls from 5 data sources: tasks (nextDueDate), feedings (timestamp),
+    journal photos (timestamp), harvests (harvestDate), IPM logs (timestamp)
+  - Responsive: smaller cells and hidden moon icons on mobile
+
+  Dashboard
+  - New "KNF Calculator" quick action button
+  - KNF Calculator added to gear settings overflow menu
+  - 2 new tips (22 total) for KNF Calculator and Calendar features
+
+  Settings Menu
+  - KNF Calculator item added to the gear overflow menu
+
+
+v1.8.0 — 2026-03-09
+--------------------
+FEATURE: Moon Phase Tracker
+
+  Algorithmic lunar phase calculation — fully offline, no API needed.
+
+  Moon Phase Engine
+  - Synodic period algorithm (29.53 days) relative to known new moon
+    (Jan 6, 2000)
+  - 8 phases: New Moon, Waxing Crescent, First Quarter, Waxing Gibbous,
+    Full Moon, Waning Gibbous, Last Quarter, Waning Crescent
+  - Illumination percentage via cosine function
+  - Accuracy within ~1 day of astronomical data
+
+  Dashboard Widget
+  - Gold-bordered stat card showing current phase icon, name, and
+    illumination percentage
+  - Countdown to next phase transition
+  - Click widget to open full moon phase detail modal
+
+  Moon Phase Detail Modal
+  - Large phase icon with illumination and cycle day
+  - KNF/biodynamic planting guidance for current phase
+  - Upcoming 6 phase transitions with dates
+  - Lunar cycle overview strip
+
+  Integration
+  - Moon phase header button (crescent moon icon)
+  - Moon phase automatically recorded with each environment reading
+  - Retroactive moon phase calculation for historical env log entries
+  - Moon column in environment readings table
+
+
+v1.7.0 — 2026-03-09
+--------------------
+FEATURE: Weather API & Cloud Sync
+
+  Weather Integration (OpenWeatherMap)
+  - Weather header button opens settings modal
+  - Enter API key and set location (city name or GPS coordinates)
+  - GPS auto-detection via browser geolocation
+  - Dashboard widget shows temperature, humidity, and conditions
+  - "Fetch Weather" button on environment log form auto-fills temp
+    and humidity from latest weather data
+  - 10-minute in-memory cache to reduce API calls
+  - Test button verifies API key and location in settings
+
+  Cloud Sync (Firebase)
+  - Cloud sync header button with colored status badge
+    (green = synced, yellow = stale, red = error)
+  - Lazy-loaded Firebase compat SDK from CDN (only loads on first use)
+  - Google sign-in via popup authentication
+  - One-click Backup and Restore to/from Firestore
+  - Single document per user in Firestore (plantManager/{userId})
+  - Auto-backup on save with 5-minute debounce (optional)
+  - Photo stripping option to stay under Firestore 1MB document limit
+  - Size estimation shown before backup
+  - Firestore security rules guidance in settings modal
+
+  Header Cleanup
+  - Notifications, banner toggle, export, and import buttons moved into
+    a gear icon overflow dropdown menu
+  - Notification badge count now displays on the gear button
+  - Header reduced from 8 buttons to 5 (weather, moon, cloud, theme, gear)
+
+
 v1.6.4 — 2026-03-08
 --------------------
 FEATURE: Catalogs, Guide Links, Tips & Quality-of-Life
