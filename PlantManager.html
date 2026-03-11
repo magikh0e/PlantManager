@@ -179,7 +179,14 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 .btn-icon{width:44px;height:44px;padding:0;justify-content:center}
 
 /* ── Quick Actions ── */
-.quick-actions{display:flex;flex-wrap:wrap;gap:var(--space-sm);margin-bottom:var(--space-xl)}
+.quick-actions{margin-bottom:var(--space-xl)}
+.qa-section{margin-bottom:var(--space-sm)}
+.qa-section-hdr{display:inline-flex;align-items:center;gap:6px;padding:4px 0;border:none;background:none;color:var(--text-tertiary);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;cursor:pointer;transition:color .2s;margin-top:var(--space-sm)}
+.qa-section-hdr:hover{color:var(--cyan)}
+.qa-section-hdr::after{content:'▸';font-size:.65rem;transition:transform .2s}
+.qa-section.open .qa-section-hdr::after{transform:rotate(90deg)}
+.qa-section-items{display:none;flex-wrap:wrap;gap:var(--space-sm);padding-top:var(--space-sm)}
+.qa-section.open .qa-section-items{display:flex}
 
 /* ── Tip Banner ── */
 .tip-banner{display:flex;align-items:center;gap:var(--space-md);padding:var(--space-md) var(--space-lg);margin-bottom:var(--space-xl);background:var(--bg-card);border:1px solid var(--border-subtle);border-left:3px solid var(--cyan);border-radius:var(--radius);font-size:.82rem;color:var(--text-secondary);line-height:1.5}
@@ -1339,6 +1346,8 @@ const Dashboard={
     h+='</div>';
 
     h+='<div class="quick-actions" style="margin-top:var(--space-xl)">';
+    h+='<div class="qa-section open"><button class="qa-section-hdr">&#9889; Quick Add</button>';
+    h+='<div class="qa-section-items" style="display:flex">';
     h+='<button class="btn btn-primary" onclick="Plants.openAddModal()">+ Add Mother</button>';
     h+='<button class="btn btn-outline" onclick="Environments.openAddModal()">+ Add Environ</button>';
     h+='<button class="btn btn-outline" onclick="Clones.openAddModal()">+ Log Clones</button>';
@@ -1349,25 +1358,35 @@ const Dashboard={
     h+='<button class="btn btn-outline" onclick="IPM.openAddModal()">+ Log Issue</button>';
     h+='<button class="btn btn-outline" onclick="Strains.openAddModal()">+ Add Strain</button>';
     h+='<button class="btn btn-outline" onclick="Harvest.openAddModal()">+ Log Harvest</button>';
-    h+='<button class="btn btn-outline" onclick="KNFCalc.openCalculator()">\ud83e\uddea KNF Calculator</button>';
-    h+='<button class="btn btn-outline" onclick="SeedBank.open()">&#127793; Seed Bank</button>';
+    h+='</div></div>';
+    h+='<div class="qa-section"><button class="qa-section-hdr">&#127793; Growing &amp; Tracking</button>';
+    h+='<div class="qa-section-items">';
     h+='<button class="btn btn-outline" onclick="Feeding.openQuickWater()">&#128167; Quick Water</button>';
     h+='<button class="btn btn-outline" onclick="Snapshot.open()">&#128203; Daily Snapshot</button>';
     h+='<button class="btn btn-outline" onclick="FeedSchedule.open()">&#128203; Feed Schedule</button>';
     h+='<button class="btn btn-outline" onclick="CostTracker.open()">&#128176; Costs</button>';
     h+='<button class="btn btn-outline" onclick="GrowCycle.open()">&#128260; Grow Cycles</button>';
-    h+='<button class="btn btn-outline" onclick="PlantCompare.open()">&#128200; Compare Plants</button>';
-    h+='<button class="btn btn-outline" onclick="SoilMixCalc.open()">&#127793; Soil Mix Calc</button>';
-    h+='<button class="btn btn-outline" onclick="Report.openSelector()">&#128196; Export Report</button>';
-    h+='<button class="btn btn-outline" onclick="PestID.open()">&#128270; Pest ID</button>';
-    h+='<button class="btn btn-outline" onclick="PestID.openGuide()">&#128218; Pest Guide</button>';
-    h+='<button class="btn btn-outline" onclick="VPDCalc.open()">&#127777; VPD Calc</button>';
-    h+='<button class="btn btn-outline" onclick="DLICalc.open()">&#9728; DLI Calc</button>';
-    h+='<button class="btn btn-outline" onclick="DeficiencyWizard.open()">&#129657; Deficiency Wizard</button>';
     h+='<button class="btn btn-outline" onclick="RunManager.open()">&#128230; Grow Runs</button>';
     h+='<button class="btn btn-outline" onclick="BreedingTracker.open()">&#129516; Breeding</button>';
+    h+='<button class="btn btn-outline" onclick="SeedBank.open()">&#127793; Seed Bank</button>';
     h+='<button class="btn btn-outline" onclick="CalibrationLog.open()">&#9879; Calibration</button>';
+    h+='</div></div>';
+    h+='<div class="qa-section"><button class="qa-section-hdr">&#129518; Calculators &amp; Diagnostics</button>';
+    h+='<div class="qa-section-items">';
+    h+='<button class="btn btn-outline" onclick="KNFCalc.openCalculator()">\ud83e\uddea KNF Calculator</button>';
+    h+='<button class="btn btn-outline" onclick="VPDCalc.open()">&#127777; VPD Calc</button>';
+    h+='<button class="btn btn-outline" onclick="DLICalc.open()">&#9728; DLI Calc</button>';
+    h+='<button class="btn btn-outline" onclick="SoilMixCalc.open()">&#127793; Soil Mix Calc</button>';
+    h+='<button class="btn btn-outline" onclick="PestID.open()">&#128270; Pest ID</button>';
+    h+='<button class="btn btn-outline" onclick="PestID.openGuide()">&#128218; Pest Guide</button>';
+    h+='<button class="btn btn-outline" onclick="DeficiencyWizard.open()">&#129657; Deficiency Wizard</button>';
+    h+='</div></div>';
+    h+='<div class="qa-section"><button class="qa-section-hdr">&#128202; Reports &amp; Layout</button>';
+    h+='<div class="qa-section-items">';
+    h+='<button class="btn btn-outline" onclick="PlantCompare.open()">&#128200; Compare Plants</button>';
+    h+='<button class="btn btn-outline" onclick="Report.openSelector()">&#128196; Export Report</button>';
     h+='<button class="btn btn-outline" onclick="RoomDiagram.open()">&#128208; Room Layout</button>';
+    h+='</div></div>';
     h+='</div>';
 
     if(overdue.length){
@@ -1446,6 +1465,7 @@ const Dashboard={
     }
 
     document.getElementById('panel-dashboard').innerHTML=h;
+    document.querySelectorAll('.qa-section-hdr').forEach(function(hdr){hdr.addEventListener('click',function(){this.parentElement.classList.toggle('open')})});
   },
   _envAlerts(){
     const alerts=[];
