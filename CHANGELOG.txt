@@ -3,6 +3,47 @@ CHANGELOG — Tropical Roots Maui - Plant Manager
 https://github.com/magikh0e/PlantManager
 
 
+v2.6.0 — 2026-03-10
+--------------------
+FEATURE: High Impact Enhancements — Feeding Trends, IPM Efficacy, SeedBank Intelligence, DryBack Saturation Tracking
+
+  Feeding — Trend Analysis & EC/PPM Visualization
+    - EC/PPM Drift chart on Analytics: plots EC In vs EC Out over time (cyan/gold lines)
+    - Feeding Frequency chart on Analytics: feedings per week bar chart, color-coded by avg pH drift
+    - Feeding stats bar: This Month count, Avg pH Drift, Avg EC In, Last Feeding date
+    - Dashboard alert: warns when any plant hasn't been fed in >7 days
+
+  IPM — Treatment Efficacy & Reapplication Reminders
+    - "Reapply in X days" optional field on IPM form with overdue/countdown status on active cards
+    - Resistance rotation warning: alerts if same treatment used 3+ times for a pest
+    - Resolved cards show "Resolved in X days" with calculated resolution time
+    - Treatment Efficacy table on Analytics: success rate %, avg days to resolve, color-coded
+    - Dashboard alert: warns about overdue IPM reapplications
+
+  SeedBank — Inventory Alerts & Germination Intelligence
+    - Low stock warnings: ⚠️ badge + orange border on seeds with ≤3 remaining
+    - Seed age tracking: displays months since purchase, warns if >2 years old
+    - Germination stats summary card: total seeds, avg germ rate, low stock count
+    - "Plant Next" suggestion: scores strains by seed count + germination rate
+    - Sort controls: Name, Count, Age, Germination Rate
+    - Dashboard alert: warns about low seed stock
+
+  DryBack — Saturation Tracking & Watering Recommendations
+    - Per-plant pot configuration: saturated weight and dry weight setup
+    - Dry-back percentage calculation from current weight vs pot config
+    - Current status display: large % indicator with color-coded dry-back level
+    - Enhanced chart with reference lines (saturated/dry) and optimal zone overlay
+    - History table shows dry-back % column when pot is configured
+    - "Time to Water" estimate: calculates drying rate from recent readings
+
+  Chart.line Enhancement
+    - Reference lines support: horizontal dashed lines with labels at specified y-values
+    - Zone overlay support: semi-transparent band between two y-values
+
+  Analytics tab: 17 → 20 charts
+
+---
+
 v2.5.0 — 2026-03-10
 --------------------
 FEATURE: Quick Wins & Data Intelligence — Custom Feed Templates, Fleet Filters, Auto Snapshot, Harvest Accuracy, Strain Performance, Env Correlations

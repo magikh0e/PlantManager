@@ -848,7 +848,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 (function(){
 'use strict';
 
-const APP_VERSION = '2.5.0';
+const APP_VERSION = '2.6.0';
 
 /* ═══════════════════════════════════════════════
    UTILS
@@ -1358,6 +1358,40 @@ const Dashboard={
       h+='</div>';
     }
 
+    const feedAlerts=Dashboard._feedAlerts();
+    if(feedAlerts.length){
+      h+='<div class="section-title" style="color:var(--orange)">&#127869; Feeding Alerts</div>';
+      h+='<div class="env-alert-list" style="margin-bottom:var(--space-xl);display:flex;flex-direction:column;gap:var(--space-xs)">';
+      feedAlerts.forEach(a=>{
+        h+='<div class="card" style="padding:var(--space-sm) var(--space-md);border-left:3px solid var(--orange);font-size:.85rem">';
+        h+='<strong>'+U.esc(a.strain)+'</strong> &mdash; last fed '+a.days;
+        h+='</div>';
+      });
+      h+='</div>';
+    }
+    const ipmReapply=Dashboard._ipmReapplyAlerts();
+    if(ipmReapply.length){
+      h+='<div class="section-title" style="color:#e05c3a">&#9888; IPM Reapplication Overdue</div>';
+      h+='<div class="env-alert-list" style="margin-bottom:var(--space-xl);display:flex;flex-direction:column;gap:var(--space-xs)">';
+      ipmReapply.forEach(a=>{
+        h+='<div class="card" style="padding:var(--space-sm) var(--space-md);border-left:3px solid #e05c3a;font-size:.85rem">';
+        h+='<strong>'+U.esc(a.plant)+'</strong> &mdash; '+U.esc(a.pest)+' treatment overdue by '+a.days+'d';
+        h+='</div>';
+      });
+      h+='</div>';
+    }
+    const seedAlerts=Dashboard._seedAlerts();
+    if(seedAlerts.length){
+      h+='<div class="section-title" style="color:var(--orange)">&#127793; Low Seed Stock</div>';
+      h+='<div class="env-alert-list" style="margin-bottom:var(--space-xl);display:flex;flex-direction:column;gap:var(--space-xs)">';
+      seedAlerts.forEach(a=>{
+        h+='<div class="card" style="padding:var(--space-sm) var(--space-md);border-left:3px solid var(--orange);font-size:.85rem">';
+        h+='<strong>'+U.esc(a.strain)+'</strong> &mdash; only '+a.count+' seed'+(a.count!==1?'s':'')+' left';
+        h+='</div>';
+      });
+      h+='</div>';
+    }
+
     const activity=Store.get('activityLog');
     const recent=(Array.isArray(activity)?activity:[]).slice(-15).reverse();
     if(recent.length){
@@ -1393,6 +1427,37 @@ const Dashboard={
         alerts.push({env:env.name,msg:'pH '+r.ph+' exceeds max '+env.phMax});
       if(env.phMin!=null&&r.ph!=null&&r.ph<env.phMin)
         alerts.push({env:env.name,msg:'pH '+r.ph+' below min '+env.phMin});
+    });
+    return alerts;
+  },
+  _feedAlerts(){
+    const alerts=[];
+    const now=Date.now();
+    Store.mothersArray().forEach(m=>{
+      const feeds=Store.feedingsForMother(m.id);
+      if(!feeds.length){alerts.push({strain:m.strainName,days:'never'});return}
+      const days=Math.floor((now-feeds[0].timestamp)/86400000);
+      if(days>=7) alerts.push({strain:m.strainName,days:days+'d ago'});
+    });
+    return alerts;
+  },
+  _ipmReapplyAlerts(){
+    const alerts=[];
+    const now=Date.now();
+    Store.ipmArray().filter(l=>!l.resolved&&l.reapplyDays).forEach(l=>{
+      const reapplyAt=l.timestamp+(l.reapplyDays*86400000);
+      if(now>=reapplyAt){
+        const overdue=Math.floor((now-reapplyAt)/86400000);
+        const m=l.motherId?Store.getById('mothers',l.motherId):null;
+        alerts.push({plant:m?m.strainName:'Unknown',pest:l.pest||'issue',days:overdue});
+      }
+    });
+    return alerts;
+  },
+  _seedAlerts(){
+    const alerts=[];
+    Store.seedsArray().filter(s=>s.seedCount>0&&s.seedCount<=3).forEach(s=>{
+      alerts.push({strain:s.strainName,count:s.seedCount});
     });
     return alerts;
   }
@@ -2470,6 +2535,22 @@ const Feeding={
     envs.forEach(e=>{h+='<option value="'+e.id+'"'+(this._filter===e.id?' selected':'')+'>'+U.esc(e.name)+' (env)</option>'});
     h+='</select></div>';
     h+=_guideLinks([["Neptune's Harvest",'neptunes-harvest-feeding-schedule.html'],['Gaia Green Schedule','gaia-green-amendment-schedule.html'],['DTE Amendments','dte-amendment-schedule.html'],['Top Dressing','top-dress-guide.html'],['Living Soil','living-soil-guide.html'],['Compost Tea','compost-tea-guide.html']]);
+    /* Summary stats bar */
+    if(logs.length){
+      const now=new Date(),mo=now.getMonth(),yr=now.getFullYear();
+      const thisMonth=logs.filter(f=>{const d=new Date(f.timestamp);return d.getMonth()===mo&&d.getFullYear()===yr});
+      const drifts=logs.filter(f=>f.phIn!=null&&f.phOut!=null).map(f=>Math.abs(f.phOut-f.phIn));
+      const avgDrift=drifts.length?(drifts.reduce((s,v)=>s+v,0)/drifts.length).toFixed(2):'—';
+      const ecs=logs.filter(f=>f.ecPpmIn!=null).map(f=>parseFloat(f.ecPpmIn));
+      const avgEc=ecs.length?Math.round(ecs.reduce((s,v)=>s+v,0)/ecs.length):'—';
+      const lastDate=logs.length?U.relTime(logs[0].timestamp):'—';
+      h+='<div style="display:flex;gap:var(--space-md);flex-wrap:wrap;margin-bottom:var(--space-md);font-size:.75rem">';
+      h+='<div class="card" style="padding:var(--space-sm) var(--space-md);flex:1;min-width:100px;text-align:center"><div style="color:var(--cyan);font-size:1.1rem;font-weight:700">'+thisMonth.length+'</div><div style="color:var(--text-tertiary)">This Month</div></div>';
+      h+='<div class="card" style="padding:var(--space-sm) var(--space-md);flex:1;min-width:100px;text-align:center"><div style="color:'+(avgDrift!=='—'&&parseFloat(avgDrift)>0.5?'var(--red)':'var(--leaf)')+';font-size:1.1rem;font-weight:700">'+avgDrift+'</div><div style="color:var(--text-tertiary)">Avg pH Drift</div></div>';
+      h+='<div class="card" style="padding:var(--space-sm) var(--space-md);flex:1;min-width:100px;text-align:center"><div style="color:var(--orange);font-size:1.1rem;font-weight:700">'+avgEc+'</div><div style="color:var(--text-tertiary)">Avg EC In</div></div>';
+      h+='<div class="card" style="padding:var(--space-sm) var(--space-md);flex:1;min-width:100px;text-align:center"><div style="font-size:.85rem;font-weight:600;color:var(--text-primary)">'+lastDate+'</div><div style="color:var(--text-tertiary)">Last Feeding</div></div>';
+      h+='</div>';
+    }
     if(!logs.length){
       h+='<div class="empty-state"><div class="empty-icon">&#129514;</div><div class="empty-text">No feedings logged yet. Track your nutrient schedule!</div></div>';
     }else{
@@ -2891,6 +2972,23 @@ const IPM={
         if(env) h+=' <span>Env: '+U.esc(env.name)+'</span>';
         h+='</div>';
         if(i.treatment) h+='<div class="ipm-treatment">Treatment: '+U.esc(i.treatment)+'</div>';
+        /* Resolution time */
+        if(i.resolved&&i.resolvedDate&&i.timestamp){
+          const rDays=Math.ceil((U.parseDate(i.resolvedDate).getTime()-i.timestamp)/86400000);
+          h+='<div style="font-size:.72rem;color:var(--leaf);margin-top:var(--space-xs)">✅ Resolved in '+(rDays<=0?'<1':rDays)+' day'+(rDays!==1?'s':'')+'</div>';
+        }
+        /* Reapplication status */
+        if(!i.resolved&&i.reapplyDays){
+          const reapplyAt=i.timestamp+(i.reapplyDays*86400000);
+          const now=Date.now();
+          if(now>=reapplyAt){
+            const overdue=Math.floor((now-reapplyAt)/86400000);
+            h+='<div style="font-size:.72rem;color:#e05c3a;margin-top:var(--space-xs)">⚠️ Reapply overdue by '+overdue+'d</div>';
+          }else{
+            const daysLeft=Math.ceil((reapplyAt-now)/86400000);
+            h+='<div style="font-size:.72rem;color:'+(daysLeft<=2?'var(--orange)':'var(--text-tertiary)')+';margin-top:var(--space-xs)">🔔 Reapply in '+daysLeft+'d</div>';
+          }
+        }
         if(i.notes) h+='<div style="font-size:.75rem;color:var(--text-tertiary);margin-top:var(--space-xs)">'+U.esc(i.notes)+'</div>';
         h+='<div style="margin-top:var(--space-sm);display:flex;gap:var(--space-xs)">';
         h+='<button class="btn btn-ghost btn-sm" onclick="IPM.openEditModal(\''+i.id+'\')">Edit</button>';
@@ -2934,10 +3032,13 @@ const IPM={
     h+='</select></div>';
     h+='<div class="form-group"><label class="form-label">Treatment</label><textarea class="form-textarea" id="f_treatment">'+U.esc(item.treatment||'')+'</textarea></div>';
     h+='<div style="margin-bottom:var(--space-md)"><button type="button" class="btn btn-outline btn-sm" onclick="IPM._openIpmCatalog()">&#128737; Browse IPM Catalog</button> <button type="button" class="btn btn-outline btn-sm" onclick="DeficiencyWizard.open()">&#129657; Deficiency Wizard</button></div>';
+    h+='<div class="form-group"><label class="form-label">Reapply in (days) <span style="font-weight:400;color:var(--text-tertiary)">— optional</span></label><input class="form-input" type="number" id="f_reapplyDays" min="1" max="90" value="'+(item.reapplyDays||'')+'" placeholder="e.g. 7" style="width:100px"></div>';
+    h+='<div id="ipmRotationWarn"></div>';
     h+='<div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="f_ipmNotes">'+U.esc(item.notes||'')+'</textarea></div>';
     return h;
   },
   _readForm(){
+    const rd=document.getElementById('f_reapplyDays').value;
     return{
       motherId:document.getElementById('f_ipmMother').value,
       environmentId:document.getElementById('f_ipmEnv').value,
@@ -2945,14 +3046,32 @@ const IPM={
       severity:document.getElementById('f_severity').value,
       pest:document.getElementById('f_pest').value,
       treatment:document.getElementById('f_treatment').value.trim(),
-      notes:document.getElementById('f_ipmNotes').value.trim()
+      notes:document.getElementById('f_ipmNotes').value.trim(),
+      reapplyDays:rd?parseInt(rd):null
     };
+  },
+  _checkRotation(){
+    const pestEl=document.getElementById('f_pest');
+    const warn=document.getElementById('ipmRotationWarn');
+    if(!pestEl||!warn)return;
+    const pest=pestEl.value;
+    const logs=Store.ipmArray().filter(l=>l.pest===pest).slice(0,3);
+    if(logs.length>=3){
+      const treatments=logs.map(l=>(l.treatment||'').trim().toLowerCase());
+      if(treatments[0]&&treatments.every(t=>t===treatments[0])){
+        warn.innerHTML='<div style="padding:var(--space-sm);margin-bottom:var(--space-sm);background:rgba(224,92,58,.12);border:1px solid rgba(224,92,58,.3);border-radius:var(--radius-sm);font-size:.78rem;color:#e05c3a">⚠️ Same treatment used 3 times for '+U.esc(pest)+'. Consider rotating to prevent resistance.</div>';
+        return;
+      }
+    }
+    warn.innerHTML='';
   },
   openAddModal(preselect){
     const initial=preselect?{motherId:preselect}:{};
     Modal.open('Log IPM Issue',IPM._buildForm(initial),
       '<button class="btn btn-ghost" onclick="Modal.close()">Cancel</button><button class="btn btn-primary" id="saveIPM">Save</button>'
     );
+    document.getElementById('f_pest').addEventListener('change',()=>IPM._checkRotation());
+    IPM._checkRotation();
     document.getElementById('saveIPM').addEventListener('click',()=>{
       const data=IPM._readForm();
       const id=U.id('ipm');
@@ -3087,6 +3206,19 @@ const Chart={
         }
       });
     }
+    /* Zone overlay (semi-transparent band) */
+    if(opts.zone){
+      const zy1=sy(opts.zone.y2),zy2=sy(opts.zone.y1);
+      s+='<rect x="'+pad.l+'" y="'+zy1+'" width="'+cw+'" height="'+Math.max(0,zy2-zy1)+'" fill="'+(opts.zone.color||'rgba(0,200,192,.08)')+'"/>';
+    }
+    /* Reference lines (horizontal dashed lines with labels) */
+    if(opts.refLines) opts.refLines.forEach(rl=>{
+      const ry=sy(rl.y);
+      if(ry>=pad.t&&ry<=pad.t+ch){
+        s+='<line x1="'+pad.l+'" y1="'+ry+'" x2="'+(W-pad.r)+'" y2="'+ry+'" stroke="'+(rl.color||'rgba(255,255,255,.25)')+'" stroke-width="1" stroke-dasharray="'+(rl.dash||'4,3')+'"/>';
+        if(rl.label) s+='<text x="'+(W-pad.r-2)+'" y="'+(ry-3)+'" fill="'+(rl.color||'rgba(255,255,255,.4)')+'" font-size="7" text-anchor="end">'+rl.label+'</text>';
+      }
+    });
     datasets.forEach((d,di)=>{
       const col=d.color||this._c(di);
       if(d.values.length<2){
@@ -4152,6 +4284,9 @@ const Analytics={
     h+=HarvestEstimate._accuracyCard();
     h+=this._strainPerformanceCard();
     h+=this._envCorrelationCard();
+    h+=this._ecDriftCard();
+    h+=this._feedFrequencyCard();
+    h+=this._ipmEfficacyCard();
     h+='</div>';
     document.getElementById('panel-analytics').innerHTML=h;
   },
@@ -4213,6 +4348,60 @@ const Analytics={
     return h;
   },
 
+  /* ── Chart: EC/PPM Drift ── */
+  _ecDriftCard(){
+    let h='<div class="card chart-card"><div class="chart-title">Feeding EC/PPM Drift</div>';
+    h+='<div class="chart-subtitle">EC In vs EC Out over time</div>';
+    const cutoff=this._cutoff();
+    let feeds=Store.feedingsArray().filter(f=>f.timestamp>=cutoff);
+    if(this._plantFilter!=='all') feeds=feeds.filter(f=>f.motherId===this._plantFilter);
+    feeds=feeds.filter(f=>f.ecPpmIn!=null||f.ecPpmOut!=null).slice(0,60).reverse();
+    if(feeds.length<2){h+='<div class="chart-no-data">Need at least 2 feeding records with EC/PPM data</div></div>';return h}
+    const ds=[];
+    const ecIn=feeds.filter(f=>f.ecPpmIn!=null).map(f=>({x:f.timestamp,y:parseFloat(f.ecPpmIn)}));
+    const ecOut=feeds.filter(f=>f.ecPpmOut!=null).map(f=>({x:f.timestamp,y:parseFloat(f.ecPpmOut)}));
+    if(ecIn.length) ds.push({label:'EC In',values:ecIn,color:'#00c8c0'});
+    if(ecOut.length) ds.push({label:'EC Out',values:ecOut,color:'#f0b429'});
+    const xLabels=feeds.map(f=>{const d=new Date(f.timestamp);return(d.getMonth()+1)+'/'+d.getDate()});
+    h+=Chart.line(ds,{width:560,height:200,xLabels:xLabels,showDots:feeds.length<=20});
+    h+='<div class="chart-legend">';
+    ds.forEach(d=>{h+='<div class="chart-legend-item"><div class="chart-legend-dot" style="background:'+d.color+'"></div>'+d.label+'</div>'});
+    h+='</div></div>';
+    return h;
+  },
+
+  /* ── Chart: Feeding Frequency ── */
+  _feedFrequencyCard(){
+    let h='<div class="card chart-card"><div class="chart-title">Feeding Frequency</div>';
+    h+='<div class="chart-subtitle">Feedings per week</div>';
+    const cutoff=this._cutoff();
+    let feeds=Store.feedingsArray().filter(f=>f.timestamp>=cutoff);
+    if(this._plantFilter!=='all') feeds=feeds.filter(f=>f.motherId===this._plantFilter);
+    if(feeds.length<2){h+='<div class="chart-no-data">Need at least 2 feeding records</div></div>';return h}
+    /* Group by ISO week */
+    const weeks={};
+    feeds.forEach(f=>{
+      const d=new Date(f.timestamp);
+      const jan1=new Date(d.getFullYear(),0,1);
+      const wk=Math.ceil(((d-jan1)/86400000+jan1.getDay()+1)/7);
+      const key=d.getFullYear()+'-W'+String(wk).padStart(2,'0');
+      if(!weeks[key]) weeks[key]={count:0,drifts:[]};
+      weeks[key].count++;
+      if(f.phIn!=null&&f.phOut!=null) weeks[key].drifts.push(Math.abs(f.phOut-f.phIn));
+    });
+    const sorted=Object.keys(weeks).sort();
+    const data=sorted.map(k=>{
+      const w=weeks[k];
+      const avgDrift=w.drifts.length?w.drifts.reduce((s,v)=>s+v,0)/w.drifts.length:0;
+      const color=avgDrift>0.5?'#e05c3a':avgDrift>0.3?'#f0b429':'#4a9e52';
+      return{label:k.split('-W')[1]?'W'+k.split('-W')[1]:k,value:w.count,color};
+    });
+    h+=Chart.bar(data,{width:560,height:200});
+    h+='<div style="font-size:.65rem;color:var(--text-tertiary);margin-top:var(--space-xs)">Bar color = avg pH drift: <span style="color:#4a9e52">●</span> &lt;0.3 <span style="color:#f0b429">●</span> 0.3–0.5 <span style="color:#e05c3a">●</span> &gt;0.5</div>';
+    h+='</div>';
+    return h;
+  },
+
   /* ── Chart 3: Clone Success Rate ── */
   _cloneSuccessCard(){
     let h='<div class="card chart-card"><div class="chart-title">Clone Success Rate</div>';
@@ -4266,6 +4455,45 @@ const Analytics={
     h+='<div class="chart-legend">';
     Object.keys(sevColors).forEach(s=>{h+='<div class="chart-legend-item"><div class="chart-legend-dot" style="background:'+sevColors[s]+'"></div>'+s.charAt(0).toUpperCase()+s.slice(1)+'</div>'});
     h+='</div></div>';
+    return h;
+  },
+
+  /* ── Chart: IPM Treatment Efficacy ── */
+  _ipmEfficacyCard(){
+    let h='<div class="card chart-card"><div class="chart-title">&#128737; Treatment Efficacy</div>';
+    h+='<div class="chart-subtitle">Success rate and resolution time by treatment</div>';
+    const logs=Store.ipmArray().filter(l=>l.treatment);
+    if(logs.length<2){h+='<div class="chart-no-data">Need at least 2 IPM entries with treatments</div></div>';return h}
+    const map={};
+    logs.forEach(l=>{
+      const t=l.treatment.trim();
+      if(!map[t]) map[t]={total:0,resolved:0,days:[]};
+      map[t].total++;
+      if(l.resolved){
+        map[t].resolved++;
+        if(l.resolvedDate&&l.timestamp){
+          const d=Math.ceil((U.parseDate(l.resolvedDate).getTime()-l.timestamp)/86400000);
+          if(d>=0) map[t].days.push(d);
+        }
+      }
+    });
+    const rows=Object.keys(map).map(t=>({name:t,...map[t],rate:Math.round(map[t].resolved/map[t].total*100),avgDays:map[t].days.length?Math.round(map[t].days.reduce((s,v)=>s+v,0)/map[t].days.length):null})).sort((a,b)=>b.total-a.total);
+    if(!rows.length){h+='<div class="chart-no-data">No treatment data</div></div>';return h}
+    h+='<div style="overflow-x:auto"><table style="width:100%;font-size:.75rem;border-collapse:collapse">';
+    h+='<thead><tr><th style="text-align:left;padding:4px 8px;border-bottom:1px solid var(--border-subtle);color:var(--text-tertiary);font-size:.68rem">Treatment</th>';
+    h+='<th style="padding:4px 8px;border-bottom:1px solid var(--border-subtle);color:var(--text-tertiary);font-size:.68rem">Uses</th>';
+    h+='<th style="padding:4px 8px;border-bottom:1px solid var(--border-subtle);color:var(--text-tertiary);font-size:.68rem">Resolved</th>';
+    h+='<th style="padding:4px 8px;border-bottom:1px solid var(--border-subtle);color:var(--text-tertiary);font-size:.68rem">Success</th>';
+    h+='<th style="padding:4px 8px;border-bottom:1px solid var(--border-subtle);color:var(--text-tertiary);font-size:.68rem">Avg Days</th></tr></thead><tbody>';
+    rows.slice(0,15).forEach(r=>{
+      const col=r.rate>=80?'#4a9e52':r.rate>=50?'#f0b429':'#e05c3a';
+      h+='<tr><td style="padding:4px 8px;border-bottom:1px solid rgba(255,255,255,.04)">'+U.esc(r.name.length>30?r.name.slice(0,30)+'…':r.name)+'</td>';
+      h+='<td style="padding:4px 8px;text-align:center;border-bottom:1px solid rgba(255,255,255,.04)">'+r.total+'</td>';
+      h+='<td style="padding:4px 8px;text-align:center;border-bottom:1px solid rgba(255,255,255,.04)">'+r.resolved+'</td>';
+      h+='<td style="padding:4px 8px;text-align:center;border-bottom:1px solid rgba(255,255,255,.04);color:'+col+';font-weight:600">'+r.rate+'%</td>';
+      h+='<td style="padding:4px 8px;text-align:center;border-bottom:1px solid rgba(255,255,255,.04)">'+(r.avgDays!==null?r.avgDays+'d':'—')+'</td></tr>';
+    });
+    h+='</tbody></table></div></div>';
     return h;
   },
 
@@ -4783,6 +5011,14 @@ const DataIO={
    ═══════════════════════════════════════════════ */
 const WhatsNew={
   _notes:{
+    '2.6.0':[
+      '<b>Feeding Trend Analysis</b> — EC/PPM Drift chart, Feeding Frequency chart (color-coded by pH drift), stats bar with month count and averages, and dashboard alerts for unfed plants',
+      '<b>IPM Treatment Efficacy</b> — reapplication reminders with overdue warnings, resistance rotation alerts after 3 same treatments, resolution time on resolved cards, and Treatment Efficacy analytics table',
+      '<b>SeedBank Intelligence</b> — low stock warnings (⚠️), seed age tracking with viability alerts, germination stats summary, "Plant Next" suggestion scoring, and sort controls',
+      '<b>DryBack Saturation Tracking</b> — per-plant pot config (saturated/dry weight), dry-back % calculation, enhanced chart with reference lines and optimal zone, and "Time to Water" estimate',
+      'Chart.line now supports <b>reference lines</b> and <b>zone overlays</b> for richer visualizations',
+      'Analytics tab now has up to 20 charts (was 17)',
+    ],
     '2.5.0':[
       '<b>Custom Feed Schedule Templates</b> — create, edit, and delete your own feeding schedules alongside the 4 built-in ones',
       '<b>Fleet View Filters & Bulk Actions</b> — filter table by stage/health/environment + checkbox multi-select with bulk health, stage, and environment updates',
@@ -5528,24 +5764,90 @@ window.KNFCalc=KNFCalc;
    SEED BANK
    ═══════════════════════════════════════════════ */
 const SeedBank={
+  _sortBy:'name',
   open(){
     const seeds=Store.seedsArray();
+    const totalSeeds=seeds.reduce((s,p)=>s+(parseInt(p.seedCount)||0),0);
     let h='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-md)">';
-    h+='<span style="font-size:.8rem;color:var(--text-secondary)">'+seeds.length+' packet'+(seeds.length!==1?'s':'')+' &middot; '+seeds.reduce((s,p)=>s+(parseInt(p.seedCount)||0),0)+' total seeds</span>';
+    h+='<span style="font-size:.8rem;color:var(--text-secondary)">'+seeds.length+' packet'+(seeds.length!==1?'s':'')+' &middot; '+totalSeeds+' total seeds</span>';
     h+='<div style="display:flex;gap:var(--space-xs)"><button class="btn btn-outline btn-sm" onclick="SeedBank.openCatalog()">&#128218; Browse Catalog</button>';
     h+='<button class="btn btn-primary btn-sm" onclick="SeedBank.openForm()">+ Add Seeds</button></div></div>';
+
+    /* Germination stats summary */
+    if(seeds.length){
+      const withGerm=seeds.filter(s=>s.germinationRate!=null&&s.germinationRate>0);
+      const avgGerm=withGerm.length?Math.round(withGerm.reduce((s,p)=>s+p.germinationRate,0)/withGerm.length):null;
+      const lowStock=seeds.filter(s=>s.seedCount>0&&s.seedCount<=3);
+      const old=seeds.filter(s=>s.datePurchased&&U.daysBetween(U.parseDate(s.datePurchased),new Date())>730);
+      h+='<div style="display:flex;gap:var(--space-sm);flex-wrap:wrap;margin-bottom:var(--space-md);font-size:.75rem">';
+      h+='<div class="card" style="padding:var(--space-sm) var(--space-md);flex:1;min-width:80px;text-align:center"><div style="color:var(--cyan);font-size:1.1rem;font-weight:700">'+totalSeeds+'</div><div style="color:var(--text-tertiary)">Seeds</div></div>';
+      if(avgGerm!==null){
+        const gCol=avgGerm>=80?'var(--leaf)':avgGerm>=60?'var(--orange)':'#e05c3a';
+        h+='<div class="card" style="padding:var(--space-sm) var(--space-md);flex:1;min-width:80px;text-align:center"><div style="color:'+gCol+';font-size:1.1rem;font-weight:700">'+avgGerm+'%</div><div style="color:var(--text-tertiary)">Avg Germ</div></div>';
+      }
+      if(lowStock.length) h+='<div class="card" style="padding:var(--space-sm) var(--space-md);flex:1;min-width:80px;text-align:center;border:1px solid rgba(224,92,58,.3)"><div style="color:#e05c3a;font-size:1.1rem;font-weight:700">'+lowStock.length+'</div><div style="color:var(--text-tertiary)">Low Stock</div></div>';
+      if(old.length) h+='<div class="card" style="padding:var(--space-sm) var(--space-md);flex:1;min-width:80px;text-align:center"><div style="color:var(--orange);font-size:1.1rem;font-weight:700">'+old.length+'</div><div style="color:var(--text-tertiary)">Old (2yr+)</div></div>';
+      h+='</div>';
+
+      /* Plant Next suggestion */
+      if(seeds.length>=3){
+        const maxCount=Math.max(...seeds.map(s=>s.seedCount||0),1);
+        const scored=seeds.filter(s=>s.seedCount>0).map(s=>{
+          const countScore=(s.seedCount||0)/maxCount;
+          const germScore=(s.germinationRate||50)/100;
+          return{strain:s.strainName,count:s.seedCount,germ:s.germinationRate,score:countScore*0.4+germScore*0.6};
+        }).sort((a,b)=>b.score-a.score);
+        if(scored.length){
+          const top=scored[0];
+          h+='<div class="card" style="padding:var(--space-sm) var(--space-md);margin-bottom:var(--space-md);border-left:3px solid var(--cyan);font-size:.78rem">';
+          h+='🌱 <strong>Suggested next:</strong> '+U.esc(top.strain)+' — '+top.count+' seeds'+(top.germ!=null?', '+top.germ+'% germ rate':'');
+          h+='</div>';
+        }
+      }
+    }
+
+    /* Sort control */
+    if(seeds.length>1){
+      h+='<div style="margin-bottom:var(--space-sm);font-size:.7rem;color:var(--text-tertiary)">';
+      h+='Sort: <a href="#" onclick="SeedBank._sortBy=\'name\';SeedBank.open();return false" style="color:'+(this._sortBy==='name'?'var(--cyan)':'var(--text-tertiary)')+'">Name</a>';
+      h+=' · <a href="#" onclick="SeedBank._sortBy=\'count\';SeedBank.open();return false" style="color:'+(this._sortBy==='count'?'var(--cyan)':'var(--text-tertiary)')+'">Count</a>';
+      h+=' · <a href="#" onclick="SeedBank._sortBy=\'age\';SeedBank.open();return false" style="color:'+(this._sortBy==='age'?'var(--cyan)':'var(--text-tertiary)')+'">Age</a>';
+      h+=' · <a href="#" onclick="SeedBank._sortBy=\'germ\';SeedBank.open();return false" style="color:'+(this._sortBy==='germ'?'var(--cyan)':'var(--text-tertiary)')+'">Germ Rate</a>';
+      h+='</div>';
+    }
+
     if(!seeds.length){
       h+='<div class="empty-state"><div class="empty-icon">&#127793;</div><div class="empty-text">No seed packets yet. Start building your seed bank!</div></div>';
     }else{
+      const sorted=seeds.slice().sort((a,b)=>{
+        if(this._sortBy==='count') return(b.seedCount||0)-(a.seedCount||0);
+        if(this._sortBy==='age'){const ad=a.datePurchased?U.parseDate(a.datePurchased).getTime():Date.now();const bd=b.datePurchased?U.parseDate(b.datePurchased).getTime():Date.now();return ad-bd;}
+        if(this._sortBy==='germ') return(b.germinationRate||0)-(a.germinationRate||0);
+        return(a.strainName||'').localeCompare(b.strainName||'');
+      });
       h+='<div class="seed-list">';
-      seeds.forEach(s=>{
+      sorted.forEach(s=>{
         const typeCls=s.femOrReg==='feminized'?'fem':s.femOrReg==='autoflower'?'auto':'reg';
-        h+='<div class="seed-row">';
-        h+='<div class="seed-count">'+U.esc(String(s.seedCount||0))+'</div>';
+        const isLow=s.seedCount>0&&s.seedCount<=3;
+        const ageDays=s.datePurchased?U.daysBetween(U.parseDate(s.datePurchased),new Date()):0;
+        const isOld=ageDays>730;
+        h+='<div class="seed-row" style="'+(isLow?'border-left:3px solid var(--orange);':'')+'position:relative">';
+        h+='<div class="seed-count" style="'+(isLow?'color:#e05c3a':'')+'">'+U.esc(String(s.seedCount||0))+'</div>';
         h+='<div class="seed-name">'+U.esc(s.strainName||'Unnamed')+(s.breeder?' <span style="font-weight:400;color:var(--text-tertiary);font-size:.75rem">'+U.esc(s.breeder)+'</span>':'')+'</div>';
         h+='<div class="seed-meta">';
         if(s.femOrReg) h+='<span class="seed-type-badge '+typeCls+'">'+U.esc(s.femOrReg)+'</span>';
         if(s.source) h+='<span>'+U.esc(s.source)+'</span>';
+        /* Age display */
+        if(ageDays>0){
+          const ageStr=ageDays>365?Math.round(ageDays/365*10)/10+'yr':ageDays>30?Math.round(ageDays/30)+'mo':ageDays+'d';
+          h+='<span style="color:'+(isOld?'var(--orange)':'var(--text-tertiary)')+';font-size:.68rem">'+(isOld?'⏳ ':'')+ageStr+'</span>';
+        }
+        /* Germ rate badge */
+        if(s.germinationRate!=null){
+          const gCol=s.germinationRate>=80?'var(--leaf)':s.germinationRate>=60?'var(--orange)':'#e05c3a';
+          h+='<span style="color:'+gCol+';font-size:.68rem">'+s.germinationRate+'% germ</span>';
+        }
+        if(isLow) h+='<span style="color:#e05c3a;font-size:.68rem">⚠️ Low</span>';
         h+='<button class="btn btn-ghost btn-sm" onclick="SeedBank.openForm(\''+s.id+'\')">Edit</button>';
         h+='<button class="btn btn-danger btn-sm" onclick="SeedBank.handleDelete(\''+s.id+'\')">&#10005;</button>';
         h+='</div></div>';
@@ -6566,25 +6868,94 @@ window.FeedSchedule=FeedSchedule;
    DRY-BACK / WEIGHT TRACKING
    ═══════════════════════════════════════════════ */
 const DryBack={
+  _getConfig(mid){return Store.setting('dryBackConfig_'+mid)||null},
+  _saveConfig(mid,cfg){Store.setting('dryBackConfig_'+mid,cfg)},
+  _toGrams(w,unit){return unit==='oz'?w*28.35:w},
+  _dryBackPct(currentG,cfg){
+    if(!cfg||!cfg.saturatedWeight||!cfg.dryWeight) return null;
+    const range=cfg.saturatedWeight-cfg.dryWeight;
+    if(range<=0) return null;
+    return Math.max(0,Math.min(100,((cfg.saturatedWeight-currentG)/range)*100));
+  },
   openForMother(mid){
     const m=Store.getById('mothers',mid);
     if(!m){Toast.show('Plant not found','error');return}
+    const cfg=this._getConfig(mid);
     let h='<div style="display:grid;gap:var(--space-md)">';
-    h+=this._form(mid);
-    h+=this._chartHtml(mid);
-    h+=this._historyHtml(mid);
+    /* Current status + time to water */
+    h+=this._statusHtml(mid,cfg);
+    h+=this._form(mid,cfg);
+    h+=this._configHtml(mid,cfg);
+    h+=this._chartHtml(mid,cfg);
+    h+=this._historyHtml(mid,cfg);
     h+='</div>';
     Modal.open('&#9878; Dry-Back &mdash; '+U.esc(m.strainName),h,'<button class="btn btn-outline" onclick="Modal.close()">Close</button>');
   },
-  _form(mid){
+  _statusHtml(mid,cfg){
+    if(!cfg) return '';
+    const entries=Store.dryBacksForMother(mid);
+    if(!entries.length) return '';
+    const latest=entries[0];
+    const currentG=this._toGrams(latest.weight,latest.unit);
+    const pct=this._dryBackPct(currentG,cfg);
+    if(pct===null) return '';
+    const col=pct>=70?'#e05c3a':pct>=50?'var(--orange)':pct>=30?'var(--leaf)':'var(--cyan)';
+    let h='<div class="card" style="padding:var(--space-md);text-align:center">';
+    h+='<div style="font-size:2rem;font-weight:700;color:'+col+'">'+Math.round(pct)+'%</div>';
+    h+='<div style="font-size:.75rem;color:var(--text-tertiary)">Current Dry-Back</div>';
+    /* Time to water estimate */
+    if(entries.length>=2){
+      const prev=entries[1];
+      const prevG=this._toGrams(prev.weight,prev.unit);
+      const hoursBetween=(latest.timestamp-prev.timestamp)/3600000;
+      if(hoursBetween>0&&prevG>currentG){
+        const dryRate=(prevG-currentG)/hoursBetween;
+        const targetG=cfg.saturatedWeight-(cfg.saturatedWeight-cfg.dryWeight)*0.5;
+        if(currentG>targetG){
+          const hoursLeft=(currentG-targetG)/dryRate;
+          const display=hoursLeft<1?'<1 hour':hoursLeft<24?Math.round(hoursLeft)+' hours':Math.round(hoursLeft/24*10)/10+' days';
+          h+='<div style="font-size:.8rem;margin-top:var(--space-xs);color:var(--cyan)">&#128167; Water in ~'+display+'</div>';
+        }else{
+          h+='<div style="font-size:.8rem;margin-top:var(--space-xs);color:var(--orange)">&#128167; Ready to water now!</div>';
+        }
+      }
+    }
+    h+='</div>';
+    return h;
+  },
+  _form(mid,cfg){
     let h='<div class="card" style="padding:var(--space-md)">';
     h+='<div style="display:flex;gap:var(--space-sm);align-items:end;flex-wrap:wrap">';
     h+='<div><label class="form-label">Weight</label><input class="form-input" type="number" step="0.1" min="0" id="dbWeight" placeholder="0.0" style="width:100px"></div>';
     h+='<div><label class="form-label">Unit</label><select class="form-select" id="dbUnit" style="width:70px"><option value="g">g</option><option value="oz">oz</option></select></div>';
     h+='<div><label class="form-label">Notes</label><input class="form-input" type="text" id="dbNotes" placeholder="Optional notes" style="width:160px"></div>';
     h+='<button class="btn btn-primary" onclick="DryBack.save(\''+mid+'\')">Save</button>';
-    h+='</div></div>';
+    h+='</div>';
+    if(!cfg) h+='<div style="font-size:.7rem;color:var(--text-tertiary);margin-top:var(--space-xs)">Tip: Configure pot weights below to see dry-back % and watering estimates.</div>';
+    h+='</div>';
     return h;
+  },
+  _configHtml(mid,cfg){
+    cfg=cfg||{};
+    let h='<details style="font-size:.78rem">';
+    h+='<summary style="cursor:pointer;color:var(--cyan);font-size:.75rem;margin-bottom:var(--space-xs)">&#9881; Configure Pot Weights'+(cfg.saturatedWeight?' ✓':'')+'</summary>';
+    h+='<div class="card" style="padding:var(--space-md)">';
+    h+='<div style="display:flex;gap:var(--space-sm);align-items:end;flex-wrap:wrap">';
+    h+='<div><label class="form-label">Saturated Weight (g)</label><input class="form-input" type="number" step="1" min="0" id="dbSatWeight" value="'+(cfg.saturatedWeight||'')+'" placeholder="Weight after watering" style="width:140px"></div>';
+    h+='<div><label class="form-label">Dry Weight (g)</label><input class="form-input" type="number" step="1" min="0" id="dbDryWeight" value="'+(cfg.dryWeight||'')+'" placeholder="Pot + dry medium" style="width:140px"></div>';
+    h+='<button class="btn btn-outline btn-sm" onclick="DryBack._saveConfigForm(\''+mid+'\')">Save Config</button>';
+    h+='</div>';
+    h+='<div style="font-size:.68rem;color:var(--text-tertiary);margin-top:var(--space-xs)">Saturated = weight right after full watering. Dry = pot + bone-dry medium (no water).</div>';
+    h+='</div></details>';
+    return h;
+  },
+  _saveConfigForm(mid){
+    const sat=parseFloat(document.getElementById('dbSatWeight').value);
+    const dry=parseFloat(document.getElementById('dbDryWeight').value);
+    if(!sat||!dry||sat<=dry){Toast.show('Saturated weight must be greater than dry weight','error');return}
+    this._saveConfig(mid,{saturatedWeight:sat,dryWeight:dry});
+    Toast.show('Pot config saved');
+    this.openForMother(mid);
   },
   save(mid){
     const w=parseFloat(document.getElementById('dbWeight').value);
@@ -6597,21 +6968,40 @@ const DryBack={
     Toast.show('Dry-back logged: '+w+unit);
     this.openForMother(mid);
   },
-  _chartHtml(mid){
+  _chartHtml(mid,cfg){
     const entries=Store.dryBacksForMother(mid).slice().reverse().slice(-30);
     if(entries.length<2) return '<div class="chart-no-data">Log 2+ entries to see a trend chart</div>';
-    const ds=[{label:'Weight',color:'var(--cyan)',values:entries.map((e,i)=>({x:i,y:e.unit==='oz'?e.weight*28.35:e.weight}))}];
+    const ds=[{label:'Weight (g)',color:'var(--cyan)',values:entries.map((e,i)=>({x:i,y:this._toGrams(e.weight,e.unit)}))}];
     const xLabels=entries.map(e=>{const d=new Date(e.timestamp);return (d.getMonth()+1)+'/'+d.getDate()});
-    return '<div class="card chart-card" style="padding:var(--space-md)"><div class="chart-title">Weight Trend</div>'+Chart.line(ds,{width:500,height:160,xLabels,showDots:entries.length<=20})+'</div>';
+    const chartOpts={width:500,height:180,xLabels,showDots:entries.length<=20};
+    if(cfg&&cfg.saturatedWeight&&cfg.dryWeight){
+      chartOpts.refLines=[
+        {y:cfg.saturatedWeight,color:'rgba(0,200,192,.5)',label:'Saturated',dash:'4,3'},
+        {y:cfg.dryWeight,color:'rgba(224,92,58,.5)',label:'Dry',dash:'4,3'}
+      ];
+      const waterTarget=cfg.saturatedWeight-(cfg.saturatedWeight-cfg.dryWeight)*0.5;
+      const zoneTop=cfg.saturatedWeight-(cfg.saturatedWeight-cfg.dryWeight)*0.3;
+      chartOpts.zone={y1:waterTarget,y2:zoneTop,color:'rgba(74,158,82,.08)'};
+      chartOpts.refLines.push({y:waterTarget,color:'rgba(74,158,82,.4)',label:'Water @50%',dash:'2,4'});
+    }
+    return '<div class="card chart-card" style="padding:var(--space-md)"><div class="chart-title">Weight Trend</div>'+Chart.line(ds,chartOpts)+(cfg?'<div style="font-size:.62rem;color:var(--text-tertiary);margin-top:var(--space-xs)">Green zone = optimal dry-back range (30–50%)</div>':'')+'</div>';
   },
-  _historyHtml(mid){
+  _historyHtml(mid,cfg){
     const entries=Store.dryBacksForMother(mid).slice(0,20);
     if(!entries.length) return '';
-    let h='<div class="db-history"><table><thead><tr><th>Date</th><th>Weight</th><th>Notes</th><th></th></tr></thead><tbody>';
+    let h='<div class="db-history"><table><thead><tr><th>Date</th><th>Weight</th>'+(cfg?'<th>Dry-Back</th>':'')+'<th>Notes</th><th></th></tr></thead><tbody>';
     entries.forEach(e=>{
       const d=new Date(e.timestamp);
+      const grams=this._toGrams(e.weight,e.unit);
+      const pct=cfg?this._dryBackPct(grams,cfg):null;
       h+='<tr><td>'+(d.getMonth()+1)+'/'+d.getDate()+' '+d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'})+'</td>';
       h+='<td>'+e.weight+(e.unit||'g')+'</td>';
+      if(cfg){
+        if(pct!==null){
+          const col=pct>=70?'#e05c3a':pct>=50?'var(--orange)':pct>=30?'var(--leaf)':'var(--cyan)';
+          h+='<td style="color:'+col+';font-weight:600">'+Math.round(pct)+'%</td>';
+        }else{h+='<td>—</td>'}
+      }
       h+='<td>'+U.esc(e.notes||'—')+'</td>';
       h+='<td><button class="btn btn-ghost btn-sm" onclick="if(confirm(\'Delete?\')){{Store.remove(\'dryBacks\',\''+e.id+'\');Store.notify();DryBack.openForMother(\''+mid+'\')}}">&#128465;</button></td></tr>';
     });
