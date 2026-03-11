@@ -347,6 +347,16 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 /* ── Confirm Dialog ── */
 .confirm-msg{font-size:.9rem;line-height:1.6;margin-bottom:var(--space-lg);color:var(--text-secondary)}
 
+/* ── Strain Autocomplete ── */
+.strain-ac-wrap{position:relative}
+.strain-ac-list{display:none;position:absolute;top:100%;left:0;right:0;max-height:200px;overflow-y:auto;background:var(--bg-secondary);border:1px solid var(--border-subtle);border-top:none;border-radius:0 0 var(--radius-sm) var(--radius-sm);box-shadow:0 8px 20px rgba(0,0,0,.3);z-index:300}
+.strain-ac-list.open{display:block}
+.strain-ac-item{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;cursor:pointer;font-size:.82rem;color:var(--text-secondary);transition:background .15s}
+.strain-ac-item:hover,.strain-ac-item.active{background:rgba(0,200,192,.1);color:var(--cyan)}
+.strain-ac-item .ac-name{font-weight:600}
+.strain-ac-item .ac-meta{font-size:.7rem;color:var(--text-tertiary)}
+.strain-ac-item .ac-tag{font-size:.6rem;padding:1px 5px;border-radius:3px;background:rgba(0,200,192,.15);color:var(--cyan);margin-left:6px}
+
 /* ── Animations ── */
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 @keyframes modalIn{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
@@ -919,7 +929,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 (function(){
 'use strict';
 
-const APP_VERSION = '2.10.0';
+const APP_VERSION = '2.10.1';
 
 /* ═══════════════════════════════════════════════
    UTILS
@@ -1851,6 +1861,7 @@ const Plants={
     Modal.open('Add Mother Plant',Plants._buildForm(),
       '<button class="btn btn-ghost" onclick="Modal.close()">Cancel</button><button class="btn btn-primary" id="savePlant">Save</button>'
     );
+    StrainAC.attach('f_strainName');
     document.getElementById('savePlant').addEventListener('click',()=>{
       const data=Plants._readForm();if(!data) return;
       const id=U.id('m');
@@ -1867,6 +1878,7 @@ const Plants={
     Modal.open('Edit Mother Plant',Plants._buildForm(m),
       '<button class="btn btn-ghost" onclick="Modal.close()">Cancel</button><button class="btn btn-primary" id="savePlant">Save</button>'
     );
+    StrainAC.attach('f_strainName');
     document.getElementById('savePlant').addEventListener('click',()=>{
       const data=Plants._readForm();if(!data) return;
       const oldHealth=m.healthStatus;
@@ -4297,6 +4309,7 @@ const Strains={
     Strains._photoData='';
     Modal.open('Add Strain',Strains._buildForm(),
       '<button class="btn btn-ghost" onclick="Modal.close()">Cancel</button><button class="btn btn-primary" id="saveStrain">Save</button>');
+    StrainAC.attach('f_strainName');
     document.getElementById('saveStrain').addEventListener('click',()=>{
       const data=Strains._readForm();if(!data) return;
       const id=U.id('str');data.id=id;data.archived=false;data.createdAt=Date.now();
@@ -4311,6 +4324,7 @@ const Strains={
     Strains._photoData='';
     Modal.open('Edit Strain',Strains._buildForm(s),
       '<button class="btn btn-ghost" onclick="Modal.close()">Cancel</button><button class="btn btn-primary" id="saveStrain">Save</button>');
+    StrainAC.attach('f_strainName');
     document.getElementById('saveStrain').addEventListener('click',()=>{
       const data=Strains._readForm();if(!data) return;
       const merged=Object.assign({},s,data);
@@ -5532,6 +5546,9 @@ const DataIO={
    ═══════════════════════════════════════════════ */
 const WhatsNew={
   _notes:{
+    '2.10.1':[
+      '<b>Strain Autocomplete</b> — type 2+ characters in any strain name field to see matching suggestions from the catalog (400+ strains), your strain library, and existing plants. Keyboard navigation with arrow keys + Enter. Auto-fills type and breeder when selected.',
+    ],
     '2.10.0':[
       '<b>Guided Setup Wizard</b> — new first-run experience with two paths: Start Fresh (simplified 5-field form to add your first plant &amp; environment) or Import Backup (restore from JSON). Dismissible with skip option.',
     ],
@@ -5890,6 +5907,7 @@ const SetupWizard={
     var tab=Router._current;
     if(tab==='dashboard')Dashboard.render();
     else if(tab==='plants')Plants.render();
+    if(step===1)StrainAC.attach('wiz_strainName');
   },
   dismiss(){
     Store.setting('setupWizardDismissed',true);
@@ -5940,6 +5958,123 @@ const SetupWizard={
   }
 };
 window.SetupWizard=SetupWizard;
+
+/* ═══════════════════════════════════════════════
+   STRAIN AUTOCOMPLETE
+   ═══════════════════════════════════════════════ */
+const StrainAC={
+  _active:null,_idx:-1,
+  attach(inputId,opts){
+    var inp=document.getElementById(inputId);
+    if(!inp||inp.dataset.acBound)return;
+    inp.dataset.acBound='1';
+    opts=opts||{};
+    /* wrap input for positioning */
+    var wrap=document.createElement('div');
+    wrap.className='strain-ac-wrap';
+    inp.parentNode.insertBefore(wrap,inp);
+    wrap.appendChild(inp);
+    var list=document.createElement('div');
+    list.className='strain-ac-list';
+    list.id=inputId+'_acList';
+    wrap.appendChild(list);
+    inp.setAttribute('autocomplete','off');
+    inp.addEventListener('input',function(){StrainAC._onInput(inputId,opts)});
+    inp.addEventListener('keydown',function(e){StrainAC._onKey(e,inputId,opts)});
+    inp.addEventListener('focus',function(){if(inp.value.trim().length>=2)StrainAC._onInput(inputId,opts)});
+    document.addEventListener('click',function(e){if(!wrap.contains(e.target))StrainAC._close(inputId)});
+  },
+  _getSuggestions(query){
+    var q=query.toLowerCase();
+    var seen={};var results=[];
+    /* user library first */
+    Store.strainsArray().forEach(function(s){
+      if(s.name.toLowerCase().includes(q)){
+        if(!seen[s.name.toLowerCase()]){seen[s.name.toLowerCase()]=1;results.push({name:s.name,type:s.type||'',breeder:s.breeder||'',src:'library',id:s.id})}
+      }
+    });
+    /* then built-in catalog */
+    if(typeof Strains!=='undefined'&&Strains._catalog){
+      Strains._catalog.forEach(function(s){
+        if(s.name.toLowerCase().includes(q)){
+          if(!seen[s.name.toLowerCase()]){seen[s.name.toLowerCase()]=1;results.push({name:s.name,type:s.type||'',breeder:s.breeder||'',src:'catalog'})}
+        }
+      });
+    }
+    /* also check existing mother plant strain names */
+    Store.mothersArray().forEach(function(m){
+      if(m.strainName.toLowerCase().includes(q)){
+        if(!seen[m.strainName.toLowerCase()]){seen[m.strainName.toLowerCase()]=1;results.push({name:m.strainName,type:m.strainType||'',breeder:m.breeder||'',src:'plant'})}
+      }
+    });
+    return results.slice(0,12);
+  },
+  _onInput(inputId,opts){
+    var inp=document.getElementById(inputId);
+    var q=inp.value.trim();
+    if(q.length<2){this._close(inputId);return}
+    var items=this._getSuggestions(q);
+    if(!items.length){this._close(inputId);return}
+    var list=document.getElementById(inputId+'_acList');
+    var h='';
+    items.forEach(function(s,i){
+      var tag=s.src==='library'?'Library':s.src==='catalog'?'Catalog':'In Use';
+      h+='<div class="strain-ac-item" data-idx="'+i+'" onmousedown="StrainAC._select(\''+inputId+'\','+i+')">';
+      h+='<span><span class="ac-name">'+U.esc(s.name)+'</span>';
+      if(s.breeder)h+=' <span class="ac-meta">'+U.esc(s.breeder)+'</span>';
+      h+='</span>';
+      h+='<span class="ac-tag">'+tag+'</span>';
+      h+='</div>';
+    });
+    list.innerHTML=h;
+    list.classList.add('open');
+    this._active=items;this._idx=-1;
+  },
+  _onKey(e,inputId,opts){
+    var list=document.getElementById(inputId+'_acList');
+    if(!list||!list.classList.contains('open'))return;
+    var items=list.querySelectorAll('.strain-ac-item');
+    if(e.key==='ArrowDown'){e.preventDefault();this._idx=Math.min(this._idx+1,items.length-1);this._highlight(items)}
+    else if(e.key==='ArrowUp'){e.preventDefault();this._idx=Math.max(this._idx-1,0);this._highlight(items)}
+    else if(e.key==='Enter'&&this._idx>=0){e.preventDefault();this._select(inputId,this._idx)}
+    else if(e.key==='Escape'){this._close(inputId)}
+  },
+  _highlight(items){
+    items.forEach(function(el,i){el.classList.toggle('active',i===StrainAC._idx)});
+    if(items[this._idx])items[this._idx].scrollIntoView({block:'nearest'});
+  },
+  _select(inputId,idx){
+    var s=this._active[idx];if(!s)return;
+    var inp=document.getElementById(inputId);
+    inp.value=s.name;
+    inp.dispatchEvent(new Event('input',{bubbles:true}));
+    /* auto-fill related fields if they exist */
+    var typeEl=document.getElementById(inputId.replace(/strain(Name)?$/i,'strainType').replace('wiz_strainName','wiz_strainType').replace('sf_strain','sf_strainType').replace('f_breedStrain','f_breedStrainType'));
+    if(!typeEl){
+      /* try common IDs */
+      ['wiz_strainType','f_strainType','sf_fem'].forEach(function(id){var el=document.getElementById(id);if(el&&s.type){typeEl=el}});
+    }
+    if(typeEl&&s.type){
+      var val=s.type.toLowerCase();
+      Array.from(typeEl.options).forEach(function(o){if(o.value===val)typeEl.value=val});
+    }
+    var breederEl=document.getElementById(inputId.replace(/strain(Name)?$/i,'breeder').replace('wiz_strainName','wiz_breeder').replace('sf_strain','sf_breeder'));
+    if(!breederEl){
+      ['f_breeder','sf_breeder'].forEach(function(id){var el=document.getElementById(id);if(el)breederEl=el});
+    }
+    if(breederEl&&s.breeder&&!breederEl.value)breederEl.value=s.breeder;
+    /* store strain ID if from library */
+    var idEl=document.getElementById('f_strainId');
+    if(idEl&&s.id)idEl.value=s.id;
+    this._close(inputId);
+  },
+  _close(inputId){
+    var list=document.getElementById(inputId+'_acList');
+    if(list)list.classList.remove('open');
+    this._active=null;this._idx=-1;
+  }
+};
+window.StrainAC=StrainAC;
 
 /* ═══════════════════════════════════════════════
    NOTIFICATIONS
@@ -6599,6 +6734,7 @@ const SeedBank={
     const title=id?'Edit Seed Packet':'Add Seed Packet';
     const saveBtn='<button class="btn btn-primary" onclick="SeedBank.save(\''+U.esc(id||'')+'\')">Save</button>';
     Modal.open(title,h,saveBtn+'<button class="btn btn-outline" onclick="SeedBank.open()">Cancel</button>');
+    StrainAC.attach('sf_strain');
   },
   save(id){
     const name=document.getElementById('sf_strain').value.trim();
@@ -9923,6 +10059,7 @@ const BreedingTracker={
     var typeLabel=this._types.find(function(t){return t.value===type});
     Modal.open('+ '+(typeLabel?typeLabel.label:'Breeding Entry'),h,
       '<button class="btn btn-ghost" onclick="BreedingTracker.open()">Back</button><button class="btn btn-primary" id="saveBreed">Save</button>');
+    if(type==='seed_harvest')StrainAC.attach('f_breedStrain');
     document.getElementById('saveBreed').addEventListener('click',function(){
       var id=U.id('breed');
       var entry={id:id,type:type,motherId:document.getElementById('f_breedMother').value,

@@ -3,6 +3,19 @@ CHANGELOG — Tropical Roots Maui - Plant Manager
 https://github.com/magikh0e/PlantManager
 
 
+v2.10.1 — 2026-03-10
+--------------------
+ENHANCEMENT: Strain Name Autocomplete
+
+  All strain name inputs now show autocomplete suggestions from the
+  built-in catalog (400+ strains), user strain library, and existing
+  mother plants. Matches display strain name, breeder, and source tag
+  (Catalog/Library/In Use). Selecting a match auto-fills type and
+  breeder fields. Keyboard navigation: arrow keys + Enter to select,
+  Escape to close. Wired to 5 inputs: Add/Edit Mother, Add/Edit
+  Strain, Setup Wizard, Seed Bank, and Breeding Tracker.
+
+
 v2.10.0 — 2026-03-10
 --------------------
 FEATURE: Guided Setup Wizard
