@@ -699,6 +699,13 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 .fleet-table th:hover{color:var(--cyan)}
 .fleet-table td{padding:var(--space-xs) var(--space-sm);border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle}
 .fleet-table tr:hover{background:rgba(0,200,192,.04)}
+.fleet-table .fv-chk{width:16px;height:16px;accent-color:var(--cyan);cursor:pointer}
+.fleet-table .fv-sel{background:rgba(0,200,192,.08)}
+.fv-filter-bar{display:flex;gap:var(--space-sm);flex-wrap:wrap;margin-bottom:var(--space-sm);align-items:center}
+.fv-filter-bar select{font-size:.72rem;padding:3px 6px;background:var(--card);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);color:var(--text-primary)}
+.fv-filter-bar label{font-size:.68rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.03em}
+.fv-bulk-bar{display:flex;gap:var(--space-sm);flex-wrap:wrap;align-items:center;padding:var(--space-sm);margin-bottom:var(--space-sm);background:rgba(0,200,192,.06);border:1px solid rgba(0,200,192,.15);border-radius:var(--radius-sm);font-size:.75rem}
+.fv-bulk-bar .fv-bulk-count{color:var(--cyan);font-weight:600;margin-right:var(--space-xs)}
 /* Grow room diagram */
 .grid-cell{border:1px dashed var(--border-subtle);border-radius:var(--radius-sm);min-height:72px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.7rem;text-align:center;padding:4px;cursor:pointer;transition:background .2s;gap:1px;position:relative}
 .grid-cell:hover{background:rgba(0,200,192,.06)}
@@ -4142,6 +4149,9 @@ const Analytics={
     h+=CostTracker._costBreakdownCard();
     h+=VPDCalc._vpdTrendCard(this._cutoff(),this._envFilter);
     h+=CostTracker._costPerGramByStrainCard();
+    h+=HarvestEstimate._accuracyCard();
+    h+=this._strainPerformanceCard();
+    h+=this._envCorrelationCard();
     h+='</div>';
     document.getElementById('panel-analytics').innerHTML=h;
   },
@@ -4366,6 +4376,121 @@ const Analytics={
       return{label:name,value:Math.round((parseFloat(hv.dryWeight)||0)*10)/10,color:Chart._c(i)};
     }).sort((a,b)=>b.value-a.value);
     h+=Chart.bar(data,{width:560,height:200});
+    h+='</div>';
+    return h;
+  },
+  /* ── Strain Performance Dashboard ── */
+  _strainPerformanceCard(){
+    var harvests=Store.harvestsArray().filter(function(hv){return hv.dryWeight>0});
+    if(!harvests.length) return '';
+    var byStrain={};
+    harvests.forEach(function(hv){
+      var m=hv.motherId?Store.getById('mothers',hv.motherId):null;
+      var name=m?m.strainName:'Unknown';
+      if(!byStrain[name]) byStrain[name]={name:name,yields:[],qualities:[],flowerDays:[],envs:{},count:0};
+      var s=byStrain[name];
+      s.yields.push(parseFloat(hv.dryWeight)||0);
+      if(hv.quality) s.qualities.push(parseInt(hv.quality));
+      if(hv.floweringStart&&hv.floweringEnd){
+        var fd=U.daysBetween(U.parseDate(hv.floweringStart),U.parseDate(hv.floweringEnd));
+        if(fd>0) s.flowerDays.push(fd);
+      }
+      var envId=hv.environmentId||(m?m.environmentId:'');
+      if(envId){
+        if(!s.envs[envId]) s.envs[envId]={yields:[]};
+        s.envs[envId].yields.push(parseFloat(hv.dryWeight)||0);
+      }
+      s.count++;
+    });
+    var rows=[];
+    for(var k in byStrain){
+      var s=byStrain[k];
+      var avgYield=Math.round(s.yields.reduce(function(a,b){return a+b},0)/s.yields.length*10)/10;
+      var totalYield=Math.round(s.yields.reduce(function(a,b){return a+b},0)*10)/10;
+      var avgQuality=s.qualities.length?Math.round(s.qualities.reduce(function(a,b){return a+b},0)/s.qualities.length*10)/10:0;
+      var avgFlower=s.flowerDays.length?Math.round(s.flowerDays.reduce(function(a,b){return a+b},0)/s.flowerDays.length):0;
+      var bestEnvId='',bestEnvYield=0;
+      for(var eid in s.envs){var ey=s.envs[eid].yields.reduce(function(a,b){return a+b},0)/s.envs[eid].yields.length;if(ey>bestEnvYield){bestEnvYield=ey;bestEnvId=eid}}
+      var bestEnv=bestEnvId?Store.getById('environments',bestEnvId):null;
+      rows.push({name:s.name,count:s.count,avgYield:avgYield,totalYield:totalYield,avgQuality:avgQuality,avgFlower:avgFlower,bestEnv:bestEnv?bestEnv.name:'—'});
+    }
+    rows.sort(function(a,b){return b.totalYield-a.totalYield});
+    var h='<div class="card chart-card" style="padding:var(--space-md)"><div class="chart-title">&#127942; Strain Performance</div>';
+    h+='<table style="width:100%;font-size:.72rem;border-collapse:collapse">';
+    h+='<thead><tr><th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-subtle)">Strain</th>';
+    h+='<th style="text-align:center;padding:4px 6px;border-bottom:1px solid var(--border-subtle)">Harvests</th>';
+    h+='<th style="text-align:center;padding:4px 6px;border-bottom:1px solid var(--border-subtle)">Avg (g)</th>';
+    h+='<th style="text-align:center;padding:4px 6px;border-bottom:1px solid var(--border-subtle)">Total (g)</th>';
+    h+='<th style="text-align:center;padding:4px 6px;border-bottom:1px solid var(--border-subtle)">Quality</th>';
+    h+='<th style="text-align:center;padding:4px 6px;border-bottom:1px solid var(--border-subtle)">Flower Days</th>';
+    h+='<th style="text-align:left;padding:4px 6px;border-bottom:1px solid var(--border-subtle)">Best Env</th></tr></thead><tbody>';
+    rows.forEach(function(r){
+      var qColor=r.avgQuality>=4?'var(--leaf)':r.avgQuality>=3?'var(--gold)':'#e05c3a';
+      var stars=r.avgQuality?r.avgQuality.toFixed(1)+' ★':'—';
+      h+='<tr>';
+      h+='<td style="padding:4px 6px;border-bottom:1px solid rgba(255,255,255,.04);font-weight:600">'+U.esc(r.name)+'</td>';
+      h+='<td style="text-align:center;padding:4px 6px;border-bottom:1px solid rgba(255,255,255,.04)">'+r.count+'</td>';
+      h+='<td style="text-align:center;padding:4px 6px;border-bottom:1px solid rgba(255,255,255,.04)">'+r.avgYield+'</td>';
+      h+='<td style="text-align:center;padding:4px 6px;border-bottom:1px solid rgba(255,255,255,.04);font-weight:700;color:var(--cyan)">'+r.totalYield+'</td>';
+      h+='<td style="text-align:center;padding:4px 6px;border-bottom:1px solid rgba(255,255,255,.04);color:'+qColor+'">'+stars+'</td>';
+      h+='<td style="text-align:center;padding:4px 6px;border-bottom:1px solid rgba(255,255,255,.04)">'+(r.avgFlower?r.avgFlower+'d':'—')+'</td>';
+      h+='<td style="padding:4px 6px;border-bottom:1px solid rgba(255,255,255,.04)">'+U.esc(r.bestEnv)+'</td>';
+      h+='</tr>';
+    });
+    h+='</tbody></table></div>';
+    return h;
+  },
+  /* ── Environment ↔ Outcome Correlations ── */
+  _envCorrelationCard(){
+    var harvests=Store.harvestsArray().filter(function(hv){return hv.dryWeight>0&&hv.floweringStart&&hv.environmentId});
+    if(harvests.length<2) return '';
+    var allLogs=Store.envArray();
+    var tempBuckets={},rhBuckets={};
+    harvests.forEach(function(hv){
+      var startTs=U.parseDate(hv.floweringStart).getTime();
+      var endTs=hv.floweringEnd?U.parseDate(hv.floweringEnd).getTime():(hv.harvestDate?U.parseDate(hv.harvestDate).getTime():Date.now());
+      var logs=allLogs.filter(function(l){return l.environmentId===hv.environmentId&&l.timestamp>=startTs&&l.timestamp<=endTs});
+      if(logs.length<2) return;
+      var temps=[],rhs=[];
+      logs.forEach(function(l){if(l.temperature) temps.push(l.temperature);if(l.humidity) rhs.push(l.humidity)});
+      if(!temps.length||!rhs.length) return;
+      var avgTemp=Math.round(temps.reduce(function(a,b){return a+b},0)/temps.length);
+      var avgRH=Math.round(rhs.reduce(function(a,b){return a+b},0)/rhs.length);
+      var dw=parseFloat(hv.dryWeight)||0;
+      var q=parseInt(hv.quality)||0;
+      /* Temp buckets (5°F) */
+      var tb=Math.floor(avgTemp/5)*5;var tbk=tb+'-'+(tb+5)+'°F';
+      if(!tempBuckets[tbk]) tempBuckets[tbk]={label:tbk,yields:[],sort:tb};
+      tempBuckets[tbk].yields.push(dw);
+      /* RH buckets (10%) */
+      var rb=Math.floor(avgRH/10)*10;var rbk=rb+'-'+(rb+10)+'%';
+      if(!rhBuckets[rbk]) rhBuckets[rbk]={label:rbk,qualities:[],sort:rb};
+      if(q) rhBuckets[rbk].qualities.push(q);
+    });
+    var tempData=Object.values(tempBuckets).sort(function(a,b){return a.sort-b.sort}).map(function(b,i){
+      var avg=Math.round(b.yields.reduce(function(a,c){return a+c},0)/b.yields.length*10)/10;
+      return{label:b.label,value:avg,color:Chart._c(i)};
+    });
+    var rhData=Object.values(rhBuckets).sort(function(a,b){return a.sort-b.sort}).map(function(b,i){
+      if(!b.qualities.length) return null;
+      var avg=Math.round(b.qualities.reduce(function(a,c){return a+c},0)/b.qualities.length*10)/10;
+      return{label:b.label,value:avg,color:Chart._c(i+4)};
+    }).filter(Boolean);
+    if(!tempData.length&&!rhData.length) return '';
+    var h='<div class="card chart-card" style="padding:var(--space-md)"><div class="chart-title">&#127793; Environment &harr; Harvest Outcomes</div>';
+    /* Best conditions insight */
+    if(tempData.length){
+      var best=tempData.slice().sort(function(a,b){return b.value-a.value})[0];
+      h+='<div style="font-size:.72rem;color:var(--leaf);margin-bottom:var(--space-sm)">&#128161; Best avg yield ('+best.value+'g) came from flowering at '+best.label+'</div>';
+    }
+    if(tempData.length){
+      h+='<div class="chart-subtitle">Avg Temp During Flower → Avg Yield (g)</div>';
+      h+=Chart.bar(tempData,{width:500,height:160});
+    }
+    if(rhData.length){
+      h+='<div class="chart-subtitle" style="margin-top:var(--space-md)">Avg RH During Flower → Avg Quality (★)</div>';
+      h+=Chart.bar(rhData,{width:500,height:140});
+    }
     h+='</div>';
     return h;
   }
@@ -5638,10 +5763,35 @@ window.HealthCheck=HealthCheck;
    DAILY SNAPSHOT
    ═══════════════════════════════════════════════ */
 const Snapshot={
+  _generateText(){
+    const now=new Date();
+    const dateStr=now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+    let txt='Date: '+dateStr+'\n';
+    const phase=Moon.phase(now);
+    if(phase){txt+='Moon: '+phase.name+' ('+Math.round(phase.illumination*100)+'%)\n'}
+    const wd=Store.setting('weatherLastData');
+    if(wd){txt+='Weather: '+Math.round(wd.temp)+'°F, '+wd.humidity+'% humidity\n'}
+    const today=U.today();
+    const allTasks=Store.tasksArray().filter(t=>t.enabled);
+    const overdue=allTasks.filter(t=>t.nextDueDate<today);
+    const dueToday=allTasks.filter(t=>t.nextDueDate===today);
+    txt+='\nTasks:\n';
+    if(overdue.length){txt+=overdue.length+' overdue\n';overdue.forEach(t=>{const m=t.motherId?Store.getById('mothers',t.motherId):null;txt+='  - [OVERDUE] '+t.description+(m?' ('+m.strainName+')':'')+'\n'})}
+    if(dueToday.length){txt+=dueToday.length+' due today\n';dueToday.forEach(t=>{const m=t.motherId?Store.getById('mothers',t.motherId):null;txt+='  - '+t.description+(m?' ('+m.strainName+')':'')+'\n'})}
+    if(!overdue.length&&!dueToday.length) txt+='No tasks due — all clear!\n';
+    const ipmActive=Store.ipmArray().filter(i=>!i.resolved);
+    if(ipmActive.length){txt+='\nIPM Issues: '+ipmActive.length+'\n';ipmActive.slice(0,5).forEach(i=>{const m=i.motherId?Store.getById('mothers',i.motherId):null;txt+='  - '+(i.issueType||'Issue')+(m?' on '+m.strainName:'')+' ('+( i.severity||'?')+')\n'})}
+    const envAlerts=Dashboard._envAlerts();
+    if(envAlerts.length){txt+='\nEnv Alerts: '+envAlerts.length+'\n';envAlerts.forEach(a=>{txt+='  - '+a.env+': '+a.msg+'\n'})}
+    const dayAgo=Date.now()-86400000;
+    const recentFeeds=Store.feedingsArray().filter(f=>f.timestamp>dayAgo);
+    if(recentFeeds.length){txt+='\nRecent Feedings: '+recentFeeds.length+'\n';recentFeeds.forEach(f=>{const m=f.motherId?Store.getById('mothers',f.motherId):null;txt+='  - '+(f.nutrientName||'Water Only')+(m?' → '+m.strainName:'')+'\n'})}
+    return txt;
+  },
   open(){
     const now=new Date();
     const dateStr=now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
-    let txt='';
+    const txt=this._generateText();
     let h='<div class="snapshot-body">';
 
     /* Date + Moon */
@@ -5649,7 +5799,6 @@ const Snapshot={
     const phase=Moon.phase(now);
     if(phase){
       h+='<div class="snap-item">Moon: '+phase.icon+' '+phase.name+' ('+Math.round(phase.illumination*100)+'% illuminated)</div>';
-      txt+='Date: '+dateStr+'\nMoon: '+phase.name+' ('+Math.round(phase.illumination*100)+'%)\n';
       if(phase.guidance) h+='<div class="snap-item" style="color:var(--leaf);font-style:italic">KNF: '+U.esc(phase.guidance)+'</div>';
     }
     h+='</div>';
@@ -5659,7 +5808,6 @@ const Snapshot={
     if(wd){
       h+='<div class="snap-section"><div class="snap-heading">&#127780; Weather</div>';
       h+='<div class="snap-item">'+Math.round(wd.temp)+'\u00B0F &middot; '+wd.humidity+'% humidity'+(wd.description?' &middot; '+U.esc(wd.description):'')+'</div></div>';
-      txt+='Weather: '+Math.round(wd.temp)+'°F, '+wd.humidity+'% humidity\n';
     }
 
     /* Tasks */
@@ -5668,23 +5816,18 @@ const Snapshot={
     const overdue=allTasks.filter(t=>t.nextDueDate<today);
     const dueToday=allTasks.filter(t=>t.nextDueDate===today);
     h+='<div class="snap-section"><div class="snap-heading">&#9745; Tasks</div>';
-    txt+='\nTasks:\n';
     if(overdue.length){
       h+='<div class="snap-item overdue"><b>'+overdue.length+' overdue:</b></div>';
-      txt+=overdue.length+' overdue\n';
       overdue.forEach(t=>{
         const m=t.motherId?Store.getById('mothers',t.motherId):null;
         h+='<div class="snap-item overdue">&nbsp;&nbsp;• '+U.esc(t.description)+(m?' ('+U.esc(m.strainName)+')':'')+'</div>';
-        txt+='  - [OVERDUE] '+t.description+(m?' ('+m.strainName+')':'')+'\n';
       });
     }
     if(dueToday.length){
       h+='<div class="snap-item due"><b>'+dueToday.length+' due today:</b></div>';
-      txt+=dueToday.length+' due today\n';
       dueToday.forEach(t=>{
         const m=t.motherId?Store.getById('mothers',t.motherId):null;
         h+='<div class="snap-item due">&nbsp;&nbsp;• '+U.esc(t.description)+(m?' ('+U.esc(m.strainName)+')':'')+'</div>';
-        txt+='  - '+t.description+(m?' ('+m.strainName+')':'')+'\n';
       });
     }
     if(!overdue.length&&!dueToday.length) h+='<div class="snap-item">No tasks due \u2014 all clear! &#127881;</div>';
@@ -5694,7 +5837,6 @@ const Snapshot={
     const ipmActive=Store.ipmArray().filter(i=>!i.resolved);
     if(ipmActive.length){
       h+='<div class="snap-section"><div class="snap-heading">&#128737; Active IPM Issues ('+ipmActive.length+')</div>';
-      txt+='\nIPM Issues: '+ipmActive.length+'\n';
       ipmActive.slice(0,5).forEach(i=>{
         const m=i.motherId?Store.getById('mothers',i.motherId):null;
         h+='<div class="snap-item">• '+U.esc(i.issueType||'Issue')+(m?' on '+U.esc(m.strainName):'')+' ('+U.esc(i.severity||'?')+')</div>';
@@ -5706,10 +5848,8 @@ const Snapshot={
     const envAlerts=Dashboard._envAlerts();
     if(envAlerts.length){
       h+='<div class="snap-section"><div class="snap-heading">&#9888; Environment Alerts ('+envAlerts.length+')</div>';
-      txt+='\nEnv Alerts: '+envAlerts.length+'\n';
       envAlerts.forEach(a=>{
         h+='<div class="snap-item" style="color:var(--orange)">• '+U.esc(a.env)+': '+U.esc(a.msg)+'</div>';
-        txt+='  - '+a.env+': '+a.msg+'\n';
       });
       h+='</div>';
     }
@@ -5719,7 +5859,6 @@ const Snapshot={
     const recentFeeds=Store.feedingsArray().filter(f=>f.timestamp>dayAgo);
     if(recentFeeds.length){
       h+='<div class="snap-section"><div class="snap-heading">&#129514; Feedings (last 24h): '+recentFeeds.length+'</div>';
-      txt+='\nRecent Feedings: '+recentFeeds.length+'\n';
       recentFeeds.forEach(f=>{
         const m=f.motherId?Store.getById('mothers',f.motherId):null;
         h+='<div class="snap-item">• '+U.esc(f.nutrientName||'Water Only')+(m?' → '+U.esc(m.strainName):'')+'</div>';
@@ -5728,6 +5867,13 @@ const Snapshot={
     }
 
     h+='</div>';
+
+    /* Auto-snapshot toggle */
+    var autoEnabled=Store.setting('autoSnapshotEnabled')||false;
+    h+='<div style="margin-top:var(--space-md);padding-top:var(--space-sm);border-top:1px solid rgba(255,255,255,.06)">';
+    h+='<label style="display:flex;align-items:center;gap:var(--space-sm);font-size:.78rem;cursor:pointer">';
+    h+='<input type="checkbox" id="f_autoSnap"'+(autoEnabled?' checked':'')+' onchange="Store.setting(\'autoSnapshotEnabled\',this.checked)">';
+    h+='Auto-save daily snapshot to journal on app open</label></div>';
 
     const footer='<button class="btn btn-primary" onclick="Snapshot._copy()">&#128203; Copy to Clipboard</button>'
       +'<button class="btn btn-outline" onclick="Snapshot._saveJournal()">&#128221; Save as Journal</button>'
@@ -5747,6 +5893,18 @@ const Snapshot={
     Store.addActivity('journal','Saved daily snapshot to journal');
     Toast.show('Snapshot saved to journal!','success');
     Modal.close();
+  },
+  autoCheck(){
+    if(!Store.setting('autoSnapshotEnabled')) return;
+    if(Store.setting('lastAutoSnapshotDate')===U.today()) return;
+    var txt=this._generateText();
+    var mothers=Store.mothersArray();
+    var mid=mothers.length?mothers[0].id:'';
+    var entry={id:U.id(),motherId:mid,timestamp:Date.now(),notes:'Daily Snapshot — '+U.today()+'\n\n'+txt,photo:''};
+    Store.set('photoJournal',entry.id,entry);
+    Store.setting('lastAutoSnapshotDate',U.today());
+    Store.addActivity('journal','Auto-saved daily snapshot to journal');
+    Toast.show('📋 Daily snapshot saved to journal');
   }
 };
 window.Snapshot=Snapshot;
@@ -6175,7 +6333,7 @@ window.PlantTimeline=PlantTimeline;
    FEED SCHEDULE TEMPLATES
    ═══════════════════════════════════════════════ */
 const FeedSchedule={
-  _templates:{
+  _builtIn:{
     ghFlora:{
       name:'GH Flora Series',desc:'General Hydroponics 3-part (Grow/Micro/Bloom) — 10 week flower program',
       weeks:[
@@ -6228,19 +6386,135 @@ const FeedSchedule={
       ]
     }
   },
+  /* backward compat — _templates now merges built-in + user */
+  get _templates(){
+    const user=Store.setting('userFeedTemplates')||{};
+    return Object.assign({},this._builtIn,user);
+  },
+  _getUserTemplates(){return Store.setting('userFeedTemplates')||{}},
+  _saveUserTemplates(obj){Store.setting('userFeedTemplates',obj)},
+  _isBuiltIn(key){return !!this._builtIn[key]},
   open(){
-    let h='<div class="fs-grid">';
-    Object.keys(this._templates).forEach(k=>{
-      const t=this._templates[k];
+    let h='<p style="font-size:.72rem;color:var(--text-tertiary);margin-bottom:var(--space-md)">Built-in schedules</p>';
+    h+='<div class="fs-grid">';
+    Object.keys(this._builtIn).forEach(k=>{
+      const t=this._builtIn[k];
       h+='<div class="fs-card" onclick="FeedSchedule._preview(\''+k+'\')">';
       h+='<h3>'+U.esc(t.name)+'</h3><p>'+U.esc(t.desc)+'</p>';
       h+='<p style="margin-top:var(--space-xs);color:var(--cyan);font-size:.7rem">'+t.weeks.length+' weeks &rarr;</p></div>';
     });
     h+='</div>';
-    Modal.open('&#128203; Feed Schedule Templates',h,'<button class="btn btn-outline" onclick="Modal.close()">Close</button>');
+    const user=this._getUserTemplates();
+    const uKeys=Object.keys(user);
+    if(uKeys.length){
+      h+='<p style="font-size:.72rem;color:var(--text-tertiary);margin:var(--space-lg) 0 var(--space-md)">My Custom Schedules</p>';
+      h+='<div class="fs-grid">';
+      uKeys.forEach(k=>{
+        const t=user[k];
+        h+='<div class="fs-card" style="position:relative">';
+        h+='<div onclick="FeedSchedule._preview(\''+k+'\')" style="cursor:pointer">';
+        h+='<h3>'+U.esc(t.name)+'</h3><p>'+U.esc(t.desc)+'</p>';
+        h+='<p style="margin-top:var(--space-xs);color:var(--cyan);font-size:.7rem">'+t.weeks.length+' weeks &rarr;</p></div>';
+        h+='<div style="display:flex;gap:var(--space-xs);margin-top:var(--space-xs)">';
+        h+='<button class="btn btn-outline btn-sm" onclick="event.stopPropagation();FeedSchedule.openEdit(\''+k+'\')" style="font-size:.62rem;padding:1px 6px">Edit</button>';
+        h+='<button class="btn btn-outline btn-sm" onclick="event.stopPropagation();FeedSchedule._deleteTemplate(\''+k+'\')" style="font-size:.62rem;padding:1px 6px;color:var(--red)">Delete</button>';
+        h+='</div></div>';
+      });
+      h+='</div>';
+    }
+    Modal.open('📋 Feed Schedule Templates',h,'<button class="btn btn-primary" onclick="FeedSchedule.openCreate()">+ Create Custom</button> <button class="btn btn-outline" onclick="Modal.close()">Close</button>');
+  },
+  /* Create / Edit custom template */
+  _weekEditorHtml(weeks){
+    let h='<div id="fsWeekRows">';
+    (weeks||[{wk:1,items:''}]).forEach((w,i)=>{
+      h+=this._weekRowHtml(i,w.wk,w.items);
+    });
+    h+='</div>';
+    h+='<button class="btn btn-outline btn-sm" onclick="FeedSchedule._addWeekRow()" style="margin-top:var(--space-xs);font-size:.7rem">+ Add Week</button>';
+    return h;
+  },
+  _weekRowHtml(idx,wk,items){
+    return '<div class="fs-week-edit" data-idx="'+idx+'" style="display:flex;gap:var(--space-xs);align-items:center;margin-bottom:var(--space-xs)">'
+      +'<input type="number" class="form-input fsWkNum" value="'+wk+'" min="1" max="52" style="width:50px;font-size:.78rem" placeholder="Wk">'
+      +'<input type="text" class="form-input fsWkItems" value="'+U.esc(items)+'" style="flex:1;font-size:.78rem" placeholder="Nutrients / instructions">'
+      +'<button class="btn btn-outline btn-sm" onclick="this.parentElement.remove()" style="font-size:.62rem;padding:1px 6px;color:var(--red)">&times;</button>'
+      +'</div>';
+  },
+  _addWeekRow(){
+    const cont=document.getElementById('fsWeekRows');
+    if(!cont)return;
+    const rows=cont.querySelectorAll('.fs-week-edit');
+    let maxWk=0;rows.forEach(r=>{const v=parseInt(r.querySelector('.fsWkNum').value)||0;if(v>maxWk)maxWk=v});
+    const div=document.createElement('div');div.innerHTML=this._weekRowHtml(rows.length,maxWk+1,'');
+    cont.appendChild(div.firstElementChild);
+  },
+  _readFormWeeks(){
+    const rows=document.querySelectorAll('#fsWeekRows .fs-week-edit');
+    const weeks=[];
+    rows.forEach(r=>{
+      const wk=parseInt(r.querySelector('.fsWkNum').value)||0;
+      const items=(r.querySelector('.fsWkItems').value||'').trim();
+      if(wk>0&&items) weeks.push({wk,items});
+    });
+    weeks.sort((a,b)=>a.wk-b.wk);
+    return weeks;
+  },
+  openCreate(){
+    let h='<div class="form-group"><label class="form-label">Template Name</label><input class="form-input" id="fsTplName" placeholder="e.g. My Coco Blend"></div>';
+    h+='<div class="form-group"><label class="form-label">Description</label><input class="form-input" id="fsTplDesc" placeholder="Short description"></div>';
+    h+='<div class="form-group"><label class="form-label">Weekly Schedule</label>';
+    h+=this._weekEditorHtml(null);
+    h+='</div>';
+    Modal.open('📋 Create Feed Schedule',h,'<button class="btn btn-primary" onclick="FeedSchedule._saveCreate()">Save Template</button> <button class="btn btn-outline" onclick="FeedSchedule.open()">Cancel</button>');
+  },
+  _saveCreate(){
+    const name=(document.getElementById('fsTplName').value||'').trim();
+    const desc=(document.getElementById('fsTplDesc').value||'').trim();
+    if(!name){Toast.show('Enter a template name','error');return}
+    const weeks=this._readFormWeeks();
+    if(!weeks.length){Toast.show('Add at least one week','error');return}
+    const key='user_'+Date.now();
+    const user=this._getUserTemplates();
+    user[key]={name,desc,weeks};
+    this._saveUserTemplates(user);
+    Toast.show('Template "'+name+'" created');
+    this.open();
+  },
+  openEdit(key){
+    const user=this._getUserTemplates();
+    const t=user[key];if(!t)return;
+    let h='<div class="form-group"><label class="form-label">Template Name</label><input class="form-input" id="fsTplName" value="'+U.esc(t.name)+'"></div>';
+    h+='<div class="form-group"><label class="form-label">Description</label><input class="form-input" id="fsTplDesc" value="'+U.esc(t.desc)+'"></div>';
+    h+='<div class="form-group"><label class="form-label">Weekly Schedule</label>';
+    h+=this._weekEditorHtml(t.weeks);
+    h+='</div>';
+    Modal.open('📋 Edit: '+U.esc(t.name),h,'<button class="btn btn-primary" onclick="FeedSchedule._saveEdit(\''+key+'\')">Save Changes</button> <button class="btn btn-outline" onclick="FeedSchedule.open()">Cancel</button>');
+  },
+  _saveEdit(key){
+    const name=(document.getElementById('fsTplName').value||'').trim();
+    const desc=(document.getElementById('fsTplDesc').value||'').trim();
+    if(!name){Toast.show('Enter a template name','error');return}
+    const weeks=this._readFormWeeks();
+    if(!weeks.length){Toast.show('Add at least one week','error');return}
+    const user=this._getUserTemplates();
+    user[key]={name,desc,weeks};
+    this._saveUserTemplates(user);
+    Toast.show('Template "'+name+'" updated');
+    this.open();
+  },
+  _deleteTemplate(key){
+    const user=this._getUserTemplates();
+    const t=user[key];if(!t)return;
+    if(!confirm('Delete "'+t.name+'"? This cannot be undone.'))return;
+    delete user[key];
+    this._saveUserTemplates(user);
+    Toast.show('Template deleted');
+    this.open();
   },
   _preview(key){
     const t=this._templates[key];if(!t)return;
+    const isUser=!this._isBuiltIn(key);
     let h='<p style="font-size:.78rem;color:var(--text-secondary);margin-bottom:var(--space-md)">'+U.esc(t.desc)+'</p>';
     h+='<div style="margin-bottom:var(--space-md)">';
     t.weeks.forEach(w=>{
@@ -6255,7 +6529,9 @@ const FeedSchedule={
     h+='</select>';
     h+='<button class="btn btn-primary" onclick="FeedSchedule.applyToPlant(\''+key+'\',document.getElementById(\'fsPlantSelect\').value)">Apply to Plant</button>';
     h+='</div>';
-    Modal.open('&#128203; '+U.esc(t.name),h,'<button class="btn btn-outline" onclick="FeedSchedule.open()">&larr; Back</button>');
+    let foot='<button class="btn btn-outline" onclick="FeedSchedule.open()">&larr; Back</button>';
+    if(isUser) foot+=' <button class="btn btn-outline" onclick="FeedSchedule.openEdit(\''+key+'\')" style="margin-left:var(--space-xs)">✏️ Edit</button>';
+    Modal.open('📋 '+U.esc(t.name),h,foot);
   },
   applyToPlant(key,mid){
     if(!mid){Toast.show('Select a plant first','error');return}
@@ -6386,6 +6662,56 @@ const HarvestEstimate={
     const wkLabel=est.minDays===est.maxDays?Math.round(est.minDays/7)+' wks':Math.round(est.minDays/7)+'-'+Math.round(est.maxDays/7)+' wks';
     let h='<div class="harvest-est-badge">&#127800; ~'+est.daysRemaining+'d left ('+wkLabel+')</div>';
     h+='<div class="harvest-est-bar"><div class="harvest-est-bar-fill" style="width:'+Math.round(est.progress*100)+'%"></div></div>';
+    return h;
+  },
+  /* Accuracy tracking: compare actual flowering days to catalog estimate */
+  _accuracyData(){
+    var harvests=Store.harvestsArray();
+    var byStrain={};
+    harvests.forEach(function(hv){
+      if(!hv.floweringStart||!hv.floweringEnd) return;
+      var m=Store.getById('mothers',hv.motherId);if(!m) return;
+      var name=m.strainName;
+      var actual=U.daysBetween(U.parseDate(hv.floweringStart),U.parseDate(hv.floweringEnd));
+      if(actual<=0) return;
+      if(!byStrain[name]) byStrain[name]={name:name,actuals:[],catalogMin:null,catalogMax:null};
+      byStrain[name].actuals.push(actual);
+      if(byStrain[name].catalogMin===null){
+        var ftStr=HarvestEstimate._findFloweringTime(m);
+        var ft=HarvestEstimate._parseFloweringTime(ftStr);
+        if(ft){byStrain[name].catalogMin=ft.minDays;byStrain[name].catalogMax=ft.maxDays}
+      }
+    });
+    var results=[];
+    for(var k in byStrain){
+      var s=byStrain[k];
+      var avg=Math.round(s.actuals.reduce(function(a,b){return a+b},0)/s.actuals.length);
+      var catRange=s.catalogMin!==null?Math.round(s.catalogMin/7)+'-'+Math.round(s.catalogMax/7)+' wks':'N/A';
+      var delta=s.catalogMax!==null?avg-Math.round((s.catalogMin+s.catalogMax)/2):null;
+      results.push({name:s.name,avgDays:avg,catRange:catRange,delta:delta,count:s.actuals.length});
+    }
+    return results;
+  },
+  _accuracyCard(){
+    var data=this._accuracyData();
+    if(!data.length) return '';
+    var h='<div class="card chart-card" style="padding:var(--space-md)"><div class="chart-title">&#127800; Harvest Estimate Accuracy</div>';
+    h+='<table style="width:100%;font-size:.75rem;border-collapse:collapse">';
+    h+='<thead><tr><th style="text-align:left;padding:4px 8px;border-bottom:1px solid var(--border-subtle)">Strain</th>';
+    h+='<th style="text-align:center;padding:4px 8px;border-bottom:1px solid var(--border-subtle)">Catalog</th>';
+    h+='<th style="text-align:center;padding:4px 8px;border-bottom:1px solid var(--border-subtle)">Avg Actual</th>';
+    h+='<th style="text-align:center;padding:4px 8px;border-bottom:1px solid var(--border-subtle)">Delta</th>';
+    h+='<th style="text-align:center;padding:4px 8px;border-bottom:1px solid var(--border-subtle)">Harvests</th></tr></thead><tbody>';
+    data.forEach(function(d){
+      var deltaStr=d.delta!==null?(d.delta>0?'+'+d.delta+'d':d.delta+'d'):'—';
+      var deltaColor=d.delta!==null?(Math.abs(d.delta)<=7?'var(--leaf)':Math.abs(d.delta)<=14?'var(--gold)':'#e05c3a'):'var(--text-tertiary)';
+      h+='<tr><td style="padding:4px 8px;border-bottom:1px solid rgba(255,255,255,.04)">'+U.esc(d.name)+'</td>';
+      h+='<td style="text-align:center;padding:4px 8px;border-bottom:1px solid rgba(255,255,255,.04)">'+d.catRange+'</td>';
+      h+='<td style="text-align:center;padding:4px 8px;border-bottom:1px solid rgba(255,255,255,.04)"><strong>'+d.avgDays+'d</strong> ('+Math.round(d.avgDays/7)+' wks)</td>';
+      h+='<td style="text-align:center;padding:4px 8px;border-bottom:1px solid rgba(255,255,255,.04);color:'+deltaColor+'">'+deltaStr+'</td>';
+      h+='<td style="text-align:center;padding:4px 8px;border-bottom:1px solid rgba(255,255,255,.04)">'+d.count+'</td></tr>';
+    });
+    h+='</tbody></table></div>';
     return h;
   }
 };
@@ -8161,14 +8487,85 @@ window.CalibrationLog=CalibrationLog;
    ═══════════════════════════════════════════════ */
 const FleetView={
   _sortCol:'strainName',_sortDir:'asc',
+  _fStage:'all',_fHealth:'all',_fEnv:'all',
+  _selected:new Set(),
   _toggleSort(col){
     if(this._sortCol===col) this._sortDir=this._sortDir==='asc'?'desc':'asc';
     else{this._sortCol=col;this._sortDir='asc'}
     Plants.render();
   },
+  _onFilter(field,val){this['_f'+field]=val;this._selected.clear();Plants.render()},
+  _toggleCheck(mid,ev){
+    ev.stopPropagation();
+    if(this._selected.has(mid)) this._selected.delete(mid);else this._selected.add(mid);
+    Plants.render();
+  },
+  _toggleAll(checked,ids){
+    if(checked) ids.forEach(id=>this._selected.add(id));
+    else this._selected.clear();
+    Plants.render();
+  },
+  _bulkApply(field){
+    if(!this._selected.size){Toast.show('Select plants first','error');return}
+    const sel=document.getElementById('fvBulk_'+field);
+    if(!sel)return;
+    const val=sel.value;
+    if(!val){Toast.show('Select a value','error');return}
+    this._selected.forEach(mid=>{
+      const m=Store.getById('mothers',mid);
+      if(m){m[field]=val;Store.set('mothers',mid,m)}
+    });
+    Store.notify();
+    const n=this._selected.size;
+    this._selected.clear();
+    Toast.show(n+' plants updated');
+    Plants.render();
+  },
   renderTable(filtered){
     var self=this;
+    /* Apply fleet-level filters */
+    var list=filtered.slice();
+    if(this._fStage!=='all') list=list.filter(function(m){return m.growthStage===self._fStage});
+    if(this._fHealth!=='all') list=list.filter(function(m){return m.healthStatus===self._fHealth});
+    if(this._fEnv!=='all') list=list.filter(function(m){return(m.environmentId||'')===(self._fEnv==='none'?'':self._fEnv)});
+
+    /* Filter bar */
+    var envs=Store.environmentsArray();
+    var stages=['all','seedling','vegetative','flowering','harvest'];
+    var healths=['all','thriving','healthy','stressed','sick','quarantine'];
+    var h='<div class="fv-filter-bar">';
+    h+='<label>Stage</label><select onchange="FleetView._onFilter(\'Stage\',this.value)">';
+    stages.forEach(function(s){h+='<option value="'+s+'"'+(self._fStage===s?' selected':'')+'>'+(s==='all'?'All':s.charAt(0).toUpperCase()+s.slice(1))+'</option>'});
+    h+='</select>';
+    h+='<label>Health</label><select onchange="FleetView._onFilter(\'Health\',this.value)">';
+    healths.forEach(function(s){h+='<option value="'+s+'"'+(self._fHealth===s?' selected':'')+'>'+(s==='all'?'All':s.charAt(0).toUpperCase()+s.slice(1))+'</option>'});
+    h+='</select>';
+    h+='<label>Environ</label><select onchange="FleetView._onFilter(\'Env\',this.value)">';
+    h+='<option value="all"'+(self._fEnv==='all'?' selected':'')+'>All</option>';
+    h+='<option value="none"'+(self._fEnv==='none'?' selected':'')+'>Unassigned</option>';
+    envs.forEach(function(e){h+='<option value="'+e.id+'"'+(self._fEnv===e.id?' selected':'')+'>'+U.esc(e.name)+'</option>'});
+    h+='</select>';
+    h+='</div>';
+
+    /* Bulk action bar */
+    if(this._selected.size>0){
+      h+='<div class="fv-bulk-bar">';
+      h+='<span class="fv-bulk-count">'+this._selected.size+' selected</span>';
+      var bSel='font-size:.72rem;padding:2px 6px;background:var(--card);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);color:var(--text-primary);min-width:100px';
+      h+='<select id="fvBulk_healthStatus" style="'+bSel+'"><option value="">Health…</option>';
+      healths.slice(1).forEach(function(s){h+='<option value="'+s+'">'+s.charAt(0).toUpperCase()+s.slice(1)+'</option>'});
+      h+='</select><button class="btn btn-outline btn-sm" onclick="FleetView._bulkApply(\'healthStatus\')" style="font-size:.68rem">Apply</button>';
+      h+='<select id="fvBulk_growthStage" style="'+bSel+'"><option value="">Stage…</option>';
+      stages.slice(1).forEach(function(s){h+='<option value="'+s+'">'+s.charAt(0).toUpperCase()+s.slice(1)+'</option>'});
+      h+='</select><button class="btn btn-outline btn-sm" onclick="FleetView._bulkApply(\'growthStage\')" style="font-size:.68rem">Apply</button>';
+      h+='<select id="fvBulk_environmentId" style="'+bSel+'"><option value="">Environ…</option>';
+      envs.forEach(function(e){h+='<option value="'+e.id+'">'+U.esc(e.name)+'</option>'});
+      h+='</select><button class="btn btn-outline btn-sm" onclick="FleetView._bulkApply(\'environmentId\')" style="font-size:.68rem">Apply</button>';
+      h+='</div>';
+    }
+
     var cols=[
+      {key:'_chk',label:'<input type="checkbox" class="fv-chk" onchange="FleetView._toggleAll(this.checked,'+JSON.stringify(list.map(function(m){return m.id})).replace(/"/g,'&quot;')+')" '+(this._selected.size===list.length&&list.length?'checked':'')+'>' },
       {key:'strainName',label:'Strain'},
       {key:'strainType',label:'Type'},
       {key:'growthStage',label:'Stage'},
@@ -8180,32 +8577,36 @@ const FleetView={
       {key:'yield',label:'Yield'}
     ];
     /* Sort */
-    var sorted=filtered.slice().sort(function(a,b){
+    var sorted=list.slice().sort(function(a,b){
       var av=self._sortVal(a,self._sortCol),bv=self._sortVal(b,self._sortCol);
       if(typeof av==='number'&&typeof bv==='number') return self._sortDir==='asc'?av-bv:bv-av;
       return self._sortDir==='asc'?String(av).localeCompare(String(bv)):String(bv).localeCompare(String(av));
     });
-    var h='<table class="fleet-table"><thead><tr>';
+    h+='<table class="fleet-table"><thead><tr>';
     cols.forEach(function(c){
+      if(c.key==='_chk'){h+='<th style="width:28px">'+c.label+'</th>';return}
       var arrow=self._sortCol===c.key?(self._sortDir==='asc'?' &#9650;':' &#9660;'):'';
       h+='<th onclick="FleetView._toggleSort(\''+c.key+'\')">'+c.label+arrow+'</th>';
     });
     h+='</tr></thead><tbody>';
     sorted.forEach(function(m){
       var env=m.environmentId?Store.getById('environments',m.environmentId):null;
-      h+='<tr onclick="Plants.openEditModal(\''+m.id+'\')" style="cursor:pointer">';
-      h+='<td><strong>'+U.esc(m.strainName)+'</strong></td>';
-      h+='<td>'+(m.strainType||'—')+'</td>';
-      h+='<td>'+(m.growthStage?m.growthStage.charAt(0).toUpperCase()+m.growthStage.slice(1):'—')+'</td>';
-      h+='<td><span class="badge-'+m.healthStatus+'" style="font-size:.65rem;padding:1px 6px;border-radius:3px">'+m.healthStatus+'</span></td>';
-      h+='<td>'+U.age(m.dateAcquired)+'</td>';
-      h+='<td>'+(env?U.esc(env.name):'—')+'</td>';
-      h+='<td>'+self._lastFed(m.id)+'</td>';
-      h+='<td>'+self._daysSinceIpm(m.id)+'</td>';
-      h+='<td>'+self._yieldForMother(m.id)+'</td>';
+      var isSel=self._selected.has(m.id);
+      h+='<tr class="'+(isSel?'fv-sel':'')+'" style="cursor:pointer">';
+      h+='<td onclick="event.stopPropagation()"><input type="checkbox" class="fv-chk"'+(isSel?' checked':'')+' onchange="FleetView._toggleCheck(\''+m.id+'\',event)"></td>';
+      h+='<td onclick="Plants.openEditModal(\''+m.id+'\')"><strong>'+U.esc(m.strainName)+'</strong></td>';
+      h+='<td onclick="Plants.openEditModal(\''+m.id+'\')">'+(m.strainType||'—')+'</td>';
+      h+='<td onclick="Plants.openEditModal(\''+m.id+'\')">'+(m.growthStage?m.growthStage.charAt(0).toUpperCase()+m.growthStage.slice(1):'—')+'</td>';
+      h+='<td onclick="Plants.openEditModal(\''+m.id+'\')"><span class="badge-'+m.healthStatus+'" style="font-size:.65rem;padding:1px 6px;border-radius:3px">'+m.healthStatus+'</span></td>';
+      h+='<td onclick="Plants.openEditModal(\''+m.id+'\')">'+U.age(m.dateAcquired)+'</td>';
+      h+='<td onclick="Plants.openEditModal(\''+m.id+'\')">'+(env?U.esc(env.name):'—')+'</td>';
+      h+='<td onclick="Plants.openEditModal(\''+m.id+'\')">'+self._lastFed(m.id)+'</td>';
+      h+='<td onclick="Plants.openEditModal(\''+m.id+'\')">'+self._daysSinceIpm(m.id)+'</td>';
+      h+='<td onclick="Plants.openEditModal(\''+m.id+'\')">'+self._yieldForMother(m.id)+'</td>';
       h+='</tr>';
     });
     h+='</tbody></table>';
+    if(!list.length&&filtered.length) h+='<p style="text-align:center;color:var(--text-tertiary);font-size:.78rem;padding:var(--space-md)">No plants match these filters. <a href="#" onclick="FleetView._fStage=\'all\';FleetView._fHealth=\'all\';FleetView._fEnv=\'all\';Plants.render();return false" style="color:var(--cyan)">Reset filters</a></p>';
     return h;
   },
   _sortVal(m,col){
@@ -8701,6 +9102,7 @@ function init(){
   });
   Router.init();
   WhatsNew.check();
+  Snapshot.autoCheck();
 }
 
 if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init);

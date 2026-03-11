@@ -111,6 +111,40 @@ FEATURE: 11 New Features — VPD, Trichome, Training, Deficiency Wizard, DLI, Ru
       · Environment card badge shows the most overdue meter as a warning
       · Calendar events now include meter name in calibration entries
       · Backward-compatible: works with legacy global settings when no meters defined
+    - Feed Schedules upgraded with custom template support:
+      · Create, edit, and delete your own feeding schedule templates
+      · Week builder UI: add/remove weeks with week number and nutrient instructions
+      · Custom templates saved to settings and shown in "My Custom Schedules" section
+      · Edit and Delete buttons on custom template cards, Edit button in preview
+      · Built-in templates (GH Flora, Fox Farm, Gaia Green, KNF) remain read-only
+    - Fleet View upgraded with filters and bulk actions:
+      · Filter bar above table: Stage, Health, and Environment dropdowns
+      · Checkbox column with select-all header for multi-select
+      · Bulk action bar appears when plants selected: set Health, Stage, or Environment
+      · Apply bulk changes to all selected plants at once
+      · "Reset filters" link shown when filters hide all plants
+    - Auto Daily Snapshot:
+      · Optional auto-save of daily snapshot to journal on first app open each day
+      · Enable via checkbox toggle in the Snapshot modal
+      · Saves date, moon phase, task summary, environment stats, and plant overview
+      · Skips if already saved for the current day; shows toast on save
+    - Harvest Estimate Accuracy Tracking (Analytics chart):
+      · Compares actual flowering days to strain catalog estimates after harvest
+      · Per-strain table: Strain, Catalog Range, Avg Actual Days, Delta, Harvest Count
+      · Color-coded delta: green (≤7d), yellow (≤14d), red (>14d)
+      · Only appears when harvests have both floweringStart and floweringEnd dates
+    - Strain Performance Dashboard (Analytics chart):
+      · Ranks all strains by yield, quality, and efficiency across harvests
+      · Sortable table: Strain, Harvests, Avg Yield, Total Yield, Quality, Flower Days, Best Env
+      · Color-coded quality cells (green ≥4★, yellow 3★, red ≤2★)
+      · Click column headers to re-sort; total yield highlighted in cyan
+    - Environment ↔ Outcome Correlations (Analytics chart):
+      · Cross-references avg environment conditions during flowering with harvest outcomes
+      · Temperature buckets (5°F) → average yield bar chart
+      · Relative humidity buckets (10%) → average quality bar chart
+      · Summary insight: "Best avg yield came from flowering at X°F"
+      · Only appears when harvests have environment readings during flowering period
+    - Analytics tab now has up to 17 charts (was 14)
 
 ---
 
