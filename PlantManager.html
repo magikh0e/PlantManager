@@ -751,6 +751,9 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
         <button class="settings-menu-item" id="importBtn"><span class="smi-icon">&#8679;</span>Import Data</button>
         <button class="settings-menu-item" onclick="KNFCalc.openCalculator()"><span class="smi-icon">&#129514;</span>KNF Calculator</button>
         <button class="settings-menu-item" onclick="QRTag.openBatch()"><span class="smi-icon">&#127991;</span>Print Plant Tags</button>
+        <button class="settings-menu-item" onclick="QRTag.openBreedingTags()"><span class="smi-icon">&#129516;</span>Breeding Cross Tags</button>
+        <button class="settings-menu-item" onclick="QRTag.openSeedTags()"><span class="smi-icon">&#127793;</span>Seed Bank Labels</button>
+        <button class="settings-menu-item" onclick="QRTag.openScanner()"><span class="smi-icon">&#128269;</span>QR Lookup</button>
         <button class="settings-menu-item" onclick="FeedSchedule.open()"><span class="smi-icon">&#128203;</span>Feed Schedules</button>
         <button class="settings-menu-item" onclick="CostTracker.open()"><span class="smi-icon">&#128176;</span>Cost Tracker</button>
         <button class="settings-menu-item" onclick="GrowCycle.open()"><span class="smi-icon">&#128260;</span>Grow Cycles</button>
@@ -848,7 +851,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 (function(){
 'use strict';
 
-const APP_VERSION = '2.7.0';
+const APP_VERSION = '2.8.0';
 
 /* ═══════════════════════════════════════════════
    UTILS
@@ -5437,6 +5440,15 @@ const DataIO={
    ═══════════════════════════════════════════════ */
 const WhatsNew={
   _notes:{
+    '2.8.0':[
+      '<b>QR Generation Tracking</b> — enhanced plant tags with generation badges (G0, G1, G2…), parent lineage lines, offspring counts, and v2 QR payload',
+      '<b>Generation Filter</b> on batch tag printing — filter by G0 (origin), G1, G2, G3+ with plant count',
+      '<b>Breeding Cross Tags</b> — QR labels for crosses showing ♀ Mother × ♂ Father = Offspring, seed count, and date',
+      '<b>Seed Bank Labels</b> — QR labels for seed packets with strain, count, germ rate bar, age, and low-stock warnings',
+      '<b>QR Lookup</b> — paste-to-decode scanner that parses TRM2 (plant), TRM-X (breeding), TRM-S (seed), and legacy TRM formats with database lookup',
+      'New settings menu items: Breeding Cross Tags, Seed Bank Labels, QR Lookup',
+      'Print Tags button added to Breeding Tracker and Print Labels button added to Seed Bank',
+    ],
     '2.7.0':[
       '<b>10 New Analytics Charts</b> — cross-referencing data that was being tracked but never analyzed',
       '<b>Training → Yield</b> chart — compare avg dry weight by training technique (topping, LST, SCROG, etc.)',
@@ -6210,7 +6222,8 @@ const SeedBank={
     const totalSeeds=seeds.reduce((s,p)=>s+(parseInt(p.seedCount)||0),0);
     let h='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-md)">';
     h+='<span style="font-size:.8rem;color:var(--text-secondary)">'+seeds.length+' packet'+(seeds.length!==1?'s':'')+' &middot; '+totalSeeds+' total seeds</span>';
-    h+='<div style="display:flex;gap:var(--space-xs)"><button class="btn btn-outline btn-sm" onclick="SeedBank.openCatalog()">&#128218; Browse Catalog</button>';
+    h+='<div style="display:flex;gap:var(--space-xs)"><button class="btn btn-outline btn-sm" onclick="QRTag.openSeedTags()">&#127991; Print Labels</button>';
+    h+='<button class="btn btn-outline btn-sm" onclick="SeedBank.openCatalog()">&#128218; Browse Catalog</button>';
     h+='<button class="btn btn-primary btn-sm" onclick="SeedBank.openForm()">+ Add Seeds</button></div></div>';
 
     /* Germination stats summary */
@@ -6801,6 +6814,16 @@ const QRGen={
    QR PLANT TAGS
    ═══════════════════════════════════════════════ */
 const QRTag={
+  _genFilter:'all',
+
+  /* ── Generation badge colors ── */
+  _genBadge(gen){
+    const cols=['#00c8c0','#4a9e52','#f0b429','#e8721a','#e05c3a'];
+    const col=cols[Math.min(gen,cols.length-1)];
+    return '<span style="display:inline-block;padding:1px 6px;border-radius:10px;font-size:.65rem;font-weight:700;background:'+col+'22;color:'+col+';border:1px solid '+col+'44">G'+gen+'</span>';
+  },
+
+  /* ── Single plant tag ── */
   openForPlant(mid){
     const m=Store.getById('mothers',mid);
     if(!m) return;
@@ -6809,28 +6832,57 @@ const QRTag={
       +'<button class="btn btn-outline" onclick="Modal.close()">Close</button>';
     Modal.open('&#127991; Plant Tag',h,footer);
   },
+
+  /* ── Batch plant tags with generation filter ── */
   openBatch(ids){
-    const mids=ids||(Plants._selectMode&&Plants._selected.length?Plants._selected:Store.mothersArray().map(m=>m.id));
-    if(!mids.length){Toast.show('No plants to tag','info');return}
-    let h='<div class="qr-tag-grid">';
-    mids.forEach(mid=>{
+    const all=ids||(Plants._selectMode&&Plants._selected.length?Plants._selected:Store.mothersArray().map(m=>m.id));
+    if(!all.length){Toast.show('No plants to tag','info');return}
+    var mids=all;
+    if(this._genFilter!=='all'){
+      var gf=parseInt(this._genFilter);
+      mids=all.filter(function(mid){
+        var gen=Store.motherGeneration(mid);
+        if(gf>=3) return gen>=3;
+        return gen===gf;
+      });
+    }
+    let h='<div style="display:flex;gap:var(--space-sm);align-items:center;margin-bottom:var(--space-md);flex-wrap:wrap">';
+    h+='<span style="font-size:.8rem;color:var(--text-secondary)">Generation:</span>';
+    ['all','0','1','2','3'].forEach(function(v){
+      var label=v==='all'?'All':v==='3'?'G3+':'G'+v;
+      var active=QRTag._genFilter===v;
+      h+='<button class="btn btn-sm '+(active?'btn-primary':'btn-outline')+'" style="font-size:.7rem;padding:2px 8px" onclick="QRTag._genFilter=\''+v+'\';QRTag.openBatch('+(ids?'['+ids.map(function(i){return"'"+i+"'"}).join(',')+']':'null')+')">';
+      h+=label+'</button>';
+    });
+    h+='<span style="font-size:.75rem;color:var(--text-tertiary);margin-left:auto">Showing '+mids.length+' of '+all.length+' plants</span>';
+    h+='</div>';
+    h+='<div class="qr-tag-grid">';
+    mids.forEach(function(mid){
       const m=Store.getById('mothers',mid);
-      if(m) h+=this._buildTag(m);
+      if(m) h+=QRTag._buildTag(m);
     });
     h+='</div>';
-    const footer='<button class="btn btn-primary" onclick="window.print()">&#128424; Print All ('+mids.length+')</button>'
+    const footer='<button class="btn btn-primary" onclick="window.print()">&#128424; Print ('+mids.length+')</button>'
       +'<button class="btn btn-outline" onclick="Modal.close()">Close</button>';
-    Modal.open('&#127991; Plant Tags ('+mids.length+')',h,footer);
+    Modal.open('&#127991; Plant Tags',h,footer);
   },
+
+  /* ── Enhanced plant tag with generation + lineage ── */
   _buildTag(m){
     const env=m.environmentId?Store.getById('environments',m.environmentId):null;
-    const payload='TRM:'+m.id+'|'+m.strainName+'|'+(m.breeder||'')+'|'+(m.growthStage||'')+'|'+(m.dateAcquired||'');
+    const gen=Store.motherGeneration(m.id);
+    const parent=m.parentMotherId?Store.getById('mothers',m.parentMotherId):null;
+    const offspring=Store.childMothers(m.id);
+    const parentStrain=parent?parent.strainName:'';
+    const payload='TRM2:'+m.id+'|'+m.strainName+'|G'+gen+'|'+parentStrain+'|'+(m.breeder||'');
     const qrSvg=QRGen.generate(payload.substring(0,70),3);
     let h='<div class="qr-tag">';
     h+='<div style="flex-shrink:0">'+qrSvg+'</div>';
     h+='<div class="qr-tag-info">';
-    h+='<div class="qr-tag-name">'+U.esc(m.strainName)+'</div>';
+    h+='<div style="display:flex;align-items:center;gap:6px;margin-bottom:2px">'+this._genBadge(gen)+'<span class="qr-tag-name" style="margin:0">'+U.esc(m.strainName)+'</span></div>';
     if(m.breeder) h+='<div class="qr-tag-detail">'+U.esc(m.breeder)+'</div>';
+    if(parent) h+='<div class="qr-tag-detail" style="color:var(--leaf);font-size:.7rem">↑ Parent: '+U.esc(parent.strainName)+' (G'+(gen-1)+')</div>';
+    if(offspring.length) h+='<div class="qr-tag-detail" style="color:var(--cyan);font-size:.7rem">↓ '+offspring.length+' offspring</div>';
     if(m.strainType) h+='<div class="qr-tag-detail">'+m.strainType.charAt(0).toUpperCase()+m.strainType.slice(1)+'</div>';
     if(m.growthStage) h+='<div class="qr-tag-detail">Stage: '+m.growthStage.charAt(0).toUpperCase()+m.growthStage.slice(1)+'</div>';
     if(env) h+='<div class="qr-tag-detail">Env: '+U.esc(env.name)+'</div>';
@@ -6839,6 +6891,205 @@ const QRTag={
     h+='<div class="qr-tag-footer">Tropical Roots Maui \u2022 Plant Manager</div>';
     h+='</div></div>';
     return h;
+  },
+
+  /* ── Breeding cross tags ── */
+  openBreedingTags(){
+    const logs=Store.breedingLogsArray().filter(function(l){return l.type==='cross'||l.type==='seed_harvest'});
+    if(!logs.length){Toast.show('No breeding crosses or seed harvests to tag','info');return}
+    let h='<div class="qr-tag-grid">';
+    logs.forEach(function(b){h+=QRTag._buildBreedTag(b)});
+    h+='</div>';
+    const footer='<button class="btn btn-primary" onclick="window.print()">&#128424; Print ('+logs.length+')</button>'
+      +'<button class="btn btn-outline" onclick="Modal.close()">Close</button>';
+    Modal.open('&#129516; Breeding Cross Tags ('+logs.length+')',h,footer);
+  },
+
+  _buildBreedTag(b){
+    const mother=b.motherId?Store.getById('mothers',b.motherId):null;
+    const father=b.fatherId?Store.getById('mothers',b.fatherId):null;
+    const mName=mother?mother.strainName:'Unknown';
+    const fName=father?father.strainName:'Unknown';
+    const offspring=b.strainName||mName+' × '+fName;
+    const payload='TRM-X:'+b.id+'|'+offspring+'|'+mName+'x'+fName+'|'+(b.seedCount||0);
+    const qrSvg=QRGen.generate(payload.substring(0,70),3);
+    const typeBadge=b.type==='cross'
+      ?'<span style="display:inline-block;padding:1px 6px;border-radius:10px;font-size:.63rem;font-weight:600;background:rgba(240,180,41,.12);color:var(--gold);border:1px solid rgba(240,180,41,.3)">Cross</span>'
+      :'<span style="display:inline-block;padding:1px 6px;border-radius:10px;font-size:.63rem;font-weight:600;background:rgba(74,158,82,.12);color:var(--leaf);border:1px solid rgba(74,158,82,.3)">Seed Harvest</span>';
+    let h='<div class="qr-tag">';
+    h+='<div style="flex-shrink:0">'+qrSvg+'</div>';
+    h+='<div class="qr-tag-info">';
+    h+='<div style="display:flex;align-items:center;gap:6px;margin-bottom:2px">'+typeBadge+'</div>';
+    h+='<div class="qr-tag-name">'+U.esc(offspring)+'</div>';
+    h+='<div class="qr-tag-detail"><span style="color:var(--leaf)">♀ '+U.esc(mName)+'</span> <span style="color:var(--text-tertiary)">×</span> <span style="color:var(--cyan)">♂ '+U.esc(fName)+'</span></div>';
+    if(b.seedCount) h+='<div class="qr-tag-detail">Seeds: <strong>'+b.seedCount+'</strong></div>';
+    if(b.date) h+='<div class="qr-tag-detail">Date: '+new Date(b.date+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})+'</div>';
+    if(b.notes) h+='<div class="qr-tag-detail" style="font-size:.68rem;font-style:italic">'+U.esc(b.notes.slice(0,40))+'</div>';
+    h+='<div class="qr-tag-footer">Tropical Roots Maui \u2022 Breeding Program</div>';
+    h+='</div></div>';
+    return h;
+  },
+
+  /* ── Seed bank labels ── */
+  openSeedTags(){
+    const seeds=Store.seedsArray().filter(function(s){return s.seedCount>0});
+    if(!seeds.length){Toast.show('No seed packets to label','info');return}
+    let h='<div class="qr-tag-grid">';
+    seeds.forEach(function(s){h+=QRTag._buildSeedTag(s)});
+    h+='</div>';
+    const footer='<button class="btn btn-primary" onclick="window.print()">&#128424; Print ('+seeds.length+')</button>'
+      +'<button class="btn btn-outline" onclick="Modal.close()">Close</button>';
+    Modal.open('&#127793; Seed Bank Labels ('+seeds.length+')',h,footer);
+  },
+
+  _buildSeedTag(s){
+    const ageMonths=s.datePurchased?Math.round((Date.now()-U.parseDate(s.datePurchased).getTime())/2592000000):null;
+    const payload='TRM-S:'+s.id+'|'+s.strainName+'|'+(s.breeder||'')+'|'+s.seedCount+'|'+(s.germinationRate||0);
+    const qrSvg=QRGen.generate(payload.substring(0,70),3);
+    const femBadge=s.femOrReg==='feminized'?'<span style="color:var(--leaf);font-size:.65rem;font-weight:600">FEM</span>'
+      :s.femOrReg==='autoflower'?'<span style="color:var(--cyan);font-size:.65rem;font-weight:600">AUTO</span>'
+      :'<span style="color:var(--text-tertiary);font-size:.65rem;font-weight:600">REG</span>';
+    let h='<div class="qr-tag">';
+    h+='<div style="flex-shrink:0">'+qrSvg+'</div>';
+    h+='<div class="qr-tag-info">';
+    h+='<div style="display:flex;align-items:center;gap:6px;margin-bottom:2px">'+femBadge+'<span class="qr-tag-name" style="margin:0">'+U.esc(s.strainName)+'</span></div>';
+    if(s.breeder) h+='<div class="qr-tag-detail">'+U.esc(s.breeder)+'</div>';
+    h+='<div class="qr-tag-detail">Seeds: <strong style="color:var(--cyan)">'+s.seedCount+'</strong>';
+    if(s.seedCount<=3) h+=' <span style="color:#e05c3a">⚠ Low</span>';
+    h+='</div>';
+    if(s.germinationRate!=null&&s.germinationRate>0){
+      var gc=s.germinationRate>=80?'var(--leaf)':s.germinationRate>=60?'var(--gold)':'#e05c3a';
+      h+='<div class="qr-tag-detail">Germ: <span style="color:'+gc+';font-weight:600">'+s.germinationRate+'%</span>';
+      h+=' <span style="display:inline-block;width:40px;height:5px;background:rgba(255,255,255,.1);border-radius:3px;vertical-align:middle"><span style="display:block;width:'+Math.min(100,s.germinationRate)+'%;height:100%;background:'+gc+';border-radius:3px"></span></span>';
+      h+='</div>';
+    }
+    if(s.datePurchased){
+      h+='<div class="qr-tag-detail">Purchased: '+new Date(s.datePurchased+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+      if(ageMonths!==null) h+=' ('+ageMonths+'mo'+(ageMonths>24?' ⏳':'')+')</div>';
+      else h+='</div>';
+    }
+    if(s.source) h+='<div class="qr-tag-detail" style="font-size:.68rem">Source: '+s.source+'</div>';
+    h+='<div class="qr-tag-footer">Tropical Roots Maui \u2022 Seed Bank</div>';
+    h+='</div></div>';
+    return h;
+  },
+
+  /* ── QR Lookup / Decoder ── */
+  openScanner(){
+    let h='<div style="margin-bottom:var(--space-md)">';
+    h+='<label class="form-label">Paste scanned QR code text</label>';
+    h+='<div style="display:flex;gap:var(--space-sm)"><input class="form-input" id="qrScanInput" placeholder="e.g. TRM2:abc123|Maui Wowie|G1|..." style="flex:1">';
+    h+='<button class="btn btn-primary btn-sm" onclick="QRTag._decodeScan()">Decode</button></div>';
+    h+='</div>';
+    h+='<div id="qrScanResult" style="min-height:60px"></div>';
+    Modal.open('&#128269; QR Lookup',h,'<button class="btn btn-outline" onclick="Modal.close()">Close</button>');
+  },
+
+  _decodeScan(){
+    const raw=(document.getElementById('qrScanInput').value||'').trim();
+    const out=document.getElementById('qrScanResult');
+    if(!raw){out.innerHTML='<div style="color:var(--text-tertiary);text-align:center;padding:var(--space-md)">Paste a QR code value above</div>';return}
+
+    let h='';
+
+    /* TRM2 — Enhanced plant tag */
+    if(raw.startsWith('TRM2:')){
+      const parts=raw.substring(5).split('|');
+      const id=parts[0]||'';
+      const strain=parts[1]||'';
+      const genStr=parts[2]||'';
+      const parentStrain=parts[3]||'';
+      const breeder=parts[4]||'';
+      const gen=parseInt((genStr.match(/\d+/)||[0])[0])||0;
+      const m=id?Store.getById('mothers',id):null;
+      h+='<div class="card" style="padding:var(--space-md)">';
+      h+='<div style="font-size:.65rem;color:var(--text-tertiary);margin-bottom:var(--space-xs)">Plant Tag (v2)</div>';
+      h+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:var(--space-sm)">'+this._genBadge(gen)+'<span style="font-size:1.1rem;font-weight:700">'+U.esc(strain)+'</span></div>';
+      if(breeder) h+='<div style="font-size:.8rem;color:var(--text-secondary)">Breeder: '+U.esc(breeder)+'</div>';
+      if(parentStrain) h+='<div style="font-size:.8rem;color:var(--leaf)">↑ Parent: '+U.esc(parentStrain)+' (G'+(gen-1)+')</div>';
+      if(m){
+        const offspring=Store.childMothers(m.id);
+        if(offspring.length) h+='<div style="font-size:.8rem;color:var(--cyan)">↓ '+offspring.length+' offspring: '+offspring.map(function(o){return U.esc(o.strainName)}).join(', ')+'</div>';
+        h+='<div style="margin-top:var(--space-sm);display:flex;gap:var(--space-sm)">';
+        h+='<button class="btn btn-outline btn-sm" onclick="Modal.close();Plants.openEditModal(\''+m.id+'\')">Open Plant</button>';
+        h+='<button class="btn btn-outline btn-sm" onclick="Lineage.openForPlant(\''+m.id+'\')">&#127795; Lineage</button>';
+        h+='<button class="btn btn-outline btn-sm" onclick="QRTag.openForPlant(\''+m.id+'\')">&#127991; Tag</button>';
+        h+='</div>';
+      }else{
+        h+='<div style="color:var(--orange);font-size:.8rem;margin-top:var(--space-sm)">⚠ Plant ID not found in database (may have been archived or deleted)</div>';
+      }
+      h+='</div>';
+
+    /* TRM (legacy v1) */
+    }else if(raw.startsWith('TRM:')){
+      const parts=raw.substring(4).split('|');
+      const id=parts[0]||'';const strain=parts[1]||'';
+      const m=id?Store.getById('mothers',id):null;
+      h+='<div class="card" style="padding:var(--space-md)">';
+      h+='<div style="font-size:.65rem;color:var(--text-tertiary);margin-bottom:var(--space-xs)">Plant Tag (v1 — legacy)</div>';
+      h+='<div style="font-size:1.1rem;font-weight:700;margin-bottom:var(--space-xs)">'+U.esc(strain)+'</div>';
+      if(parts[2]) h+='<div style="font-size:.8rem;color:var(--text-secondary)">Breeder: '+U.esc(parts[2])+'</div>';
+      if(parts[3]) h+='<div style="font-size:.8rem;color:var(--text-secondary)">Stage: '+U.esc(parts[3])+'</div>';
+      if(m){
+        h+='<div style="margin-top:var(--space-sm)"><button class="btn btn-outline btn-sm" onclick="Modal.close();Plants.openEditModal(\''+m.id+'\')">Open Plant</button></div>';
+      }else{
+        h+='<div style="color:var(--orange);font-size:.8rem;margin-top:var(--space-sm)">⚠ Plant not found in database</div>';
+      }
+      h+='</div>';
+
+    /* TRM-X — Breeding cross tag */
+    }else if(raw.startsWith('TRM-X:')){
+      const parts=raw.substring(6).split('|');
+      const id=parts[0]||'';const offspring=parts[1]||'';
+      const parentCross=parts[2]||'';const seeds=parts[3]||'0';
+      const b=id?Store.getById('breedingLogs',id):null;
+      h+='<div class="card" style="padding:var(--space-md)">';
+      h+='<div style="font-size:.65rem;color:var(--text-tertiary);margin-bottom:var(--space-xs)">Breeding Cross Tag</div>';
+      h+='<div style="font-size:1.1rem;font-weight:700;color:var(--gold);margin-bottom:var(--space-xs)">'+U.esc(offspring)+'</div>';
+      if(parentCross){
+        var ps=parentCross.split('x');
+        h+='<div style="font-size:.85rem"><span style="color:var(--leaf)">♀ '+U.esc(ps[0]||'')+'</span> × <span style="color:var(--cyan)">♂ '+U.esc(ps[1]||'')+'</span></div>';
+      }
+      if(parseInt(seeds)>0) h+='<div style="font-size:.8rem;color:var(--text-secondary)">Seeds: '+seeds+'</div>';
+      if(b){
+        h+='<div style="font-size:.75rem;color:var(--text-tertiary);margin-top:var(--space-xs)">Logged '+U.relTime(b.timestamp)+'</div>';
+        h+='<div style="margin-top:var(--space-sm)"><button class="btn btn-outline btn-sm" onclick="BreedingTracker.open()">Open Breeding Tracker</button></div>';
+      }else{
+        h+='<div style="color:var(--orange);font-size:.8rem;margin-top:var(--space-sm)">⚠ Breeding record not found</div>';
+      }
+      h+='</div>';
+
+    /* TRM-S — Seed bank tag */
+    }else if(raw.startsWith('TRM-S:')){
+      const parts=raw.substring(6).split('|');
+      const id=parts[0]||'';const strain=parts[1]||'';
+      const breeder=parts[2]||'';const seeds=parts[3]||'0';const germ=parts[4]||'0';
+      const s=id?Store.getById('seeds',id):null;
+      h+='<div class="card" style="padding:var(--space-md)">';
+      h+='<div style="font-size:.65rem;color:var(--text-tertiary);margin-bottom:var(--space-xs)">Seed Bank Label</div>';
+      h+='<div style="font-size:1.1rem;font-weight:700;margin-bottom:var(--space-xs)">'+U.esc(strain)+'</div>';
+      if(breeder) h+='<div style="font-size:.8rem;color:var(--text-secondary)">'+U.esc(breeder)+'</div>';
+      h+='<div style="font-size:.8rem">Seeds: <strong>'+seeds+'</strong>';
+      if(s) h+=' (current: <strong style="color:var(--cyan)">'+s.seedCount+'</strong>)';
+      h+='</div>';
+      if(parseInt(germ)>0) h+='<div style="font-size:.8rem">Germination: <strong>'+germ+'%</strong></div>';
+      if(s){
+        h+='<div style="margin-top:var(--space-sm)"><button class="btn btn-outline btn-sm" onclick="SeedBank.open()">Open Seed Bank</button></div>';
+      }else{
+        h+='<div style="color:var(--orange);font-size:.8rem;margin-top:var(--space-sm)">⚠ Seed packet not found</div>';
+      }
+      h+='</div>';
+
+    /* Unknown format */
+    }else{
+      h+='<div class="card" style="padding:var(--space-md)">';
+      h+='<div style="color:var(--orange);font-size:.85rem">⚠ Unknown QR format</div>';
+      h+='<div style="font-size:.75rem;color:var(--text-tertiary);margin-top:var(--space-xs);word-break:break-all">'+U.esc(raw)+'</div>';
+      h+='<div style="font-size:.72rem;color:var(--text-tertiary);margin-top:var(--space-sm)">Recognized formats: TRM2: (plant), TRM-X: (breeding), TRM-S: (seed), TRM: (legacy)</div>';
+      h+='</div>';
+    }
+
+    out.innerHTML=h;
   }
 };
 window.QRTag=QRTag;
@@ -9035,7 +9286,7 @@ const BreedingTracker={
     }else{
       h+='<div style="text-align:center;color:var(--text-tertiary);padding:var(--space-lg)">No breeding logs yet.</div>';
     }
-    Modal.open('&#129516; Breeding Tracker',h,'<button class="btn btn-ghost" onclick="Modal.close()">Close</button>');
+    Modal.open('&#129516; Breeding Tracker',h,'<button class="btn btn-outline btn-sm" onclick="QRTag.openBreedingTags()">&#127991; Print Tags</button> <button class="btn btn-ghost" onclick="Modal.close()">Close</button>');
   },
   openForm(type,preselect){
     var mothers=Store.mothersArray();

@@ -3,6 +3,45 @@ CHANGELOG — Tropical Roots Maui - Plant Manager
 https://github.com/magikh0e/PlantManager
 
 
+v2.8.0 — 2026-03-10
+--------------------
+FEATURE: QR Offspring Tracking — Generation Tags, Breeding Cross Tags, Seed Labels, QR Lookup
+
+  Enhanced Plant Tags (v2 QR Payload)
+    - Generation badge on every tag: G0 (cyan), G1 (green), G2 (gold), G3+ (orange)
+    - Parent lineage line: "↑ Parent: {strain} (G{n-1})" for clone-derived plants
+    - Offspring count: "↓ N offspring" when plant has children
+    - Updated QR payload: TRM2:{id}|{strain}|G{gen}|{parentStrain}|{breeder}
+
+  Generation Filter on Batch Tags
+    - Filter dropdown: All, G0, G1, G2, G3+ with live plant count
+    - "Showing X of Y plants" counter
+
+  Breeding Cross Tags
+    - QR labels for breeding crosses and seed harvests
+    - Visual: ♀ Mother × ♂ Father = Offspring strain name
+    - Payload: TRM-X:{id}|{offspring}|{mother}x{father}|{seedCount}
+    - Accessible from Breeding Tracker modal + settings gear menu
+
+  Seed Bank Labels
+    - QR labels for seed packets with strain, breeder, seed count, fem/reg badge
+    - Germination rate bar, purchase date with age, low-stock warning
+    - Payload: TRM-S:{id}|{strain}|{breeder}|{seeds}|{germ%}
+    - Accessible from Seed Bank modal + settings gear menu
+
+  QR Lookup / Decoder
+    - Paste-to-decode interface for scanning QR codes
+    - Parses all 4 formats: TRM2 (plant), TRM-X (breeding), TRM-S (seed), TRM (legacy)
+    - Database lookup with "Open Plant", "Lineage", "Tag" action buttons
+    - Graceful "not found" fallback for deleted/unknown entries
+
+  Integration Points
+    - Settings gear menu: 3 new items (Breeding Cross Tags, Seed Bank Labels, QR Lookup)
+    - Breeding Tracker: "Print Tags" button in modal footer
+    - Seed Bank: "Print Labels" button in modal header
+
+---
+
 v2.7.0 — 2026-03-10
 --------------------
 FEATURE: Analytics Expansion — 10 New Cross-Reference Charts (20 → 30 total)
