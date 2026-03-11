@@ -11,6 +11,11 @@ ENHANCEMENT: Collapsible Gear Menu Groups
   Tags & Labels (5), Growing (6), Calculators (4), Diagnostics (3),
   Reports & Layout (2). Top-level items (Notifications, Toggle Banner,
   Export/Import Data) and Help Guide remain always visible.
+  Quick Actions header added for visual consistency.
+
+  Dashboard quick actions reorganized into 4 collapsible sections:
+  Quick Add (10, expanded by default), Growing & Tracking (9),
+  Calculators & Diagnostics (7), Reports & Layout (3).
 
 
 v2.9.0 — 2026-03-10
