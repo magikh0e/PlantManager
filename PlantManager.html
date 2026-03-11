@@ -113,6 +113,13 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 .settings-menu-item{display:flex;align-items:center;gap:var(--space-sm);width:100%;padding:10px 14px;border:none;background:none;color:var(--text-secondary);font-size:.85rem;cursor:pointer;transition:all var(--duration) var(--ease);text-align:left}
 .settings-menu-item:hover{background:rgba(0,200,192,.08);color:var(--cyan)}
 .settings-menu-item .smi-icon{font-size:1.05rem;width:22px;text-align:center;flex-shrink:0}
+.smi-group{border-top:1px solid var(--border-subtle);padding:2px 0}
+.smi-group-hdr{display:flex;align-items:center;justify-content:space-between;width:100%;padding:8px 14px;border:none;background:none;color:var(--text-tertiary);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;cursor:pointer;transition:color .2s}
+.smi-group-hdr:hover{color:var(--cyan)}
+.smi-group-hdr::after{content:'▸';font-size:.65rem;transition:transform .2s}
+.smi-group.open .smi-group-hdr::after{transform:rotate(90deg)}
+.smi-group .smi-group-items{display:none}
+.smi-group.open .smi-group-items{display:block}
 
 /* ── Tab Nav ── */
 .tab-nav{position:fixed;top:var(--header-h);left:0;right:0;height:var(--tab-h);background:var(--bg-secondary);border-bottom:1px solid var(--border-subtle);display:flex;overflow-x:auto;z-index:190;transition:background var(--duration) var(--ease);scrollbar-width:none;-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 40px),transparent)}
@@ -749,27 +756,52 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
         <button class="settings-menu-item" id="heroToggle"><span class="smi-icon">&#127956;</span>Toggle Banner</button>
         <button class="settings-menu-item" id="exportBtn"><span class="smi-icon">&#8681;</span>Export Data</button>
         <button class="settings-menu-item" id="importBtn"><span class="smi-icon">&#8679;</span>Import Data</button>
-        <button class="settings-menu-item" onclick="KNFCalc.openCalculator()"><span class="smi-icon">&#129514;</span>KNF Calculator</button>
-        <button class="settings-menu-item" onclick="QRTag.openBatch()"><span class="smi-icon">&#127991;</span>Print Plant Tags</button>
-        <button class="settings-menu-item" onclick="QRTag.openCloneTags()"><span class="smi-icon">&#9986;</span>Clone Tags</button>
-        <button class="settings-menu-item" onclick="QRTag.openBreedingTags()"><span class="smi-icon">&#129516;</span>Breeding Cross Tags</button>
-        <button class="settings-menu-item" onclick="QRTag.openSeedTags()"><span class="smi-icon">&#127793;</span>Seed Bank Labels</button>
-        <button class="settings-menu-item" onclick="QRTag.openScanner()"><span class="smi-icon">&#128269;</span>QR Lookup</button>
-        <button class="settings-menu-item" onclick="FeedSchedule.open()"><span class="smi-icon">&#128203;</span>Feed Schedules</button>
-        <button class="settings-menu-item" onclick="CostTracker.open()"><span class="smi-icon">&#128176;</span>Cost Tracker</button>
-        <button class="settings-menu-item" onclick="GrowCycle.open()"><span class="smi-icon">&#128260;</span>Grow Cycles</button>
-        <button class="settings-menu-item" onclick="SoilMixCalc.open()"><span class="smi-icon">&#127793;</span>Soil Mix Calc</button>
-        <button class="settings-menu-item" onclick="Report.openSelector()"><span class="smi-icon">&#128196;</span>Export Report</button>
-        <button class="settings-menu-item" onclick="PestID.open()"><span class="smi-icon">&#128270;</span>Pest Identifier</button>
-        <button class="settings-menu-item" onclick="PestID.openSettings()"><span class="smi-icon">&#129302;</span>Pest ID Settings</button>
-        <button class="settings-menu-item" onclick="VPDCalc.open()"><span class="smi-icon">&#127777;</span>VPD Calculator</button>
-        <button class="settings-menu-item" onclick="DLICalc.open()"><span class="smi-icon">&#9728;</span>DLI Calculator</button>
-        <button class="settings-menu-item" onclick="DeficiencyWizard.open()"><span class="smi-icon">&#129657;</span>Deficiency Wizard</button>
-        <button class="settings-menu-item" onclick="RunManager.open()"><span class="smi-icon">&#128230;</span>Grow Runs</button>
-        <button class="settings-menu-item" onclick="BreedingTracker.open()"><span class="smi-icon">&#129516;</span>Breeding Tracker</button>
-        <button class="settings-menu-item" onclick="CalibrationLog.open()"><span class="smi-icon">&#9879;</span>Calibration Log</button>
-        <button class="settings-menu-item" onclick="RoomDiagram.open()"><span class="smi-icon">&#128208;</span>Room Layout</button>
-        <a href="/PlantManagerHelp.html" target="_blank" class="settings-menu-item" style="text-decoration:none"><span class="smi-icon">&#10067;</span>Help Guide</a>
+        <div class="smi-group">
+          <button class="smi-group-hdr">&#127991; Tags &amp; Labels</button>
+          <div class="smi-group-items">
+            <button class="settings-menu-item" onclick="QRTag.openBatch()"><span class="smi-icon">&#127991;</span>Print Plant Tags</button>
+            <button class="settings-menu-item" onclick="QRTag.openCloneTags()"><span class="smi-icon">&#9986;</span>Clone Tags</button>
+            <button class="settings-menu-item" onclick="QRTag.openBreedingTags()"><span class="smi-icon">&#129516;</span>Breeding Cross Tags</button>
+            <button class="settings-menu-item" onclick="QRTag.openSeedTags()"><span class="smi-icon">&#127793;</span>Seed Bank Labels</button>
+            <button class="settings-menu-item" onclick="QRTag.openScanner()"><span class="smi-icon">&#128269;</span>QR Lookup</button>
+          </div>
+        </div>
+        <div class="smi-group">
+          <button class="smi-group-hdr">&#127793; Growing</button>
+          <div class="smi-group-items">
+            <button class="settings-menu-item" onclick="FeedSchedule.open()"><span class="smi-icon">&#128203;</span>Feed Schedules</button>
+            <button class="settings-menu-item" onclick="CostTracker.open()"><span class="smi-icon">&#128176;</span>Cost Tracker</button>
+            <button class="settings-menu-item" onclick="GrowCycle.open()"><span class="smi-icon">&#128260;</span>Grow Cycles</button>
+            <button class="settings-menu-item" onclick="RunManager.open()"><span class="smi-icon">&#128230;</span>Grow Runs</button>
+            <button class="settings-menu-item" onclick="BreedingTracker.open()"><span class="smi-icon">&#129516;</span>Breeding Tracker</button>
+            <button class="settings-menu-item" onclick="CalibrationLog.open()"><span class="smi-icon">&#9879;</span>Calibration Log</button>
+          </div>
+        </div>
+        <div class="smi-group">
+          <button class="smi-group-hdr">&#129518; Calculators</button>
+          <div class="smi-group-items">
+            <button class="settings-menu-item" onclick="KNFCalc.openCalculator()"><span class="smi-icon">&#129514;</span>KNF Calculator</button>
+            <button class="settings-menu-item" onclick="VPDCalc.open()"><span class="smi-icon">&#127777;</span>VPD Calculator</button>
+            <button class="settings-menu-item" onclick="DLICalc.open()"><span class="smi-icon">&#9728;</span>DLI Calculator</button>
+            <button class="settings-menu-item" onclick="SoilMixCalc.open()"><span class="smi-icon">&#127793;</span>Soil Mix Calc</button>
+          </div>
+        </div>
+        <div class="smi-group">
+          <button class="smi-group-hdr">&#128300; Diagnostics</button>
+          <div class="smi-group-items">
+            <button class="settings-menu-item" onclick="PestID.open()"><span class="smi-icon">&#128270;</span>Pest Identifier</button>
+            <button class="settings-menu-item" onclick="PestID.openSettings()"><span class="smi-icon">&#129302;</span>Pest ID Settings</button>
+            <button class="settings-menu-item" onclick="DeficiencyWizard.open()"><span class="smi-icon">&#129657;</span>Deficiency Wizard</button>
+          </div>
+        </div>
+        <div class="smi-group">
+          <button class="smi-group-hdr">&#128202; Reports &amp; Layout</button>
+          <div class="smi-group-items">
+            <button class="settings-menu-item" onclick="Report.openSelector()"><span class="smi-icon">&#128196;</span>Export Report</button>
+            <button class="settings-menu-item" onclick="RoomDiagram.open()"><span class="smi-icon">&#128208;</span>Room Layout</button>
+          </div>
+        </div>
+        <a href="/PlantManagerHelp.html" target="_blank" class="settings-menu-item" style="text-decoration:none;border-top:1px solid var(--border-subtle)"><span class="smi-icon">&#10067;</span>Help Guide</a>
       </div>
     </div>
     <input type="file" id="importFile" accept=".json" class="sr-only">
@@ -852,7 +884,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 (function(){
 'use strict';
 
-const APP_VERSION = '2.9.0';
+const APP_VERSION = '2.9.1';
 
 /* ═══════════════════════════════════════════════
    UTILS
@@ -5445,6 +5477,9 @@ const DataIO={
    ═══════════════════════════════════════════════ */
 const WhatsNew={
   _notes:{
+    '2.9.1':[
+      '<b>Collapsible Gear Menu</b> — settings menu reorganized into 5 collapsible groups (Tags &amp; Labels, Growing, Calculators, Diagnostics, Reports &amp; Layout) for faster navigation',
+    ],
     '2.9.0':[
       '<b>Cost Efficiency Over Time</b> — monthly &amp; cumulative $/gram line chart with average reference line, tracking cost trends across harvests',
       '<b>Monthly Expense Trend</b> — multi-line chart showing spending by category (Seeds, Nutrients, Equipment, etc.) over time',
@@ -10536,7 +10571,8 @@ function init(){
   var sBtn=document.getElementById('settingsBtn'),sMenu=document.getElementById('settingsMenu');
   sBtn.addEventListener('click',function(e){e.stopPropagation();sMenu.classList.toggle('open')});
   document.addEventListener('click',function(){sMenu.classList.remove('open')});
-  sMenu.addEventListener('click',function(){sMenu.classList.remove('open')});
+  sMenu.addEventListener('click',function(e){if(!e.target.closest('.smi-group-hdr'))sMenu.classList.remove('open')});
+  sMenu.querySelectorAll('.smi-group-hdr').forEach(function(hdr){hdr.addEventListener('click',function(e){e.stopPropagation();this.parentElement.classList.toggle('open')})});
   document.getElementById('appVersion').textContent='v'+APP_VERSION;
   Store.subscribe(()=>{
     const tab=Router._current;

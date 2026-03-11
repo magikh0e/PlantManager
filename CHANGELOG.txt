@@ -3,6 +3,16 @@ CHANGELOG — Tropical Roots Maui - Plant Manager
 https://github.com/magikh0e/PlantManager
 
 
+v2.9.1 — 2026-03-10
+--------------------
+ENHANCEMENT: Collapsible Gear Menu Groups
+
+  Settings gear menu reorganized into 5 collapsible accordion groups:
+  Tags & Labels (5), Growing (6), Calculators (4), Diagnostics (3),
+  Reports & Layout (2). Top-level items (Notifications, Toggle Banner,
+  Export/Import Data) and Help Guide remain always visible.
+
+
 v2.9.0 — 2026-03-10
 --------------------
 FEATURE: Cost Efficiency Analytics + Analytics Export Report
