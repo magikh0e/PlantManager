@@ -751,6 +751,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
         <button class="settings-menu-item" id="importBtn"><span class="smi-icon">&#8679;</span>Import Data</button>
         <button class="settings-menu-item" onclick="KNFCalc.openCalculator()"><span class="smi-icon">&#129514;</span>KNF Calculator</button>
         <button class="settings-menu-item" onclick="QRTag.openBatch()"><span class="smi-icon">&#127991;</span>Print Plant Tags</button>
+        <button class="settings-menu-item" onclick="QRTag.openCloneTags()"><span class="smi-icon">&#9986;</span>Clone Tags</button>
         <button class="settings-menu-item" onclick="QRTag.openBreedingTags()"><span class="smi-icon">&#129516;</span>Breeding Cross Tags</button>
         <button class="settings-menu-item" onclick="QRTag.openSeedTags()"><span class="smi-icon">&#127793;</span>Seed Bank Labels</button>
         <button class="settings-menu-item" onclick="QRTag.openScanner()"><span class="smi-icon">&#128269;</span>QR Lookup</button>
@@ -851,7 +852,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 (function(){
 'use strict';
 
-const APP_VERSION = '2.8.0';
+const APP_VERSION = '2.8.1';
 
 /* ═══════════════════════════════════════════════
    UTILS
@@ -2006,6 +2007,7 @@ const Clones={
         h+='</div>';
         h+='<div class="clone-actions">';
         h+='<button class="btn btn-ghost btn-sm" onclick="Clones.openEditModal(\''+c.id+'\')">Edit</button>';
+        h+='<button class="btn btn-ghost btn-sm" onclick="QRTag.openCloneTag(\''+c.id+'\')">&#127991; Tag</button>';
         if(pending>0){
           h+='<button class="btn btn-ghost btn-sm" style="color:var(--leaf)" onclick="Clones.quickUpdate(\''+c.id+'\',\'success\')">+1 &#10003;</button>';
           h+='<button class="btn btn-ghost btn-sm" style="color:#e05c3a" onclick="Clones.quickUpdate(\''+c.id+'\',\'fail\')">+1 &#10007;</button>';
@@ -5440,9 +5442,14 @@ const DataIO={
    ═══════════════════════════════════════════════ */
 const WhatsNew={
   _notes:{
+    '2.8.1':[
+      '<b>Cannabis Generation Labels</b> — renamed from G0/G1/G2 to standard S1 (seed origin), F1, F2, F3+ across all tags, QR payloads, filter buttons, and decoder',
+      '<b>Clone QR Tags</b> — new tag type for clone batches with TRM-C payload, mother reference, cutting counts, rooting status, and success rate',
+      'New Clone Tags option in settings gear menu + 🏷️ Tag button on clone cards',
+    ],
     '2.8.0':[
-      '<b>QR Generation Tracking</b> — enhanced plant tags with generation badges (G0, G1, G2…), parent lineage lines, offspring counts, and v2 QR payload',
-      '<b>Generation Filter</b> on batch tag printing — filter by G0 (origin), G1, G2, G3+ with plant count',
+      '<b>QR Generation Tracking</b> — enhanced plant tags with generation badges, parent lineage lines, offspring counts, and v2 QR payload',
+      '<b>Generation Filter</b> on batch tag printing — filter by generation with plant count',
       '<b>Breeding Cross Tags</b> — QR labels for crosses showing ♀ Mother × ♂ Father = Offspring, seed count, and date',
       '<b>Seed Bank Labels</b> — QR labels for seed packets with strain, count, germ rate bar, age, and low-stock warnings',
       '<b>QR Lookup</b> — paste-to-decode scanner that parses TRM2 (plant), TRM-X (breeding), TRM-S (seed), and legacy TRM formats with database lookup',
@@ -6816,11 +6823,12 @@ const QRGen={
 const QRTag={
   _genFilter:'all',
 
-  /* ── Generation badge colors ── */
+  /* ── Generation label + badge ── */
+  _genLabel(gen){ return gen===0?'S1':'F'+gen; },
   _genBadge(gen){
     const cols=['#00c8c0','#4a9e52','#f0b429','#e8721a','#e05c3a'];
     const col=cols[Math.min(gen,cols.length-1)];
-    return '<span style="display:inline-block;padding:1px 6px;border-radius:10px;font-size:.65rem;font-weight:700;background:'+col+'22;color:'+col+';border:1px solid '+col+'44">G'+gen+'</span>';
+    return '<span style="display:inline-block;padding:1px 6px;border-radius:10px;font-size:.65rem;font-weight:700;background:'+col+'22;color:'+col+';border:1px solid '+col+'44">'+this._genLabel(gen)+'</span>';
   },
 
   /* ── Single plant tag ── */
@@ -6849,7 +6857,7 @@ const QRTag={
     let h='<div style="display:flex;gap:var(--space-sm);align-items:center;margin-bottom:var(--space-md);flex-wrap:wrap">';
     h+='<span style="font-size:.8rem;color:var(--text-secondary)">Generation:</span>';
     ['all','0','1','2','3'].forEach(function(v){
-      var label=v==='all'?'All':v==='3'?'G3+':'G'+v;
+      var label=v==='all'?'All':v==='0'?'S1':v==='3'?'F3+':'F'+v;
       var active=QRTag._genFilter===v;
       h+='<button class="btn btn-sm '+(active?'btn-primary':'btn-outline')+'" style="font-size:.7rem;padding:2px 8px" onclick="QRTag._genFilter=\''+v+'\';QRTag.openBatch('+(ids?'['+ids.map(function(i){return"'"+i+"'"}).join(',')+']':'null')+')">';
       h+=label+'</button>';
@@ -6874,14 +6882,14 @@ const QRTag={
     const parent=m.parentMotherId?Store.getById('mothers',m.parentMotherId):null;
     const offspring=Store.childMothers(m.id);
     const parentStrain=parent?parent.strainName:'';
-    const payload='TRM2:'+m.id+'|'+m.strainName+'|G'+gen+'|'+parentStrain+'|'+(m.breeder||'');
+    const payload='TRM2:'+m.id+'|'+m.strainName+'|'+this._genLabel(gen)+'|'+parentStrain+'|'+(m.breeder||'');
     const qrSvg=QRGen.generate(payload.substring(0,70),3);
     let h='<div class="qr-tag">';
     h+='<div style="flex-shrink:0">'+qrSvg+'</div>';
     h+='<div class="qr-tag-info">';
     h+='<div style="display:flex;align-items:center;gap:6px;margin-bottom:2px">'+this._genBadge(gen)+'<span class="qr-tag-name" style="margin:0">'+U.esc(m.strainName)+'</span></div>';
     if(m.breeder) h+='<div class="qr-tag-detail">'+U.esc(m.breeder)+'</div>';
-    if(parent) h+='<div class="qr-tag-detail" style="color:var(--leaf);font-size:.7rem">↑ Parent: '+U.esc(parent.strainName)+' (G'+(gen-1)+')</div>';
+    if(parent) h+='<div class="qr-tag-detail" style="color:var(--leaf);font-size:.7rem">↑ Parent: '+U.esc(parent.strainName)+' ('+this._genLabel(gen-1)+')</div>';
     if(offspring.length) h+='<div class="qr-tag-detail" style="color:var(--cyan);font-size:.7rem">↓ '+offspring.length+' offspring</div>';
     if(m.strainType) h+='<div class="qr-tag-detail">'+m.strainType.charAt(0).toUpperCase()+m.strainType.slice(1)+'</div>';
     if(m.growthStage) h+='<div class="qr-tag-detail">Stage: '+m.growthStage.charAt(0).toUpperCase()+m.growthStage.slice(1)+'</div>';
@@ -6974,6 +6982,57 @@ const QRTag={
     return h;
   },
 
+  /* ── Clone batch tags ── */
+  openCloneTags(){
+    const clones=Store.clonesArray();
+    if(!clones.length){Toast.show('No clone batches to tag','info');return}
+    let h='<div class="qr-tag-grid">';
+    clones.forEach(function(c){h+=QRTag._buildCloneTag(c)});
+    h+='</div>';
+    const footer='<button class="btn btn-primary" onclick="window.print()">&#128424; Print ('+clones.length+')</button>'
+      +'<button class="btn btn-outline" onclick="Modal.close()">Close</button>';
+    Modal.open('&#9986; Clone Tags ('+clones.length+')',h,footer);
+  },
+
+  openCloneTag(cid){
+    const c=Store.getById('clones',cid);
+    if(!c) return;
+    const h=this._buildCloneTag(c);
+    const footer='<button class="btn btn-primary" onclick="window.print()">&#128424; Print Tag</button>'
+      +'<button class="btn btn-outline" onclick="Modal.close()">Close</button>';
+    Modal.open('&#9986; Clone Tag',h,footer);
+  },
+
+  _buildCloneTag(c){
+    const m=c.motherId?Store.getById('mothers',c.motherId):null;
+    const strainName=m?m.strainName:'Unknown';
+    const gen=m?Store.motherGeneration(m.id)+1:1;
+    const pending=Math.max(0,(c.countTaken||0)-(c.successCount||0)-(c.failureCount||0));
+    const rate=c.countTaken?Math.round((c.successCount||0)/c.countTaken*100):0;
+    const payload='TRM-C:'+c.id+'|'+strainName+'|'+this._genLabel(gen)+'|'+(c.countTaken||0)+'|'+(c.successCount||0);
+    const qrSvg=QRGen.generate(payload.substring(0,70),3);
+    const statusCols={cutting:'var(--text-secondary)',callusing:'var(--gold)',rooting:'var(--orange)',rooted:'var(--leaf)',transplanted:'var(--cyan)',failed:'#e05c3a'};
+    const sCol=statusCols[c.rootingStatus]||'var(--text-secondary)';
+    let h='<div class="qr-tag">';
+    h+='<div style="flex-shrink:0">'+qrSvg+'</div>';
+    h+='<div class="qr-tag-info">';
+    h+='<div style="display:flex;align-items:center;gap:6px;margin-bottom:2px">'+this._genBadge(gen)+'<span class="qr-tag-name" style="margin:0">'+U.esc(strainName)+'</span></div>';
+    h+='<div class="qr-tag-detail" style="font-size:.7rem;color:var(--text-tertiary)">Clone Batch &middot; '+U.formatDate(c.cloneDate)+'</div>';
+    if(m) h+='<div class="qr-tag-detail" style="color:var(--leaf);font-size:.7rem">↑ Mother: '+U.esc(m.strainName)+' ('+this._genLabel(gen-1)+')</div>';
+    h+='<div class="qr-tag-detail">Cuttings: <strong>'+(c.countTaken||0)+'</strong> &middot; ';
+    h+='<span style="color:var(--leaf)">'+( c.successCount||0)+' ✓</span> ';
+    h+='<span style="color:#e05c3a">'+(c.failureCount||0)+' ✗</span> ';
+    if(pending>0) h+='<span style="color:var(--text-tertiary)">'+pending+' pending</span>';
+    h+='</div>';
+    h+='<div class="qr-tag-detail">Medium: '+U.esc((c.rootingMedium||'').replace('_',' '))+'</div>';
+    h+='<div class="qr-tag-detail">Status: <span style="color:'+sCol+';font-weight:600">'+U.esc(c.rootingStatus||'unknown')+'</span>';
+    if(rate>0) h+=' &middot; <span style="color:var(--cyan)">'+rate+'% success</span>';
+    h+='</div>';
+    h+='<div class="qr-tag-footer">Tropical Roots Maui \u2022 Clone Program</div>';
+    h+='</div></div>';
+    return h;
+  },
+
   /* ── QR Lookup / Decoder ── */
   openScanner(){
     let h='<div style="margin-bottom:var(--space-md)">';
@@ -7000,13 +7059,13 @@ const QRTag={
       const genStr=parts[2]||'';
       const parentStrain=parts[3]||'';
       const breeder=parts[4]||'';
-      const gen=parseInt((genStr.match(/\d+/)||[0])[0])||0;
+      const gen=genStr==='S1'?0:parseInt((genStr.match(/\d+/)||[0])[0])||0;
       const m=id?Store.getById('mothers',id):null;
       h+='<div class="card" style="padding:var(--space-md)">';
       h+='<div style="font-size:.65rem;color:var(--text-tertiary);margin-bottom:var(--space-xs)">Plant Tag (v2)</div>';
       h+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:var(--space-sm)">'+this._genBadge(gen)+'<span style="font-size:1.1rem;font-weight:700">'+U.esc(strain)+'</span></div>';
       if(breeder) h+='<div style="font-size:.8rem;color:var(--text-secondary)">Breeder: '+U.esc(breeder)+'</div>';
-      if(parentStrain) h+='<div style="font-size:.8rem;color:var(--leaf)">↑ Parent: '+U.esc(parentStrain)+' (G'+(gen-1)+')</div>';
+      if(parentStrain) h+='<div style="font-size:.8rem;color:var(--leaf)">↑ Parent: '+U.esc(parentStrain)+' ('+this._genLabel(gen-1)+')</div>';
       if(m){
         const offspring=Store.childMothers(m.id);
         if(offspring.length) h+='<div style="font-size:.8rem;color:var(--cyan)">↓ '+offspring.length+' offspring: '+offspring.map(function(o){return U.esc(o.strainName)}).join(', ')+'</div>';
@@ -7080,12 +7139,32 @@ const QRTag={
       }
       h+='</div>';
 
+    /* TRM-C — Clone batch tag */
+    }else if(raw.startsWith('TRM-C:')){
+      const parts=raw.substring(6).split('|');
+      const id=parts[0]||'';const strain=parts[1]||'';
+      const genStr=parts[2]||'F1';const taken=parts[3]||'0';const success=parts[4]||'0';
+      const gen=genStr==='S1'?0:parseInt((genStr.match(/\d+/)||[0])[0])||0;
+      const c=id?Store.getById('clones',id):null;
+      h+='<div class="card" style="padding:var(--space-md)">';
+      h+='<div style="font-size:.65rem;color:var(--text-tertiary);margin-bottom:var(--space-xs)">Clone Batch Tag</div>';
+      h+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:var(--space-sm)">'+this._genBadge(gen)+'<span style="font-size:1.1rem;font-weight:700">'+U.esc(strain)+'</span></div>';
+      h+='<div style="font-size:.8rem">Cuttings: <strong>'+taken+'</strong> &middot; Success: <strong style="color:var(--leaf)">'+success+'</strong></div>';
+      if(c){
+        var rate=c.countTaken?Math.round((c.successCount||0)/c.countTaken*100):0;
+        h+='<div style="font-size:.8rem;color:var(--text-secondary)">Status: '+U.esc(c.rootingStatus||'unknown')+' &middot; '+rate+'% success rate</div>';
+        h+='<div style="margin-top:var(--space-sm)"><button class="btn btn-outline btn-sm" onclick="Modal.close();document.querySelector(\'[data-tab=clones]\').click()">Open Clones</button></div>';
+      }else{
+        h+='<div style="color:var(--orange);font-size:.8rem;margin-top:var(--space-sm)">⚠ Clone batch not found</div>';
+      }
+      h+='</div>';
+
     /* Unknown format */
     }else{
       h+='<div class="card" style="padding:var(--space-md)">';
       h+='<div style="color:var(--orange);font-size:.85rem">⚠ Unknown QR format</div>';
       h+='<div style="font-size:.75rem;color:var(--text-tertiary);margin-top:var(--space-xs);word-break:break-all">'+U.esc(raw)+'</div>';
-      h+='<div style="font-size:.72rem;color:var(--text-tertiary);margin-top:var(--space-sm)">Recognized formats: TRM2: (plant), TRM-X: (breeding), TRM-S: (seed), TRM: (legacy)</div>';
+      h+='<div style="font-size:.72rem;color:var(--text-tertiary);margin-top:var(--space-sm)">Recognized formats: TRM2: (plant), TRM-C: (clone), TRM-X: (breeding), TRM-S: (seed), TRM: (legacy)</div>';
       h+='</div>';
     }
 

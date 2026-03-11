@@ -3,18 +3,38 @@ CHANGELOG — Tropical Roots Maui - Plant Manager
 https://github.com/magikh0e/PlantManager
 
 
+v2.8.1 — 2026-03-10
+--------------------
+ENHANCEMENT: Cannabis Generation Labels + Clone QR Tags
+
+  Cannabis Generation Labels (S1/F1/F2/F3+)
+    - Renamed from G0/G1/G2/G3+ to standard cannabis convention:
+      S1 = seed origin, F1 = first filial, F2, F3+
+    - Updated across all tags, QR payloads, filter buttons, and decoder
+
+  Clone QR Tags
+    - New tag type for clone batches with TRM-C payload
+    - Shows mother plant reference, cutting date, cutting/rooted/failed counts
+    - Success rate percentage and rooting status indicator
+    - QR payload: TRM-C:{id}|{strain}|{genLabel}|{taken}|{success}
+    - TRM-C format added to QR Lookup decoder
+    - 🏷️ Tag button added to clone cards
+    - "Clone Tags" added to settings gear menu
+
+---
+
 v2.8.0 — 2026-03-10
 --------------------
 FEATURE: QR Offspring Tracking — Generation Tags, Breeding Cross Tags, Seed Labels, QR Lookup
 
   Enhanced Plant Tags (v2 QR Payload)
-    - Generation badge on every tag: G0 (cyan), G1 (green), G2 (gold), G3+ (orange)
-    - Parent lineage line: "↑ Parent: {strain} (G{n-1})" for clone-derived plants
+    - Generation badge on every tag: S1 (cyan), F1 (green), F2 (gold), F3+ (orange)
+    - Parent lineage line: "↑ Parent: {strain} (S1/F1/…)" for clone-derived plants
     - Offspring count: "↓ N offspring" when plant has children
-    - Updated QR payload: TRM2:{id}|{strain}|G{gen}|{parentStrain}|{breeder}
+    - Updated QR payload: TRM2:{id}|{strain}|{genLabel}|{parentStrain}|{breeder}
 
   Generation Filter on Batch Tags
-    - Filter dropdown: All, G0, G1, G2, G3+ with live plant count
+    - Filter buttons: All, S1, F1, F2, F3+ with live plant count
     - "Showing X of Y plants" counter
 
   Breeding Cross Tags
