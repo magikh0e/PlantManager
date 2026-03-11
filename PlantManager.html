@@ -317,6 +317,32 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 .empty-state{text-align:center;padding:var(--space-2xl) var(--space-xl);color:var(--text-secondary)}
 .empty-state .empty-icon{font-size:3rem;margin-bottom:var(--space-md);opacity:.5}
 .empty-state .empty-text{font-size:.9rem;margin-bottom:var(--space-lg)}
+/* ── Setup Wizard ── */
+.setup-wizard{text-align:center;padding:var(--space-2xl) var(--space-lg);max-width:600px;margin:0 auto}
+.setup-wizard .wiz-icon{font-size:4rem;margin-bottom:var(--space-lg);opacity:.8}
+.setup-wizard .wiz-title{font-size:1.4rem;font-weight:700;margin-bottom:var(--space-sm);color:var(--text-primary)}
+.setup-wizard .wiz-subtitle{font-size:.9rem;color:var(--text-secondary);margin-bottom:var(--space-2xl);line-height:1.6}
+.wiz-steps{display:flex;justify-content:center;gap:var(--space-sm);margin-bottom:var(--space-2xl)}
+.wiz-step{width:8px;height:8px;border-radius:50%;background:var(--border-subtle);transition:all .3s var(--ease)}
+.wiz-step.active{background:var(--cyan);width:24px;border-radius:4px}
+.wiz-step.done{background:rgba(0,200,192,.4)}
+.wiz-choices{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-lg);margin-bottom:var(--space-xl);text-align:left}
+.wiz-choice{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius);padding:var(--space-xl);cursor:pointer;transition:all var(--duration) var(--ease)}
+.wiz-choice:hover{border-color:var(--cyan);box-shadow:var(--shadow-hover);transform:translateY(-2px)}
+.wiz-choice .wiz-choice-icon{font-size:2rem;margin-bottom:var(--space-md)}
+.wiz-choice .wiz-choice-title{font-size:1rem;font-weight:700;margin-bottom:var(--space-xs);color:var(--text-primary)}
+.wiz-choice .wiz-choice-desc{font-size:.8rem;color:var(--text-secondary);line-height:1.5;margin-bottom:var(--space-lg)}
+.wiz-form{text-align:left;margin-bottom:var(--space-xl)}
+.wiz-form .form-group{margin-bottom:var(--space-md)}
+.wiz-env-toggle{display:flex;align-items:center;gap:var(--space-sm);font-size:.8rem;color:var(--text-secondary);cursor:pointer}
+.wiz-env-inline{padding:var(--space-md);background:rgba(0,0,0,.15);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);margin-top:var(--space-sm)}
+.wiz-footer{display:flex;justify-content:center;gap:var(--space-md);margin-top:var(--space-xl)}
+.wiz-tips{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-md);margin:var(--space-xl) 0;text-align:left}
+.wiz-tip{padding:var(--space-md);background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);font-size:.8rem;color:var(--text-secondary);line-height:1.5}
+.wiz-tip .wiz-tip-icon{font-size:1.2rem;margin-bottom:var(--space-xs);display:block}
+.wiz-skip{font-size:.75rem;color:var(--text-tertiary);background:none;border:none;cursor:pointer;margin-top:var(--space-lg);transition:color var(--duration) var(--ease)}
+.wiz-skip:hover{color:var(--text-secondary)}
+@media(max-width:600px){.wiz-choices,.wiz-tips{grid-template-columns:1fr}.setup-wizard .wiz-title{font-size:1.2rem}}
 
 /* ── Confirm Dialog ── */
 .confirm-msg{font-size:.9rem;line-height:1.6;margin-bottom:var(--space-lg);color:var(--text-secondary)}
@@ -893,7 +919,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 (function(){
 'use strict';
 
-const APP_VERSION = '2.9.1';
+const APP_VERSION = '2.10.0';
 
 /* ═══════════════════════════════════════════════
    UTILS
@@ -1308,6 +1334,7 @@ const Dashboard={
     if(this._tipTimer){clearInterval(this._tipTimer);this._tipTimer=null;}
   },
   render(){
+    if(SetupWizard._step===2){document.getElementById('panel-dashboard').innerHTML=SetupWizard.render();return}
     const mothers=Store.mothersArray();
     const envCount=Store.environmentsArray().length;
     const allClones=Store.clonesArray();
@@ -1461,7 +1488,9 @@ const Dashboard={
     }
 
     if(!mothers.length && !recent.length){
-      h+='<div class="empty-state"><div class="empty-icon">&#127793;</div><div class="empty-text">Welcome! Add your first mother plant to get started.</div><button class="btn btn-primary" onclick="Plants.openAddModal()">+ Add Mother Plant</button></div>';
+      var wiz=SetupWizard.render();
+      if(wiz)h+=wiz;
+      else h+='<div class="empty-state"><div class="empty-icon">&#127793;</div><div class="empty-text">Welcome! Add your first mother plant to get started.</div><button class="btn btn-primary" onclick="Plants.openAddModal()">+ Add Mother Plant</button></div>';
     }
 
     document.getElementById('panel-dashboard').innerHTML=h;
@@ -1563,9 +1592,13 @@ const Plants={
     }
 
     if(!filtered.length){
-      h+='<div class="empty-state"><div class="empty-icon">&#127807;</div><div class="empty-text">'+(mothers.length?'No plants match your search.':'No mother plants yet. Add your first one!')+'</div>';
-      if(!mothers.length) h+='<button class="btn btn-primary" onclick="Plants.openAddModal()">+ Add Mother</button>';
-      h+='</div>';
+      if(!mothers.length){
+        var wiz=SetupWizard.render();
+        if(wiz)h+=wiz;
+        else{h+='<div class="empty-state"><div class="empty-icon">&#127807;</div><div class="empty-text">No mother plants yet. Add your first one!</div><button class="btn btn-primary" onclick="Plants.openAddModal()">+ Add Mother</button></div>'}
+      }else{
+        h+='<div class="empty-state"><div class="empty-icon">&#127807;</div><div class="empty-text">No plants match your search.</div></div>';
+      }
     }else if(this._viewMode==='table'){
       h+=FleetView.renderTable(filtered);
     }else{
@@ -5499,6 +5532,9 @@ const DataIO={
    ═══════════════════════════════════════════════ */
 const WhatsNew={
   _notes:{
+    '2.10.0':[
+      '<b>Guided Setup Wizard</b> — new first-run experience with two paths: Start Fresh (simplified 5-field form to add your first plant &amp; environment) or Import Backup (restore from JSON). Dismissible with skip option.',
+    ],
     '2.9.1':[
       '<b>Collapsible Gear Menu</b> — settings menu reorganized into 5 collapsible groups (Tags &amp; Labels, Growing, Calculators, Diagnostics, Reports &amp; Layout) for faster navigation',
       '<b>Dashboard Quick Actions</b> — 28 buttons reorganized into 4 collapsible sections; Quick Add expanded by default, tools tucked into Growing, Calculators &amp; Reports groups',
@@ -5741,6 +5777,169 @@ const WhatsNew={
   }
 };
 window.WhatsNew=WhatsNew;
+
+/* ═══════════════════════════════════════════════
+   SETUP WIZARD
+   ═══════════════════════════════════════════════ */
+const SetupWizard={
+  _step:0,
+  _envInline:false,
+  shouldShow(){return(Store.mothersArray().length===0&&!Store.setting('setupWizardDismissed'))||this._step===2},
+  render(){
+    if(!this.shouldShow())return'';
+    if(this._step===0)return this._buildWelcome();
+    if(this._step===1)return this._buildAddPlant();
+    if(this._step===2)return this._buildDone();
+    return'';
+  },
+  _stepDots(cur){
+    var h='<div class="wiz-steps">';
+    for(var i=0;i<3;i++){var cls=i===cur?'active':i<cur?'done':'';h+='<div class="wiz-step '+cls+'"></div>'}
+    return h+'</div>';
+  },
+  _buildWelcome(){
+    var h='<div class="setup-wizard">';
+    h+=this._stepDots(0);
+    h+='<div class="wiz-icon">&#127793;</div>';
+    h+='<div class="wiz-title">Welcome to Plant Manager</div>';
+    h+='<div class="wiz-subtitle">Track your mother plants, clones, feedings, and grow environments &mdash; all in one place.</div>';
+    h+='<div class="wiz-choices">';
+    h+='<div class="wiz-choice" tabindex="0" onclick="SetupWizard._goTo(1)" onkeydown="if(event.key===\'Enter\')SetupWizard._goTo(1)">';
+    h+='<div class="wiz-choice-icon">&#127807;</div>';
+    h+='<div class="wiz-choice-title">Start Fresh</div>';
+    h+='<div class="wiz-choice-desc">Add your first plant with a quick guided setup.</div>';
+    h+='<button class="btn btn-primary" onclick="event.stopPropagation();SetupWizard._goTo(1)">Get Started</button>';
+    h+='</div>';
+    h+='<div class="wiz-choice" tabindex="0" onclick="SetupWizard.triggerImport()" onkeydown="if(event.key===\'Enter\')SetupWizard.triggerImport()">';
+    h+='<div class="wiz-choice-icon">&#128229;</div>';
+    h+='<div class="wiz-choice-title">Import Backup</div>';
+    h+='<div class="wiz-choice-desc">Restore from a previously exported JSON backup file.</div>';
+    h+='<button class="btn btn-outline" onclick="event.stopPropagation();SetupWizard.triggerImport()">Choose File</button>';
+    h+='</div>';
+    h+='</div>';
+    h+='<button class="wiz-skip" onclick="SetupWizard.dismiss()">Skip setup &mdash; I\'ll add plants manually</button>';
+    h+='</div>';
+    return h;
+  },
+  _buildAddPlant(){
+    var envs=Store.environmentsArray();
+    var hasEnvs=envs.length>0;
+    var h='<div class="setup-wizard">';
+    h+=this._stepDots(1);
+    h+='<div class="wiz-title">Add Your First Plant</div>';
+    h+='<div class="wiz-subtitle">Just the essentials &mdash; you can always edit details later.</div>';
+    h+='<div class="wiz-form">';
+    h+='<div class="form-group"><label class="form-label">Strain Name *</label>';
+    h+='<input class="form-input" id="wiz_strainName" placeholder="e.g. Blue Dream, OG Kush"></div>';
+    h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-md)">';
+    h+='<div class="form-group"><label class="form-label">Type</label><select class="form-select" id="wiz_strainType">';
+    ['hybrid','sativa','indica','ruderalis'].forEach(function(t){h+='<option value="'+t+'">'+t.charAt(0).toUpperCase()+t.slice(1)+'</option>'});
+    h+='</select></div>';
+    h+='<div class="form-group"><label class="form-label">Source</label><select class="form-select" id="wiz_source">';
+    [['seed','Seed'],['clone','Clone'],['tissue_culture','Tissue Culture']].forEach(function(p){h+='<option value="'+p[0]+'">'+p[1]+'</option>'});
+    h+='</select></div>';
+    h+='</div>';
+    h+='<div class="form-group"><label class="form-label">Growth Stage</label><select class="form-select" id="wiz_growthStage">';
+    ['seedling','vegetative','flowering','mature','declining'].forEach(function(s){h+='<option value="'+s+'">'+s.charAt(0).toUpperCase()+s.slice(1)+'</option>'});
+    h+='</select></div>';
+    h+='<div class="form-group"><label class="form-label">Environment</label>';
+    if(hasEnvs){
+      h+='<select class="form-select" id="wiz_environmentId"><option value="">None (assign later)</option>';
+      envs.forEach(function(e){h+='<option value="'+e.id+'">'+U.esc(e.name)+'</option>'});
+      h+='</select>';
+      h+='<label class="wiz-env-toggle" style="margin-top:var(--space-sm)"><input type="checkbox" onchange="SetupWizard._toggleEnvInline(this.checked)"> or create a new one</label>';
+    }else{
+      h+='<label class="wiz-env-toggle"><input type="checkbox" id="wiz_envCheck" onchange="SetupWizard._toggleEnvInline(this.checked)" checked> Create a grow environment (recommended)</label>';
+      this._envInline=true;
+    }
+    h+='<div class="wiz-env-inline" id="wiz_envInlineFields" style="display:'+(hasEnvs?'none':'block')+'">';
+    h+='<div class="form-group"><label class="form-label">Environment Name</label><input class="form-input" id="wiz_envName" placeholder="e.g. Veg Tent 4x4"></div>';
+    h+='<div class="form-group"><label class="form-label">Type</label><select class="form-select" id="wiz_envType">';
+    [['tent','Tent'],['room','Room'],['greenhouse','Greenhouse'],['outdoor','Outdoor'],['closet','Closet'],['other','Other']].forEach(function(p){h+='<option value="'+p[0]+'">'+p[1]+'</option>'});
+    h+='</select></div></div></div>';
+    h+='</div>';
+    h+='<div class="wiz-footer">';
+    h+='<button class="btn btn-ghost" onclick="SetupWizard._goTo(0)">Back</button>';
+    h+='<button class="btn btn-primary" onclick="SetupWizard.savePlant()">Save &amp; Continue</button>';
+    h+='</div>';
+    h+='</div>';
+    return h;
+  },
+  _buildDone(){
+    var h='<div class="setup-wizard">';
+    h+=this._stepDots(2);
+    h+='<div class="wiz-icon">&#127881;</div>';
+    h+='<div class="wiz-title">You\'re All Set!</div>';
+    h+='<div class="wiz-subtitle">Your first plant has been added. Here are some next steps:</div>';
+    h+='<div class="wiz-tips">';
+    h+='<div class="wiz-tip"><span class="wiz-tip-icon">&#9978;</span>Add grow environments to track temperature, humidity, and pH readings.</div>';
+    h+='<div class="wiz-tip"><span class="wiz-tip-icon">&#128203;</span>Log feedings, clone batches, and IPM events from plant action buttons.</div>';
+    h+='<div class="wiz-tip"><span class="wiz-tip-icon">&#129516;</span>Build your strain library in the Strains tab for quick lookups.</div>';
+    h+='<div class="wiz-tip"><span class="wiz-tip-icon">&#128190;</span>Export your data regularly from the gear menu to keep backups.</div>';
+    h+='</div>';
+    h+='<div class="wiz-footer">';
+    h+='<button class="btn btn-outline" onclick="Plants.openAddModal()">Add Another Plant</button>';
+    h+='<button class="btn btn-primary" onclick="SetupWizard._finish()">Go to Dashboard</button>';
+    h+='</div>';
+    h+='</div>';
+    return h;
+  },
+  _goTo(step){
+    this._step=step;
+    if(step===1)this._envInline=Store.environmentsArray().length===0;
+    var tab=Router._current;
+    if(tab==='dashboard')Dashboard.render();
+    else if(tab==='plants')Plants.render();
+  },
+  dismiss(){
+    Store.setting('setupWizardDismissed',true);
+    this._step=0;
+    var tab=Router._current;
+    if(tab==='dashboard')Dashboard.render();
+    else if(tab==='plants')Plants.render();
+  },
+  triggerImport(){document.getElementById('importFile').click()},
+  _toggleEnvInline(checked){
+    this._envInline=checked;
+    var el=document.getElementById('wiz_envInlineFields');
+    if(el)el.style.display=checked?'block':'none';
+  },
+  savePlant(){
+    var name=(document.getElementById('wiz_strainName')||{}).value;
+    if(!name||!name.trim()){Toast.show('Strain name is required.','error');return}
+    name=name.trim();
+    var strainType=(document.getElementById('wiz_strainType')||{}).value||'hybrid';
+    var source=(document.getElementById('wiz_source')||{}).value||'seed';
+    var growthStage=(document.getElementById('wiz_growthStage')||{}).value||'seedling';
+    var envId='';
+    /* batch saves: suppress notify, save env+mother, then notify once */
+    var origNotify=Store.notify.bind(Store);
+    Store.notify=function(){};
+    if(this._envInline){
+      var envName=(document.getElementById('wiz_envName')||{}).value||'';
+      if(envName.trim()){
+        envId=U.id('env');
+        Store.set('environments',envId,{id:envId,name:envName.trim(),type:(document.getElementById('wiz_envType')||{}).value||'tent',dimensions:'',lightType:'',lightSchedule:'',notes:'',tempMin:null,tempMax:null,humidityMin:null,humidityMax:null,phMin:null,phMax:null,archived:false,createdAt:Date.now()});
+        Store.addActivity('env_added','Added environment: '+envName.trim(),envId);
+      }
+    }else{
+      var sel=document.getElementById('wiz_environmentId');
+      envId=sel?sel.value:'';
+    }
+    var id=U.id('m');
+    Store.set('mothers',id,{id:id,strainName:name,strainType:strainType,source:source,growthStage:growthStage,environmentId:envId,breeder:'',dateAcquired:U.today(),parentMotherId:'',healthStatus:'healthy',floweringStart:'',floweringEnd:'',notes:'',photo:'',strainId:'',archived:false,createdAt:Date.now()});
+    Store.addActivity('plant_added','Added mother: '+name,id);
+    Store.notify=origNotify;
+    this._step=2;
+    Store.notify();
+    Toast.show('Your first plant has been added!');
+  },
+  _finish(){
+    this._step=0;
+    Router.switchTo('dashboard');
+  }
+};
+window.SetupWizard=SetupWizard;
 
 /* ═══════════════════════════════════════════════
    NOTIFICATIONS
@@ -10605,7 +10804,7 @@ function init(){
     CloudSync._updateBadge();
   });
   Router.init();
-  WhatsNew.check();
+  if(!SetupWizard.shouldShow())WhatsNew.check();
   Snapshot.autoCheck();
 }
 

@@ -3,6 +3,19 @@ CHANGELOG — Tropical Roots Maui - Plant Manager
 https://github.com/magikh0e/PlantManager
 
 
+v2.10.0 — 2026-03-10
+--------------------
+FEATURE: Guided Setup Wizard
+
+  Optional first-run wizard when database is empty with two paths:
+  Start Fresh — simplified 5-field form (strain name, type, source,
+  growth stage, environment) to add first plant and optionally create
+  a grow environment inline. Import Backup — triggers existing JSON
+  restore flow. Wizard is dismissible with "Skip setup" which persists
+  and falls back to the original empty state. 3-step flow: Welcome →
+  Add Plant → Success tips.
+
+
 v2.9.1 — 2026-03-10
 --------------------
 ENHANCEMENT: Collapsible Gear Menu Groups
