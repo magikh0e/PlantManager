@@ -113,6 +113,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 .settings-menu-item{display:flex;align-items:center;gap:var(--space-sm);width:100%;padding:10px 14px;border:none;background:none;color:var(--text-secondary);font-size:.85rem;cursor:pointer;transition:all var(--duration) var(--ease);text-align:left}
 .settings-menu-item:hover{background:rgba(0,200,192,.08);color:var(--cyan)}
 .settings-menu-item .smi-icon{font-size:1.05rem;width:22px;text-align:center;flex-shrink:0}
+.smi-section-hdr{padding:8px 14px 4px;color:var(--text-tertiary);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
 .smi-group{border-top:1px solid var(--border-subtle);padding:2px 0}
 .smi-group-hdr{display:flex;align-items:center;justify-content:space-between;width:100%;padding:8px 14px;border:none;background:none;color:var(--text-tertiary);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;cursor:pointer;transition:color .2s}
 .smi-group-hdr:hover{color:var(--cyan)}
@@ -752,6 +753,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
     <div class="settings-wrap">
       <button class="icon-btn" id="settingsBtn" title="More settings">&#9881;</button>
       <div class="settings-menu" id="settingsMenu">
+        <div class="smi-section-hdr">&#9889; Quick Actions</div>
         <button class="settings-menu-item" id="notifyBell"><span class="smi-icon">&#128276;</span>Notifications</button>
         <button class="settings-menu-item" id="heroToggle"><span class="smi-icon">&#127956;</span>Toggle Banner</button>
         <button class="settings-menu-item" id="exportBtn"><span class="smi-icon">&#8681;</span>Export Data</button>
