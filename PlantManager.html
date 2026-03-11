@@ -848,7 +848,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 (function(){
 'use strict';
 
-const APP_VERSION = '2.4.0';
+const APP_VERSION = '2.5.0';
 
 /* ═══════════════════════════════════════════════
    UTILS
@@ -4783,6 +4783,15 @@ const DataIO={
    ═══════════════════════════════════════════════ */
 const WhatsNew={
   _notes:{
+    '2.5.0':[
+      '<b>Custom Feed Schedule Templates</b> — create, edit, and delete your own feeding schedules alongside the 4 built-in ones',
+      '<b>Fleet View Filters & Bulk Actions</b> — filter table by stage/health/environment + checkbox multi-select with bulk health, stage, and environment updates',
+      '<b>Auto Daily Snapshot</b> — optionally auto-save a daily snapshot to the journal on first app open each day (toggle in Snapshot modal)',
+      '<b>Harvest Accuracy Tracking</b> analytics chart — compare actual flowering days to strain catalog estimates per strain',
+      '<b>Strain Performance Dashboard</b> analytics chart — rank strains by yield, quality, flower days, and best environment',
+      '<b>Environment ↔ Outcome Correlations</b> analytics chart — cross-reference temp/humidity during flowering with harvest results',
+      'Analytics tab now has up to 17 charts (was 14)',
+    ],
     '2.4.0':[
       'New <b>VPD Calculator</b> — auto-fill from environment readings, zone color-coding by growth stage, and VPD trend chart on Analytics',
       'New <b>Trichome Harvest Tracker</b> — log clear/cloudy/amber percentages with linked sliders, harvest-window recommendations, and stacked bar chart history',

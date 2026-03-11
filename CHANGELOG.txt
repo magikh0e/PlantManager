@@ -3,6 +3,50 @@ CHANGELOG — Tropical Roots Maui - Plant Manager
 https://github.com/magikh0e/PlantManager
 
 
+v2.5.0 — 2026-03-10
+--------------------
+FEATURE: Quick Wins & Data Intelligence — Custom Feed Templates, Fleet Filters, Auto Snapshot, Harvest Accuracy, Strain Performance, Env Correlations
+
+  Custom Feed Schedule Templates
+    - Create, edit, and delete your own feeding schedule templates
+    - Week builder UI: add/remove weeks with week number and nutrient instructions
+    - Custom templates saved to settings and shown in "My Custom Schedules" section
+    - Edit and Delete buttons on custom template cards, Edit button in preview
+    - Built-in templates (GH Flora, Fox Farm, Gaia Green, KNF) remain read-only
+
+  Fleet View Filters & Bulk Actions
+    - Filter bar above table: Stage, Health, and Environment dropdowns
+    - Checkbox column with select-all header for multi-select
+    - Bulk action bar appears when plants selected: set Health, Stage, or Environment
+    - Apply bulk changes to all selected plants at once
+    - "Reset filters" link shown when filters hide all plants
+
+  Auto Daily Snapshot
+    - Optional auto-save of daily snapshot to journal on first app open each day
+    - Enable via checkbox toggle in the Snapshot modal
+    - Saves date, moon phase, task summary, environment stats, and plant overview
+    - Skips if already saved for the current day; shows toast on save
+
+  Harvest Estimate Accuracy (Analytics #15)
+    - Compares actual flowering days to strain catalog estimates after harvest
+    - Per-strain table: Strain, Catalog Range, Avg Actual Days, Delta, Harvest Count
+    - Color-coded delta: green (≤7d), yellow (≤14d), red (>14d)
+
+  Strain Performance Dashboard (Analytics #16)
+    - Ranks all strains by yield, quality, and efficiency across harvests
+    - Sortable table: Strain, Harvests, Avg Yield, Total Yield, Quality, Flower Days, Best Env
+    - Color-coded quality cells; click column headers to re-sort
+
+  Environment ↔ Outcome Correlations (Analytics #17)
+    - Cross-references avg environment conditions during flowering with harvest outcomes
+    - Temperature buckets → average yield bar chart
+    - Relative humidity buckets → average quality bar chart
+    - Summary insight line with optimal temperature
+
+  Analytics tab: 14 → 17 charts
+
+---
+
 v2.4.0 — 2026-03-10
 --------------------
 FEATURE: 11 New Features — VPD, Trichome, Training, Deficiency Wizard, DLI, Runs, Breeding, Calibration, Fleet View, Room Diagram, Cost/Gram

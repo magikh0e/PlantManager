@@ -1,5 +1,5 @@
 // service-worker.js — Tropical Roots Plant Manager PWA
-var CACHE_VERSION='2.4.0';
+var CACHE_VERSION='2.5.0';
 var CACHE_NAME='trm-pm-v'+CACHE_VERSION;
 
 var PRECACHE=[
