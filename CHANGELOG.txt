@@ -3,6 +3,39 @@ CHANGELOG — Tropical Roots Maui - Plant Manager
 https://github.com/magikh0e/PlantManager
 
 
+v2.9.0 — 2026-03-10
+--------------------
+FEATURE: Cost Efficiency Analytics + Analytics Export Report
+
+  Cost Efficiency Over Time (new analytics chart)
+    - Monthly $/gram line (orange) and cumulative $/gram line (cyan)
+    - Reference line at overall average cost per gram
+    - Buckets expenses and harvests by month for trend analysis
+
+  Monthly Expense Trend (new analytics chart)
+    - Multi-line chart with one line per expense category
+    - Uses category colors (Seeds, Nutrients, Equipment, Soil & Media, Electricity, Water, Other)
+    - Shows spending patterns and seasonal trends over time
+
+  Strain ROI Ranking (new analytics chart)
+    - Composite score (0–100) combining yield (30%), quality (30%), cost efficiency (25%), consistency (15%)
+    - Color-coded bar chart: green ≥70, gold ≥40, red <40
+    - Detailed table: strain, score, yield, quality, $/gram, harvest count
+    - Same attributed/unattributed cost allocation as Cost per Gram by Strain
+
+  Analytics Export Report (new printable report)
+    - Third option in Export Report selector (alongside Plant Report and Garden Report)
+    - Executive summary: plant count, flowering, active runs, yield, expenses, $/gram
+    - Cost analysis: category breakdown with percentages + monthly spending table
+    - Strain performance: yield, avg yield, quality, $/gram per strain
+    - Environment summary: type, plant count, total yield per environment
+    - Recent harvests (last 20) and active grow runs
+    - Print-ready with screen + print CSS
+
+  Analytics tab now has up to 33 charts (was 30)
+
+---
+
 v2.8.1 — 2026-03-10
 --------------------
 ENHANCEMENT: Cannabis Generation Labels + Clone QR Tags

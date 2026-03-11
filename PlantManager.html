@@ -852,7 +852,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 (function(){
 'use strict';
 
-const APP_VERSION = '2.8.1';
+const APP_VERSION = '2.9.0';
 
 /* ═══════════════════════════════════════════════
    UTILS
@@ -4286,6 +4286,9 @@ const Analytics={
     h+=CostTracker._costBreakdownCard();
     h+=VPDCalc._vpdTrendCard(this._cutoff(),this._envFilter);
     h+=CostTracker._costPerGramByStrainCard();
+    h+=CostTracker._costEfficiencyCard();
+    h+=CostTracker._expenseTrendCard();
+    h+=CostTracker._strainROICard();
     h+=HarvestEstimate._accuracyCard();
     h+=this._strainPerformanceCard();
     h+=this._envCorrelationCard();
@@ -5442,6 +5445,12 @@ const DataIO={
    ═══════════════════════════════════════════════ */
 const WhatsNew={
   _notes:{
+    '2.9.0':[
+      '<b>Cost Efficiency Over Time</b> — monthly &amp; cumulative $/gram line chart with average reference line, tracking cost trends across harvests',
+      '<b>Monthly Expense Trend</b> — multi-line chart showing spending by category (Seeds, Nutrients, Equipment, etc.) over time',
+      '<b>Strain ROI Ranking</b> — composite score (0\u2013100) combining yield, quality, cost efficiency &amp; consistency with ranked table',
+      '<b>Analytics Export Report</b> — comprehensive printable report with executive summary, cost analysis, strain performance, environment comparison, harvests &amp; active runs',
+    ],
     '2.8.1':[
       '<b>Cannabis Generation Labels</b> — renamed from G0/G1/G2 to standard S1 (seed origin), F1, F2, F3+ across all tags, QR payloads, filter buttons, and decoder',
       '<b>Clone QR Tags</b> — new tag type for clone batches with TRM-C payload, mother reference, cutting counts, rooting status, and success rate',
@@ -8027,6 +8036,143 @@ const CostTracker={
     h+='</div>';
     return h;
   },
+  _costEfficiencyCard(){
+    const expenses=Store.expensesArray();
+    const harvests=Store.harvestsArray().filter(h=>h.dryWeight>0&&h.harvestDate);
+    if(harvests.length<2||!expenses.length) return '';
+    const months={};
+    expenses.forEach(e=>{
+      if(!e.date) return;
+      const key=e.date.slice(0,7);
+      if(!months[key]) months[key]={exp:0,yield:0};
+      months[key].exp+=e.amount||0;
+    });
+    harvests.forEach(hv=>{
+      const key=hv.harvestDate.slice(0,7);
+      if(!months[key]) months[key]={exp:0,yield:0};
+      months[key].yield+=parseFloat(hv.dryWeight)||0;
+    });
+    const keys=Object.keys(months).sort();
+    if(keys.length<2) return '<div class="card chart-card"><div class="chart-title">&#128176; Cost Efficiency Over Time</div><div class="chart-no-data">Need at least 2 months of expense + harvest data</div></div>';
+    const monthlyVals=[],cumulVals=[];
+    let cumExp=0,cumYield=0;
+    keys.forEach((k,i)=>{
+      const m=months[k];
+      cumExp+=m.exp; cumYield+=m.yield;
+      if(m.yield>0) monthlyVals.push({x:i,y:Math.round(m.exp/m.yield*100)/100});
+      if(cumYield>0) cumulVals.push({x:i,y:Math.round(cumExp/cumYield*100)/100});
+    });
+    if(cumulVals.length<2) return '';
+    const avgCpg=cumYield>0?Math.round(cumExp/cumYield*100)/100:0;
+    const labels=keys.map(k=>{const p=k.split('-');return parseInt(p[1])+'/'+p[0].slice(2)});
+    const ds=[];
+    if(monthlyVals.length) ds.push({label:'Monthly $/g',values:monthlyVals,color:'#e8721a'});
+    if(cumulVals.length) ds.push({label:'Cumulative $/g',values:cumulVals,color:'#00c8c0'});
+    let h='<div class="card chart-card"><div class="chart-title">&#128176; Cost Efficiency Over Time</div>';
+    h+='<div class="chart-subtitle">Monthly &amp; cumulative $/gram — avg: $'+avgCpg.toFixed(2)+'/g</div>';
+    h+=Chart.line(ds,{width:560,height:220,xLabels:labels,showDots:keys.length<=15,
+      refLines:[{y:avgCpg,color:'rgba(240,180,41,.3)',label:'Avg $'+avgCpg.toFixed(2)+'/g'}]});
+    h+='<div class="chart-legend">';
+    ds.forEach(d=>{h+='<div class="chart-legend-item"><div class="chart-legend-dot" style="background:'+d.color+'"></div>'+d.label+'</div>'});
+    h+='</div></div>';
+    return h;
+  },
+  _expenseTrendCard(){
+    const expenses=Store.expensesArray();
+    if(expenses.length<3) return '';
+    const catMonths={},allMonths={};
+    expenses.forEach(e=>{
+      if(!e.date) return;
+      const key=e.date.slice(0,7);
+      allMonths[key]=true;
+      const cat=e.category||'Other';
+      if(!catMonths[cat]) catMonths[cat]={};
+      catMonths[cat][key]=(catMonths[cat][key]||0)+(e.amount||0);
+    });
+    const keys=Object.keys(allMonths).sort();
+    if(keys.length<2) return '<div class="card chart-card"><div class="chart-title">&#128176; Monthly Expense Trend</div><div class="chart-no-data">Need at least 2 months of expense data</div></div>';
+    const ds=[];
+    this._categories.forEach(cat=>{
+      if(!catMonths[cat]) return;
+      const vals=keys.map((k,i)=>({x:i,y:Math.round((catMonths[cat][k]||0)*100)/100}));
+      if(vals.some(v=>v.y>0)) ds.push({label:cat,values:vals,color:this._catColors[cat]||Chart._c(ds.length)});
+    });
+    if(!ds.length) return '';
+    const labels=keys.map(k=>{const p=k.split('-');return parseInt(p[1])+'/'+p[0].slice(2)});
+    let h='<div class="card chart-card"><div class="chart-title">&#128176; Monthly Expense Trend</div>';
+    h+='<div class="chart-subtitle">Spending by category over time</div>';
+    h+=Chart.line(ds,{width:560,height:220,xLabels:labels,showDots:keys.length<=12});
+    h+='<div class="chart-legend">';
+    ds.forEach(d=>{h+='<div class="chart-legend-item"><div class="chart-legend-dot" style="background:'+d.color+'"></div>'+d.label+'</div>'});
+    h+='</div></div>';
+    return h;
+  },
+  _strainROICard(){
+    const harvests=Store.harvestsArray().filter(h=>h.dryWeight>0);
+    const expenses=Store.expensesArray();
+    if(harvests.length<2) return '';
+    const byStrain={};
+    harvests.forEach(hv=>{
+      const m=hv.motherId?Store.getById('mothers',hv.motherId):null;
+      const strain=m?m.strainName:'Unknown';
+      if(!byStrain[strain]) byStrain[strain]={yield:0,directCost:0,qualities:[],count:0};
+      byStrain[strain].yield+=parseFloat(hv.dryWeight)||0;
+      if(hv.quality) byStrain[strain].qualities.push(parseInt(hv.quality));
+      byStrain[strain].count++;
+    });
+    const attributed={};
+    expenses.forEach(e=>{
+      if(e.motherId){
+        const m=Store.getById('mothers',e.motherId);
+        const strain=m?m.strainName:'Unknown';
+        if(byStrain[strain]) byStrain[strain].directCost+=e.amount;
+        attributed[e.id]=true;
+      }
+    });
+    const unattr=expenses.filter(e=>!attributed[e.id]).reduce((s,e)=>s+e.amount,0);
+    const totalYield=Object.values(byStrain).reduce((s,v)=>s+v.yield,0);
+    const strains=Object.keys(byStrain);
+    if(strains.length<2) return '';
+    let rows=strains.map(name=>{
+      const s=byStrain[name];
+      const share=totalYield>0?(s.yield/totalYield)*unattr:0;
+      const cpg=s.yield>0?(s.directCost+share)/s.yield:999;
+      const avgQ=s.qualities.length?s.qualities.reduce((a,b)=>a+b,0)/s.qualities.length:0;
+      return{name,yield:Math.round(s.yield*10)/10,cpg:Math.round(cpg*100)/100,avgQ:Math.round(avgQ*10)/10,count:s.count};
+    });
+    const maxYield=Math.max(...rows.map(r=>r.yield))||1;
+    const maxCpg=Math.max(...rows.map(r=>r.cpg))||1;
+    const maxCount=Math.max(...rows.map(r=>r.count))||1;
+    rows.forEach(r=>{
+      const yN=r.yield/maxYield,qN=r.avgQ/5,cN=1-(r.cpg/maxCpg),kN=r.count/maxCount;
+      r.score=Math.round((yN*0.30+qN*0.30+cN*0.25+kN*0.15)*100);
+    });
+    rows.sort((a,b)=>b.score-a.score);
+    if(rows.length>10) rows=rows.slice(0,10);
+    const data=rows.map(r=>({label:r.name.length>14?r.name.slice(0,12)+'\u2026':r.name,value:r.score,
+      color:r.score>=70?'var(--leaf)':r.score>=40?'var(--gold)':'#e05c3a'}));
+    let h='<div class="card chart-card"><div class="chart-title">&#127942; Strain ROI Ranking</div>';
+    h+='<div class="chart-subtitle">Composite score: yield 30% · quality 30% · cost efficiency 25% · consistency 15%</div>';
+    h+=Chart.bar(data,{width:560,height:200});
+    h+='<table style="width:100%;font-size:.7rem;border-collapse:collapse;margin-top:8px">';
+    h+='<thead><tr><th style="text-align:left;padding:3px 6px;border-bottom:1px solid var(--border-subtle)">Strain</th>';
+    h+='<th style="text-align:center;padding:3px 6px;border-bottom:1px solid var(--border-subtle)">Score</th>';
+    h+='<th style="text-align:center;padding:3px 6px;border-bottom:1px solid var(--border-subtle)">Yield (g)</th>';
+    h+='<th style="text-align:center;padding:3px 6px;border-bottom:1px solid var(--border-subtle)">Quality</th>';
+    h+='<th style="text-align:center;padding:3px 6px;border-bottom:1px solid var(--border-subtle)">$/g</th>';
+    h+='<th style="text-align:center;padding:3px 6px;border-bottom:1px solid var(--border-subtle)">Harvests</th></tr></thead><tbody>';
+    rows.forEach(r=>{
+      const sCol=r.score>=70?'var(--leaf)':r.score>=40?'var(--gold)':'#e05c3a';
+      h+='<tr><td style="padding:3px 6px;border-bottom:1px solid rgba(255,255,255,.04);font-weight:600">'+U.esc(r.name)+'</td>';
+      h+='<td style="text-align:center;padding:3px 6px;border-bottom:1px solid rgba(255,255,255,.04);color:'+sCol+';font-weight:700">'+r.score+'</td>';
+      h+='<td style="text-align:center;padding:3px 6px;border-bottom:1px solid rgba(255,255,255,.04)">'+r.yield+'</td>';
+      h+='<td style="text-align:center;padding:3px 6px;border-bottom:1px solid rgba(255,255,255,.04)">'+(r.avgQ?r.avgQ.toFixed(1)+' \u2605':'\u2014')+'</td>';
+      h+='<td style="text-align:center;padding:3px 6px;border-bottom:1px solid rgba(255,255,255,.04)">$'+r.cpg.toFixed(2)+'</td>';
+      h+='<td style="text-align:center;padding:3px 6px;border-bottom:1px solid rgba(255,255,255,.04)">'+r.count+'</td></tr>';
+    });
+    h+='</tbody></table></div>';
+    return h;
+  },
   _expensesForPlantReport(mid){
     const m=Store.getById('mothers',mid);if(!m) return '';
     const direct=Store.expensesForMother(mid);
@@ -8381,6 +8527,8 @@ const Report={
     h+='<span class="rpt-card-icon">&#127807;</span><h3>Plant Report</h3><p>Full grow history for a single plant</p></div>';
     h+='<div class="rpt-card" onclick="Report.openGardenReport()">';
     h+='<span class="rpt-card-icon">&#127758;</span><h3>Garden Report</h3><p>Overall summary of your entire garden</p></div>';
+    h+='<div class="rpt-card" onclick="Report.openAnalyticsReport()">';
+    h+='<span class="rpt-card-icon">&#128202;</span><h3>Analytics Report</h3><p>Cost efficiency, strain ROI &amp; performance trends</p></div>';
     h+='</div>';
     Modal.open('&#128196; Export Report',h,'<button class="btn btn-outline" onclick="Modal.close()">Cancel</button>');
   },
@@ -8508,6 +8656,134 @@ const Report={
       b+='</tbody></table>';
     }
     this._openWindow('Garden Report — Tropical Roots Maui',b);
+  },
+  openAnalyticsReport(){
+    Modal.close();
+    const mothers=Store.mothersArray();
+    const envs=Store.environmentsArray();
+    const harvests=Store.harvestsArray();
+    const expenses=Store.expensesArray();
+    const totalYield=Store.totalYield();
+    const totalExp=Store.totalExpenses();
+    const cpg=totalYield>0?(totalExp/totalYield).toFixed(2):'N/A';
+    const activeRuns=Store.activeGrowRuns();
+    /* ── Executive Summary ── */
+    let b='<div class="rpt-header"><h1>Tropical Roots Maui &mdash; Analytics Report</h1>';
+    b+='<p>Generated '+new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'})+'</p></div>';
+    b+='<div class="rpt-stat-grid">';
+    b+=this._stat(mothers.length,'Total Plants');
+    b+=this._stat(mothers.filter(m=>m.growthStage==='flowering').length,'Flowering');
+    b+=this._stat(activeRuns.length,'Active Runs');
+    b+=this._stat(totalYield>0?totalYield.toFixed(1)+'g':'0g','Total Yield');
+    b+=this._stat(totalExp>0?'$'+totalExp.toFixed(2):'$0','Total Spent');
+    b+=this._stat(cpg==='N/A'?cpg:'$'+cpg,'Cost/Gram');
+    b+=this._stat(harvests.length,'Total Harvests');
+    b+=this._stat(expenses.length,'Expense Entries');
+    b+='</div>';
+    /* ── Cost Analysis ── */
+    if(expenses.length){
+      b+=this._section('Cost Analysis')+'</div>';
+      const bycat={};
+      expenses.forEach(e=>{bycat[e.category||'Other']=(bycat[e.category||'Other']||0)+(e.amount||0)});
+      b+='<div class="rpt-section">';
+      b+='<table class="rpt-table"><thead><tr><th>Category</th><th>Amount</th><th>% of Total</th></tr></thead><tbody>';
+      Object.keys(bycat).sort((a,b_)=>bycat[b_]-bycat[a]).forEach(c=>{
+        const pct=totalExp>0?Math.round(bycat[c]/totalExp*100):0;
+        b+='<tr><td>'+U.esc(c)+'</td><td>$'+bycat[c].toFixed(2)+'</td><td>'+pct+'%</td></tr>';
+      });
+      b+='</tbody></table>';
+      /* Monthly spending */
+      const monthlyTotals={};
+      expenses.forEach(e=>{
+        if(!e.date) return;
+        const key=e.date.slice(0,7);
+        monthlyTotals[key]=(monthlyTotals[key]||0)+(e.amount||0);
+      });
+      const mkeys=Object.keys(monthlyTotals).sort();
+      if(mkeys.length>1){
+        b+='<h3 style="font-size:.85rem;margin:12pt 0 6pt;color:#00c8c0">Monthly Spending</h3>';
+        b+='<table class="rpt-table"><thead><tr><th>Month</th><th>Amount</th></tr></thead><tbody>';
+        mkeys.forEach(k=>{
+          const parts=k.split('-');
+          const label=new Date(parseInt(parts[0]),parseInt(parts[1])-1).toLocaleDateString('en-US',{month:'long',year:'numeric'});
+          b+='<tr><td>'+label+'</td><td>$'+monthlyTotals[k].toFixed(2)+'</td></tr>';
+        });
+        b+='</tbody></table>';
+      }
+      b+='</div>';
+    }
+    /* ── Strain Performance ── */
+    const harvestsWithYield=harvests.filter(hv=>hv.dryWeight>0);
+    if(harvestsWithYield.length){
+      b+=this._section('Strain Performance');
+      const strainMap={};
+      harvestsWithYield.forEach(hv=>{
+        const m=hv.motherId?Store.getById('mothers',hv.motherId):null;
+        const name=m?m.strainName:'Unknown';
+        if(!strainMap[name]) strainMap[name]={yields:[],qualities:[],count:0,directCost:0};
+        strainMap[name].yields.push(parseFloat(hv.dryWeight)||0);
+        if(hv.quality) strainMap[name].qualities.push(parseInt(hv.quality));
+        strainMap[name].count++;
+      });
+      const attrExp={};
+      expenses.forEach(e=>{
+        if(e.motherId){
+          const m=Store.getById('mothers',e.motherId);
+          const strain=m?m.strainName:'Unknown';
+          if(strainMap[strain]) strainMap[strain].directCost+=e.amount;
+          attrExp[e.id]=true;
+        }
+      });
+      const unattrTotal=expenses.filter(e=>!attrExp[e.id]).reduce((s,e)=>s+e.amount,0);
+      b+='<table class="rpt-table"><thead><tr><th>Strain</th><th>Harvests</th><th>Total Yield</th><th>Avg Yield</th><th>Avg Quality</th><th>$/Gram</th></tr></thead><tbody>';
+      Object.keys(strainMap).map(name=>{
+        const s=strainMap[name];
+        const tot=s.yields.reduce((a,b_)=>a+b_,0);
+        const avg=Math.round(tot/s.yields.length*10)/10;
+        const avgQ=s.qualities.length?Math.round(s.qualities.reduce((a,b_)=>a+b_,0)/s.qualities.length*10)/10:0;
+        const share=totalYield>0?(tot/totalYield)*unattrTotal:0;
+        const cpgS=tot>0?((s.directCost+share)/tot).toFixed(2):'N/A';
+        return{name,count:s.count,total:Math.round(tot*10)/10,avg,avgQ,cpg:cpgS};
+      }).sort((a,b_)=>b_.total-a.total).forEach(r=>{
+        b+='<tr><td><strong>'+U.esc(r.name)+'</strong></td><td>'+r.count+'</td><td>'+r.total+'g</td><td>'+r.avg+'g</td>';
+        b+='<td>'+(r.avgQ?r.avgQ.toFixed(1)+' \u2605':'\u2014')+'</td><td>'+(r.cpg==='N/A'?'\u2014':'$'+r.cpg)+'</td></tr>';
+      });
+      b+='</tbody></table></div>';
+    }
+    /* ── Environment Summary ── */
+    if(envs.length){
+      b+=this._section('Environment Summary');
+      b+='<table class="rpt-table"><thead><tr><th>Environment</th><th>Type</th><th>Plants</th><th>Total Yield</th></tr></thead><tbody>';
+      envs.forEach(env=>{
+        const plants=Store.mothersInEnv(env.id);
+        let envYield=0;
+        plants.forEach(m=>{Store.harvestsForMother(m.id).forEach(hv=>{envYield+=parseFloat(hv.dryWeight)||0})});
+        b+='<tr><td><strong>'+U.esc(env.name)+'</strong></td><td>'+U.esc(env.type||'\u2014')+'</td><td>'+plants.length+'</td><td>'+Math.round(envYield*10)/10+'g</td></tr>';
+      });
+      b+='</tbody></table></div>';
+    }
+    /* ── Recent Harvests ── */
+    const recentH=harvestsWithYield.slice(0,20);
+    if(recentH.length){
+      b+=this._section('Recent Harvests');
+      b+='<table class="rpt-table"><thead><tr><th>Date</th><th>Plant</th><th>Dry Weight</th><th>Quality</th></tr></thead><tbody>';
+      recentH.forEach(hv=>{
+        const m=hv.motherId?Store.getById('mothers',hv.motherId):null;
+        b+='<tr><td>'+U.formatDate(hv.harvestDate||'')+'</td><td>'+U.esc(m?m.strainName:'\u2014')+'</td><td>'+(hv.dryWeight||'\u2014')+'g</td><td>'+(hv.quality?hv.quality+'/5':'\u2014')+'</td></tr>';
+      });
+      b+='</tbody></table></div>';
+    }
+    /* ── Active Grow Runs ── */
+    if(activeRuns.length){
+      b+=this._section('Active Grow Runs');
+      b+='<table class="rpt-table"><thead><tr><th>Run Name</th><th>Start Date</th><th>Plants</th><th>Days Active</th></tr></thead><tbody>';
+      activeRuns.forEach(run=>{
+        const days=run.startDate?U.daysBetween(U.parseDate(run.startDate),new Date()):0;
+        b+='<tr><td><strong>'+U.esc(run.name||'Unnamed')+'</strong></td><td>'+U.formatDate(run.startDate||'')+'</td><td>'+(run.plantIds?run.plantIds.length:0)+'</td><td>'+days+'d</td></tr>';
+      });
+      b+='</tbody></table></div>';
+    }
+    this._openWindow('Analytics Report — Tropical Roots Maui',b);
   },
   _stat(val,label){return '<div class="rpt-stat"><div class="rpt-stat-val">'+val+'</div><div class="rpt-stat-lbl">'+label+'</div></div>'},
   _section(title){return '<div class="rpt-section"><h2 class="rpt-section-title">'+title+'</h2>'},
