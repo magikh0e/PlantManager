@@ -10,7 +10,7 @@
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Tropical Roots Maui">
 <meta property="og:title" content="Plant Manager Help Guide — Tropical Roots Maui">
-<meta property="og:description" content="Complete help guide for the Tropical Roots Maui Plant Manager app — covering all 13 tabs, tools, and features.">
+<meta property="og:description" content="Complete help guide for the Tropical Roots Maui Plant Manager app — covering all tabs, 33 analytics charts, tools, QR tags, and features.">
 <meta property="og:url" content="https://tracker.tropicalrootsmaui.com/PlantManagerHelp.html">
 <meta property="og:image" content="https://tropicalrootsmaui.com/img/tropical-roots-maui-kanehiwa-alchemical-sanctuary-logo.webp">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -225,7 +225,7 @@ kbd {
 <div class="recipe-hero">
   <div class="hero-eyebrow">Tropical Roots Maui</div>
   <h1 class="hero-title">Plant Manager<br><span class="gold">Help Guide</span></h1>
-  <div class="hero-byline">v2.5.0 &mdash; Complete Feature Reference</div>
+  <div class="hero-byline">v2.9.0 &mdash; Complete Feature Reference</div>
   <p class="hero-sub">Everything you need to know about tracking plants, clones, feedings, harvests, and more in the Tropical Roots Maui Plant Manager.</p>
 </div>
 
@@ -315,12 +315,16 @@ kbd {
       <li><strong>&#8681; Export Data</strong> &mdash; download all your data as a JSON backup file.</li>
       <li><strong>&#8679; Import Data</strong> &mdash; restore from a previously exported JSON file.</li>
       <li><strong>&#129514; KNF Calculator</strong> &mdash; dilution calculator for Korean Natural Farming inputs.</li>
-      <li><strong>&#127991; Print Plant Tags</strong> &mdash; generate printable QR code tags for all plants.</li>
-      <li><strong>&#128195; Feed Schedules</strong> &mdash; apply nutrient schedule templates to auto-create feeding tasks.</li>
-      <li><strong>&#128176; Cost Tracker</strong> &mdash; log and track grow expenses across 7 categories.</li>
+      <li><strong>&#127991; Print Plant Tags</strong> &mdash; generate printable QR code tags for all plants with generation badges (S1/F1/F2/F3+), parent lineage, and offspring counts.</li>
+      <li><strong>&#9986; Clone Tags</strong> &mdash; generate QR code tags for clone batches with mother reference, cutting counts, and success rate.</li>
+      <li><strong>&#129516; Breeding Cross Tags</strong> &mdash; QR labels for breeding crosses showing &#9792; Mother &times; &#9794; Father = Offspring.</li>
+      <li><strong>&#127793; Seed Bank Labels</strong> &mdash; QR labels for seed packets with strain, seed count, germination rate, and age.</li>
+      <li><strong>&#128269; QR Lookup</strong> &mdash; paste-to-decode scanner for all QR tag formats with database lookup.</li>
+      <li><strong>&#128195; Feed Schedules</strong> &mdash; apply built-in or custom nutrient schedule templates to auto-create feeding tasks.</li>
+      <li><strong>&#128176; Cost Tracker</strong> &mdash; log and track grow expenses across 7 categories with cost-per-gram analytics.</li>
       <li><strong>&#128260; Grow Cycles</strong> &mdash; apply phased grow cycle templates that auto-create tasks from seed to harvest.</li>
       <li><strong>&#127793; Soil Mix Calc</strong> &mdash; calculate soil mix recipes with adjustable volume and components.</li>
-      <li><strong>&#128196; Export Report</strong> &mdash; generate printable Plant Reports or Garden Reports.</li>
+      <li><strong>&#128196; Export Report</strong> &mdash; generate printable Plant Reports, Garden Reports, or comprehensive Analytics Reports.</li>
       <li><strong>&#128270; Pest Identifier</strong> &mdash; open the Pest ID tool to identify pests from a photo.</li>
       <li><strong>&#129302; Pest ID Settings</strong> &mdash; configure your Google Cloud Vision API key for auto-identification.</li>
       <li><strong>&#127777; VPD Calculator</strong> &mdash; calculate vapor pressure deficit with auto-fill from environment readings.</li>
@@ -330,6 +334,7 @@ kbd {
       <li><strong>&#129516; Breeding Tracker</strong> &mdash; log pollen collection, crosses, and seed harvests.</li>
       <li><strong>&#9879; Calibration Log</strong> &mdash; track pH/EC meter calibrations with overdue reminders.</li>
       <li><strong>&#128208; Room Layout</strong> &mdash; visual grid diagram of plant positions per environment.</li>
+      <li><strong>&#10067; Help Guide</strong> &mdash; opens this help documentation in a new tab.</li>
     </ul>
   </div>
 </div>
@@ -482,6 +487,8 @@ kbd {
     <span class="detail-label">Stats &amp; Progress</span>
     <p>The top of the tab shows aggregate stats: total taken, total rooted, total failed, total batches, and overall success rate. Each batch card shows a color-coded progress bar (green = rooted, red = failed, gray = pending).</p>
     <p>Clone success rates automatically appear on the corresponding mother plant cards on the Plants tab.</p>
+    <span class="detail-label">Clone QR Tags</span>
+    <p>Tap the <strong>&#127991; Tag</strong> button on any clone card to generate a printable QR label. Clone tags include the mother plant reference, strain with generation label, cutting date, rooted/failed/total counts, success rate, and rooting status. Print all clone tags at once from the gear menu via <strong>Clone Tags</strong>. The QR payload uses the TRM-C format and can be decoded with the QR Lookup tool.</p>
   </div>
 </div>
 
@@ -656,7 +663,7 @@ kbd {
     <span class="detail-label">Browse Catalog</span>
     <p>The built-in catalog includes strains from 7 breeders: Sticky Finger Seeds, Hawaiian Budline, Ziplock Seeds, Makena Genetics, Deep Green Genetics, Aloha Island Genetics, and CloneFreak (clones only). Filter by breeder, search by name, and quick-add strains to your library.</p>
     <span class="detail-label">Seed Bank</span>
-    <p>Access the Seed Bank from the Strains toolbar or the Dashboard. Track seed packets with strain name, breeder, count, type (feminized/regular/autoflower), source, purchase date, germination rate, and notes. The <strong>Browse Catalog</strong> button inside the Seed Bank lets you quick-add seed entries from the strain catalog (excludes clone-only providers).</p>
+    <p>Access the Seed Bank from the Strains toolbar or the Dashboard. Track seed packets with strain name, breeder, count, type (feminized/regular/autoflower), source, purchase date, germination rate, and notes. The <strong>Browse Catalog</strong> button inside the Seed Bank lets you quick-add seed entries from the strain catalog (excludes clone-only providers). Features include: low stock warnings (&#9888;), seed age tracking with viability alerts, germination stats summary, &ldquo;Plant Next&rdquo; suggestion scoring, sort controls, and a <strong>Print Labels</strong> button to generate QR seed packet labels.</p>
     <span class="detail-label">Strain Reviews</span>
     <p>Tap the <strong>&#11088; Reviews</strong> button on any strain card to write a personal grow review. Reviews capture:</p>
     <ul>
@@ -689,25 +696,50 @@ kbd {
     <h2 class="phase-title">Analytics <span class="gold">Charts</span></h2>
   </div>
   <div class="phase-body">
-    <p>The Analytics tab renders 14 interactive SVG charts from your data. All charts are pure SVG &mdash; no external libraries required.</p>
+    <p>The Analytics tab renders 33 interactive SVG charts from your data. All charts are pure SVG &mdash; no external libraries required. Charts gracefully hide when insufficient data exists.</p>
     <span class="detail-label">Filters</span>
     <p>Use the date range (7 days, 30 days, 90 days, All Time), environment, and plant dropdowns to narrow chart data.</p>
-    <span class="detail-label">Charts</span>
+    <span class="detail-label">Core Charts</span>
     <ul>
       <li><strong>Environment Trends</strong> &mdash; line chart of temperature, humidity, pH, and EC/PPM over time.</li>
       <li><strong>Feeding pH Drift</strong> &mdash; line chart comparing pH In vs pH Out across feedings.</li>
+      <li><strong>Feeding EC/PPM Drift</strong> &mdash; line chart comparing EC In vs EC Out with nutrient uptake trends.</li>
+      <li><strong>Feeding Frequency</strong> &mdash; feedings per week bar chart color-coded by pH drift severity.</li>
       <li><strong>Clone Success Rates</strong> &mdash; bar chart comparing rooted vs failed counts per mother.</li>
       <li><strong>Family Tree</strong> &mdash; visual lineage tree showing mother-clone relationships.</li>
       <li><strong>Health Distribution</strong> &mdash; donut chart of plant health statuses.</li>
       <li><strong>IPM Overview</strong> &mdash; bar chart of pest/disease types by severity.</li>
+      <li><strong>IPM Treatment Efficacy</strong> &mdash; success rate and resolution time by treatment type.</li>
       <li><strong>Activity Heatmap</strong> &mdash; calendar heatmap showing daily activity levels.</li>
       <li><strong>Harvest Yield Timeline</strong> &mdash; line chart of individual and cumulative dry weight over time.</li>
       <li><strong>Yield by Strain</strong> &mdash; bar chart ranking total yield per strain (top 12).</li>
       <li><strong>Quality Distribution</strong> &mdash; donut chart of harvest star ratings with average score.</li>
       <li><strong>Flowering Days vs Yield</strong> &mdash; bar chart correlating flowering duration with dry weight.</li>
-      <li><strong>Cost Breakdown</strong> &mdash; donut chart showing expense distribution across 7 categories with dollar totals and a color-coded legend.</li>
       <li><strong>VPD Trends</strong> &mdash; line chart tracking vapor pressure deficit over time with zone bands for each growth stage.</li>
-      <li><strong>Cost per Gram by Strain</strong> &mdash; bar chart showing dollar cost per gram of dried flower, allocated by strain (direct + proportional shared expenses).</li>
+      <li><strong>Harvest Estimate Accuracy</strong> &mdash; compare actual flowering days to strain catalog estimates per strain.</li>
+      <li><strong>Strain Performance</strong> &mdash; rank strains by yield, quality, flower days, and best environment.</li>
+      <li><strong>Environment &harr; Outcome Correlations</strong> &mdash; cross-reference temp/humidity during flowering with harvest results.</li>
+    </ul>
+    <span class="detail-label">Cost &amp; ROI Charts</span>
+    <ul>
+      <li><strong>Cost Breakdown</strong> &mdash; donut chart showing expense distribution across 7 categories with dollar totals and cost per gram.</li>
+      <li><strong>Cost per Gram by Strain</strong> &mdash; bar chart showing $/gram allocated by strain (direct + proportional shared expenses).</li>
+      <li><strong>Cost Efficiency Over Time</strong> &mdash; monthly $/gram (orange) and cumulative $/gram (cyan) trend lines with average reference line.</li>
+      <li><strong>Monthly Expense Trend</strong> &mdash; multi-line chart showing spending by category over time.</li>
+      <li><strong>Strain ROI Ranking</strong> &mdash; composite score (0&ndash;100) combining yield (30%), quality (30%), cost efficiency (25%), and consistency (15%) with ranked table.</li>
+    </ul>
+    <span class="detail-label">Cross-Reference Charts</span>
+    <ul>
+      <li><strong>Training &rarr; Yield</strong> &mdash; bar chart comparing average dry weight by training technique (topping, LST, SCROG, etc.).</li>
+      <li><strong>Trichome Maturity Timeline</strong> &mdash; clear/cloudy/amber percentage progression over time with harvest window zone.</li>
+      <li><strong>Grow Run Comparison</strong> &mdash; yield, quality, duration, and cost-per-gram for completed grow runs.</li>
+      <li><strong>Task Completion Rate</strong> &mdash; color-coded bars showing which tasks get done vs skipped.</li>
+      <li><strong>Health Trend</strong> &mdash; average health score (1&ndash;5) over time with &ldquo;Good&rdquo; zone overlay.</li>
+      <li><strong>Seed Germination vs Age</strong> &mdash; scatter plot showing seed viability decline over months of storage.</li>
+      <li><strong>DryBack Curves</strong> &mdash; overlay dry-back percentage curves for multiple plants with optimal zone.</li>
+      <li><strong>Breeding Success</strong> &mdash; pollen/cross/seed harvest summary with cross detail table.</li>
+      <li><strong>Feeding &rarr; Yield</strong> &mdash; average EC during flowering vs dry weight to find the nutrient sweet spot.</li>
+      <li><strong>Calibration Monitor</strong> &mdash; meter status table with overdue/due-soon/OK indicators.</li>
     </ul>
   </div>
 </div>
@@ -792,10 +824,19 @@ kbd {
     <p>The moon widget on the Dashboard shows the current phase, illumination, and time until the next phase. Tap it for a detailed modal with KNF planting guidance for each of the 8 lunar phases, upcoming phase dates, and a visual cycle overview.</p>
 
     <span class="detail-label">QR Code Plant Tags</span>
-    <p>Generate printable QR code labels for any plant. Each tag includes a QR code (encoding strain, breeder, stage, and date), the plant name, breeder, type, stage, environment, date acquired, and health status. Print single tags from a plant card or batch-print all tags from the gear menu or select mode.</p>
+    <p>Generate printable QR code labels for any plant. Each tag includes a QR code with v2 payload (encoding strain, generation, parent lineage, and breeder), a color-coded generation badge using cannabis convention (S1 = seed origin, F1, F2, F3+), parent lineage line, offspring count, strain, breeder, type, stage, environment, and health status. Print single tags from a plant card or batch-print all tags from the gear menu. Batch printing includes generation filter buttons (All, S1, F1, F2, F3+) with a live plant count.</p>
+
+    <span class="detail-label">Breeding Cross Tags</span>
+    <p>Generate QR labels for breeding crosses and seed harvests. Each tag shows &#9792; Mother &times; &#9794; Father = Offspring strain name, seed count, date, and a QR code with TRM-X payload. Accessible from the Breeding Tracker modal footer or the gear menu.</p>
+
+    <span class="detail-label">Seed Bank Labels</span>
+    <p>Generate QR labels for seed packets. Each label shows strain, breeder, seed count, fem/reg badge, germination rate bar, purchase date with age, and low-stock warning. The QR payload uses TRM-S format. Accessible from the Seed Bank modal header or the gear menu.</p>
+
+    <span class="detail-label">QR Lookup / Decoder</span>
+    <p>Open from the gear menu. Paste any scanned QR text to decode it. The tool parses 5 formats: TRM2 (plant tags), TRM-C (clone tags), TRM-X (breeding crosses), TRM-S (seed labels), and TRM (legacy v1 tags). Decoded entries show full details with action buttons to open the plant, view lineage, or print a tag. Graceful fallback for deleted or unknown entries.</p>
 
     <span class="detail-label">Daily Snapshot</span>
-    <p>Open from the Dashboard to generate a full daily report. The snapshot includes the date, current weather, moon phase with KNF guidance, pending tasks, active IPM issues, environment alerts, and recent feedings. You can <strong>copy to clipboard</strong> for pasting elsewhere or <strong>save to journal</strong> as a text note.</p>
+    <p>Open from the Dashboard to generate a full daily report. The snapshot includes the date, current weather, moon phase with KNF guidance, pending tasks, active IPM issues, environment alerts, and recent feedings. You can <strong>copy to clipboard</strong> for pasting elsewhere or <strong>save to journal</strong> as a text note. Toggle <strong>Auto Daily Snapshot</strong> to automatically save a snapshot to the journal on first app open each day.</p>
 
     <span class="detail-label">Health Check / Score Tracker</span>
     <p>Tap <strong>&#10084; Health</strong> on any plant card to log a quick 1&ndash;5 score with optional notes. Scores are: 1 = Critical, 2 = Poor, 3 = Fair, 4 = Good, 5 = Excellent. Recent scores appear as colored dots on plant cards, and health changes during plant edits are automatically logged.</p>
@@ -807,16 +848,16 @@ kbd {
     <p>Tap <strong>&#128197; Timeline</strong> on any plant card to view a chronological event history combining 8 data sources: feedings, photos, IPM logs, harvests, health checks, dry-back readings, clone batches, and task completions. Events are sorted by date with color-coded dots for each type.</p>
 
     <span class="detail-label">Feed Schedule Templates</span>
-    <p>Open from the Dashboard or gear menu. Choose from 4 built-in nutrient schedules: <strong>GH Flora Series</strong> (10 weeks), <strong>Fox Farm Trio</strong> (8 weeks), <strong>Gaia Green Organic</strong> (5 weeks), or <strong>KNF Inputs</strong> (8 weeks). Preview the weekly schedule, then apply it to a plant to auto-create one-time feeding tasks for each week.</p>
+    <p>Open from the Dashboard or gear menu. Choose from 4 built-in nutrient schedules: <strong>GH Flora Series</strong> (10 weeks), <strong>Fox Farm Trio</strong> (8 weeks), <strong>Gaia Green Organic</strong> (5 weeks), or <strong>KNF Inputs</strong> (8 weeks). You can also create, edit, and delete your own <strong>Custom Feed Schedules</strong> with custom week names, product lists, and amounts. Preview the weekly schedule, then apply it to a plant to auto-create one-time feeding tasks for each week.</p>
 
     <span class="detail-label">Dry-Back Tracking</span>
-    <p>Tap <strong>&#9878; Dry-Back</strong> on a plant card to log weight readings over time. Enter the weight, unit (g/oz/lb), and optional notes. A line chart tracks the dry-back curve and a history table lets you review or delete past entries.</p>
+    <p>Tap <strong>&#9878; Dry-Back</strong> on a plant card to log weight readings over time. Enter the weight, unit (g/oz/lb), and optional notes. Configure saturated and dry weights per plant to calculate dry-back percentage. The chart shows readings with reference lines and an optimal zone overlay (10&ndash;20% dry-back). A &ldquo;Time to Water&rdquo; estimate appears when below the optimal zone. Multi-plant dry-back curve comparison is available on the Analytics tab.</p>
 
     <span class="detail-label">Harvest Estimate</span>
     <p>If a plant's strain has a flowering time set and the plant has a flowering start date, a harvest estimate badge appears on the plant card. It shows a progress bar, estimated harvest window, and days remaining. Harvest estimate events also appear on the Calendar.</p>
 
     <span class="detail-label">Cost Tracker</span>
-    <p>Open from the Dashboard or gear menu. Log grow expenses across 7 categories: Nutrients, Equipment, Soil/Media, Seeds/Clones, IPM, Utilities, and Other. The summary shows total spent, spending this month, and average per month. A Cost Breakdown donut chart appears on the Analytics tab.</p>
+    <p>Open from the Dashboard or gear menu. Log grow expenses across 7 categories: Seeds, Nutrients, Equipment, Soil &amp; Media, Electricity, Water, and Other. Optionally assign expenses to a specific plant for direct cost attribution. The summary shows total spent, cost per gram, and spending breakdown. Five cost analytics charts appear on the Analytics tab: Cost Breakdown (donut), Cost per Gram by Strain (bar), Cost Efficiency Over Time (monthly &amp; cumulative $/gram trend), Monthly Expense Trend (by category), and Strain ROI Ranking (composite score).</p>
 
     <span class="detail-label">Grow Cycle Templates</span>
     <p>Open from the Dashboard, gear menu, or plant cards. Choose from 4 built-in grow cycle templates: <strong>Indoor Photoperiod</strong> (16 weeks / 9 phases), <strong>Indoor Autoflower</strong> (12 weeks / 7 phases), <strong>Outdoor Tropical Maui</strong> (21 weeks / 6 phases), or <strong>Clone to Flower</strong> (12 weeks / 7 phases). Each phase includes week range, phase name, light schedule, and a list of tasks. Preview all phases in a table, then apply to a plant &mdash; this auto-creates one-time tasks with calculated due dates from seedling through harvest.</p>
@@ -828,10 +869,11 @@ kbd {
     <p>Open from the Dashboard or a plant card's <strong>&#128200; Compare</strong> button. Select 2&ndash;3 plants with checkboxes, then tap Compare. A comparison table shows 11 metrics side-by-side: strain, type, age, stage, health, environment, feedings, IPM issues, clone rate, total yield, and average health score. Best values are highlighted in cyan. Mini bar charts below the table compare feedings, yield, and health scores visually.</p>
 
     <span class="detail-label">Export Report (Print-to-PDF)</span>
-    <p>Open from the Dashboard, gear menu, or a plant card's <strong>&#128196; Report</strong> button. Choose between two report modes:</p>
+    <p>Open from the Dashboard, gear menu, or a plant card's <strong>&#128196; Report</strong> button. Choose between three report modes:</p>
     <ul>
-      <li><strong>Plant Report</strong> &mdash; full grow history for a single plant including strain info, stat grid (8 metrics), feeding history (last 20), harvests, IPM log, and health checks.</li>
+      <li><strong>Plant Report</strong> &mdash; full grow history for a single plant including strain info, stat grid (8 metrics), feeding history (last 20), harvests, IPM log, health checks, and expense table.</li>
       <li><strong>Garden Report</strong> &mdash; overall summary of your entire garden including plant count, environments, flowering count, total yield, total expenses, cost per gram, plant roster, environment list, harvest summary, and expense breakdown by category.</li>
+      <li><strong>Analytics Report</strong> &mdash; comprehensive analytics export with executive summary (8 key stats), cost analysis by category with percentages, monthly spending table, strain performance table (yield, quality, $/gram per strain), environment summary with yield per space, recent harvests (last 20), and active grow runs.</li>
     </ul>
     <p>Reports open in a new browser window with a dark theme on screen and clean black-and-white formatting for printing. Tap <strong>Print / Save PDF</strong> to open your browser's print dialog and save as PDF.</p>
 
@@ -865,16 +907,16 @@ kbd {
     <p>Open from the Dashboard, gear menu, or the <strong>&#129657; Deficiency Wizard</strong> button in the IPM form. The wizard walks you through 3 steps: (1) Where are symptoms? (old growth, new growth, all), (2) What do you see? (yellowing, browning, spots, curling, purple), (3) What pattern? (interveinal, edges, tips, uniform). Based on your answers, it identifies the most likely deficiency (Nitrogen, Magnesium, Iron, Potassium, Calcium, Phosphorus, Manganese, or Nutrient Burn) and provides fix instructions. A <strong>Log as IPM Issue</strong> button pre-fills the IPM form.</p>
 
     <span class="detail-label">Grow Run Manager</span>
-    <p>Open from the Dashboard or gear menu. Create named grow runs, assign plants, and track start/end dates. Each run shows aggregate statistics: plant count, total yield, total cost, and average health. Mark runs as completed when finished. Use <strong>Compare Runs</strong> to select two runs and view side-by-side stats.</p>
+    <p>Open from the Dashboard or gear menu. Create named grow runs, assign plants, and track start/end dates. Each run shows aggregate statistics: plant count, total yield, total cost, cost per gram, and average health. Mark runs as completed when finished. Use <strong>Compare Runs</strong> to select two runs and view side-by-side stats. Completed runs appear on the <strong>Grow Run Comparison</strong> analytics chart with yield, quality, duration, and cost-per-gram metrics.</p>
 
     <span class="detail-label">Breeding / Pollen Tracker</span>
-    <p>Open from the Dashboard, gear menu, or the <strong>&#129516; Breed</strong> button on plant cards. Log three entry types: <strong>Pollen Collection</strong> (date, storage method, viability notes), <strong>Cross</strong> (mother &times; father, method, notes), and <strong>Seed Harvest</strong> (parents, seed count, offspring strain name). Filter entries by plant or type.</p>
+    <p>Open from the Dashboard, gear menu, or the <strong>&#129516; Breed</strong> button on plant cards. Log three entry types: <strong>Pollen Collection</strong> (date, storage method, viability notes), <strong>Cross</strong> (mother &times; father, method, notes), and <strong>Seed Harvest</strong> (parents, seed count, offspring strain name). Filter entries by plant or type. Use the <strong>Print Tags</strong> button in the Breeding Tracker footer to generate QR cross tags for all your breeding records.</p>
 
     <span class="detail-label">pH/EC Calibration Log</span>
     <p>Open from the gear menu (<strong>&#9879; Calibration Log</strong>). Log meter calibrations with meter type (pH, EC, or both), buffer solutions used, and notes. Set a calibration interval (default: 30 days). A badge on environment cards shows days since last calibration and turns orange/red when overdue.</p>
 
     <span class="detail-label">Fleet View / Table Mode</span>
-    <p>Toggle between Grid and Table view on the Plants tab using the <strong>&#9776; Table / &#9638; Grid</strong> button in the toolbar. Table mode shows a sortable table with 9 columns: Strain, Type, Stage, Health, Age, Environment, Last Fed, Days Since IPM, and Yield. Click any column header to sort ascending or descending.</p>
+    <p>Toggle between Grid and Table view on the Plants tab using the <strong>&#9776; Table / &#9638; Grid</strong> button in the toolbar. Table mode shows a sortable table with 9 columns: Strain, Type, Stage, Health, Age, Environment, Last Fed, Days Since IPM, and Yield. Click any column header to sort ascending or descending. Use the filter dropdowns to narrow by stage, health status, or environment. Select multiple plants via checkboxes for bulk actions: update health, change growth stage, or move to a different environment.</p>
 
     <span class="detail-label">Grow Room Diagram</span>
     <p>Open from the <strong>&#128208; Layout</strong> button on environment cards or the gear menu. Set grid dimensions (rows &times; columns) for your grow space. Click any cell to assign a plant from a picker, or click an occupied cell to unassign. Layouts save per environment.</p>
