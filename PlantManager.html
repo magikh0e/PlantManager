@@ -848,7 +848,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 (function(){
 'use strict';
 
-const APP_VERSION = '2.6.0';
+const APP_VERSION = '2.7.0';
 
 /* ═══════════════════════════════════════════════
    UTILS
@@ -4287,6 +4287,16 @@ const Analytics={
     h+=this._ecDriftCard();
     h+=this._feedFrequencyCard();
     h+=this._ipmEfficacyCard();
+    h+=this._trainingYieldCard();
+    h+=this._trichomeTimelineCard();
+    h+=this._growRunComparisonCard();
+    h+=this._taskCompletionCard();
+    h+=this._healthTrendCard();
+    h+=this._seedGermAgeCard();
+    h+=this._dryBackCurveCard();
+    h+=this._breedingSuccessCard();
+    h+=this._feedingYieldCard();
+    h+=this._calibrationMonitorCard();
     h+='</div>';
     document.getElementById('panel-analytics').innerHTML=h;
   },
@@ -4494,6 +4504,422 @@ const Analytics={
       h+='<td style="padding:4px 8px;text-align:center;border-bottom:1px solid rgba(255,255,255,.04)">'+(r.avgDays!==null?r.avgDays+'d':'—')+'</td></tr>';
     });
     h+='</tbody></table></div></div>';
+    return h;
+  },
+
+  /* ── Chart 21: Training → Yield Correlation ── */
+  _trainingYieldCard(){
+    var harvests=Store.harvestsArray().filter(function(hv){return hv.dryWeight>0&&hv.motherId});
+    var training=Store.trainingLogsArray();
+    if(!harvests.length||!training.length) return '';
+    var yieldByMother={};
+    harvests.forEach(function(hv){
+      if(!yieldByMother[hv.motherId]) yieldByMother[hv.motherId]=[];
+      yieldByMother[hv.motherId].push(parseFloat(hv.dryWeight)||0);
+    });
+    var byTech={};var allYields=[];
+    training.forEach(function(t){
+      if(!t.technique||!yieldByMother[t.motherId]) return;
+      if(!byTech[t.technique]) byTech[t.technique]={yields:[],plants:{}};
+      if(!byTech[t.technique].plants[t.motherId]){
+        byTech[t.technique].plants[t.motherId]=true;
+        yieldByMother[t.motherId].forEach(function(y){byTech[t.technique].yields.push(y)});
+      }
+    });
+    harvests.forEach(function(hv){allYields.push(parseFloat(hv.dryWeight)||0)});
+    var overallAvg=allYields.length?Math.round(allYields.reduce(function(a,b){return a+b},0)/allYields.length*10)/10:0;
+    var data=[];var i=0;
+    for(var tech in byTech){
+      var arr=byTech[tech].yields;
+      if(!arr.length) continue;
+      var avg=Math.round(arr.reduce(function(a,b){return a+b},0)/arr.length*10)/10;
+      data.push({label:tech.charAt(0).toUpperCase()+tech.slice(0),value:avg,color:Chart._c(i++)});
+    }
+    if(data.length<1) return '';
+    data.sort(function(a,b){return b.value-a.value});
+    var h='<div class="card chart-card"><div class="chart-title">✂️ Training → Yield</div>';
+    h+='<div class="chart-subtitle">Avg dry weight (g) by training technique — overall avg: '+overallAvg+'g</div>';
+    h+=Chart.bar(data,{width:560,height:220});
+    h+='</div>';
+    return h;
+  },
+
+  /* ── Chart 22: Trichome Maturity Timeline ── */
+  _trichomeTimelineCard(){
+    var cutoff=this._cutoff();var pf=this._plantFilter;
+    var readings=Store.trichomeReadingsArray().filter(function(r){
+      if(cutoff&&r.timestamp<cutoff) return false;
+      if(pf&&pf!=='all'&&r.motherId!==pf) return false;
+      return true;
+    });
+    if(readings.length<2){
+      var h='<div class="card chart-card"><div class="chart-title">🔬 Trichome Maturity</div>';
+      h+='<div class="chart-subtitle">Clear / Cloudy / Amber % over time</div>';
+      h+='<div class="chart-no-data">Need at least 2 trichome readings</div></div>';
+      return h;
+    }
+    readings.sort(function(a,b){return a.timestamp-b.timestamp});
+    var labels=[];
+    var clear=[],cloudy=[],amber=[];
+    readings.forEach(function(r){
+      var d=new Date(r.timestamp);
+      labels.push((d.getMonth()+1)+'/'+d.getDate());
+      clear.push({x:labels.length-1,y:r.clearPct||0});
+      cloudy.push({x:labels.length-1,y:r.cloudyPct||0});
+      amber.push({x:labels.length-1,y:r.amberPct||0});
+    });
+    var h='<div class="card chart-card"><div class="chart-title">🔬 Trichome Maturity</div>';
+    h+='<div class="chart-subtitle">Clear / Cloudy / Amber % over time</div>';
+    h+=Chart.line([
+      {label:'Clear',color:'rgba(255,255,255,.7)',values:clear},
+      {label:'Cloudy',color:'#00c8c0',values:cloudy},
+      {label:'Amber',color:'#f0b429',values:amber}
+    ],{width:560,height:220,xLabels:labels,yMin:0,yMax:100,
+      refLines:[{y:30,color:'rgba(240,180,41,.25)',label:'Amber 30%'}],
+      zone:{y1:20,y2:40,color:'rgba(240,180,41,.06)'}});
+    h+='<div style="display:flex;gap:12px;justify-content:center;margin-top:6px;font-size:.65rem">';
+    h+='<span style="color:rgba(255,255,255,.7)">● Clear</span>';
+    h+='<span style="color:#00c8c0">● Cloudy</span>';
+    h+='<span style="color:#f0b429">● Amber</span></div>';
+    h+='</div>';
+    return h;
+  },
+
+  /* ── Chart 23: Grow Run Comparison ── */
+  _growRunComparisonCard(){
+    var runs=Store.growRunsArray().filter(function(r){return r.status==='completed'&&r.plantIds&&r.plantIds.length});
+    if(runs.length<1){
+      var h='<div class="card chart-card"><div class="chart-title">🌱 Grow Run Comparison</div>';
+      h+='<div class="chart-subtitle">Yield, quality & efficiency by grow run</div>';
+      h+='<div class="chart-no-data">Need at least 1 completed grow run with plants</div></div>';
+      return h;
+    }
+    var rows=[];
+    runs.forEach(function(run){
+      var totalYield=0,quals=[],dur=0;
+      if(run.startDate&&run.endDate) dur=U.daysBetween(U.parseDate(run.startDate),U.parseDate(run.endDate));
+      (run.plantIds||[]).forEach(function(pid){
+        Store.harvestsForMother(pid).forEach(function(hv){
+          if(hv.dryWeight) totalYield+=parseFloat(hv.dryWeight)||0;
+          if(hv.quality) quals.push(parseInt(hv.quality));
+        });
+      });
+      var avgQ=quals.length?Math.round(quals.reduce(function(a,b){return a+b},0)/quals.length*10)/10:0;
+      var totalExp=0;
+      Store.expensesArray().forEach(function(e){
+        if(run.plantIds.indexOf(e.motherId)!==-1) totalExp+=(parseFloat(e.amount)||0);
+      });
+      var cpg=totalYield>0?totalExp/totalYield:0;
+      rows.push({name:run.name||'Run',dur:dur,yield:Math.round(totalYield*10)/10,avgQ:avgQ,cpg:Math.round(cpg*100)/100,plants:run.plantIds.length});
+    });
+    rows.sort(function(a,b){return b.yield-a.yield});
+    var h='<div class="card chart-card" style="padding:var(--space-md)"><div class="chart-title">🌱 Grow Run Comparison</div>';
+    h+='<div class="chart-subtitle">Yield, quality & efficiency by grow run</div>';
+    var data=rows.map(function(r,i){return{label:(r.name||'').slice(0,12),value:r.yield,color:Chart._c(i)}});
+    if(data.length) h+=Chart.bar(data,{width:560,height:180});
+    h+='<table style="width:100%;font-size:.7rem;border-collapse:collapse;margin-top:8px">';
+    h+='<thead><tr><th style="text-align:left;padding:3px 6px;border-bottom:1px solid var(--border-subtle)">Run</th>';
+    h+='<th style="text-align:center;padding:3px 6px;border-bottom:1px solid var(--border-subtle)">Days</th>';
+    h+='<th style="text-align:center;padding:3px 6px;border-bottom:1px solid var(--border-subtle)">Plants</th>';
+    h+='<th style="text-align:center;padding:3px 6px;border-bottom:1px solid var(--border-subtle)">Yield (g)</th>';
+    h+='<th style="text-align:center;padding:3px 6px;border-bottom:1px solid var(--border-subtle)">Quality</th>';
+    h+='<th style="text-align:center;padding:3px 6px;border-bottom:1px solid var(--border-subtle)">$/g</th></tr></thead><tbody>';
+    rows.forEach(function(r){
+      var qCol=r.avgQ>=4?'var(--leaf)':r.avgQ>=3?'var(--gold)':'#e05c3a';
+      h+='<tr><td style="padding:3px 6px;border-bottom:1px solid rgba(255,255,255,.04);font-weight:600">'+U.esc((r.name||'').slice(0,20))+'</td>';
+      h+='<td style="text-align:center;padding:3px 6px;border-bottom:1px solid rgba(255,255,255,.04)">'+(r.dur?r.dur+'d':'—')+'</td>';
+      h+='<td style="text-align:center;padding:3px 6px;border-bottom:1px solid rgba(255,255,255,.04)">'+r.plants+'</td>';
+      h+='<td style="text-align:center;padding:3px 6px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--cyan);font-weight:700">'+r.yield+'</td>';
+      h+='<td style="text-align:center;padding:3px 6px;border-bottom:1px solid rgba(255,255,255,.04);color:'+qCol+'">'+(r.avgQ?r.avgQ.toFixed(1)+' ★':'—')+'</td>';
+      h+='<td style="text-align:center;padding:3px 6px;border-bottom:1px solid rgba(255,255,255,.04)">'+(r.cpg?'$'+r.cpg.toFixed(2):'—')+'</td></tr>';
+    });
+    h+='</tbody></table></div>';
+    return h;
+  },
+
+  /* ── Chart 24: Task Completion Rate ── */
+  _taskCompletionCard(){
+    var tasks=Store.tasksArray();
+    if(tasks.length<1) return '';
+    var data=[];
+    tasks.forEach(function(t,i){
+      var comps=Store.completionsFor(t.id);
+      if(!comps||!comps.length) return;
+      var expected=1;
+      if(t.scheduleType==='recurring'&&t.intervalDays>0){
+        var oldest=comps.reduce(function(mn,c){return c.completedAt<mn?c.completedAt:mn},comps[0].completedAt);
+        var span=Math.max(1,(Date.now()-oldest)/86400000);
+        expected=Math.max(1,Math.floor(span/t.intervalDays));
+      }
+      var rate=Math.min(100,Math.round(comps.length/expected*100));
+      var m=t.motherId?Store.getById('mothers',t.motherId):null;
+      var label=(t.description||'Task').slice(0,22);
+      if(m) label=m.strainName.slice(0,8)+': '+label.slice(0,14);
+      data.push({label:label,value:rate,color:rate>=80?'var(--leaf)':rate>=50?'var(--gold)':'#e05c3a'});
+    });
+    if(!data.length) return '';
+    data.sort(function(a,b){return a.value-b.value});
+    if(data.length>12) data=data.slice(0,12);
+    var h='<div class="card chart-card"><div class="chart-title">☑️ Task Completion Rate</div>';
+    h+='<div class="chart-subtitle">Completion % by task — red &lt;50%, yellow &lt;80%, green ≥80%</div>';
+    h+=Chart.bar(data,{width:560,height:220});
+    h+='</div>';
+    return h;
+  },
+
+  /* ── Chart 25: Health Trend Timeline ── */
+  _healthTrendCard(){
+    var cutoff=this._cutoff();var pf=this._plantFilter;
+    var checks=Store.healthChecksArray().filter(function(c){
+      if(cutoff&&c.timestamp<cutoff) return false;
+      if(pf&&pf!=='all'&&c.motherId!==pf) return false;
+      return c.score>0;
+    });
+    if(checks.length<2){
+      var h='<div class="card chart-card"><div class="chart-title">💚 Health Trend</div>';
+      h+='<div class="chart-subtitle">Average health score over time (1–5)</div>';
+      h+='<div class="chart-no-data">Need at least 2 health checks with scores</div></div>';
+      return h;
+    }
+    checks.sort(function(a,b){return a.timestamp-b.timestamp});
+    var byWeek={};
+    checks.forEach(function(c){
+      var d=new Date(c.timestamp);
+      var wk=d.getFullYear()+'-W'+String(Math.ceil(((d-new Date(d.getFullYear(),0,1))/86400000+1)/7)).padStart(2,'0');
+      if(!byWeek[wk]) byWeek[wk]={scores:[],date:d};
+      byWeek[wk].scores.push(c.score);
+    });
+    var weeks=Object.keys(byWeek).sort();
+    var labels=[],vals=[];
+    weeks.forEach(function(wk){
+      var sc=byWeek[wk].scores;
+      var avg=Math.round(sc.reduce(function(a,b){return a+b},0)/sc.length*10)/10;
+      var d=byWeek[wk].date;
+      labels.push((d.getMonth()+1)+'/'+d.getDate());
+      vals.push({x:vals.length,y:avg});
+    });
+    var h='<div class="card chart-card"><div class="chart-title">💚 Health Trend</div>';
+    h+='<div class="chart-subtitle">Average health score over time (1–5)</div>';
+    h+=Chart.line([{label:'Health Score',color:'#00c8c0',values:vals}],{
+      width:560,height:220,xLabels:labels,yMin:1,yMax:5,
+      refLines:[{y:3,color:'rgba(240,180,41,.3)',label:'Fair'},{y:4,color:'rgba(0,200,192,.3)',label:'Good'}],
+      zone:{y1:4,y2:5,color:'rgba(0,200,192,.06)'}
+    });
+    h+='</div>';
+    return h;
+  },
+
+  /* ── Chart 26: Seed Germination vs Age ── */
+  _seedGermAgeCard(){
+    var seeds=Store.seedsArray().filter(function(s){
+      return s.germinationRate>0&&s.datePurchased;
+    });
+    if(seeds.length<3){
+      var h='<div class="card chart-card"><div class="chart-title">🌰 Germination vs Seed Age</div>';
+      h+='<div class="chart-subtitle">Does viability decline with age?</div>';
+      h+='<div class="chart-no-data">Need at least 3 seed packets with germination rate and purchase date</div></div>';
+      return h;
+    }
+    seeds.sort(function(a,b){
+      var ageA=(Date.now()-U.parseDate(a.datePurchased).getTime())/2592000000;
+      var ageB=(Date.now()-U.parseDate(b.datePurchased).getTime())/2592000000;
+      return ageA-ageB;
+    });
+    var labels=[],vals=[];
+    seeds.forEach(function(s,i){
+      var ageMonths=Math.round((Date.now()-U.parseDate(s.datePurchased).getTime())/2592000000*10)/10;
+      labels.push(Math.round(ageMonths)+'mo');
+      vals.push({x:i,y:s.germinationRate});
+    });
+    var h='<div class="card chart-card"><div class="chart-title">🌰 Germination vs Seed Age</div>';
+    h+='<div class="chart-subtitle">Germination rate (%) by seed packet age in months</div>';
+    h+=Chart.line([{label:'Germ Rate',color:'#00c8c0',values:vals}],{
+      width:560,height:220,xLabels:labels,yMin:0,yMax:100,showDots:true,
+      refLines:[{y:80,color:'rgba(74,158,82,.35)',label:'Good viability'}]
+    });
+    h+='</div>';
+    return h;
+  },
+
+  /* ── Chart 27: DryBack Curve Analysis ── */
+  _dryBackCurveCard(){
+    var pf=this._plantFilter;
+    var allDB=Store.dryBacksArray();
+    if(pf&&pf!=='all') allDB=allDB.filter(function(d){return d.motherId===pf});
+    var byPlant={};
+    allDB.forEach(function(d){
+      if(!byPlant[d.motherId]) byPlant[d.motherId]=[];
+      byPlant[d.motherId].push(d);
+    });
+    var datasets=[];var colorIdx=0;
+    for(var mid in byPlant){
+      var logs=byPlant[mid];
+      if(logs.length<3) continue;
+      var cfg=DryBack._getConfig(mid);
+      if(!cfg||!cfg.saturatedWeight||!cfg.dryWeight) continue;
+      logs.sort(function(a,b){return a.timestamp-b.timestamp});
+      var heaviest=logs.reduce(function(mx,d){var g=DryBack._toGrams(d.weight,d.unit||'g');return g>mx?g:mx},0);
+      var startTs=null;
+      logs.forEach(function(d){var g=DryBack._toGrams(d.weight,d.unit||'g');if(g>=heaviest*0.95&&(!startTs||d.timestamp<startTs)) startTs=d.timestamp});
+      if(!startTs) startTs=logs[0].timestamp;
+      var vals=[];
+      logs.forEach(function(d){
+        var hrs=Math.round((d.timestamp-startTs)/3600000*10)/10;
+        if(hrs<0) return;
+        var g=DryBack._toGrams(d.weight,d.unit||'g');
+        var pct=DryBack._dryBackPct(g,cfg);
+        vals.push({x:hrs,y:Math.max(0,Math.min(100,Math.round(pct*10)/10))});
+      });
+      if(vals.length<3) continue;
+      var m=Store.getById('mothers',mid);
+      var name=m?m.strainName:'Plant';
+      datasets.push({label:name.slice(0,12),color:Chart._c(colorIdx++),values:vals});
+    }
+    if(!datasets.length){
+      var h='<div class="card chart-card"><div class="chart-title">💧 DryBack Curves</div>';
+      h+='<div class="chart-subtitle">Dry-back % over hours since watering</div>';
+      h+='<div class="chart-no-data">Need 2+ plants with pot config and 3+ weight readings each</div></div>';
+      return h;
+    }
+    var maxHr=0;
+    datasets.forEach(function(ds){ds.values.forEach(function(v){if(v.x>maxHr) maxHr=v.x})});
+    var lblCount=Math.min(8,Math.ceil(maxHr));
+    var labels=[];
+    for(var i=0;i<=lblCount;i++){var hr=Math.round(maxHr/lblCount*i);labels.push(hr+'h')}
+    var normSets=datasets.map(function(ds){
+      return{label:ds.label,color:ds.color,values:ds.values.map(function(v){
+        return{x:lblCount>0?v.x/maxHr*lblCount:0,y:v.y};
+      })};
+    });
+    var h='<div class="card chart-card"><div class="chart-title">💧 DryBack Curves</div>';
+    h+='<div class="chart-subtitle">Dry-back % over hours since watering</div>';
+    h+=Chart.line(normSets,{width:560,height:220,xLabels:labels,yMin:0,yMax:100,
+      refLines:[{y:50,color:'rgba(0,200,192,.3)',label:'Target 50%'}],
+      zone:{y1:30,y2:50,color:'rgba(0,200,192,.06)'}});
+    if(datasets.length>1){
+      h+='<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:6px;font-size:.63rem">';
+      datasets.forEach(function(ds){h+='<span style="color:'+ds.color+'">● '+U.esc(ds.label)+'</span>'});
+      h+='</div>';
+    }
+    h+='</div>';
+    return h;
+  },
+
+  /* ── Chart 28: Breeding Success Tracker ── */
+  _breedingSuccessCard(){
+    var logs=Store.breedingLogsArray();
+    if(logs.length<1) return '';
+    var pollen=logs.filter(function(l){return l.type==='pollen'});
+    var crosses=logs.filter(function(l){return l.type==='cross'});
+    var harvests=logs.filter(function(l){return l.type==='seed_harvest'});
+    var totalSeeds=harvests.reduce(function(s,l){return s+(parseInt(l.seedCount)||0)},0);
+    var h='<div class="card chart-card" style="padding:var(--space-md)"><div class="chart-title">🧬 Breeding Success</div>';
+    h+='<div class="chart-subtitle">Pollen collections, crosses & seed harvests</div>';
+    h+='<div style="display:flex;gap:12px;margin:10px 0;flex-wrap:wrap">';
+    h+='<div style="flex:1;min-width:70px;text-align:center;padding:8px;background:rgba(0,200,192,.06);border-radius:var(--radius-sm)"><div style="font-size:1.3rem;font-weight:700;color:var(--cyan)">'+pollen.length+'</div><div style="font-size:.6rem;color:var(--text-secondary)">Pollen</div></div>';
+    h+='<div style="flex:1;min-width:70px;text-align:center;padding:8px;background:rgba(240,180,41,.06);border-radius:var(--radius-sm)"><div style="font-size:1.3rem;font-weight:700;color:var(--gold)">'+crosses.length+'</div><div style="font-size:.6rem;color:var(--text-secondary)">Crosses</div></div>';
+    h+='<div style="flex:1;min-width:70px;text-align:center;padding:8px;background:rgba(74,158,82,.06);border-radius:var(--radius-sm)"><div style="font-size:1.3rem;font-weight:700;color:var(--leaf)">'+harvests.length+'</div><div style="font-size:.6rem;color:var(--text-secondary)">Seed Harvests</div></div>';
+    h+='<div style="flex:1;min-width:70px;text-align:center;padding:8px;background:rgba(255,255,255,.04);border-radius:var(--radius-sm)"><div style="font-size:1.3rem;font-weight:700">'+totalSeeds+'</div><div style="font-size:.6rem;color:var(--text-secondary)">Total Seeds</div></div>';
+    h+='</div>';
+    if(crosses.length||harvests.length){
+      h+='<table style="width:100%;font-size:.7rem;border-collapse:collapse;margin-top:6px">';
+      h+='<thead><tr><th style="text-align:left;padding:3px 6px;border-bottom:1px solid var(--border-subtle)">Cross / Harvest</th>';
+      h+='<th style="text-align:left;padding:3px 6px;border-bottom:1px solid var(--border-subtle)">Mother</th>';
+      h+='<th style="text-align:left;padding:3px 6px;border-bottom:1px solid var(--border-subtle)">Father</th>';
+      h+='<th style="text-align:center;padding:3px 6px;border-bottom:1px solid var(--border-subtle)">Seeds</th>';
+      h+='<th style="text-align:center;padding:3px 6px;border-bottom:1px solid var(--border-subtle)">Type</th></tr></thead><tbody>';
+      var combined=crosses.concat(harvests);
+      combined.sort(function(a,b){return b.timestamp-a.timestamp});
+      combined.slice(0,10).forEach(function(l){
+        var mom=l.motherId?Store.getById('mothers',l.motherId):null;
+        var dad=l.fatherId?Store.getById('mothers',l.fatherId):null;
+        var typeBadge=l.type==='cross'?'<span style="color:var(--gold)">Cross</span>':'<span style="color:var(--leaf)">Harvest</span>';
+        h+='<tr><td style="padding:3px 6px;border-bottom:1px solid rgba(255,255,255,.04);font-weight:600">'+U.esc((l.strainName||'—').slice(0,18))+'</td>';
+        h+='<td style="padding:3px 6px;border-bottom:1px solid rgba(255,255,255,.04)">'+U.esc(mom?mom.strainName.slice(0,12):'—')+'</td>';
+        h+='<td style="padding:3px 6px;border-bottom:1px solid rgba(255,255,255,.04)">'+U.esc(dad?dad.strainName.slice(0,12):'—')+'</td>';
+        h+='<td style="text-align:center;padding:3px 6px;border-bottom:1px solid rgba(255,255,255,.04)">'+(l.seedCount||'—')+'</td>';
+        h+='<td style="text-align:center;padding:3px 6px;border-bottom:1px solid rgba(255,255,255,.04)">'+typeBadge+'</td></tr>';
+      });
+      h+='</tbody></table>';
+    }
+    h+='</div>';
+    return h;
+  },
+
+  /* ── Chart 29: Feeding → Yield Correlation ── */
+  _feedingYieldCard(){
+    var harvests=Store.harvestsArray().filter(function(hv){return hv.dryWeight>0&&hv.motherId&&hv.floweringStart});
+    if(harvests.length<2) return '';
+    var points=[];
+    harvests.forEach(function(hv){
+      var feeds=Store.feedingsForMother(hv.motherId);
+      var flStart=U.parseDate(hv.floweringStart).getTime();
+      var flEnd=hv.floweringEnd?U.parseDate(hv.floweringEnd).getTime():Date.now();
+      var ecVals=[];
+      feeds.forEach(function(f){
+        if(f.timestamp>=flStart&&f.timestamp<=flEnd&&f.ecPpmIn){
+          ecVals.push(parseFloat(f.ecPpmIn));
+        }
+      });
+      if(!ecVals.length) return;
+      var avgEc=Math.round(ecVals.reduce(function(a,b){return a+b},0)/ecVals.length);
+      points.push({ec:avgEc,yield:parseFloat(hv.dryWeight)||0});
+    });
+    if(points.length<2){
+      var h='<div class="card chart-card"><div class="chart-title">🧪 Feeding → Yield</div>';
+      h+='<div class="chart-subtitle">Avg EC during flowering vs dry weight</div>';
+      h+='<div class="chart-no-data">Need at least 2 harvests with feeding EC data during flowering</div></div>';
+      return h;
+    }
+    points.sort(function(a,b){return a.ec-b.ec});
+    var labels=points.map(function(p){return p.ec+''});
+    var vals=points.map(function(p,i){return{x:i,y:Math.round(p.yield*10)/10}});
+    var avgY=Math.round(points.reduce(function(s,p){return s+p.yield},0)/points.length*10)/10;
+    var h='<div class="card chart-card"><div class="chart-title">🧪 Feeding → Yield</div>';
+    h+='<div class="chart-subtitle">Avg EC/PPM during flowering vs dry weight (g) — avg yield: '+avgY+'g</div>';
+    h+=Chart.line([{label:'Yield',color:'#00c8c0',values:vals}],{
+      width:560,height:220,xLabels:labels,showDots:true,
+      refLines:[{y:avgY,color:'rgba(240,180,41,.3)',label:'Avg '+avgY+'g'}]
+    });
+    h+='</div>';
+    return h;
+  },
+
+  /* ── Chart 30: Calibration Drift Monitor ── */
+  _calibrationMonitorCard(){
+    var meters=Store.metersArray();
+    if(!meters.length) return '';
+    var rows=[];
+    var okCount=0;
+    meters.forEach(function(m){
+      var logs=Store.calibrationLogsForMeter(m.id);
+      var last=logs.length?logs.reduce(function(latest,l){return l.timestamp>latest?l.timestamp:latest},0):0;
+      var interval=m.intervalDays||30;
+      var daysSince=last?Math.floor((Date.now()-last)/86400000):999;
+      var status,statusColor;
+      if(!last){status='Never';statusColor='#e05c3a'}
+      else if(daysSince>interval){status='🔴 Overdue';statusColor='#e05c3a'}
+      else if(daysSince>interval*0.8){status='⚠️ Due Soon';statusColor='var(--gold)'}
+      else{status='✅ OK';statusColor='var(--leaf)';okCount++}
+      rows.push({name:m.name,type:m.type||'—',lastCal:last?U.relTime(last):'Never',interval:interval+'d',daysSince:daysSince,status:status,statusColor:statusColor});
+    });
+    var h='<div class="card chart-card" style="padding:var(--space-md)"><div class="chart-title">🔧 Calibration Monitor</div>';
+    h+='<div class="chart-subtitle">'+okCount+' of '+meters.length+' meters current</div>';
+    h+='<table style="width:100%;font-size:.7rem;border-collapse:collapse">';
+    h+='<thead><tr><th style="text-align:left;padding:3px 6px;border-bottom:1px solid var(--border-subtle)">Meter</th>';
+    h+='<th style="text-align:center;padding:3px 6px;border-bottom:1px solid var(--border-subtle)">Type</th>';
+    h+='<th style="text-align:center;padding:3px 6px;border-bottom:1px solid var(--border-subtle)">Last Cal</th>';
+    h+='<th style="text-align:center;padding:3px 6px;border-bottom:1px solid var(--border-subtle)">Interval</th>';
+    h+='<th style="text-align:center;padding:3px 6px;border-bottom:1px solid var(--border-subtle)">Status</th></tr></thead><tbody>';
+    rows.sort(function(a,b){return b.daysSince-a.daysSince});
+    rows.forEach(function(r){
+      h+='<tr><td style="padding:3px 6px;border-bottom:1px solid rgba(255,255,255,.04);font-weight:600">'+U.esc(r.name.slice(0,20))+'</td>';
+      h+='<td style="text-align:center;padding:3px 6px;border-bottom:1px solid rgba(255,255,255,.04)">'+U.esc(r.type)+'</td>';
+      h+='<td style="text-align:center;padding:3px 6px;border-bottom:1px solid rgba(255,255,255,.04)">'+r.lastCal+'</td>';
+      h+='<td style="text-align:center;padding:3px 6px;border-bottom:1px solid rgba(255,255,255,.04)">'+r.interval+'</td>';
+      h+='<td style="text-align:center;padding:3px 6px;border-bottom:1px solid rgba(255,255,255,.04);color:'+r.statusColor+';font-weight:600">'+r.status+'</td></tr>';
+    });
+    h+='</tbody></table></div>';
     return h;
   },
 
@@ -5011,6 +5437,20 @@ const DataIO={
    ═══════════════════════════════════════════════ */
 const WhatsNew={
   _notes:{
+    '2.7.0':[
+      '<b>10 New Analytics Charts</b> — cross-referencing data that was being tracked but never analyzed',
+      '<b>Training → Yield</b> chart — compare avg dry weight by training technique (topping, LST, SCROG, etc.)',
+      '<b>Trichome Maturity Timeline</b> — clear/cloudy/amber % progression over time with harvest window zone',
+      '<b>Grow Run Comparison</b> — yield, quality, duration & cost-per-gram table for completed grow runs',
+      '<b>Task Completion Rate</b> — color-coded bars showing which tasks get done vs skipped',
+      '<b>Health Trend</b> — avg health score (1–5) over time with "Good" zone overlay',
+      '<b>Germination vs Seed Age</b> — scatter plot showing viability decline over months',
+      '<b>DryBack Curves</b> — overlay dry-back % curves for multiple plants with optimal zone',
+      '<b>Breeding Success</b> — pollen/cross/seed harvest summary with cross detail table',
+      '<b>Feeding → Yield</b> — avg EC during flowering vs dry weight to find the nutrient sweet spot',
+      '<b>Calibration Monitor</b> — meter status table with overdue/due-soon/OK indicators',
+      'Analytics tab now has up to 30 charts (was 20)',
+    ],
     '2.6.0':[
       '<b>Feeding Trend Analysis</b> — EC/PPM Drift chart, Feeding Frequency chart (color-coded by pH drift), stats bar with month count and averages, and dashboard alerts for unfed plants',
       '<b>IPM Treatment Efficacy</b> — reapplication reminders with overdue warnings, resistance rotation alerts after 3 same treatments, resolution time on resolved cards, and Treatment Efficacy analytics table',

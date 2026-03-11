@@ -3,6 +3,64 @@ CHANGELOG — Tropical Roots Maui - Plant Manager
 https://github.com/magikh0e/PlantManager
 
 
+v2.7.0 — 2026-03-10
+--------------------
+FEATURE: Analytics Expansion — 10 New Cross-Reference Charts (20 → 30 total)
+
+  Training → Yield Correlation
+    - Bar chart comparing avg dry weight (g) by training technique
+    - Cross-references trainingLogs with harvestsArray for plants that used each technique
+    - Shows overall average yield as reference point
+
+  Trichome Maturity Timeline
+    - Line chart plotting clear/cloudy/amber % over time
+    - Amber 30% reference line with harvest-window zone overlay
+    - Supports plant filter for per-plant progression tracking
+
+  Grow Run Comparison
+    - Yield bar chart + detail table for completed grow runs
+    - Table columns: Run Name, Duration, Plants, Yield, Quality, Cost/gram
+    - Cross-references growRuns with harvests and expenses
+
+  Task Completion Rate
+    - Color-coded bar chart: green ≥80%, yellow ≥50%, red <50%
+    - Calculates completion rate based on expected vs actual completions
+    - Identifies most-skipped tasks at a glance
+
+  Health Trend Timeline
+    - Line chart of avg health score (1–5) over time, grouped by week
+    - Reference lines at Fair (3) and Good (4) thresholds
+    - Zone overlay highlighting the Good–Excellent range (4–5)
+
+  Seed Germination vs Age
+    - Scatter plot of germination rate vs seed packet age in months
+    - Reference line at 80% "good viability" threshold
+    - Reveals viability decline patterns in your seed bank
+
+  DryBack Curve Analysis
+    - Multi-plant line chart showing dry-back % over hours since watering
+    - Target 50% reference line with 30–50% optimal zone
+    - Color-coded per-plant curves with legend
+
+  Breeding Success Tracker
+    - Summary stat cards: Pollen Collections, Crosses, Seed Harvests, Total Seeds
+    - Detail table: Cross name, Mother, Father, Seed count, Type (Cross/Harvest)
+    - Shows most recent 10 breeding entries
+
+  Feeding → Yield Correlation
+    - Scatter plot of avg EC/PPM during flowering vs final dry weight
+    - Each dot = one harvest; reference line at overall avg yield
+    - Identifies the nutrient sweet spot for maximum yield
+
+  Calibration Drift Monitor
+    - Status table: Meter, Type, Last Cal, Interval, Status
+    - Color-coded: ✅ OK (green), ⚠️ Due Soon (yellow), 🔴 Overdue / Never (red)
+    - Summary line: "X of Y meters current"
+
+  Analytics tab: 20 → 30 charts
+
+---
+
 v2.6.0 — 2026-03-10
 --------------------
 FEATURE: High Impact Enhancements — Feeding Trends, IPM Efficacy, SeedBank Intelligence, DryBack Saturation Tracking
