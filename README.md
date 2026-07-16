@@ -5,7 +5,7 @@ clones, feedings, environments, harvests, genetics, and more. No accounts, no
 analytics, no ads — your data stays on your device.
 
 **Live app:** https://tracker.tropicalrootsmaui.com/
-**Current release:** v2.10.1
+**Latest release:** [see the Releases page](https://github.com/magikh0e/PlantManager/releases/latest)
 **License:** [GPL-3.0-or-later](#license)
 
 ---
@@ -119,6 +119,29 @@ recommended so the service worker and PWA install prompt work correctly.)
 
 To self-host, upload the contents of the repo to any static web host — there is
 no backend to deploy.
+
+---
+
+## Staying up to date
+
+A self-hosted copy is fully standalone — the app never phones home, so it won't
+automatically know when a new version ships upstream. To keep up:
+
+1. **Get notified of releases.** On the
+   [GitHub repo](https://github.com/magikh0e/PlantManager), click
+   **Watch → Custom → Releases**; GitHub then emails you on every new release.
+   (Prefer feeds? Subscribe to the
+   [releases feed](https://github.com/magikh0e/PlantManager/releases.atom) in
+   any RSS reader.)
+2. **Update your copy.** `git pull` (or download the latest release) and
+   re-upload the files to your host. The bundled `service-worker.js` already
+   carries a bumped cache version, so returning visitors get the new build on
+   their next load — just make sure your host/CDN serves `service-worker.js`
+   with `Cache-Control: no-cache` so a stale copy isn't pinned at the edge.
+
+Your own users are then notified automatically: the service worker shows a
+"new version available" prompt when it detects the update. See
+[CHANGELOG.txt](CHANGELOG.txt) for what changed in each release.
 
 ---
 
