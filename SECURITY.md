@@ -2,7 +2,7 @@
 
 Plant Manager is a **local-first, serverless web app**. The entire application
 is a single static `index.html` file that runs entirely in your browser. There
-is no backend, no user account system, and no server that stores your data — so
+is no backend, no user account system, and no server that stores your data, so
 the security model is different from a typical web service. This document
 explains what that means, what is in scope, and how to report a vulnerability.
 
@@ -14,8 +14,8 @@ simply to deploy/download the latest version.
 
 | Version | Supported |
 |---------|-----------|
-| 2.10.x (latest) | Yes |
-| < 2.10  | No — please update |
+| Latest release | Yes |
+| Anything older | No, please update |
 
 The live, always-current build is hosted at
 https://tracker.tropicalrootsmaui.com/.
@@ -69,15 +69,15 @@ Understanding the architecture helps frame what is and isn't a vulnerability:
 
 We welcome reports about:
 
-- **Cross-site scripting (XSS)** — e.g. user-supplied content (notes, strain
+- **Cross-site scripting (XSS):** e.g. user-supplied content (notes, strain
   names, nicknames, journal text) breaking out of escaping and executing script
 - **HTML/markup injection** in any field rendered back to the page
-- **Data integrity bypass** — defeating the export checksum/envelope so a
+- **Data integrity bypass:** defeating the export checksum/envelope so a
   tampered backup imports without warning
 - **Service worker / cache poisoning** issues affecting the offline shell
 - **Leakage of locally stored secrets** (e.g. an API key being sent to an
   unintended origin)
-- **Dependency-free claims** — any hidden remote code execution or unexpected
+- **Dependency-free claims:** any hidden remote code execution or unexpected
   network call (the app is intended to make no third-party calls without an
   explicit, user-configured integration)
 
@@ -92,10 +92,10 @@ considered vulnerabilities:
   design, so the app can use them offline. Treat shared/public computers
   accordingly.
 - **No rate limiting / server hardening**, because there is no server.
-- Issues requiring a **already-compromised device**, a malicious browser
+- Issues requiring an **already-compromised device**, a malicious browser
   extension, or physical access to an unlocked machine.
 - Vulnerabilities in **third-party services you opt into** (Firebase, Google
-  APIs) — report those to the respective vendor. Configuration mistakes in your
+  APIs). Report those to the respective vendor. Configuration mistakes in your
   own Firebase project (e.g. open Firestore rules) are your responsibility;
   see the in-app Cloud Sync settings for recommended security rules.
 - Self-XSS that requires a user to paste attacker-supplied script into their own
@@ -105,7 +105,7 @@ considered vulnerabilities:
 
 - **Backups** are exported as JSON carrying an integrity checksum in a signed
   envelope; imports verify the checksum and reject tampered or foreign-origin
-  files. (Note: this protects integrity, not confidentiality — exported JSON is
+  files. (Note: this protects integrity, not confidentiality. Exported JSON is
   not encrypted, so store backup files somewhere safe.)
 - **Cloud Sync** stores a single document per user in your own Firestore project
   under your Google account; the project, rules, and data are entirely under
