@@ -13,7 +13,7 @@ FIX: iOS reload loop
   triggered on each launch, producing a nonstop reload. Updates are now user-
   prompted: a new version installs quietly in the background and a "new
   version available" notice lets you reload when you choose, so you never lose
-  what you were typing.
+  what you were typing. Thanks to more_greens for reporting this.
 
 FEATURE: Plant Cost Breakdown & Archive Reasons
 
