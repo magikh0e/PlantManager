@@ -7,12 +7,22 @@
 <meta name="author" content="Tropical Roots Maui">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://tracker.tropicalrootsmaui.com/PlantManagerHelp.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Plant Manager", "item": "https://tracker.tropicalrootsmaui.com/"},
+    {"@type": "ListItem", "position": 2, "name": "Help Guide", "item": "https://tracker.tropicalrootsmaui.com/PlantManagerHelp.html"}
+  ]
+}
+</script>
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Tropical Roots Maui">
 <meta property="og:title" content="Plant Manager Help Guide — Tropical Roots Maui">
-<meta property="og:description" content="Complete help guide for the Tropical Roots Maui Plant Manager app — covering all tabs, 33 analytics charts, tools, QR tags, and features.">
+<meta property="og:description" content="Complete help guide for the Tropical Roots Maui Plant Manager app — covering all tabs, 33 analytics charts, 50+ tools, QR tags, and features.">
 <meta property="og:url" content="https://tracker.tropicalrootsmaui.com/PlantManagerHelp.html">
-<meta property="og:image" content="https://tropicalrootsmaui.com/img/tropical-roots-maui-kanehiwa-alchemical-sanctuary-logo.webp">
+<meta property="og:image" content="https://tracker.tropicalrootsmaui.com/img/PlantManagerLogo.webp">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -212,7 +222,259 @@ kbd {
   content: ''; position: absolute; left: 0; top: 0.65rem;
   width: 6px; height: 6px; border-radius: 50%; background: var(--cyan);
 }
+
+/* FAQ accordion */
+.faq-wrap { max-width: 760px; margin: 0 auto; padding: 0 2rem; }
+.faq-item {
+  border: 1px solid rgba(0,200,192,0.18);
+  border-radius: 6px;
+  margin-bottom: 0.85rem;
+  background: rgba(15,28,16,0.4);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  overflow: hidden;
+}
+.faq-item[open] {
+  border-color: rgba(0,200,192,0.5);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 22px rgba(0,200,192,0.06);
+}
+.faq-q {
+  cursor: pointer;
+  list-style: none;
+  padding: 1rem 1.4rem 1rem 1.2rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  position: relative;
+  user-select: none;
+}
+.faq-q::-webkit-details-marker { display: none; }
+.faq-q::before {
+  content: 'Q';
+  flex: 0 0 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(240,180,41,0.5);
+  border-radius: 50%;
+  color: var(--gold);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  font-family: 'Lora', serif;
+}
+.faq-q::after {
+  content: '+';
+  position: absolute;
+  right: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--cyan);
+  font-size: 1.4rem;
+  font-weight: 300;
+  transition: transform 0.3s ease;
+  font-family: 'Lora', serif;
+  letter-spacing: 0;
+}
+.faq-item[open] .faq-q::after { transform: translateY(-50%) rotate(45deg); }
+.faq-q:hover { color: var(--cyan); }
+.faq-a {
+  padding: 0 1.4rem 1.2rem 4.05rem;
+  font-size: 0.92rem;
+  line-height: 1.75;
+  color: var(--sand);
+  border-top: 1px dashed rgba(0,200,192,0.12);
+  margin-top: -2px;
+  padding-top: 1rem;
+  animation: faq-slide 0.32s ease;
+}
+.faq-a strong { color: var(--cyan); font-style: normal; }
+.faq-a a { color: var(--cyan); text-decoration: underline; text-underline-offset: 2px; }
+.faq-a code {
+  background: rgba(0,200,192,0.08);
+  border: 1px solid rgba(0,200,192,0.18);
+  border-radius: 3px;
+  padding: 1px 6px;
+  font-size: 0.84em;
+  color: var(--gold);
+}
+@keyframes faq-slide {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 600px) {
+  .faq-q { font-size: 0.72rem; padding-left: 1rem; padding-right: 3rem; }
+  .faq-a { padding-left: 1rem; padding-right: 1rem; }
+}
+
+/* Gear menu group accordion — mirrors the in-app collapsible groups
+   inside the settings dropdown. Same visual language as .faq-item but
+   without the round "Q" badge — each summary leads with the group's
+   own icon. */
+.gear-groups { margin: 0.6rem 0 0.4rem 0; }
+.gear-group {
+  border: 1px solid rgba(0,200,192,0.16);
+  border-radius: 6px;
+  margin-bottom: 0.6rem;
+  background: rgba(15,28,16,0.32);
+  overflow: hidden;
+}
+.gear-group[open] {
+  border-color: rgba(0,200,192,0.42);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.22);
+}
+.gear-group-summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 0.65rem 1.2rem 0.65rem 1rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.74rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  position: relative;
+  user-select: none;
+}
+.gear-group-summary::-webkit-details-marker { display: none; }
+.gear-group-summary::after {
+  content: '+';
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--cyan);
+  font-size: 1.2rem;
+  font-weight: 300;
+  transition: transform 0.25s ease;
+  font-family: 'Lora', serif;
+}
+.gear-group[open] .gear-group-summary::after { transform: translateY(-50%) rotate(45deg); }
+.gear-group-summary:hover { color: var(--cyan); }
+.gear-group-summary .gg-emoji { font-size: 1rem; }
+.gear-group-summary .gg-count {
+  margin-left: auto;
+  margin-right: 1.6rem;
+  font-family: 'Lora', serif;
+  font-size: 0.68rem;
+  letter-spacing: 0;
+  color: var(--sand);
+  opacity: 0.6;
+  font-weight: 400;
+  text-transform: none;
+}
+.gear-group ul {
+  margin: 0;
+  padding: 0.4rem 1.2rem 1rem 1rem;
+  list-style: none;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--sand);
+  border-top: 1px dashed rgba(0,200,192,0.12);
+}
+.gear-group ul li { padding: 0.18rem 0; }
+.gear-group ul li strong { color: var(--cyan); font-weight: 600; }
+
 </style>
+
+<!-- FAQPage Structured Data for Rich Results -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Where is my data stored, and is it private?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "All Plant Manager data lives in your browser's localStorage on your own device. Nothing is uploaded, tracked, or shared with any server. Cloud Sync is optional and uses your own Firebase configuration when enabled."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will I lose my data if I clear my browser cache?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Clearing site data, switching browsers, or uninstalling the PWA without an export will erase your plants, journals, and logs. Always export a JSON backup regularly via the gear menu, or enable Cloud Sync for automatic protection."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Plant Manager free to use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Plant Manager is fully free and open-source under the GNU GPL v3 license. There are no accounts, no ads, no paid tiers, and no telemetry."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Plant Manager work offline?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Once the page has loaded once, the service worker caches the app and all assets so you can use it without an internet connection. Install it as a Progressive Web App for the best offline experience."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I sync data between phone and computer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, in two ways: (1) Manually export a JSON backup from one device and import it on the other via the gear menu. (2) Enable Cloud Sync with your own Firebase project to keep multiple devices in sync automatically. Encryption is optional on exports."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I differentiate multiple plants of the same strain?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "When you add a second plant with the same strain name, both are auto-numbered #1 and #2. You can also set a custom nickname per plant (e.g. 'Pele' or 'North Tent') which appears in dropdowns, feeding logs, charts, and notifications. Click the dice button next to the nickname field for a random Polynesian/Hawaiian name suggestion."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I encrypt my data exports?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Open the gear menu and select Export Encryption to enable password-based encryption. Encrypted exports use AES-256-GCM with PBKDF2 key derivation (600,000 SHA-256 iterations). Encrypted .encrypted.json files are auto-detected on import. Password recovery is not possible — store yours safely."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which devices and browsers are supported?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Plant Manager works on any modern browser: Chrome, Edge, Firefox, Safari (desktop and mobile), and Brave. It is mobile-first and installable as a PWA on iOS Safari, Android Chrome, and desktop Chromium browsers. Internet Explorer is not supported."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How accurate is the harvest yield estimate?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Harvest estimates are derived from logged height, age, environment readings, and historical yields per strain. Accuracy improves over time as you log more harvests. Treat estimates as guidance, not guarantees — many genetic and environmental factors influence final yield."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I print plant tags for the grow room?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Open any plant card and click the Tag button (under More) for an individual QR tag, or use the gear menu → Print Plant Tags / Clone Tags / Breeding Cross Tags for batch printing. Each tag includes a scannable QR code linking back to that plant in the app."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <div class="bg-ambience"></div>
@@ -225,7 +487,7 @@ kbd {
 <div class="recipe-hero">
   <div class="hero-eyebrow">Tropical Roots Maui</div>
   <h1 class="hero-title">Plant Manager<br><span class="gold">Help Guide</span></h1>
-  <div class="hero-byline">v2.9.0 &mdash; Complete Feature Reference</div>
+  <div class="hero-byline">v2.24.0 &mdash; Complete Feature Reference</div>
   <p class="hero-sub">Everything you need to know about tracking plants, clones, feedings, harvests, and more in the Tropical Roots Maui Plant Manager.</p>
 </div>
 
@@ -252,6 +514,10 @@ kbd {
       <li><a href="#tools"><span class="toc-icon">&#128295;</span> Tools &amp; Extras</a></li>
       <li><a href="#data"><span class="toc-icon">&#128190;</span> Data &amp; Backup</a></li>
       <li><a href="#pwa"><span class="toc-icon">&#128241;</span> Install as App (PWA)</a></li>
+      <li><a href="#accessibility"><span class="toc-icon">&#9855;</span> Accessibility</a></li>
+      <li><a href="#privacy-seo"><span class="toc-icon">&#128270;</span> Privacy &amp; Search Indexing</a></li>
+      <li><a href="#shortcuts"><span class="toc-icon">&#9094;</span> Keyboard Shortcuts &amp; Command Palette</a></li>
+      <li><a href="#faq"><span class="toc-icon">&#10067;</span> Frequently Asked Questions</a></li>
     </ul>
   </div>
 </div>
@@ -302,40 +568,135 @@ kbd {
   <div class="phase-body">
     <p>The fixed header at the top of the app contains quick-access buttons:</p>
     <ul>
+      <li><strong>Offline indicator</strong> &mdash; a small amber <em>Offline</em> pill appears at the left of the header cluster whenever your device loses network connectivity. Tooltip reminds you that your edits are still saved locally and will sync when you reconnect; brief toasts confirm the transition in both directions. Hidden when online.</li>
       <li><strong>&#127780; Weather</strong> &mdash; set your location to auto-fill temperature and humidity when logging environment readings.</li>
       <li><strong>&#127769; Moon Phase</strong> &mdash; view the current lunar phase, illumination percentage, KNF planting guidance, and upcoming phases.</li>
       <li><strong>&#9729; Cloud Sync</strong> &mdash; back up your data to Firebase. Syncs across devices and prevents data loss if the browser is cleared.</li>
-      <li><strong>&#9790; Theme Toggle</strong> &mdash; switch between dark and light modes.</li>
+      <li><strong>&#128190; Backup Nudge</strong> &mdash; a passive indicator that appears here only when your last export is getting stale. Border turns amber after 14 days, red after 30 days. Click to export immediately. Hides itself when backups are fresh or when you have no data yet.</li>
+      <li><strong>&#9790; Theme Toggle</strong> &mdash; cycles between three modes: <strong>Dark</strong> &rarr; <strong>Light</strong> &rarr; <strong>Auto</strong>. Auto follows your operating system&rsquo;s <em>prefers-color-scheme</em> setting and switches in real time when your OS theme flips (sunset/sunrise schedules, manual toggles, etc.). A small <strong>A</strong> badge appears on the toggle whenever Auto mode is active so you can tell at a glance.</li>
       <li><strong>&#9881; Gear Menu</strong> &mdash; opens the settings dropdown with additional tools.</li>
     </ul>
-    <span class="detail-label">Gear Menu Options</span>
+
+    <span class="detail-label">Footer Version Chip / About Dialog</span>
+    <p>The version number in the footer (e.g. <code>v2.23.0</code>) is a clickable button. Tap it to open the <strong>About</strong> dialog with the current version, an &ldquo;installed PWA&rdquo; marker if you&rsquo;re running the installed app, links to the GitHub repo, the GPL-3.0 license, and quick-action buttons for <strong>What&rsquo;s New</strong>, <strong>Full Changelog</strong> (renders <code>CHANGELOG.txt</code> in a styled in-app modal), and this <strong>Help Guide</strong>. The About dialog also re-states the app&rsquo;s posture: no telemetry, no third-party trackers, and optional integrations off by default.</p>
+
+    <span class="detail-label">Grouped Tab Navigation</span>
+    <p>Below the header, the tab nav is organized into five sections: <strong>Dashboard</strong> (single tab) plus four dropdown groups &mdash; <strong>Plants</strong> (Plants / Clones / Strains), <strong>Care</strong> (Tasks / Feeding / IPM), <strong>Records</strong> (Journal / Harvest / Calendar), and <strong>Insights</strong> (Environs / Readings / Analytics). Click a group to reveal its sub-tabs. The parent group highlights cyan whenever any of its children is the active tab, so you always know where you are.</p>
+
+    <span class="detail-label">Tab Badges</span>
+    <p>Three of the tab-group buttons can show a small numeric pill badge when there&rsquo;s something needing attention &mdash; visible at a glance from any tab, no need to open each one to check:</p>
     <ul>
-      <li><strong>&#128276; Notifications</strong> &mdash; enable browser notifications for overdue tasks and environment alerts.</li>
-      <li><strong>&#127956; Toggle Banner</strong> &mdash; show or hide the hero banner image on the Dashboard.</li>
-      <li><strong>&#8681; Export Data</strong> &mdash; download all your data as a JSON backup file.</li>
-      <li><strong>&#8679; Import Data</strong> &mdash; restore from a previously exported JSON file.</li>
-      <li><strong>&#129514; KNF Calculator</strong> &mdash; dilution calculator for Korean Natural Farming inputs.</li>
-      <li><strong>&#127991; Print Plant Tags</strong> &mdash; generate printable QR code tags for all plants with generation badges (S1/F1/F2/F3+), parent lineage, and offspring counts.</li>
-      <li><strong>&#9986; Clone Tags</strong> &mdash; generate QR code tags for clone batches with mother reference, cutting counts, and success rate.</li>
-      <li><strong>&#129516; Breeding Cross Tags</strong> &mdash; QR labels for breeding crosses showing &#9792; Mother &times; &#9794; Father = Offspring.</li>
-      <li><strong>&#127793; Seed Bank Labels</strong> &mdash; QR labels for seed packets with strain, seed count, germination rate, and age.</li>
-      <li><strong>&#128269; QR Lookup</strong> &mdash; paste-to-decode scanner for all QR tag formats with database lookup.</li>
-      <li><strong>&#128195; Feed Schedules</strong> &mdash; apply built-in or custom nutrient schedule templates to auto-create feeding tasks.</li>
-      <li><strong>&#128176; Cost Tracker</strong> &mdash; log and track grow expenses across 7 categories with cost-per-gram analytics.</li>
-      <li><strong>&#128260; Grow Cycles</strong> &mdash; apply phased grow cycle templates that auto-create tasks from seed to harvest.</li>
-      <li><strong>&#127793; Soil Mix Calc</strong> &mdash; calculate soil mix recipes with adjustable volume and components.</li>
-      <li><strong>&#128196; Export Report</strong> &mdash; generate printable Plant Reports, Garden Reports, or comprehensive Analytics Reports.</li>
-      <li><strong>&#128270; Pest Identifier</strong> &mdash; open the Pest ID tool to identify pests from a photo.</li>
-      <li><strong>&#129302; Pest ID Settings</strong> &mdash; configure your Google Cloud Vision API key for auto-identification.</li>
-      <li><strong>&#127777; VPD Calculator</strong> &mdash; calculate vapor pressure deficit with auto-fill from environment readings.</li>
-      <li><strong>&#9728; DLI Calculator</strong> &mdash; estimate Daily Light Integral from light type, wattage, and photoperiod.</li>
-      <li><strong>&#129657; Deficiency Wizard</strong> &mdash; 3-step diagnostic tree to identify nutrient deficiencies.</li>
-      <li><strong>&#128230; Grow Runs</strong> &mdash; group plants into grow runs, track aggregate stats, and compare runs.</li>
-      <li><strong>&#129516; Breeding Tracker</strong> &mdash; log pollen collection, crosses, and seed harvests.</li>
-      <li><strong>&#9879; Calibration Log</strong> &mdash; track pH/EC meter calibrations with overdue reminders.</li>
-      <li><strong>&#128208; Room Layout</strong> &mdash; visual grid diagram of plant positions per environment.</li>
+      <li><strong>Care</strong> &mdash; total of overdue + due-today tasks (red; turns amber if more than 5)</li>
+      <li><strong>Plants</strong> &mdash; count of unresolved IPM issues across your fleet</li>
+      <li><strong>Insights</strong> &mdash; environment alerts where current readings drift past your configured thresholds</li>
+    </ul>
+    <p>Badges hide entirely when the count is zero. Counts above 99 collapse to <strong>99+</strong> to avoid layout shift.</p>
+
+    <span class="detail-label">Sticky Toolbar</span>
+    <p>The filter / Add bar that sits at the top of long tabs (Plants, Journal, Harvest, Strains, Feeding, etc.) is now <em>sticky</em> &mdash; it stays pinned just below the tab nav while you scroll the panel. Re-filtering or hitting <em>+ Add</em> never requires scrolling back to the top. Reverts to a normal flow position in print/PDF export so reports look clean.</p>
+
+    <span class="detail-label">Gear Menu Options</span>
+    <p>The gear menu opens a settings dropdown organized into six collapsible groups, so the 50+ items aren&rsquo;t a wall of links. The expanders below mirror the in-app structure &mdash; click any group to see what&rsquo;s inside.</p>
+
+    <p style="font-size:0.85rem;color:var(--sand);margin-bottom:0.6rem"><strong>Top-level entries</strong> (always visible at the top and bottom of the menu):</p>
+    <ul>
+      <li><strong>&#128269; Search Commands</strong> &mdash; opens the Command Palette for fuzzy-searching all 80+ commands. Also reachable via <kbd>Ctrl</kbd>+<kbd>K</kbd> or <kbd>/</kbd>. See the <a href="#shortcuts">Keyboard Shortcuts</a> section.</li>
       <li><strong>&#10067; Help Guide</strong> &mdash; opens this help documentation in a new tab.</li>
     </ul>
+
+    <div class="gear-groups">
+
+      <details class="gear-group">
+        <summary class="gear-group-summary"><span class="gg-emoji">&#9889;</span>Quick Actions<span class="gg-count">8 items</span></summary>
+        <ul>
+          <li><strong>&#128276; Notifications</strong> &mdash; enable browser notifications for overdue tasks and environment alerts.</li>
+          <li><strong>&#127956; Toggle Banner</strong> &mdash; show or hide the hero banner image on the Dashboard.</li>
+          <li><strong>&#8681; Export Data</strong> &mdash; download all your data as a JSON backup file.</li>
+          <li><strong>&#8679; Import Data</strong> &mdash; restore from a previously exported JSON file. Shows a diff preview before applying.</li>
+          <li><strong>&#128274; Export Encryption</strong> &mdash; toggle password-protected exports on or off (AES-256-GCM, PBKDF2 with 600,000 iterations). When enabled, Export Data prompts for a password and the file saves as <code>.encrypted.json</code>.</li>
+          <li><strong>&#129529; Clear Demo Data</strong> &mdash; removes records the demo fixture created (tagged with <code>_demo:true</code>) while preserving everything you&rsquo;ve added yourself. Shows a per-category confirm modal before deleting.</li>
+          <li><strong>&#128242; Install App</strong> &mdash; on Android/Chrome, fires the native install prompt so you can add Plant Manager to your home screen. On iOS Safari (where the browser doesn&rsquo;t expose a prompt) it opens a walkthrough showing the Share &rarr; <em>Add to Home Screen</em> &rarr; Add flow.</li>
+          <li><strong>&#129498; Run Setup Wizard</strong> &mdash; re-opens the first-run Setup Wizard at any time, even after you&rsquo;ve added plants or skipped it. Clears the dismissed flag and navigates back to the Dashboard with the wizard ready.</li>
+        </ul>
+      </details>
+
+      <details class="gear-group">
+        <summary class="gear-group-summary"><span class="gg-emoji">&#127991;</span>Tags &amp; Labels<span class="gg-count">5 items</span></summary>
+        <ul>
+          <li><strong>&#127991; Print Plant Tags</strong> &mdash; generate printable QR code tags for all plants with generation badges (S1/F1/F2/F3+), parent lineage, and offspring counts.</li>
+          <li><strong>&#9986; Clone Tags</strong> &mdash; generate QR code tags for clone batches with mother reference, cutting counts, and success rate.</li>
+          <li><strong>&#129516; Breeding Cross Tags</strong> &mdash; QR labels for breeding crosses showing &#9792; Mother &times; &#9794; Father = Offspring.</li>
+          <li><strong>&#127793; Seed Bank Labels</strong> &mdash; QR labels for seed packets with strain, seed count, germination rate, and age.</li>
+          <li><strong>&#128269; QR Lookup</strong> &mdash; paste-to-decode scanner for all QR tag formats with database lookup.</li>
+        </ul>
+      </details>
+
+      <details class="gear-group">
+        <summary class="gear-group-summary"><span class="gg-emoji">&#127793;</span>Growing<span class="gg-count">18 items</span></summary>
+        <ul>
+          <li><strong>&#128203; Feed Schedules</strong> &mdash; apply built-in or custom nutrient schedule templates (GH Flora, Fox Farm, Gaia Green, Down To Earth, KNF, plus your own) to auto-create feeding tasks.</li>
+          <li><strong>&#128176; Cost Tracker</strong> &mdash; log and track grow expenses across 7 categories with cost-per-gram analytics.</li>
+          <li><strong>&#128260; Grow Cycles</strong> &mdash; apply phased grow cycle templates that auto-create tasks from seed to harvest.</li>
+          <li><strong>&#128230; Grow Runs</strong> &mdash; group plants into named grow runs with aggregate stats and side-by-side run comparison.</li>
+          <li><strong>&#129516; Breeding Tracker</strong> &mdash; log pollen collection, crosses, and seed harvests across your breeding program.</li>
+          <li><strong>&#127793; Pheno Hunt</strong> &mdash; phenotype-selection workflow for working through a packet of seeds and picking keepers.</li>
+          <li><strong>&#9879; Calibration Log</strong> &mdash; per-meter pH/EC calibration tracking with overdue reminders and per-device history.</li>
+          <li><strong>&#127800; Harvest Forecast</strong> &mdash; predicts harvest windows for flowering plants from strain flowering time and start date.</li>
+          <li><strong>&#128260; Spray Rotation</strong> &mdash; manage IPM treatment rotation by mode of action to prevent resistance.</li>
+          <li><strong>&#128167; Water Quality Log</strong> &mdash; track source water TDS/ppm, chloramine, and other water-chemistry data.</li>
+          <li><strong>&#129516; Genetic Tree</strong> &mdash; visualize the full lineage of any plant from parent mothers through clone generations.</li>
+          <li><strong>&#9989; Pre-Grow Checklist</strong> &mdash; setup checklist for prepping a new grow cycle (equipment, supplies, environment).</li>
+          <li><strong>&#127793; Garden Stats</strong> &mdash; lifetime totals across every grow: total harvests, total yield, total expenses, average quality.</li>
+          <li><strong>&#127811; Terpene Profiles</strong> &mdash; log terpene and cannabinoid profiles per strain (myrcene, limonene, etc.).</li>
+          <li><strong>&#128200; Crop Steering</strong> &mdash; substrate dryback and irrigation logs for steering plants generative vs vegetative.</li>
+          <li><strong>&#127777; Env Recipes</strong> &mdash; named environmental setpoint profiles per growth stage (seedling, veg, early flower, late flower).</li>
+          <li><strong>&#129514; Ferment Tracker</strong> &mdash; track KNF and lacto fermentations (FPJ, FAA, LABS, IMO) from start through harvest.</li>
+          <li><strong>&#128203; Batch Feed</strong> &mdash; log a single feeding across multiple plants at once instead of one-by-one.</li>
+        </ul>
+      </details>
+
+      <details class="gear-group">
+        <summary class="gear-group-summary"><span class="gg-emoji">&#129518;</span>Calculators<span class="gg-count">11 items</span></summary>
+        <ul>
+          <li><strong>&#129514; KNF Calculator</strong> &mdash; dilution calculator for Korean Natural Farming inputs (FPJ, FFJ, FAA, OHN, LABS, IMO, WCA, BRV, Sea Water).</li>
+          <li><strong>&#127777; VPD Calculator</strong> &mdash; calculate vapor pressure deficit with auto-fill from environment readings; color-coded zones per growth stage.</li>
+          <li><strong>&#9728; DLI Calculator</strong> &mdash; estimate Daily Light Integral from light type, wattage, and photoperiod.</li>
+          <li><strong>&#127793; Soil Mix Calc</strong> &mdash; calculate soil mix recipes with adjustable volume (gal/L/cu&nbsp;ft) and components including biochar (Coots, BuildASoil, Tropical Living, custom).</li>
+          <li><strong>&#128207; Medium Fill Calc</strong> &mdash; how much growing medium fills a bed, pot, or tent footprint, in cubic feet, gallons, or liters, plus bag counts.</li>
+          <li><strong>&#129514; Nutrient Mix Calc</strong> &mdash; mix-by-volume calculator for any feeding recipe; recall saved recipes.</li>
+          <li><strong>&#128161; Light Map</strong> &mdash; PPFD grid mapping for visualizing canopy light distribution.</li>
+          <li><strong>&#128208; Unit Converter</strong> &mdash; convert grams/ounces, ml/oz, gallons/liters, &deg;F/&deg;C, ft/m, and more.</li>
+          <li><strong>&#9889; Power Cost Calc</strong> &mdash; estimate kWh and dollar cost per grow from wattage and photoperiod.</li>
+          <li><strong>&#128200; Strain Compare</strong> &mdash; side-by-side comparison of strains from your library on flowering time, yield, effects, terps.</li>
+          <li><strong>&#127811; CO&sub2; Calculator</strong> &mdash; CO&sub2; supplementation amount calculator for sealed environments.</li>
+        </ul>
+      </details>
+
+      <details class="gear-group">
+        <summary class="gear-group-summary"><span class="gg-emoji">&#128300;</span>Diagnostics<span class="gg-count">5 items</span></summary>
+        <ul>
+          <li><strong>&#128270; Pest Identifier</strong> &mdash; open the Pest ID tool to identify pests from a photo via Google Cloud Vision or manual Google Lens.</li>
+          <li><strong>&#129302; Pest ID Settings</strong> &mdash; configure your Google Cloud Vision API key for auto-identification.</li>
+          <li><strong>&#129657; Deficiency Wizard</strong> &mdash; 3-step diagnostic tree to identify nutrient deficiencies and log them as IPM issues.</li>
+          <li><strong>&#127807; Companion Planting</strong> &mdash; reference guide for beneficial and antagonistic companion plants.</li>
+          <li><strong>&#129514; pH Nutrient Chart</strong> &mdash; visual nutrient availability chart by pH (the &ldquo;Mulder&rsquo;s chart&rdquo; reference).</li>
+        </ul>
+      </details>
+
+      <details class="gear-group">
+        <summary class="gear-group-summary"><span class="gg-emoji">&#128202;</span>Reports &amp; Layout<span class="gg-count">4 items</span></summary>
+        <ul>
+          <li><strong>&#128196; Export Report</strong> &mdash; generate printable Plant Reports, Garden Reports, or comprehensive Analytics Reports (print-to-PDF).</li>
+          <li><strong>&#128208; Room Layout</strong> &mdash; visual grid diagram of plant positions per environment with per-cell pot size and growing medium.</li>
+          <li><strong>&#128214; Grow Journal Export</strong> &mdash; export the full Journal as a styled HTML diary suitable for sharing or printing.</li>
+          <li><strong>&#128247; Photo Compare</strong> &mdash; side-by-side photo timeline view to see progress between two captured dates.</li>
+        </ul>
+      </details>
+
+    </div>
+
+    <span class="detail-label">Context Help (?) Icons</span>
+    <p>Several feature-dense panels include a small circular <strong>?</strong> icon next to their title (KNF Calculator, VPD Calculator, DLI Calculator, Deficiency Wizard, Pheno Hunt, Crop Steering, etc.). Click any of them to jump directly to the relevant anchor in this help guide. Each icon opens in a new tab so you don&rsquo;t lose your place in the app. Hover for a tooltip describing what topic the icon links to.</p>
   </div>
 </div>
 
@@ -356,10 +717,17 @@ kbd {
     <p>The Dashboard is your home screen. It provides a bird's-eye view of your entire garden.</p>
     <span class="detail-label">Stat Cards</span>
     <p>The top row shows live stat cards: <strong>Mother Plants</strong>, <strong>Flowering Count</strong>, <strong>Active Clones</strong>, <strong>Environments</strong>, <strong>Tasks Due</strong>, <strong>Health Overview</strong>, <strong>Active IPM Issues</strong>, <strong>Environment Alerts</strong>, <strong>Strains</strong>, <strong>Total Yield</strong>, plus <strong>Weather</strong> and <strong>Moon Phase</strong> widgets.</p>
-    <span class="detail-label">Rotating Tips</span>
-    <p>A tip banner cycles through 53 helpful tips. Use the arrow buttons to navigate tips manually, or let them auto-rotate every 30 seconds.</p>
+    <span class="detail-label">Action-Required Layout</span>
+    <p>The dashboard prioritizes what needs your attention. When alerts exist (overdue tasks, environment alerts, feeding alerts, IPM reapplications, low seed stock), they appear under an <strong>&#9888; Action Required</strong> heading directly below the stats grid &mdash; above the inline cards and Quick Actions &mdash; so you see what needs doing before you scroll through chrome. When no alerts exist, this section is hidden entirely.</p>
+
+    <span class="detail-label">Demo Data Banner</span>
+    <p>If you loaded the demo fixture (via the Setup Wizard, the Command Palette, or a <code>?demo</code> URL), a banner appears between the hero and stats grid with three actions: <strong>Clear demo data</strong> (surgical removal of tagged records), <strong>+ Add my plant</strong> (start tracking real grows alongside the demo), or <strong>Keep mixed</strong> (hide the banner; reversible via Command Palette &rarr; <em>Show Demo Banner</em>). See the <a href="#getting-started">Getting Started</a> section for the full demo lifecycle.</p>
+
+    <span class="detail-label">Rotating Tips (Dismissible)</span>
+    <p>A tip banner at the bottom of the dashboard cycles through 50+ helpful tips. Use the arrow buttons to navigate manually, or let them auto-rotate every 30 seconds. Click the &times; button on the right to permanently hide the banner &mdash; a small <strong>&#128161; Show tips</strong> pill appears in its place that you can click anytime to bring it back. Dismissal state persists in localStorage.</p>
+
     <span class="detail-label">Quick Actions</span>
-    <p>29 quick action buttons let you jump directly to any feature without switching tabs: Add Mother, Add Environ, Log Clones, Add Task, Log Reading, Log Feeding, Add Photo, Log Issue, Add Strain, Log Harvest, KNF Calculator, Seed Bank, Quick Water, Daily Snapshot, Feed Schedule, Costs, Grow Cycles, Compare Plants, Soil Mix Calc, Export Report, Pest ID, Pest Guide, VPD Calc, DLI Calc, Deficiency Wizard, Grow Runs, Breeding, Calibration, and Room Layout.</p>
+    <p>30 quick action buttons let you jump directly to any feature without switching tabs: Add Mother, Add Environ, Log Clones, Add Task, Log Reading, Log Feeding, Add Photo, Log Issue, Add Strain, Log Harvest, KNF Calculator, Seed Bank, Quick Water, Daily Snapshot, Feed Schedule, Costs, Grow Cycles, Compare Plants, Soil Mix Calc, Medium Fill Calc, Export Report, Pest ID, Pest Guide, VPD Calc, DLI Calc, Deficiency Wizard, Grow Runs, Breeding, Calibration, and Room Layout.</p>
     <span class="detail-label">Overdue Tasks &amp; Environment Alerts</span>
     <p>If any tasks are overdue, they appear at the top of the dashboard with a red warning indicator. You can check them off right from the dashboard. Environment alerts display when any reading exceeds the thresholds you set (temp, humidity, pH).</p>
     <span class="detail-label">Activity Feed</span>
@@ -386,6 +754,10 @@ kbd {
     <p>Tap <strong>+ Add Mother</strong> and fill in the form. You can pick a strain from your Strain Library (which auto-fills strain, type, and breeder) or enter details manually. Fields include: strain name, strain type (indica/sativa/hybrid), breeder, genetics, source (seed/clone/tissue culture), date acquired, environment, growth stage, health status, photo, and notes.</p>
     <span class="detail-label">Health Status</span>
     <p>Each plant has a health status: <strong>Thriving</strong>, <strong>Healthy</strong>, <strong>Stressed</strong>, <strong>Sick</strong>, or <strong>Quarantine</strong>. This status appears as a colored badge on the card and is used for filtering.</p>
+
+    <span class="detail-label">Stage-Themed Card Stripes</span>
+    <p>Each plant card has a colored accent stripe across the top, color-coded by growth stage: <strong>lime/green</strong> for seedling and vegetative, <strong>gold/orange</strong> for flowering, <strong>violet</strong> for mature, <strong>muted gray</strong> for declining. Cards lift 3px and gain a subtle cyan glow on hover; the stripe brightens to full opacity. Lets you scan a grid of plants and see the lifecycle distribution at a glance.</p>
+
     <span class="detail-label">Plant Card Actions</span>
     <p>Each card has action buttons along the bottom:</p>
     <ul>
@@ -407,7 +779,7 @@ kbd {
       <li><strong>&#128300; Trichome</strong> &mdash; log trichome readings (clear/cloudy/amber percentages) with harvest-window recommendations.</li>
       <li><strong>&#9986; Training</strong> &mdash; log training events (topping, LST, SCROG, etc.) with technique badges and notes.</li>
       <li><strong>&#129516; Breed</strong> &mdash; log pollen collection, crosses, or seed harvests for this plant.</li>
-      <li><strong>Archive</strong> &mdash; soft-delete the plant (can be restored via import).</li>
+      <li><strong>Archive</strong> &mdash; retire the plant from the active roster. You&rsquo;re asked why (Harvested, Retired, Died, or Culled); Died and Culled feed the &ldquo;money lost&rdquo; figure in Strain Comparison. A toast lets you undo for a few seconds.</li>
     </ul>
     <span class="detail-label">Search &amp; Filter</span>
     <p>Use the search bar to find plants by strain name, breeder, environment, or notes. The dropdown filter narrows results by health status.</p>
@@ -570,12 +942,39 @@ kbd {
   </div>
   <div class="phase-body">
     <p>Build a visual timeline of each plant's growth. Upload photos with growth stage tags and notes. Photos are stored locally as compressed base64 images (auto-resized to 400px max dimension).</p>
+
     <span class="detail-label">Adding a Photo</span>
-    <p>Tap <strong>+ Add Photo</strong>, select a plant, upload an image, choose the growth stage (Seedling, Vegetative, Flowering, Harvest, Curing), and add optional notes.</p>
-    <span class="detail-label">Photo Grid</span>
-    <p>Photos display in a grid with the plant name, date, and growth stage. Tap any photo to view full-size with details, or delete it.</p>
+    <p>Tap <strong>+ Add Photo</strong>, select a plant, upload an image (three ways &mdash; see below), choose the growth stage (Seedling, Vegetative, Flowering, Harvest, Curing), and add optional notes.</p>
+
+    <span class="detail-label">Three ways to attach an image</span>
+    <ul>
+      <li><strong>Click to pick</strong> &mdash; the original flow. Tap the preview tile to open the file picker.</li>
+      <li><strong>Drag &amp; drop</strong> &mdash; on desktop, drag any image file onto the preview tile. A cyan dashed outline confirms the drop target while you drag.</li>
+      <li><strong>Paste from clipboard</strong> &mdash; press <kbd>Ctrl</kbd>+<kbd>V</kbd> (or <kbd>Cmd</kbd>+<kbd>V</kbd>) anywhere in the modal to paste a screenshot or copied image. Especially handy for screenshots taken with <kbd>Win</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd> or <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>4</kbd>.</li>
+    </ul>
+    <p>You can also send a photo <em>into</em> the Journal from outside the app on Android: see <a href="#pwa">Receive shared photos</a> in the Install section.</p>
+
+    <span class="detail-label">EXIF Date Detection</span>
+    <p>When you upload a photo, Plant Manager reads the photo's <strong>EXIF DateTimeOriginal</strong> from the original file before resizing. If a capture date is found, the journal entry's timestamp uses that date instead of the upload date &mdash; so a photo you took last Tuesday lands on Tuesday in the timeline, not today. A small <strong>&check; Using photo capture date: ...</strong> chip confirms detection during upload. The resized version stored in the app contains no EXIF data (canvas resize strips metadata).</p>
+
+    <span class="detail-label">EXIF Orientation Auto-Correction</span>
+    <p>Many phone cameras (especially Android) save portrait photos with landscape pixel data and an EXIF <em>Orientation</em> tag instructing viewers to rotate. Plain <code>canvas.drawImage()</code> ignores that tag, which used to leave portrait shots showing up sideways in the journal. Plant Manager now reads the Orientation tag (values 1&ndash;8) and applies the appropriate rotation, flip, or transpose to the canvas before re-encoding the JPEG &mdash; so portrait photos always land right-side up regardless of how the camera stored them.</p>
+
+    <span class="detail-label">Photo Lightbox</span>
+    <p>Tap any photo in the grid to open a full-screen lightbox viewer. Features:</p>
+    <ul>
+      <li><strong>Prev/next arrows</strong> on either side cycle through photos in the current filtered view</li>
+      <li><strong>Click the image</strong> to toggle 2&times; zoom (cursor changes from zoom-in to zoom-out)</li>
+      <li><strong>Swipe left/right</strong> on touch devices to navigate</li>
+      <li><strong>Arrow keys</strong> (<kbd>&larr;</kbd>/<kbd>&rarr;</kbd>) on desktop</li>
+      <li><strong>Caption</strong> below the image shows plant name, capture date, growth stage, and notes</li>
+      <li><strong>Counter</strong> at the bottom shows position (e.g. &ldquo;3 / 8&rdquo;)</li>
+      <li><strong>Delete shortcut</strong> in the top-left removes the current photo (with toast-undo)</li>
+      <li><strong>Esc</strong>, click on backdrop, or tap the &times; button to close</li>
+    </ul>
+
     <span class="detail-label">Filter</span>
-    <p>Use the plant dropdown to filter photos to a single plant.</p>
+    <p>Use the plant dropdown to filter photos to a single plant. The lightbox respects the current filter, so prev/next walks through whichever subset you&rsquo;re viewing.</p>
   </div>
 </div>
 
@@ -836,7 +1235,13 @@ kbd {
     <p>Open from the gear menu. Paste any scanned QR text to decode it. The tool parses 5 formats: TRM2 (plant tags), TRM-C (clone tags), TRM-X (breeding crosses), TRM-S (seed labels), and TRM (legacy v1 tags). Decoded entries show full details with action buttons to open the plant, view lineage, or print a tag. Graceful fallback for deleted or unknown entries.</p>
 
     <span class="detail-label">Daily Snapshot</span>
-    <p>Open from the Dashboard to generate a full daily report. The snapshot includes the date, current weather, moon phase with KNF guidance, pending tasks, active IPM issues, environment alerts, and recent feedings. You can <strong>copy to clipboard</strong> for pasting elsewhere or <strong>save to journal</strong> as a text note. Toggle <strong>Auto Daily Snapshot</strong> to automatically save a snapshot to the journal on first app open each day.</p>
+    <p>Open from the Dashboard to generate a full daily report. The snapshot includes the date, current weather, moon phase with KNF guidance, pending tasks, active IPM issues, environment alerts, and recent feedings. Three actions:</p>
+    <ul>
+      <li><strong>Copy to Clipboard</strong> &mdash; for pasting elsewhere</li>
+      <li><strong>Share&hellip;</strong> &mdash; on browsers that support <code>navigator.share</code> (mobile + Chromium desktops), opens the OS share sheet so you can send the snapshot text straight to Signal, email, Drive, etc. The button is hidden on browsers without share support</li>
+      <li><strong>Save as Journal</strong> &mdash; persists the snapshot as a journal note</li>
+    </ul>
+    <p>Toggle <strong>Auto Daily Snapshot</strong> to automatically save a snapshot to the journal on first app open each day.</p>
 
     <span class="detail-label">Health Check / Score Tracker</span>
     <p>Tap <strong>&#10084; Health</strong> on any plant card to log a quick 1&ndash;5 score with optional notes. Scores are: 1 = Critical, 2 = Poor, 3 = Fair, 4 = Good, 5 = Excellent. Recent scores appear as colored dots on plant cards, and health changes during plant edits are automatically logged.</p>
@@ -848,7 +1253,7 @@ kbd {
     <p>Tap <strong>&#128197; Timeline</strong> on any plant card to view a chronological event history combining 8 data sources: feedings, photos, IPM logs, harvests, health checks, dry-back readings, clone batches, and task completions. Events are sorted by date with color-coded dots for each type.</p>
 
     <span class="detail-label">Feed Schedule Templates</span>
-    <p>Open from the Dashboard or gear menu. Choose from 4 built-in nutrient schedules: <strong>GH Flora Series</strong> (10 weeks), <strong>Fox Farm Trio</strong> (8 weeks), <strong>Gaia Green Organic</strong> (5 weeks), or <strong>KNF Inputs</strong> (8 weeks). You can also create, edit, and delete your own <strong>Custom Feed Schedules</strong> with custom week names, product lists, and amounts. Preview the weekly schedule, then apply it to a plant to auto-create one-time feeding tasks for each week.</p>
+    <p>Open from the Dashboard or gear menu. Choose from 5 built-in nutrient schedules: <strong>GH Flora Series</strong> (10 weeks), <strong>Fox Farm Trio</strong> (8 weeks), <strong>Gaia Green Organic</strong> (5 weeks), <strong>Down To Earth Organic</strong> (9 weeks, dry-amendment top-dress), or <strong>KNF Inputs</strong> (8 weeks). You can also create, edit, and delete your own <strong>Custom Feed Schedules</strong> with custom week names, product lists, and amounts. Preview the weekly schedule, then apply it to a plant to auto-create one-time feeding tasks for each week. Note: the organic schedules finish on plain water rather than a salt flush &mdash; a pre-harvest flush only applies to mineral/salt nutrient lines.</p>
 
     <span class="detail-label">Dry-Back Tracking</span>
     <p>Tap <strong>&#9878; Dry-Back</strong> on a plant card to log weight readings over time. Enter the weight, unit (g/oz/lb), and optional notes. Configure saturated and dry weights per plant to calculate dry-back percentage. The chart shows readings with reference lines and an optimal zone overlay (10&ndash;20% dry-back). A &ldquo;Time to Water&rdquo; estimate appears when below the optimal zone. Multi-plant dry-back curve comparison is available on the Analytics tab.</p>
@@ -863,7 +1268,10 @@ kbd {
     <p>Open from the Dashboard, gear menu, or plant cards. Choose from 4 built-in grow cycle templates: <strong>Indoor Photoperiod</strong> (16 weeks / 9 phases), <strong>Indoor Autoflower</strong> (12 weeks / 7 phases), <strong>Outdoor Tropical Maui</strong> (21 weeks / 6 phases), or <strong>Clone to Flower</strong> (12 weeks / 7 phases). Each phase includes week range, phase name, light schedule, and a list of tasks. Preview all phases in a table, then apply to a plant &mdash; this auto-creates one-time tasks with calculated due dates from seedling through harvest.</p>
 
     <span class="detail-label">Soil Mix Calculator</span>
-    <p>Open from the Dashboard or gear menu. Choose from 4 pre-built soil recipes: <strong>Coots Mix</strong> (classic 1:1:1 living soil), <strong>BuildASoil 3.0</strong>, <strong>Simple Coco Mix</strong>, or <strong>Tropical Living Soil</strong> (Maui-style). You can also start a <strong>Custom Mix</strong> from scratch. The calculator has 14 components across 3 categories: Base Mix (Peat Moss, Coco Coir, Compost), Aeration (Perlite, Pumice, Rice Hulls), and Amendments (Worm Castings, Bone Meal, Blood Meal, Kelp Meal, Gypsum, Dolomite Lime, Rock Phosphate, Azomite). Adjust the total volume and unit (gallons or liters), edit any ratio or amount, and calculated quantities update live. Save custom recipes for later use.</p>
+    <p>Open from the Dashboard or gear menu. Choose from 4 pre-built soil recipes: <strong>Coots Mix</strong> (classic 1:1:1 living soil), <strong>BuildASoil 3.0</strong>, <strong>Simple Coco Mix</strong>, or <strong>Tropical Living Soil</strong> (Maui-style &mdash; a coco-and-compost living soil with biochar for CEC, no imported peat). You can also start a <strong>Custom Mix</strong> from scratch. The calculator has 15 components across 3 categories: <strong>Base Mix</strong> (Peat Moss, Coco Coir, Compost, Biochar) and <strong>Aeration</strong> (Perlite, Pumice, Rice Hulls) are entered as <em>parts by volume</em>, while <strong>Amendments</strong> (Worm Castings, Bone Meal, Blood Meal, Kelp Meal, Gypsum, Dolomite Lime, Rock Phosphate, Azomite) are cups per gallon of soil. Set the total volume in <strong>gallons, liters, or cubic feet</strong> (handy for bagged soil), edit any ratio or amount, and quantities update live in the unit you chose. Save custom recipes for later use.</p>
+
+    <span class="detail-label">Medium Fill Calculator</span>
+    <p>Open from the Dashboard, gear menu, or Command Palette. Works out how much growing medium fills a container or bed. Pick a shape &mdash; <strong>Rectangular</strong> (bed / tent footprint) or <strong>Round</strong> (pot) &mdash; and enter the dimensions in feet, inches, or cm, plus optional quantity and fill-level percentage. Results show the total volume in <strong>cubic feet, gallons, and liters</strong>, plus how many bags you&rsquo;d need at 1.0 / 1.5 / 2.0 / 3.0 cu ft each. A <strong>Build this mix in the Soil Mix Calculator</strong> button hands the volume straight over, so you can turn &ldquo;how much&rdquo; into &ldquo;what goes in it&rdquo;.</p>
 
     <span class="detail-label">Plant Comparison</span>
     <p>Open from the Dashboard or a plant card's <strong>&#128200; Compare</strong> button. Select 2&ndash;3 plants with checkboxes, then tap Compare. A comparison table shows 11 metrics side-by-side: strain, type, age, stage, health, environment, feedings, IPM issues, clone rate, total yield, and average health score. Best values are highlighted in cyan. Mini bar charts below the table compare feedings, yield, and health scores visually.</p>
@@ -875,7 +1283,7 @@ kbd {
       <li><strong>Garden Report</strong> &mdash; overall summary of your entire garden including plant count, environments, flowering count, total yield, total expenses, cost per gram, plant roster, environment list, harvest summary, and expense breakdown by category.</li>
       <li><strong>Analytics Report</strong> &mdash; comprehensive analytics export with executive summary (8 key stats), cost analysis by category with percentages, monthly spending table, strain performance table (yield, quality, $/gram per strain), environment summary with yield per space, recent harvests (last 20), and active grow runs.</li>
     </ul>
-    <p>Reports open in a new browser window with a dark theme on screen and clean black-and-white formatting for printing. Tap <strong>Print / Save PDF</strong> to open your browser's print dialog and save as PDF.</p>
+    <p>Reports open in a new browser window with a dark theme on screen and clean black-and-white formatting for printing. Tap <strong>Print / Save PDF</strong> to open your browser's print dialog and save as PDF. On browsers that support <code>navigator.share</code> (mobile + Chromium desktops), a <strong>Share</strong> button also appears in the top-right of the report popup &mdash; it wraps the rendered HTML as a <code>.html</code> File and opens the OS share sheet so you can send the report straight to Signal, email, Drive, etc. The Share button auto-hides on browsers without share support.</p>
 
     <span class="detail-label">Pest Identification Tool</span>
     <p>Open from the Dashboard (<strong>&#128270; Pest ID</strong>), gear menu (<strong>&#128270; Pest Identifier</strong>), or a plant card's <strong>&#128270; Identify</strong> button. The tool offers three identification methods:</p>
@@ -895,7 +1303,10 @@ kbd {
     <p>Open from the Dashboard, gear menu, or the <strong>&#127777; VPD</strong> button on environment cards. The calculator auto-fills temperature and humidity from the latest environment reading. Enter an optional leaf temperature offset (default: air temp &minus; 2&deg;F). The result shows your VPD in kPa with color-coded zone indicators for seedling (0.4&ndash;0.8), vegetative (0.8&ndash;1.2), early flower (1.0&ndash;1.5), and late flower (1.2&ndash;1.6). A VPD trend chart also appears on the Analytics tab.</p>
 
     <span class="detail-label">DLI Calculator</span>
-    <p>Open from the Dashboard or gear menu. Select your light type (LED, HPS, CMH, Fluorescent, or Sunlight), enter wattage, and set photoperiod hours. The calculator estimates PPFD from light efficiency and computes Daily Light Integral (DLI) in mol/m&sup2;/day. Optimal ranges are shown for each growth stage: seedling (12&ndash;18), veg (18&ndash;30), and flower (30&ndash;45).</p>
+    <p>Open from the Dashboard or gear menu. Select your light type (LED, HPS, CMH, Fluorescent, or Sunlight), enter wattage, and set photoperiod hours. The calculator estimates PPFD from light efficiency and computes Daily Light Integral (DLI) in mol/m&sup2;/day. Optimal ranges are shown for each growth stage: seedling (12&ndash;18), veg (18&ndash;30), and flower (30&ndash;45). Selecting <strong>Sunlight</strong> clears the wattage field, since that source uses a fixed PPFD.</p>
+
+    <span class="detail-label">Shareable Tool Links</span>
+    <p>Most of the app&rsquo;s tools have a <strong>&#128279; Share</strong> button in their window &mdash; every calculator (Soil Mix, Medium Fill, VPD, DLI, Nutrient Mix, KNF, CO&#8322;, pH Chart, PPFD, Power Cost, Unit Converter); the growing tools (Strain &amp; Plant Comparison, Harvest Forecast, Grow Cycles, Grow Runs, Pre-Grow Checklist, Garden Stats, Terpene Profiles, Crop Steering, Environmental Recipes, Water Log, Spray Rotation, Breeding Tracker, Pheno Hunt, Ferment Tracker, Seed Bank); and the diagnostic tools (Deficiency Wizard, Pest Identifier, Visual Pest Guide, Companion Planting Guide). It hands out a deep link (e.g. <code>?tool=soilmix</code>) that opens straight into that tool &mdash; on mobile via the native share sheet, on desktop by copying the link to your clipboard. For VPD, DLI, Medium Fill, and KNF the link also carries your input values, so you can share an actual worked calculation: for example <code>?tool=vpd&amp;t=82&amp;rh=45</code> opens the VPD calc already showing that result, and <code>?tool=knf&amp;vol=5&amp;unit=gal&amp;mode=drench</code> opens the KNF dilutions for a 5-gallon soil drench. No account needed, and it works offline once the app is installed.</p>
 
     <span class="detail-label">Trichome Harvest Tracker</span>
     <p>Open from the <strong>&#128300; Trichome</strong> button on plant cards. Log trichome development readings with linked sliders for clear, cloudy, and amber percentages (always totaling 100%). The tracker provides harvest-window recommendations: &ldquo;Too early&rdquo; when clear &gt; 50%, &ldquo;Peak THC window&rdquo; when cloudy &ge; 50% and amber &lt; 20%, and &ldquo;Balanced / couch-lock&rdquo; when amber &ge; 20%. A stacked bar chart shows reading history, and a compact trichome badge appears on flowering plant cards.</p>
@@ -925,7 +1336,106 @@ kbd {
     <p>Enable browser notifications from the gear menu. The app will send alerts for overdue tasks and environment readings that exceed your thresholds.</p>
 
     <span class="detail-label">Theme Toggle</span>
-    <p>Switch between <strong>dark mode</strong> (default &mdash; dark green/black) and <strong>light mode</strong> (cream/white) using the moon icon in the header.</p>
+    <p>The theme toggle in the header cycles between three modes: <strong>Dark</strong> (default &mdash; dark green/black), <strong>Light</strong> (cream/white), and <strong>Auto</strong> (follows your operating system&rsquo;s color-scheme preference). Auto reacts in real time when your OS theme flips; a small <strong>A</strong> badge appears on the toggle button when Auto is active.</p>
+
+    <span class="detail-label">Setup Wizard</span>
+    <p>An optional first-run wizard appears when the database is empty. Three options:</p>
+    <ul>
+      <li><strong>Start Fresh</strong> &mdash; simplified 5-field form to add your first plant and environment.</li>
+      <li><strong>Import Backup</strong> &mdash; restore from a previously exported JSON file.</li>
+      <li><strong>&#127807; Load Demo Data</strong> &mdash; hydrates a realistic fixture (6 mother plants, 5 harvests, ~40 feedings, 4 environments, 6 strains, 5+ IPM events, full activity history) so you can explore Analytics, Lineage Tree, Strain Compare, and other features that need data to render. Existing-data users get a confirm prompt before anything is added.</li>
+    </ul>
+    <p>The wizard is dismissible with &ldquo;Skip setup&rdquo;. If you skip and later want to run through it again &mdash; either to add another plant via the guided flow or to revisit the demo-data and import options &mdash; reopen it at any time from the gear menu &rarr; <strong>Run Setup Wizard</strong> or the Command Palette &rarr; <em>&ldquo;Run Setup Wizard&rdquo;</em>. The Demo Data option is also reachable on its own via the Command Palette &rarr; <em>&ldquo;Load Demo Data&rdquo;</em>, and a sharable <code>?demo</code> URL parameter auto-loads it on page load (useful for previewing the app to friends).</p>
+
+    <span class="detail-label">After loading demo data</span>
+    <p>Every record created by the demo fixture is tagged internally with a <code>_demo:true</code> flag at build time. This lets the app distinguish demo records from real ones, so when you&rsquo;re ready to start tracking your own grow, you can remove the demo cleanly without touching anything you&rsquo;ve added yourself.</p>
+    <p>When demo data is detected, a banner appears at the top of the dashboard (between the hero and stats grid) with three actions:</p>
+    <ul>
+      <li><strong>Clear demo data</strong> &mdash; opens a confirmation modal listing the per-category record counts that will be removed (e.g. <em>plants &minus;6, harvests &minus;5, feedings &minus;41, ...</em>). On confirm, only <code>_demo:true</code> records are removed &mdash; your own data is preserved.</li>
+      <li><strong>+ Add my plant</strong> &mdash; opens the Add Mother Plant form. The demo records stay in place alongside your new plant. Useful if you want to keep the demo around as a reference while you build your own grow.</li>
+      <li><strong>Keep mixed</strong> &mdash; hides the banner permanently for this session (saved in localStorage as <code>demoBannerDismissed</code>). The demo records stay loaded but the prompt stops nagging. You can restore the banner anytime via Command Palette &rarr; <em>Show Demo Banner</em>.</li>
+    </ul>
+    <p>The <strong>Clear Demo Data</strong> action is also reachable independently of the banner via:</p>
+    <ul>
+      <li>The gear menu &rarr; <strong>&#129529; Clear Demo Data</strong></li>
+      <li>The Command Palette: <kbd>Ctrl</kbd>+<kbd>K</kbd> &rarr; <em>"clear demo"</em></li>
+    </ul>
+    <p>All three paths invoke the same confirmation flow. Users who loaded demo data <em>before</em> v2.22.0 (when the <code>_demo</code> flag didn&rsquo;t exist yet) get auto-tagged on first launch under the new version by a legacy-detection backfill that recognizes records with <code>notes:'(demo)'</code> &mdash; so the Clear command works retroactively without manual cleanup.</p>
+
+    <span class="detail-label">Strain Name Autocomplete</span>
+    <p>All strain name inputs across the app show autocomplete suggestions from the built-in catalog (400+ strains), your strain library, and existing mother plants. Matches display strain name, breeder, and a source tag (Catalog, Library, or In Use). Selecting a match auto-fills the type and breeder fields. Navigate suggestions with arrow keys and Enter; press Escape to close.</p>
+
+    <span class="detail-label">Pheno Hunt Logger</span>
+    <p>Open from the gear menu or Dashboard. Create a pheno hunt for any strain, then add individual phenotypes and score them across <strong>8 traits</strong> (Vigor, Structure, Aroma, Resin Production, Yield Potential, Disease Resistance, Root Development, Flower Density) on a 1&ndash;5 scale. Classify each phenotype as <strong>Keeper</strong>, <strong>Maybe</strong>, <strong>Eliminate</strong>, or Pending with color-coded cards. Supports multi-round scoring sessions to track development over time. Use the <strong>Compare</strong> feature for a side-by-side trait table with best-value highlighting, overall ranking with gold/silver/bronze badges, and an SVG radar chart overlay.</p>
+
+    <span class="detail-label">Enhanced Plant Timeline</span>
+    <p>The plant timeline (accessible via <strong>&#128197; Timeline</strong> on any plant card) now shows a rich social-feed-style grow diary with date-grouped event cards. Events are organized by day with "Today" / "Yesterday" headers. Each event type has a detailed card layout: feedings show pH/EC data pills, photos display inline thumbnails, IPM entries show severity badges, harvests show weight pills, and health checks show colored score badges. Use the <strong>filter chip buttons</strong> to toggle event types on or off. A summary stats banner shows total events, timeline span, and most active event type. Supports 12 event types including breeding logs and expenses.</p>
+
+    <span class="detail-label">Cure Tracker</span>
+    <p>Open from the <strong>&#129383; Cure</strong> button on harvest cards. Log per-jar curing progress with humidity %, weight (g), burp schedule, and terpene development notes. Color-coded range indicators show ideal targets: 55&ndash;65% RH for humidity and 10&ndash;15% for weight loss. The stats banner tracks days curing, total weight loss, average humidity, and burp count. The first log entry automatically sets the harvest's cure status to "curing".</p>
+
+    <span class="detail-label">Nutrient Mix Calculator</span>
+    <p>Open from the gear menu or Dashboard. Compute the exact amount of each nutrient product for any water volume and target EC/PPM. Select from saved products or the built-in catalog. Each product row has a <strong>unit selector</strong> &mdash; <strong>ml/gal</strong> for liquids or <strong>tbsp/gal</strong> for dry amendments (Epsom salt, cal-mag powder, top-dress) &mdash; so a single recipe can mix liquid and dry inputs. The results table shows the amount needed per product with total EC. Save and load preset mixes; a warning appears when total EC exceeds the target.</p>
+
+    <span class="detail-label">Harvest Forecast</span>
+    <p>Open from the gear menu or Dashboard. Predicts harvest dates and estimated yields for all flowering plants using historical strain data plus configured flowering times. The Dashboard widget shows the next 3 upcoming harvests. The full modal displays progress bars, yield ranges (min/max), and confidence badges (high, medium, or low based on available data points).</p>
+
+    <span class="detail-label">IPM Spray Rotation Planner</span>
+    <p>Open from the gear menu or Dashboard. Create named spray rotations with products from the IPM catalog, each with configurable day intervals. A <strong>4-week calendar</strong> shows the color-coded spray schedule organized by product category (insecticide, miticide, fungicide, biological, organic, KNF). Tracks next due spray with overdue warnings. The Dashboard widget shows the next upcoming spray at a glance. Cross-references existing IPM logs for compliance tracking.</p>
+
+    <span class="detail-label">Light Map / PPFD Grid</span>
+    <p>Open from the gear menu or Dashboard. Record PPFD readings at grid points across the canopy using a 3&times;3, 4&times;4, or 5&times;5 grid. Visualize results as an SVG color-coded heat map ranging from purple (low) to red (high). The stats banner shows average PPFD, min, max, and uniformity percentage (min/avg). Per-environment history allows comparing readings over time.</p>
+
+    <span class="detail-label">Water Source Quality Log</span>
+    <p>Open from the gear menu or Dashboard. Track source water parameters over time: pH, EC, TDS, alkalinity, chlorine, and temperature. An SVG trend chart shows dual pH/EC series with an ideal pH zone overlay (5.8&ndash;6.5). The stats banner displays averages and trend direction arrows. Supports 5 water sources: Tap, Filtered, Rain, RO, and Well.</p>
+
+    <span class="detail-label">Genetic Lineage Tree</span>
+    <p>Open from the gear menu or the <strong>&#127795; Lineage</strong> button on plant cards. The enhanced SVG family tree shows parent-clone relationships merged with breeding data. <strong>Full Genetics</strong> mode adds strain genetics subtitles, generation-colored node borders, breeding cross badges, father-plant reference arrows (dashed gold), and seed harvest count badges. Toggle between <strong>Simple</strong> (classic) and <strong>Full Genetics</strong> view. A legend explains all node types.</p>
+
+    <span class="detail-label">Unit Converter</span>
+    <p>Open from the gear menu (Calculators group) or Dashboard. Convert between units across 7 categories: <strong>Weight</strong> (g, oz, lb, kg), <strong>Volume</strong> (mL, L, gal, fl oz, tsp, tbsp, cup), <strong>Temperature</strong> (&deg;F, &deg;C), <strong>Length</strong> (cm, in, ft, m), <strong>Area</strong> (ft&sup2;, m&sup2;), <strong>EC/PPM</strong> (EC, PPM-500, PPM-700), and <strong>Light</strong> (lux, foot-candles, PPFD). Live bidirectional conversion with a swap button to reverse source and target units.</p>
+
+    <span class="detail-label">Pre-Grow Checklist</span>
+    <p>Open from the gear menu (Growing group) or Dashboard. Choose from 4 built-in templates: <strong>Indoor Photoperiod</strong> (23 items), <strong>Indoor Autoflower</strong> (16 items), <strong>Outdoor</strong> (16 items), and <strong>Hydro/DWC</strong> (19 items). Items are organized by category (Equipment, Environment, Medium, Nutrients, Seeds &amp; Genetics, Safety). Check off items as you prepare, track progress with a percentage bar, and add custom items. Save and reuse checklists for future grows.</p>
+
+    <span class="detail-label">Garden Stats &amp; Milestones</span>
+    <p>A persistent counter on the Dashboard tracks every plant ever managed &mdash; even if deleted or archived. The <strong>Garden Stats</strong> card shows total plants managed, harvests, total yield, and days growing. Tap it to open the detailed stats modal with 8 metrics and a <strong>milestone ladder</strong> with achievement badges: Seedling (10), Gardener (25), Cultivator (50), Expert (100), Veteran (250), Elite (500), and Master Grower (1,000). A progress bar shows advancement to the next milestone.</p>
+
+    <span class="detail-label">Terpene &amp; Cannabinoid Profiles</span>
+    <p>Open from the gear menu (Growing group) or Dashboard. Log <strong>THC%</strong>, <strong>CBD%</strong>, and 10 terpene percentages (Myrcene, Limonene, Caryophyllene, Linalool, Pinene, Humulene, Terpinolene, Ocimene, Bisabolol, Eucalyptol) per harvest. Visualize results as an interactive 10-axis <strong>SVG radar chart</strong>. Tag effect profiles (Relaxing, Energizing, Creative, Focused, Euphoric, Sedating, Appetite, Anti-Inflammatory, Pain Relief, Anti-Anxiety), add aroma notes, and assign a quality score. Compare 2&ndash;3 profiles with overlaid radar charts.</p>
+
+    <span class="detail-label">Power Cost Calculator</span>
+    <p>Open from the gear menu (Calculators group) or Dashboard. Estimate electricity costs from grow equipment specifications. Add equipment rows with name, wattage, hours per day, and quantity. The calculator provides <strong>live cost estimates</strong>: daily kWh, daily cost, monthly cost, and per-cycle cost based on your electricity rate (default $0.12/kWh, configurable). Save equipment profiles for reuse across grows.</p>
+
+    <span class="detail-label">Crop Steering Tracker</span>
+    <p>Open from the gear menu (Growing group) or Dashboard. Track <strong>generative vs vegetative</strong> crop steering strategies per plant. Log dry-back percentage, irrigation count, EC runoff, substrate moisture, and notes per session. View a <strong>trend chart</strong> with dual-axis (dry-back % and EC) and phase region shading. Phase reference cards show target ranges: Generative (dry-back 15&ndash;30%, EC 3&ndash;6, 3&ndash;4 irrigations) and Vegetative (dry-back 5&ndash;15%, EC 2&ndash;3.5, 6&ndash;10 irrigations).</p>
+
+    <span class="detail-label">Environmental Recipes</span>
+    <p>Open from the gear menu (Growing group) or Dashboard. Create reusable grow-stage environment target profiles with temperature, humidity, VPD, CO2, and light hour settings. Four <strong>built-in templates</strong> are included: Seedling (72&ndash;78&deg;F, 65&ndash;75% RH), Vegetative (75&ndash;82&deg;F, 55&ndash;65% RH), Flower (72&ndash;78&deg;F, 45&ndash;55% RH), and Late Flower/Ripen (68&ndash;75&deg;F, 40&ndash;50% RH). Create custom recipes, then apply any recipe to an environment for <strong>live actual-vs-target comparison</strong> with green (within range), yellow (slightly off), and red (far off) indicators.</p>
+
+    <span class="detail-label">Grow Journal Export</span>
+    <p>Open from the gear menu (Reports group) or Dashboard. Generate a <strong>shareable standalone HTML grow diary</strong> for any plant. The export aggregates strain information, a chronological photo gallery, feeding log, IPM events, harvest results, and terpene profiles into a single printable document. The report opens in a new browser window, ready to print or save as an HTML file that can be opened in any browser without the app. On browsers that support <code>navigator.share</code>, a <strong>Share</strong> button in the top-right of the popup wraps the journal as a <code>.html</code> File and opens the OS share sheet for direct send to messaging / mail / cloud storage.</p>
+
+    <span class="detail-label">Strain Comparison Tool</span>
+    <p>Open from the gear menu (Calculators group) or Dashboard. Select 2&ndash;3 strains to compare side-by-side using aggregated data from harvests, reviews, and expenses. The table shows harvests, plant count, average dry weight, total yield, quality, and review scores &mdash; plus a full <strong>cost breakdown</strong>: <strong>Cost (harvested)</strong>, <strong>Lost (dead plants)</strong>, <strong>Cost/Plant</strong>, and <strong>Cost/Gram</strong>. Every expense is split into direct (tagged to a plant) and shared overhead (spread equally across every plant grown); the &ldquo;money lost&rdquo; figure comes from plants you archive as <em>Died</em> or <em>Culled</em>. Lowest-cost values are highlighted, and a bar chart compares yield. See the FAQ &ldquo;How are the plant costs in Strain Comparison calculated?&rdquo; for the full method.</p>
+
+    <span class="detail-label">Photo Timeline Comparison</span>
+    <p>Open from the gear menu (Reports group) or Dashboard. Select a plant, then click two photos from its journal to view them <strong>side by side</strong> with date labels and a days-apart indicator. Useful for visually tracking plant growth or comparing canopy development at different stages.</p>
+
+    <span class="detail-label">KNF Ferment Tracker</span>
+    <p>Open from the gear menu (Growing group) or Dashboard. Track active Korean Natural Farming ferments with 10 built-in types: <strong>FPJ</strong> (7 days), <strong>FFJ</strong> (90 days), <strong>FAA</strong> (90 days), <strong>OHN</strong> (30 days), <strong>LABS</strong> (7 days), <strong>IMO-3</strong> (7 days), <strong>WCA</strong> (14 days), <strong>WCA-P</strong> (30 days), <strong>BRV</strong> (7 days), and <strong>Molasses Soil Drench</strong> (1 day). Each entry tracks start date, ingredients, expected duration, and notes. Live status badges show current state: gold (fermenting), green (ready to use), or orange (overdue). Mark ferments as used or delete when finished.</p>
+
+    <span class="detail-label">Companion Planting Guide</span>
+    <p>Open from the gear menu (Diagnostics group) or Dashboard. A reference guide for <strong>15 companion plants</strong> organized into 4 filterable categories: <strong>Pest Repellent</strong> (Basil, Lavender, Peppermint, Rosemary, Garlic, Chrysanthemum), <strong>Trap Crop</strong> (Marigold, Nasturtium, Sunflower), <strong>Pollinator</strong> (Dill, Cilantro, Yarrow), and <strong>Soil Builder</strong> (Chamomile, Clover, Comfrey). Each plant card shows an emoji icon, description of benefits, specific pests repelled, and practical growing tips.</p>
+
+    <span class="detail-label">Nutrient Availability / pH Chart</span>
+    <p>Open from the gear menu (Diagnostics group) or Dashboard. An interactive visual chart showing which of <strong>14 nutrients</strong> (N, P, K, Ca, Mg, S, Fe, Mn, B, Cu, Zn, Mo, Cl, Ni) are available, reduced, or locked out at any given pH. The SVG chart displays pH 3.0&ndash;9.0 on the x-axis with horizontal bars per nutrient: green for optimal availability, gold for reduced, and gaps for locked out. A <strong>draggable pH slider</strong> moves a cyan indicator line across the chart and updates the status summary in real time. Toggle between <strong>Soil / Organic</strong> and <strong>Hydro / Coco</strong> modes for different availability ranges. The tool auto-reads your latest logged pH from environment readings or feeding data to pre-fill the slider.</p>
+
+    <span class="detail-label">CO&#8322; Calculator &amp; Tracking</span>
+    <p>Open from the gear menu (Calculators group) or Dashboard. A two-part feature for sealed-room CO&#8322; management. The <strong>calculator</strong> takes room dimensions (length, width, height in feet), current CO&#8322; PPM, target PPM, and injection rate (CFH) to compute CO&#8322; needed (cubic feet) and injection time (minutes). <strong>Growth stage presets</strong> fill the target: Ambient (400), Veg (800), Early Flower (1200), Peak Flower (1500), and Late Flower (1000). Save your defaults for quick reuse. The <strong>CO&#8322; tracking</strong> component adds a CO&#8322; PPM field to environment readings &mdash; log CO&#8322; levels alongside temperature and humidity. The calculator includes a CO&#8322; trend chart from your logged readings with reference lines at ambient and flower levels.</p>
+
+    <span class="detail-label">Batch Feeding</span>
+    <p>Open from the Feeding tab toolbar (<strong>&#128203; Batch Feed</strong>), the gear menu (Growing group), or Dashboard quick actions. Log one feeding for <strong>multiple plants at once</strong>. The modal shows an environment filter dropdown to narrow plants, a checkbox grid of plant cards (showing strain, stage, and environment), with <strong>Select All</strong> and <strong>Deselect</strong> buttons and a live count badge. Fill in the feeding details once (nutrient, amount, unit, water volume, pH in/out, EC in/out, notes) and submit to create individual feeding entries for every selected plant. Useful for feeding all plants in a tent the same nutrient mix without logging each one separately.</p>
   </div>
 </div>
 
@@ -949,11 +1459,30 @@ kbd {
     <span class="detail-label">Export</span>
     <p>Go to gear menu &#8594; <strong>Export Data</strong> to download a complete JSON backup. The file includes a checksum for integrity verification. Export regularly &mdash; it only takes a second and protects all your grow records.</p>
 
-    <span class="detail-label">Import</span>
-    <p>Go to gear menu &#8594; <strong>Import Data</strong> to restore from a JSON backup. This replaces all current data with the imported file. The import validates the checksum to ensure the file hasn't been corrupted.</p>
+    <span class="detail-label">Backup Nudge</span>
+    <p>A passive <strong>&#128190;</strong> indicator appears in the header when your last export is getting stale: <strong>amber</strong> at 14+ days (or never exported), <strong>red</strong> at 30+ days. Click it to jump straight to Export Data. Hides itself when backups are fresh or when you have no data yet to back up. The thresholds are configurable in source if you want them sooner or later.</p>
+
+    <span class="detail-label">Import (with diff preview)</span>
+    <p>Go to gear menu &#8594; <strong>Import Data</strong> to restore from a JSON backup. Before anything is applied, a <strong>diff preview</strong> modal shows a per-category record count comparison (current vs backup, with &Delta;) across mothers, environments, clones, tasks, feedings, journal photos, IPM logs, harvests, strains, env readings, seeds, and health checks. Backup metadata (export date, app version) is shown at the top with a version-mismatch warning when applicable, and a red &ldquo;heads up&rdquo; appears if the backup contains fewer total records than your current data &mdash; protects against accidentally clobbering data with an older backup. Confirm to apply, Cancel to abort.</p>
+
+    <span class="detail-label">Undo via Toast</span>
+    <p>Destructive actions (archive plant, archive environment, delete task, delete photo) skip the &ldquo;Are you sure?&rdquo; modal and run immediately. A 6-second toast appears in the bottom-right with an <strong>Undo</strong> button. Click Undo to restore the prior state; ignore it and the action persists. Faster, reversible, and respects your flow. The undo restores the full record snapshot including any associated activity-log entry.</p>
 
     <span class="detail-label">Cloud Sync (Firebase)</span>
     <p>Tap the <strong>&#9729; Cloud Sync</strong> button in the header to connect with Firebase. Cloud sync provides automatic backup and cross-device synchronization. Your data is encrypted and stored securely. Log in with your email to enable sync.</p>
+    <p><strong>Restore from cloud</strong> uses the same <em>diff preview</em> modal as file imports: before any destructive overwrite, you see a per-category record-count comparison (current vs cloud backup, with &Delta;), the backup&rsquo;s export date, a version-mismatch warning when applicable, and a red &ldquo;heads up&rdquo; if the cloud copy has fewer records than your current local data. Confirm with <em>Restore from cloud</em> to apply, Cancel to abort &mdash; you&rsquo;ll never accidentally clobber your local data with an older cloud snapshot without seeing what&rsquo;s about to happen.</p>
+
+    <span class="detail-label">Encrypted Exports</span>
+    <p>Go to gear menu &rarr; <strong>&#128274; Export Encryption</strong> to toggle encrypted exports on or off. When enabled, Export Data will prompt for a password and encrypt your backup using <strong>AES-256-GCM</strong> with PBKDF2 key derivation (SHA-256, 600,000 iterations). The export is saved as a <code>.encrypted.json</code> file. On import, encrypted files are <strong>auto-detected</strong> by their header and a password prompt appears. Unencrypted backups are always accepted regardless of this setting. A password strength indicator helps you choose a strong password. <strong>There is no password recovery</strong> &mdash; if you forget the password, the backup cannot be restored.</p>
+
+    <span class="detail-label">Plant Nicknames &amp; Auto-Numbering</span>
+    <p>When you grow multiple plants of the same strain, the app automatically assigns numbers (#1, #2, #3) to each plant so you can tell them apart in every dropdown, feeding log, task list, chart, calendar, and notification. You can also set an optional <strong>Nickname</strong> in the Add/Edit Plant form (e.g. &ldquo;Mom A&rdquo;, &ldquo;North Tent&rdquo;, &ldquo;Pheno 3&rdquo;). Nicknames override auto-numbers and display as &ldquo;Blue Dream &mdash; Yoda&rdquo; across the entire app. The FleetView table includes a sortable <strong>Label</strong> column showing each plant&rsquo;s nickname or number. Search also matches against nicknames.</p>
+
+    <span class="detail-label">Hawaiian Name Suggestions</span>
+    <p>Click the <strong>&#127922; dice button</strong> next to the Nickname field when adding or editing a plant to get a random Polynesian/Hawaiian name as a nickname. The app picks from 66 names drawn from Hawaiian mythology, ali&#699;i lineage, and nature (Pele, Lono, K&#257;ne, Hi&#699;iaka, Leilani, Mahina, Lehua, Pikake, and more) and avoids names already in use by your active plants. Click again for a different suggestion, or type your own custom nickname.</p>
+
+    <span class="detail-label">Print &amp; PDF Export</span>
+    <p>Plant Manager has a unified print stylesheet that applies to every <em>Print / Save as PDF</em> flow in the app: Plant Reports, Garden Reports, Grow Journal Export, Daily Snapshot, and QR plant tags. When you trigger any of these (or hit <kbd>Ctrl</kbd>+<kbd>P</kbd> on a tab), the print preview hides all chrome (header, nav, command palette, toasts, tip banner, hero, gear menu), flattens cards (white background, no shadows, no hover transforms), forces text to black, expands external link URLs after each <code>&lt;a&gt;</code> tag, applies sensible page-breaks (cards/rows/headings stay together), and uses a 0.6&quot; page margin. Theme-agnostic &mdash; looks the same regardless of dark or light mode.</p>
   </div>
 </div>
 
@@ -976,14 +1505,341 @@ kbd {
     <h2 class="phase-title">PWA <span class="gold">Install</span></h2>
   </div>
   <div class="phase-body">
-    <p>Plant Manager is a Progressive Web App (PWA). You can install it on your phone or computer for a native app-like experience:</p>
+    <p>Plant Manager is a Progressive Web App (PWA). You can install it on your phone or computer for a native app-like experience &mdash; offline-capable, fullscreen, with its own home-screen icon. There are now three ways to trigger the install:</p>
+
+    <span class="detail-label">In-app install prompt (recommended)</span>
+    <p>On <strong>Android Chrome / Edge</strong> and most desktop Chromium browsers, the app captures the browser&rsquo;s install event and surfaces it directly. Plant Manager waits until you&rsquo;ve done enough with the app to know whether you want it on your home screen &mdash; specifically, until you have <strong>3+ plants</strong> or <strong>5+ feedings</strong> logged (or 90 seconds of session time has elapsed, whichever comes first). At that point you&rsquo;ll see a one-time toast at the bottom of the screen offering <strong>Install</strong>. Tap it to fire the native install dialog. You can also trigger the prompt on demand at any time from the gear menu &rarr; <strong>Install App</strong> or Command Palette &rarr; <em>&ldquo;Install App&rdquo;</em>.</p>
+
+    <span class="detail-label">iOS (Safari)</span>
+    <p>iOS doesn&rsquo;t expose an install event to web pages, so the app shows a one-time walkthrough modal on first launch that mirrors the native flow:</p>
+    <ol>
+      <li>Tap the <strong>Share</strong> button at the bottom of Safari</li>
+      <li>Scroll down and tap <strong>Add to Home Screen</strong></li>
+      <li>Tap <strong>Add</strong> to confirm</li>
+    </ol>
+    <p>You can re-open this walkthrough at any time from the gear menu &rarr; <strong>Install App</strong>.</p>
+
+    <span class="detail-label">Manual install (fallback)</span>
     <ul>
-      <li><strong>iOS Safari</strong> &mdash; tap the Share button &#8594; "Add to Home Screen".</li>
-      <li><strong>Android Chrome</strong> &mdash; tap the three-dot menu &#8594; "Install app" or "Add to Home Screen".</li>
-      <li><strong>Desktop Chrome/Edge</strong> &mdash; click the install icon in the address bar, or go to the three-dot menu &#8594; "Install Tropical Roots Maui - Plant Manager".</li>
+      <li><strong>Android Chrome</strong> &mdash; three-dot menu &rarr; <em>Install app</em> or <em>Add to Home Screen</em></li>
+      <li><strong>Desktop Chrome/Edge</strong> &mdash; click the install icon in the address bar, or three-dot menu &rarr; <em>Install Tropical Roots Maui - Plant Manager</em></li>
+      <li><strong>iOS Safari</strong> &mdash; Share button &rarr; <em>Add to Home Screen</em> (same as the walkthrough above)</li>
     </ul>
-    <p>Once installed, the app opens in its own window without browser chrome and works offline thanks to the service worker cache.</p>
+
+    <span class="detail-label">After installing</span>
+    <p>The app opens in its own window without browser chrome and works offline thanks to the service worker cache. The About dialog (tap the version chip in the footer) will show an <em>&middot; installed PWA</em> marker so you can confirm you&rsquo;re running the installed copy. Home-screen shortcuts are also available: long-press the app icon on Android to get quick-launch entries for <em>Quick Water</em>, <em>Add Plant</em>, and <em>Daily Snapshot</em>.</p>
+
+    <span class="detail-label">Receive shared photos (Android share target)</span>
+    <p>Once installed, Plant Manager appears in the <strong>Android system share sheet</strong> for any image. Snap a photo with the Camera app, hit Share, pick Plant Manager from the list, and the photo lands pre-attached in the Add Journal Photo modal &mdash; just pick the plant, optionally tag a growth stage, and save. The service worker handles the share POST under the hood and the photo is consumed exactly once, so a normal reload won&rsquo;t re-import it.</p>
+
+    <span class="detail-label">Open .json backups in the installed app</span>
+    <p>The installed PWA also registers as a handler for <code>application/json</code> files. On Android (and Chromium &ge; 102 on desktop), tapping a Plant Manager backup in the Files app launches the installed app with the file pre-loaded into the Import flow. The launch handler reuses the running window when one exists, so opening a file won&rsquo;t spawn a duplicate.</p>
+
+    <span class="detail-label">App updates</span>
+    <p>When Plant Manager ships a new version, the service worker downloads it in the background. Once the update is ready, you&rsquo;ll see a passive <em>"A new version is available"</em> toast with a <strong>Reload</strong> action. The toast is sticky &mdash; it stays visible until you click Reload, so it never interrupts mid-form work. Click when you&rsquo;re ready and the page reloads with the fresh shell.</p>
   </div>
+</div>
+
+
+<!-- ═══ Accessibility ═══ -->
+<div class="section-divider" id="accessibility">
+  <div class="divider-line"></div>
+  <div class="divider-label">Accessibility</div>
+  <div class="divider-line"></div>
+</div>
+
+<div class="phase-section">
+  <div class="phase-header">
+    <div class="phase-number">&#9855;</div>
+    <h2 class="phase-title">Accessibility <span class="gold">Features</span></h2>
+  </div>
+  <div class="phase-body">
+    <p>Plant Manager is built to work for people who navigate by keyboard, screen reader, reduced-motion preference, or high-contrast vision. Specifics:</p>
+
+    <span class="detail-label">Keyboard Navigation</span>
+    <p>Every interactive element is reachable via <kbd>Tab</kbd>. Focus is indicated by a 2px cyan outline that matches the brand (visible only via <code>:focus-visible</code>, so it doesn&rsquo;t appear on mouse clicks). Tab dropdowns and the command palette can be operated entirely from the keyboard &mdash; see the <a href="#shortcuts">Keyboard Shortcuts</a> section for the full layer.</p>
+
+    <span class="detail-label">Skip-to-Content Link</span>
+    <p>The first focusable element on every page is a hidden <strong>Skip to main content</strong> link. Press <kbd>Tab</kbd> on first load to reveal it; <kbd>Enter</kbd> jumps focus past the header and tab nav directly to the dashboard content. Useful for keyboard and screen-reader users who don&rsquo;t want to walk through navigation links every page.</p>
+
+    <span class="detail-label">Screen Reader Support</span>
+    <p>Icon-only buttons (gear, weather, moon, cloud-sync, theme-toggle, modal-close, backup-nudge) all carry <code>aria-label</code> attributes describing their purpose. The toast container has <code>role=&quot;status&quot;</code> with <code>aria-live=&quot;polite&quot;</code> so success and error messages get announced. The settings menu has <code>aria-haspopup</code> and <code>aria-expanded</code> that update as it opens and closes. Top-level landmarks use semantic <code>&lt;header role=&quot;banner&quot;&gt;</code>, <code>&lt;nav role=&quot;navigation&quot;&gt;</code>, and <code>&lt;main role=&quot;main&quot;&gt;</code>.</p>
+
+    <span class="detail-label">Modals &amp; Dialogs</span>
+    <p>All modal dialogs in the app (forms, confirms, calculators, the photo lightbox, command palette, About, Changelog viewer) carry <code>role=&quot;dialog&quot;</code>, <code>aria-modal=&quot;true&quot;</code>, and <code>aria-labelledby</code> pointing at the modal title so screen readers announce them correctly. A <strong>focus trap</strong> keeps <kbd>Tab</kbd> and <kbd>Shift</kbd>+<kbd>Tab</kbd> cycling inside the open modal so keyboard users can&rsquo;t accidentally tab out into background content. On open, focus moves to the first form field (or the first action button if there are no fields); on close, focus is <strong>restored to whatever element opened the modal</strong>, so keyboard users continue right where they left off instead of being dumped at the top of the page.</p>
+
+    <span class="detail-label">Reduced Motion</span>
+    <p>If your operating system sets <code>prefers-reduced-motion: reduce</code>, Plant Manager honors it. All transitions are reduced to near-instant, hover-lift effects on cards are disabled, the stat-card icon scale-rotate animation is disabled, the fadeUp panel-transition is disabled, and the pulse animation is disabled. The cyan focus ring still works.</p>
+
+    <span class="detail-label">Haptic Feedback (Mobile)</span>
+    <p>On devices that support <code>navigator.vibrate</code>, Plant Manager fires a brief tactile pulse on a couple of key actions so the interaction feels physical: a 10ms tick when you press <strong>Undo</strong> on a toast (so the undo lands before the toast fades), and a 15ms tick when you mark a task as complete. No-op on desktop and on devices where the OS blocks vibration; the parent action runs identically either way.</p>
+
+    <span class="detail-label">Contrast (WCAG AA)</span>
+    <p>Body text and secondary text both pass WCAG AA contrast ratios on small body copy in both dark and light themes. Tertiary/dim text (used for captions, timestamps, metadata) sits at the AA threshold and is bumped from earlier versions to ensure readability.</p>
+
+    <span class="detail-label">Reporting Issues</span>
+    <p>If you hit a screen reader, keyboard, or contrast issue that this section doesn&rsquo;t cover, the GitHub repo accepts accessibility reports as issues: <a href="https://github.com/magikh0e/PlantManager/issues" target="_blank" rel="noopener">github.com/magikh0e/PlantManager/issues</a>. Tag with the <code>a11y</code> label.</p>
+  </div>
+</div>
+
+
+<!-- ═══ Privacy & Search Indexing ═══ -->
+<div class="section-divider" id="privacy-seo">
+  <div class="divider-line"></div>
+  <div class="divider-label">Privacy &amp; How Plant Manager Appears in Search</div>
+  <div class="divider-line"></div>
+</div>
+
+<div class="phase-section">
+  <div class="phase-header">
+    <div class="phase-number">&#128270;</div>
+    <h2 class="phase-title">Privacy &amp; <span class="gold">Search Indexing</span></h2>
+  </div>
+  <div class="phase-body">
+    <span class="detail-label">No Tracking, No Ads, No Analytics</span>
+    <p>Plant Manager contains no third-party analytics scripts, no advertising, no tracking pixels, and no telemetry. The developer cannot see which features you use, when you use them, or how often. Optional integrations (Cloud Sync, Weather, Pest Identification) are off by default and use credentials you supply (your own Firebase project, your own Google Vision API key). The <strong>About</strong> dialog (tap the version chip in the footer) restates this posture in-product so it&rsquo;s never more than one tap away.</p>
+
+    <span class="detail-label">Where Your Data Lives</span>
+    <p>All cultivation records (plants, feedings, photos, harvests, IPM events) are stored in your browser&rsquo;s <code>localStorage</code> on your own device. Nothing is uploaded to a developer-operated server. If you enable Cloud Sync, data flows directly between your device and your own Firebase project &mdash; the developer never sees it. If you use the Pest Identifier, the specific photo you submit goes to Google&rsquo;s Vision API for that single request, billed against your own API key.</p>
+
+    <span class="detail-label">Schema Markup &amp; Rich Search Results</span>
+    <p>Plant Manager&rsquo;s pages embed JSON-LD structured data conforming to schema.org standards (<code>WebApplication</code>, <code>SoftwareApplication</code>, <code>Article</code>, <code>BreadcrumbList</code>, <code>Organization</code>) so Google can index the app and supporting pages with rich results. Once Play Store reviews accumulate, an <code>AggregateRating</code> schema block surfaces star ratings directly in Google search snippets. Plant Manager doesn&rsquo;t use the deprecated <code>FAQPage</code> or <code>HowTo</code> schemas (Google removed those rich-result types in 2023).</p>
+
+    <span class="detail-label">Privacy Policy</span>
+    <p>The full privacy policy is available at <a href="/privacy-policy.html" target="_blank" rel="noopener">/privacy-policy.html</a>. It documents the &ldquo;no server, no analytics, no ads&rdquo; posture and the optional integrations in detail. Required for the Play Store listing and accurately describes the app&rsquo;s actual behavior.</p>
+  </div>
+</div>
+
+
+<!-- ═══ Keyboard Shortcuts & Command Palette ═══ -->
+<div class="section-divider" id="shortcuts">
+  <div class="divider-line"></div>
+  <div class="divider-label">Keyboard Shortcuts &amp; Command Palette</div>
+  <div class="divider-line"></div>
+</div>
+
+<div class="phase-section">
+  <div class="phase-header">
+    <div class="phase-number">&#9094;</div>
+    <h2 class="phase-title">Power-user <span class="gold">shortcuts</span></h2>
+  </div>
+  <div class="phase-body">
+    <p>Plant Manager has a full keyboard layer for users who prefer not to reach for the mouse. None of these shortcuts fire while you&rsquo;re typing in a form field, so you can ignore them entirely if you don&rsquo;t want them.</p>
+
+    <span class="detail-label">Command Palette</span>
+    <p>Press <kbd>Ctrl</kbd>+<kbd>K</kbd> (or <kbd>Cmd</kbd>+<kbd>K</kbd> on Mac) or simply <kbd>/</kbd> to open a fuzzy-search launcher covering <strong>80+ commands</strong> across navigation, quick-add forms, calculators, growing tools, diagnostics, reports, tags, and settings. Type any partial keyword (try <em>&ldquo;feed&rdquo;</em>, <em>&ldquo;vpd&rdquo;</em>, or <em>&ldquo;harvest&rdquo;</em>) to filter. Multi-word queries match across the command name, keywords, and section. <kbd>&uarr;</kbd>/<kbd>&darr;</kbd> arrows navigate the result list, <kbd>Enter</kbd> activates the selected command, <kbd>Esc</kbd> closes the palette. The palette is also reachable via the <strong>&#128269; Search Commands</strong> entry pinned to the top of the gear menu.</p>
+    <p>Useful global utility commands that don&rsquo;t correspond to any tab:</p>
+    <ul>
+      <li><strong>Install App</strong> &mdash; fires the native install prompt (Android/Chrome) or the iOS Add-to-Home-Screen walkthrough</li>
+      <li><strong>About Plant Manager</strong> &mdash; opens the About dialog with version, GitHub, license, and links to What&rsquo;s New / Full Changelog / Help</li>
+      <li><strong>Show What&rsquo;s New</strong> &mdash; replays the release-notes popup for the current version</li>
+      <li><strong>View Changelog</strong> &mdash; renders the full <code>CHANGELOG.txt</code> in a styled in-app modal (version dividers, FEATURE/POLISH/FIX section labels, scrollable history back to v1.0.0)</li>
+      <li><strong>Run Setup Wizard</strong> &mdash; replays the first-run wizard at any time, even after you&rsquo;ve dismissed it</li>
+      <li><strong>Toggle Theme</strong> &mdash; cycles Dark &rarr; Light &rarr; Auto without leaving the keyboard</li>
+      <li><strong>Copy Demo Share Link</strong> &mdash; copies the <code>?demo</code> sharable URL to the clipboard</li>
+    </ul>
+
+    <span class="detail-label">Cheat Sheet</span>
+    <p>Press <kbd>?</kbd> at any time (outside a form field) to open a modal listing every keyboard shortcut available in the app. Useful when you forget a binding or want to discover ones you haven&rsquo;t tried.</p>
+
+    <span class="detail-label">Context-Aware New</span>
+    <p>Press <kbd>n</kbd> to open the &ldquo;new&rdquo; form for whatever tab you&rsquo;re currently on:</p>
+    <ul>
+      <li><strong>Plants</strong> &mdash; opens Add Mother Plant</li>
+      <li><strong>Clones</strong> &mdash; opens Log Clones</li>
+      <li><strong>Strains</strong> &mdash; opens Add Strain</li>
+      <li><strong>Tasks</strong> &mdash; opens Add Task</li>
+      <li><strong>Feeding</strong> &mdash; opens Log Feeding</li>
+      <li><strong>IPM</strong> &mdash; opens Log IPM Issue</li>
+      <li><strong>Journal</strong> &mdash; opens Add Photo</li>
+      <li><strong>Harvest</strong> &mdash; opens Log Harvest</li>
+      <li><strong>Environs</strong> &mdash; opens Add Environment</li>
+      <li><strong>Readings</strong> &mdash; opens Log Environment Reading</li>
+      <li><strong>Dashboard / Calendar / Analytics</strong> &mdash; falls back to Add Mother Plant or Add Task</li>
+    </ul>
+
+    <span class="detail-label">Vim-Style Go-To</span>
+    <p>Press <kbd>g</kbd> and then a letter (within ~1.5 seconds) to jump to a section of the app:</p>
+    <ul>
+      <li><kbd>g</kbd> <kbd>d</kbd> &mdash; Dashboard</li>
+      <li><kbd>g</kbd> <kbd>p</kbd> &mdash; Plants</li>
+      <li><kbd>g</kbd> <kbd>c</kbd> &mdash; Tasks (Care group)</li>
+      <li><kbd>g</kbd> <kbd>r</kbd> &mdash; Journal (Records group)</li>
+      <li><kbd>g</kbd> <kbd>i</kbd> &mdash; Readings (Insights group)</li>
+    </ul>
+
+    <span class="detail-label">Modal &amp; Palette Dismissal</span>
+    <p><kbd>Esc</kbd> closes any open modal, dialog, the photo lightbox, the command palette, or an open tab dropdown. Clicking outside the modal/palette has the same effect.</p>
+
+    <span class="detail-label">URL Shortcuts</span>
+    <p>Plant Manager also accepts a few URL parameters for direct access without going through the UI:</p>
+    <ul>
+      <li><code>?demo</code> or <code>#demo</code> &mdash; auto-loads the demo data fixture on page load. Existing-data users get a confirm prompt before anything is added. Useful for sharing a preview link with friends.</li>
+      <li><code>?action=quickwater</code> &mdash; opens the Quick Water modal directly. Used by the &ldquo;Quick Water&rdquo; home-screen shortcut on Android (long-press the launcher icon).</li>
+      <li><code>?action=addplant</code> &mdash; opens the Add Mother Plant form directly. Used by the &ldquo;Add Plant&rdquo; home-screen shortcut.</li>
+      <li><code>?action=snapshot</code> &mdash; generates today&rsquo;s Daily Snapshot directly. Used by the &ldquo;Daily Snapshot&rdquo; home-screen shortcut.</li>
+    </ul>
+    <p>All special URL parameters are stripped via <code>history.replaceState</code> after they fire, so a normal reload won&rsquo;t re-trigger them.</p>
+  </div>
+</div>
+
+<div class="island-tip">
+  <span class="it-label">Tip</span>
+  Forget a shortcut? Press <kbd>?</kbd> on the dashboard for the full list, or hit <kbd>Ctrl</kbd>+<kbd>K</kbd> and type the feature name &mdash; the Command Palette covers everything the keyboard layer does and more.
+</div>
+
+
+<!-- ═══ FAQ ═══ -->
+<div class="section-divider" id="faq">
+  <div class="divider-line"></div>
+  <div class="divider-label">Frequently Asked Questions</div>
+  <div class="divider-line"></div>
+</div>
+
+<div class="phase-section" style="padding-bottom:0">
+  <div class="phase-header">
+    <div class="phase-number">&#10067;</div>
+    <h2 class="phase-title">Common <span class="gold">Questions</span></h2>
+  </div>
+  <div class="phase-body">
+    <p>The most-asked questions about Plant Manager &mdash; tap any question to expand the answer.</p>
+  </div>
+</div>
+
+<div class="faq-wrap">
+
+  <details class="faq-item">
+    <summary class="faq-q">Where is my data stored, and is it private?</summary>
+    <div class="faq-a">
+      All Plant Manager data lives in your browser's <strong>localStorage</strong> on your own device. Nothing is uploaded, tracked, or shared with any server &mdash; there is no analytics, no telemetry, no account creation. <strong>Cloud Sync</strong> is entirely optional and uses your own <strong>Firebase</strong> configuration when enabled, meaning the data still belongs to you and lives in infrastructure you control.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary class="faq-q">Will I lose my data if I clear my browser cache?</summary>
+    <div class="faq-a">
+      Yes. Clearing site data, switching browsers, switching devices, or uninstalling the PWA without backing up first will erase your plants, journals, feeding logs, and harvests. <strong>Always export a JSON backup regularly</strong> via the gear menu &rarr; Export Data, or enable <strong>Cloud Sync</strong> for automatic protection. For sensitive data, enable <code>Export Encryption</code> to password-protect your backups.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary class="faq-q">Is Plant Manager free to use?</summary>
+    <div class="faq-a">
+      Yes. Plant Manager is fully free and open-source under the <strong>GNU GPL v3</strong> license. There are no accounts, no advertisements, no paid tiers, no premium features behind a paywall, and no usage telemetry. The full source is in a single HTML file you can read, modify, and self-host.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary class="faq-q">I loaded demo data. How do I clear it out now that I'm tracking real plants?</summary>
+    <div class="faq-a">
+      Every record the demo fixture creates is tagged internally with <code>_demo:true</code>. To remove all demo records without touching your own data, you have three options: <strong>(1)</strong> click <em>Clear demo data</em> in the banner that appears at the top of the dashboard when demo records are detected, <strong>(2)</strong> open the gear menu and click <strong>&#129529; Clear Demo Data</strong>, or <strong>(3)</strong> hit <kbd>Ctrl</kbd>+<kbd>K</kbd> and search for "clear demo." All three paths show the same confirmation modal listing the per-category record counts that will be removed before deleting anything. Records you've added yourself are preserved.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary class="faq-q">I dismissed the demo banner with "Keep mixed." How do I get it back?</summary>
+    <div class="faq-a">
+      Open the Command Palette (<kbd>Ctrl</kbd>+<kbd>K</kbd> or <kbd>/</kbd>) and search for <em>"Show Demo Banner"</em>. That clears the <code>demoBannerDismissed</code> flag and the banner reappears on the dashboard next time you visit. Alternatively, just clear demo data directly from the gear menu — the banner is no longer relevant once demo records are gone.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary class="faq-q">How does Plant Manager compare to other grow tracker apps?</summary>
+    <div class="faq-a">
+      Most other cultivation trackers (e.g. <strong>Grow with Jane</strong>) are freemium with subscription tiers, ads in the free tier, and cloud-locked data on the vendor's servers. Plant Manager is the opposite: free forever, no ads, no subscription, and your data stays on your device unless you explicitly opt into your own Firebase sync. It's also open-source under GPL-3.0, which means you can read, fork, or self-host the entire app. For a detailed feature-by-feature comparison, see <a href="https://tracker.tropicalrootsmaui.com/plant-manager-vs-grow-with-jane.html" target="_blank" rel="noopener">Plant Manager vs Grow with Jane</a>.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary class="faq-q">How are the plant costs in Strain Comparison calculated?</summary>
+    <div class="faq-a">
+      Every expense you log is one of two kinds: a <strong>direct</strong> cost (tagged to a specific plant when you added it) or <strong>shared overhead</strong> (untagged &mdash; tents, meters, electricity, a bulk soil order, and so on). Shared overhead is split <strong>equally across every plant you've grown</strong>, so each plant carries its own direct expenses plus one equal slice of overhead.
+      <br><br>
+      For each strain those per-plant costs are then grouped by what happened to the plant:
+      <ul style="margin:0.4rem 0 0.4rem 1.1rem">
+        <li><strong>Cost (harvested)</strong> &mdash; total cost of the plants that actually produced a harvest.</li>
+        <li><strong>Lost (dead plants)</strong> &mdash; money spent on plants you archived as <em>Died</em> or <em>Culled</em> that never yielded &mdash; your sunk cost.</li>
+        <li><strong>Cost/Plant</strong> &mdash; the strain's total cost divided by every plant of that strain (harvested, dead, retired, or still growing).</li>
+        <li><strong>Cost/Gram</strong> &mdash; the cost of the <em>harvested</em> plants divided by their total dry weight. Dead-plant losses are shown separately, not baked in.</li>
+      </ul>
+      The Died / Culled distinction comes from the reason you choose when you archive a plant (<strong>Harvested / Retired / Died / Culled</strong>). Plants archived before this feature existed, or without a reason, still count toward totals but are not treated as losses.
+      <br><br>
+      Note: the <strong>Cost per Gram by Strain</strong> chart on the Analytics tab uses a simpler method &mdash; it splits shared overhead by each strain's share of total <em>yield</em> rather than per plant &mdash; so its $/g figure can differ slightly from the one in Strain Comparison.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary class="faq-q">Does Plant Manager work offline?</summary>
+    <div class="faq-a">
+      Yes. After the page loads once, the <strong>service worker</strong> caches the entire app plus all assets so you can open and use it without an internet connection. This is especially handy in grow tents or rooms with weak Wi-Fi. When your device loses connectivity, a small amber <strong>Offline</strong> pill appears in the header so you always know &mdash; your edits keep saving to local storage and will sync when you reconnect (if Cloud Sync is enabled). Help, comparison, privacy, and changelog pages are all precached too. Install it as a Progressive Web App (see the <a href="#pwa">Install as App</a> section above) for the best offline experience.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary class="faq-q">How do I install Plant Manager on my phone?</summary>
+    <div class="faq-a">
+      The app captures the install moment automatically &mdash; <strong>on Android (Chrome/Edge)</strong> you&rsquo;ll see a one-time toast at the bottom of the screen offering <em>Install</em>, and tapping it fires the native install dialog. <strong>On iPhone/iPad Safari</strong>, where browsers don&rsquo;t expose an install event, the app shows a one-time walkthrough modal: tap the Share button at the bottom of Safari &rarr; scroll down to <strong>Add to Home Screen</strong> &rarr; tap <strong>Add</strong>. You can re-trigger either prompt at any time from the gear menu &rarr; <strong>&#128242; Install App</strong> or Command Palette &rarr; <em>&ldquo;Install App.&rdquo;</em> Once installed, the app launches in its own window without browser chrome and works fully offline. See the <a href="#pwa">Install as App</a> section above for the manual-install fallback paths.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary class="faq-q">Can I sync data between my phone and computer?</summary>
+    <div class="faq-a">
+      Yes, two ways:
+      <ul style="list-style:none;padding-left:0;margin-top:0.6rem">
+        <li style="padding-left:1.2rem;position:relative;margin-bottom:0.4rem"><span style="position:absolute;left:0;top:0.6rem;width:6px;height:6px;border-radius:50%;background:var(--cyan);display:block"></span><strong>Manual:</strong> Export a JSON backup from one device, import it on the other via the gear menu.</li>
+        <li style="padding-left:1.2rem;position:relative;margin-bottom:0.4rem"><span style="position:absolute;left:0;top:0.6rem;width:6px;height:6px;border-radius:50%;background:var(--cyan);display:block"></span><strong>Automatic:</strong> Enable <strong>Cloud Sync</strong> with your own Firebase project to keep multiple devices in sync. Encryption is optional on both manual exports and cloud backups.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary class="faq-q">How do I differentiate multiple plants of the same strain?</summary>
+    <div class="faq-a">
+      When you add a second plant with the same strain name, both are <strong>auto-numbered</strong> &mdash; you'll see "Blue Dream #1" and "Blue Dream #2" across all dropdowns, charts, and logs. You can also set a custom <strong>nickname</strong> per plant (e.g. "Pele" or "North Tent") which overrides the number; the display becomes "Blue Dream &mdash; Pele". Need a name idea? Click the <strong>&#127922; dice</strong> button next to the nickname field for a random Polynesian/Hawaiian name suggestion (66 available from mythology, ali&#699;i lineage, and nature; won't repeat names already in use).
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary class="faq-q">Can I encrypt my data exports?</summary>
+    <div class="faq-a">
+      Yes. Open the gear menu and select <strong>Export Encryption</strong> to enable password-based encryption. When enabled, exports prompt you for a password (with strength indicator) and write a <code>.encrypted.json</code> file. Encryption uses <strong>AES-256-GCM</strong> with <strong>PBKDF2</strong> key derivation (600,000 SHA-256 iterations) for brute-force resistance. On import, encrypted files are auto-detected and prompt for the decryption password. <strong>Password recovery is not possible</strong> &mdash; store your password somewhere safe.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary class="faq-q">Which devices and browsers are supported?</summary>
+    <div class="faq-a">
+      Plant Manager works on any modern browser:
+      <ul style="list-style:none;padding-left:0;margin-top:0.6rem">
+        <li style="padding-left:1.2rem;position:relative;margin-bottom:0.3rem"><span style="position:absolute;left:0;top:0.6rem;width:6px;height:6px;border-radius:50%;background:var(--cyan);display:block"></span><strong>Mobile:</strong> iOS Safari 14+, Android Chrome, Brave, Firefox</li>
+        <li style="padding-left:1.2rem;position:relative;margin-bottom:0.3rem"><span style="position:absolute;left:0;top:0.6rem;width:6px;height:6px;border-radius:50%;background:var(--cyan);display:block"></span><strong>Desktop:</strong> Chrome, Edge, Firefox, Safari, Brave</li>
+        <li style="padding-left:1.2rem;position:relative;margin-bottom:0.3rem"><span style="position:absolute;left:0;top:0.6rem;width:6px;height:6px;border-radius:50%;background:var(--cyan);display:block"></span><strong>Installable as a PWA</strong> on all of the above</li>
+      </ul>
+      Internet Explorer is not supported. Mobile is the recommended interface for grow-room logging.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary class="faq-q">How accurate is the harvest yield estimate?</summary>
+    <div class="faq-a">
+      Harvest estimates are derived from your logged plant height, age, growth stage, environment readings (VPD, light hours, CO&#8322;), and historical yields per strain. <strong>Accuracy improves over time</strong> as you log more harvests &mdash; the system learns your specific genetics and growing conditions. Treat early estimates as rough guidance, not guarantees. Final yields depend on many factors beyond the model: pheno selection, dry-back schedule, training, IPM events, and post-harvest curing.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary class="faq-q">Can I print plant tags for the grow room?</summary>
+    <div class="faq-a">
+      Yes. Three options:
+      <ul style="list-style:none;padding-left:0;margin-top:0.6rem">
+        <li style="padding-left:1.2rem;position:relative;margin-bottom:0.3rem"><span style="position:absolute;left:0;top:0.6rem;width:6px;height:6px;border-radius:50%;background:var(--cyan);display:block"></span><strong>Single tag:</strong> Open any plant card &rarr; "More" dropdown &rarr; <strong>QR Tag</strong></li>
+        <li style="padding-left:1.2rem;position:relative;margin-bottom:0.3rem"><span style="position:absolute;left:0;top:0.6rem;width:6px;height:6px;border-radius:50%;background:var(--cyan);display:block"></span><strong>Batch:</strong> Gear menu &rarr; <strong>Tags &amp; Labels</strong> &rarr; Print Plant Tags / Clone Tags / Breeding Cross Tags</li>
+        <li style="padding-left:1.2rem;position:relative;margin-bottom:0.3rem"><span style="position:absolute;left:0;top:0.6rem;width:6px;height:6px;border-radius:50%;background:var(--cyan);display:block"></span><strong>Reports:</strong> Plant Report PDF includes a tag for hand-off or archiving</li>
+      </ul>
+      Each tag includes a scannable QR code that opens the plant directly in the app.
+    </div>
+  </details>
+
 </div>
 
 

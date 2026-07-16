@@ -3,7 +3,1175 @@ CHANGELOG — Tropical Roots Maui - Plant Manager
 https://github.com/magikh0e/PlantManager
 
 
-v2.10.1 — 2026-03-10
+v2.24.0 — 2026-07-14
+--------------------
+FEATURE: Plant Cost Breakdown & Archive Reasons
+
+  The Strain Comparison tool now breaks cost down by plant outcome. Every
+  expense is treated as direct (tagged to a specific plant) or shared
+  overhead (untagged); overhead is split equally across every plant grown.
+  Per strain you now see Cost (harvested plants), Lost (dead plants), Cost
+  per Plant, and a corrected Cost per Gram (harvested cost over yield).
+
+  The old Cost/Gram was miscomputed — it used total garden expense times
+  average harvest weight, which is a dollar figure, not a per-gram rate.
+  It is now a proper per-strain value.
+
+  Archiving a plant now prompts for a reason — Harvested, Retired, Died,
+  or Culled — stored as archiveReason. Died and Culled plants drive the
+  new "money lost" figure. Plants archived before this release (or via
+  batch archive) have no reason and are not counted as losses.
+
+  Documented in the Help Guide FAQ ("How are the plant costs in Strain
+  Comparison calculated?").
+
+FEATURE: Nutrient Mix Calculator — Dry Amendments (tbsp/gal)
+
+  Each product row now has a unit selector (ml/gal or tbsp/gal), so dry
+  amendments (Epsom salt, cal-mag powder, top-dress) can be mixed
+  alongside liquid nutrients. Results and saved presets carry the per-row
+  unit; older presets load as ml/gal.
+
+FEATURE: Medium Fill Calculator
+
+  New calculator that works out how much growing medium fills a bed, pot,
+  or tent footprint. Enter rectangular (bed/tent) or round (pot)
+  dimensions in feet, inches, or cm, with quantity and fill-level inputs.
+  Outputs total volume in cubic feet, gallons, and liters, plus how many
+  bags you need at 1.0 / 1.5 / 2.0 / 3.0 cu ft each. A "Build this mix in
+  the Soil Mix Calculator" button hands the volume straight over to the
+  Soil Mix Calculator. Available from the Dashboard, gear menu, and
+  Command Palette.
+
+FEATURE: Shareable Tool Links
+
+  Most of the app's tools (31) now have a Share button that hands out a deep
+  link (e.g. .../?tool=soilmix). Opening that URL jumps straight into the
+  tool. Uses the native share sheet on mobile and the clipboard on desktop;
+  the params are stripped after they fire so a reload doesn't re-open it.
+
+  Covered: every calculator (Soil Mix, Medium Fill, VPD, DLI, Nutrient Mix,
+  KNF, CO2, pH Chart, Light Map / PPFD, Power Cost, Unit Converter); the
+  growing tools (Strain Comparison, Plant Comparison, Harvest Forecast, Grow
+  Cycles, Grow Runs, Pre-Grow Checklist, Garden Stats, Terpene Profiles, Crop
+  Steering, Environmental Recipes, Water Quality Log, Spray Rotation,
+  Breeding Tracker, Pheno Hunt, Ferment Tracker, Seed Bank); and the
+  diagnostic tools (Deficiency Wizard, Pest Identifier, Visual Pest Guide,
+  Companion Planting Guide).
+
+  For VPD, DLI, Medium Fill, and KNF the link also carries your input values,
+  so you can share an actual worked calculation — e.g. .../?tool=vpd&t=82&rh=45
+  opens the VPD calc already showing that result, and
+  .../?tool=knf&vol=5&unit=gal&mode=drench opens the KNF dilutions for a
+  5-gallon soil drench. (Soil Mix and Nutrient Mix open without pre-fill;
+  the diagnostic tools are wizards / reference, so they open to the start.)
+
+POLISH: Calculator Labels & Soil Recipe
+
+  - Soil Mix Calculator: Base Mix and Aeration sections now labeled
+    "parts by volume" to match the Amendments header
+  - Soil Mix Calculator: added cubic feet (cu ft) as a volume unit for
+    growers who buy soil by the bag; base and aeration amounts now display
+    in the unit you select (previously always gallons)
+  - Soil Mix Calculator: Biochar added as a selectable base component
+    (high-CEC carbon; charge before use)
+  - Tropical Living Soil preset refined for the island climate: coco-based
+    rather than imported peat (better in a hot, wet climate and more
+    sustainable to land on Maui), with Biochar for high CEC (the
+    nutrient/water-holding peat would give, without the downsides), plus
+    dolomite for coco's Ca/Mg, gypsum, and slow-release rock phosphate
+  - DLI Calculator: selecting Sunlight now clears the wattage field (a
+    fixed-PPFD source) instead of leaving a stale value
+  - Added missing units: CropSteer "EC Runoff (mS/cm)", DLI "Wattage (W)"
+  - Feed Schedules: added Down To Earth Organic as a 5th built-in template
+    (All Purpose 4-6-2 -> Bud & Bloom 0-10-10 dry-amendment top-dress program)
+  - Feed Schedules: the organic schedules (Gaia Green, Down To Earth) now
+    finish on "water only" instead of a pre-harvest flush — flushing only
+    applies to mineral/salt nutrient lines (GH Flora, Fox Farm)
+
+POLISH: Demo Data Coverage
+
+  Filled out the demo fixture so every tool has sample data to explore:
+  a pheno hunt (an active Wedding Cake seed run with four scored
+  phenotypes), three terpene profiles (OG Kush, Granddaddy Purple, Blue
+  Dream) on cured harvests, a PPFD light map, a saved soil recipe, and
+  four KNF ferments (FPJ, LABS, FAA, WCA). Because ferments are stored in
+  settings rather than a top-level collection, Clear Demo Data now
+  surgically removes demo ferments while leaving any you started yourself
+  untouched.
+
+
+v2.23.4 — 2026-06-09
+--------------------
+SECURITY: QR Decoder & Export Hardening
+
+  The QR Lookup decoder now escapes the numeric-looking fields (seed
+  counts, germination %, cutting and success counts) parsed from a
+  scanned or pasted tag, closing the last unescaped output path in the
+  decoder. A crafted QR string can no longer inject markup on lookup.
+
+  Plaintext backup files now strip user-supplied secrets — the weather
+  and Google Vision API keys and the Firebase config — so a shared
+  backup cannot leak credentials. Encrypted backups retain them, since
+  the AES-256-GCM password already protects the file; restoring an
+  encrypted backup brings your keys back automatically.
+
+POLISH: Attribute-Escaping Consistency
+
+  Wrapped the remaining unescaped data-* attribute values (nutrient
+  product default amount, IPM treatment category) in the now quote-safe
+  escaper for defense-in-depth.
+
+SEO: Structured-Data Upgrade
+
+  Upgraded the homepage JSON-LD from WebApplication to
+  SoftwareApplication with featureList, screenshot, and softwareVersion,
+  and added a BreadcrumbList to the Help Guide.
+
+
+v2.23.3 — 2026-06-09
+--------------------
+SECURITY: Output-Encoding Hardening (XSS Defense-in-Depth)
+
+  Hardened the central HTML-escaping helper so it also encodes double
+  and single quotes. This closes attribute-context escape vectors where
+  user- or import-supplied text (strain names, breeders, nicknames,
+  notes, environment names, etc.) is rendered into HTML attribute
+  values. Element-text rendering is unchanged.
+
+  Also wrapped every stored-photo image source in the escaper, so a
+  crafted photo field inside an imported backup can no longer break out
+  of the src attribute. In-app photos (canvas re-encoded data URLs) are
+  unaffected.
+
+  Maintenance release: no feature or data-format changes; existing data
+  and backups render identically.
+
+
+v2.23.2 — 2026-05-11
+--------------------
+FEATURE: Web Share Target — Receive Shared Photos from Android
+
+  The manifest now declares a share_target endpoint so Plant Manager
+  appears in the Android system share sheet for any image. Snap a photo
+  in the Camera app, hit Share, pick Plant Manager, and the photo lands
+  pre-attached in the Add Journal Photo modal — ready for plant
+  selection, growth-stage tagging, and notes. The service worker
+  intercepts the multipart POST, stashes the file in a dedicated
+  trm-share-target cache under /_share/photo (with the original
+  filename in an X-Filename header), then 303-redirects to a GET so
+  the page can load and consume the stash on init.
+    - New Journal.openAddModalWithFile(file) external entry point
+      reused by both share-target and the existing flow
+    - The trm-share-target cache survives the activate-purge so a
+      freshly-shared photo isn't deleted before consumption
+    - Cache entries are deleted after consumption so a normal reload
+      doesn't re-fire the import
+
+FEATURE: Tab-Nav Badge Counts
+
+  Numeric pill badges now appear on tab-group buttons when there's
+  something needing attention — visible on every tab, no need to open
+  each one to check:
+    - Care: count of overdue + due-today tasks (red, amber if >5)
+    - Plants: count of unresolved IPM issues (red)
+    - Insights: count of environment alerts vs. configured thresholds
+      (amber)
+  Badges hide when count is zero. Updates on every Store change via
+  the existing Store.subscribe loop. Display "99+" when count exceeds
+  99 to avoid layout shift.
+
+FEATURE: Sticky Toolbar Headers on Long Tabs
+
+  The .toolbar bar (Add buttons + filter selects) is now position:sticky
+  with top calculated from the fixed header + tab nav heights. Filter
+  re-selection and quick-add buttons stay reachable while scrolling
+  through 200+ photos / 50+ plants. Subtle bottom border and
+  background match the panel; print stylesheet reverts to static so
+  reports aren't affected.
+
+FEATURE: Drag-and-Drop + Clipboard Paste for Photo Uploads
+
+  The Add Journal Photo modal preview tile now accepts:
+    - Drag-and-drop from any source (Files app, Photos, browser tabs)
+      with cyan dashed outline feedback during drag-over
+    - Clipboard paste via Ctrl+V — perfect for screenshots taken with
+      Win+Shift+S / Cmd+Shift+4
+  Both paths flow through the same Journal._processFile(file) pipeline
+  as the file picker, so EXIF date extraction, orientation correction,
+  and resize all apply identically. Paste listener auto-cleans-up
+  when the modal DOM goes away.
+
+FEATURE: EXIF Orientation Correction
+
+  Phone-camera portraits no longer end up sideways after upload.
+  New EXIF.readOrientation(file, cb) reads the JPEG's Orientation
+  tag (0x0112). U.resizeImage now honors orientations 1-8, swapping
+  width/height for orientations 5-8 and applying the appropriate
+  canvas transform (translate/scale/rotate per the standard EXIF
+  matrix) before re-encoding. Especially relevant for Android
+  cameras that store landscape pixel data with an Orientation=6
+  rotation hint.
+
+POLISH: SW Update Notification — User-Controlled Refresh
+
+  When a new service worker is installed and waiting, the page no
+  longer silently force-reloads (which was eating mid-form work).
+  Instead a sticky "A new version is available" toast appears with a
+  Reload action button. The user clicks Reload when ready; the SW
+  receives SKIP_WAITING and the existing controllerchange listener
+  performs the reload after the new SW takes over.
+    - Toast.show now supports duration:0 for sticky toasts that
+      only dismiss on click
+    - Catches three cases: page loaded with reg.waiting already
+      present, updatefound while page is open, and post-skipWaiting
+      controllerchange
+
+POLISH: Smart Install Prompt Gating
+
+  InstallPrompt._showOneTimeNudge no longer fires the install toast
+  the first time Chrome surfaces beforeinstallprompt — that's often
+  before the user has any reason to want the app installed. New
+  gating: defer until the user has 3+ plants OR 5+ feedings
+  (engagement signals that say "this person is invested"). Subscribes
+  to Store changes to re-evaluate after every save. Falls back to a
+  90-second session-time timer so a casual user still sees the
+  offer eventually.
+
+POLISH: Service Worker — Single Fetch Listener
+
+  Consolidated the share-target POST handler and the existing fetch
+  strategy into one fetch event listener (avoids double-respondWith
+  errors). Cache version bumped to 2.23.2.
+
+
+v2.23.1 — 2026-05-11
+--------------------
+FEATURE: Web Share API — Native Share from Snapshot + Reports
+
+  navigator.share is now wired into three places that previously
+  forced a "Copy to clipboard then paste somewhere else" workflow:
+    - Daily Snapshot modal — new "Share..." button (visible only
+      on browsers that support navigator.share) shares the snapshot
+      text via the OS share sheet
+    - Plant Report / Garden Report popup — new Share button in the
+      top-right that wraps the rendered HTML as a .html File and
+      calls navigator.share with files; falls back to text-share
+      if files aren't accepted; auto-hides on browsers without
+      navigator.share
+    - Grow Journal Export popup — same treatment as Plant Report
+  Backed by a new Share helper module (window.Share) that wraps
+  navigator.share with text() and files() helpers and graceful
+  fallback (returns false instead of throwing on AbortError).
+
+FEATURE: Manifest file_handlers + launch_handler
+
+  The installed PWA now registers as a handler for application/json
+  files. On Android (and desktop Chromium >= 102), opening a Plant
+  Manager .json backup from the Files app launches the installed
+  app with the file pre-loaded. The new launch_handler entry uses
+  client_mode "navigate-existing" so a new file open reuses the
+  running window instead of spawning a duplicate.
+    - New ?action=import URL route consumes window.launchQueue
+      (Chromium >= 102) and pipes the file straight into
+      DataIO.handleImport(file) — no manual file-picker step
+    - Older Chromium without launchQueue falls back to firing the
+      import file picker so the user can re-pick
+
+FEATURE: Offline Indicator Chip in Header
+
+  Small amber pill that appears in the header when navigator.onLine
+  is false. Includes inline SVG WiFi-off glyph. Tooltip explains
+  that edits are still saved locally and will sync when reconnected.
+  New Offline module listens to online/offline events and toasts a
+  brief confirmation in both directions ("Offline — your edits are
+  saved locally" / "Back online"). Suppresses the initial-load
+  toast so users aren't pinged on every page load if they happen
+  to be offline at boot.
+
+FEATURE: Haptic Feedback on Mobile
+
+  navigator.vibrate is now called on:
+    - Toast Undo button press (10ms) — confirms the undo lands
+      before the toast fades
+    - Task completion (15ms) — physical "tick" on each completed
+      task so the action feels deliberate
+  No-op on desktop / when blocked by the OS; wrapped in try/catch
+  so a missing vibrate API can't break the parent action.
+
+POLISH: SW Network Timeout — No More Hangs on Captive Wi-Fi
+
+  The network-first shell fetch in service-worker.js is now wrapped
+  in a Promise.race against a 3-second NET_TIMEOUT_MS. Slow or
+  captive networks no longer hang the page indefinitely; after the
+  timeout the SW falls back to whatever's in the cache, then to
+  '/' as a last resort. Also added /PlantManagerHelp.html,
+  /plant-manager-vs-grow-with-jane.html, /privacy-policy.html, and
+  /CHANGELOG.txt to PRECACHE so first offline visit to any of them
+  works.
+
+POLISH: Toast Sticky Mode
+
+  Toast.show now treats opts.duration <= 0 as "stay visible until
+  the user clicks". Used by the v2.23.2 SW update notification, but
+  available for any toast that needs to wait for an explicit user
+  decision rather than a time-based dismiss.
+
+FIX: Cheat Sheet (?) Self-Toggle
+
+  Pressing ? to close the keyboard cheat sheet was being eaten by
+  the _modalOpen() guard, leaving the sheet stuck open until the
+  user used Esc / overlay click. The ? handler now runs BEFORE the
+  modal-open guard and toggles the sheet on/off via a
+  Shortcuts._cheatSheetOpen flag that's auto-cleared by a
+  MutationObserver on the modal overlay (so any close path resets
+  it correctly).
+
+FIX: Safari Download Cancel — Defer URL.revokeObjectURL
+
+  The two object-URL revoke calls in DataIO (plain export +
+  encrypted export) ran synchronously immediately after a.click(),
+  which caused Safari to occasionally cancel the download mid-save.
+  Both revokes now wrapped in setTimeout(..., 0) so the download
+  finishes before the URL is invalidated.
+
+
+v2.23.0 — 2026-05-10
+--------------------
+FEATURE: Install App (PWA prompt, properly captured)
+
+  New InstallPrompt module captures the deferred beforeinstallprompt
+  event on Android/Chrome browsers that fire it, and surfaces installation
+  via three paths:
+    - One-time toast nudge the first time the prompt is captured
+      ("Install Plant Manager for offline use and a home-screen icon"
+      with an Install action button) — gated by an installNudgeShown
+      flag so it only ever fires once
+    - Command Palette entry: Ctrl/Cmd-K → "Install App"
+    - Gear menu Quick Actions: "Install App"
+  Listens for the appinstalled event to clear the deferred prompt and
+  toast a success message. Detects existing PWA installs via
+  matchMedia('(display-mode: standalone)') and navigator.standalone so
+  the install paths no-op when the app is already installed.
+
+FEATURE: iOS Add-to-Home-Screen Hint
+
+  Safari on iOS doesn't fire beforeinstallprompt, so the installable-PWA
+  affordance has been invisible there. New one-time modal (~2.5s after
+  init on first iOS launch) walks the user through the three-step
+  Share → Add to Home Screen → Add flow with an inline SVG of the iOS
+  share glyph so the user can pattern-match the button. Reachable on
+  demand from the same Install App command/menu — calling
+  InstallPrompt.prompt() on iOS opens this hint rather than failing
+  silently. Gated by an iosInstallHintShown flag.
+
+FEATURE: Auto Theme (follows system prefers-color-scheme)
+
+  Theme module is now a tri-state: dark → light → auto → dark on each
+  toggle tap. Auto resolves to the user's OS theme via
+  matchMedia('(prefers-color-scheme: dark)') and subscribes to the
+  media query's change event, so the app re-themes in real time when
+  the OS flips at sunset/sunrise or via system shortcut.
+    - Small "A" badge appears on the theme toggle button when Auto is
+      active so users can tell which mode they're in
+    - aria-label cycles through three descriptive strings ("Theme:
+      Dark — tap for Light", etc.)
+    - <meta name="color-scheme"> tag is now updated dynamically (set
+      to "light dark" in auto mode) so form controls, scrollbars, and
+      native widgets follow the chosen mode
+    - Brief toast confirms when Auto mode is entered to avoid the
+      "why did my theme just change?" puzzle on the first OS theme flip
+
+FEATURE: About Dialog (tap the version chip)
+
+  The footer version number is now a real button instead of a static
+  link to /CHANGELOG.txt. Tapping it opens an About modal with:
+    - Version + "installed PWA" marker when running standalone
+    - "by Tropical Roots Maui" credit linking to the main site
+    - Quick-action grid: What's New, Full Changelog, GitHub repo,
+      Help Guide
+    - GPL-3.0-or-later license footer
+    - Explicit no-telemetry / no-tracker / no-ads statement
+  Also reachable via Command Palette → "About Plant Manager".
+
+FEATURE: Cloud Restore Shows the Diff Preview
+
+  CloudSync.restore() previously asked a bare yes/no via Modal.confirm
+  before destructively overwriting local data. It now wraps the
+  Firestore payload in a synthetic _trm_export envelope and reuses
+  DataIO._showImportPreview() — the same per-category record-count
+  diff that file imports use. Users see:
+    - Backup version + relative export time
+    - Per-category Now / Backup / Δ table
+    - "Backup has N fewer records than your current data" warning
+  Before the "Restore from cloud" button is clickable. _showImportPreview
+  was generalized with optional {title, intro, applyLabel} opts so file
+  import and cloud restore share one render path with appropriately
+  worded copy.
+
+FEATURE: Run Setup Wizard, Replayable
+
+  Setup Wizard is no longer one-shot. Two new entry points re-enable it
+  at any time by clearing the setupWizardDismissed flag and resetting
+  _step:
+    - Command Palette: Ctrl/Cmd-K → "Run Setup Wizard"
+    - Gear menu Quick Actions: "Run Setup Wizard"
+  Toast confirms when the wizard is restored to the dashboard.
+
+A11Y: Main Modal Gets Dialog Semantics + Focus Trap
+
+  The main #modal element previously had no ARIA role or focus
+  management — only the lightbox and command palette did. Now:
+    - role="dialog", aria-modal="true", aria-labelledby="modalTitle"
+    - Full Tab/Shift-Tab focus trap keeps focus inside the modal
+      while it's open
+    - On open, focus lands on the first input/select/textarea; if
+      there isn't one, the first footer button (or the close button)
+      is focused instead so Esc and Tab still work cleanly
+    - On close, focus is returned to whatever element opened the modal
+      so keyboard users aren't dumped at <body>
+
+POLISH: Modal.confirm Accepts okLabel / okClass
+
+  Modal.confirm() previously always rendered a red btn-danger "Delete"
+  button regardless of what the dialog was actually doing. New optional
+  fourth arg {okLabel, okClass} lets callers pick. Updated non-
+  destructive call sites:
+    - SetupWizard.loadDemoData() — "Load demo" / btn-primary
+    - Strains.handleDelete() — "Archive" / btn-primary
+    - CloudSync.restore() — moved entirely to the diff preview path
+  Existing destructive call sites (clone batch delete, rotation delete,
+  pheno hunt delete, etc.) are unchanged.
+
+PERF: Lazy-Loaded Photos in List Views
+
+  Eight list/grid img render sites now carry
+  loading="lazy" decoding="async":
+    - Plants tab plant cards (m.photo)
+    - Journal tab grid (.journal-img)
+    - Harvest tab harvest cards
+    - Strains tab strain cards
+    - Strain Reviews photos (.review-photo)
+    - Plant Timeline thumbs (.tl-thumb)
+    - Grow Journal Export photo grid
+    - Photo Compare thumb grid (.ptc-thumb)
+  Form previews (single visible image at a time) are not lazied. Net
+  effect: a journal with 200 entries no longer pays the full memory
+  cost on render — only the photos that scroll into view decode.
+
+
+v2.22.0
+--------------------
+FEATURE: Demo Data Lifecycle — _demo Flag + Clear Demo Data
+
+  Every record the SetupWizard demo fixture creates is now tagged with
+  _demo:true at creation time. The fixture uses a snapshot-before-build
+  pattern: keys of every collection are captured before the fixture runs,
+  then anything not in the snapshot is tagged _demo:true at the end. This
+  catches every record type without per-record edits, and is safe against
+  future additions (any new record a future fixture writes is auto-tagged
+  if it lands in a recognized collection).
+
+  New DemoData module:
+    - DemoData.hasDemo()  — boolean, true if any _demo record exists
+    - DemoData.countDemo() — per-category breakdown
+                              { mothers:6, harvests:5, feedings:40, ... }
+    - DemoData.clearDemoData() — shows a confirm modal with the per-
+                                 category breakdown, then surgically
+                                 removes only _demo records (user records
+                                 untouched)
+    - DemoData.isBannerDismissed() / dismissBanner()
+                              — banner-state helpers
+
+FEATURE: Dashboard Demo Banner
+
+  When demo data is detected and the user hasn't dismissed the banner, a
+  persistent banner appears at the top of the dashboard (between hero and
+  stats grid) with three actions:
+    - Clear demo data  — invokes the confirm modal + surgical removal
+    - + Add my plant   — opens Plants.openAddModal() directly
+    - Keep mixed       — sets demoBannerDismissed=true, hides the banner
+                         until demo data is cleared or re-loaded
+  The "Keep mixed" choice is reversible via the Command Palette entry
+  "Show Demo Banner" which clears the dismiss flag.
+
+FEATURE: Three Demo-Related Command Palette Entries
+
+  Ctrl/Cmd-K → "Clear Demo Data" surfaces the same confirm flow as the
+  banner button. "Show Demo Banner" restores the banner if it was
+  dismissed via "Keep mixed". "Load Demo Data" remains available for
+  loading the fixture (with the existing confirm-before-clobbering
+  prompt if real data is present).
+
+  Also added to the gear menu under Quick Actions as
+  "🧹 Clear Demo Data" for users who never see the banner.
+
+
+v2.21.4
+--------------------
+FEATURE: TWA / Android App Prep
+
+  Manifest hardened for Bubblewrap / Trusted Web Activity:
+    - Added id, lang, dir, categories, prefer_related_applications
+    - Split icons into separate "any" and "maskable" purposes
+    - Added display_override for graceful fallback
+    - Three home-screen shortcuts (Quick Water, Add Plant, Daily Snapshot)
+      that long-press on the launcher icon will expose
+  Manifest shortcuts wired to ?action=quickwater / ?action=addplant /
+  ?action=snapshot URL handlers in init() — they fire after the
+  dashboard renders and open the relevant modal.
+
+  Generated /.well-known/assetlinks.json template (with placeholder for
+  the SHA-256 fingerprint to fill in after generating the signing key)
+  for Digital Asset Links verification — required for the TWA to hide
+  Chrome's URL bar.
+
+  Added TWA-RUNBOOK.md walking through Bubblewrap install, build, key
+  signing, asset-links deploy, Play Console listing, and listing-copy
+  guidance for cannabis-related restricted-content review. Added
+  privacy-policy.html as a Play-Store-ready template that accurately
+  describes the app's "no server, no analytics, no ads" posture and
+  the optional integrations (Cloud Sync, Weather, Pest ID Vision API).
+
+
+v2.21.3
+--------------------
+FEATURE: Sharable Demo URL
+
+  Visiting the app with "?demo" in the URL (or "#demo" hash) now auto-
+  loads the demo fixture on init. Useful for sharing a preview link
+  without asking people to find the Setup Wizard or Command Palette.
+  The query param is stripped via history.replaceState immediately after
+  triggering, so a normal reload doesn't re-fire the loader. Existing-
+  data users still see the confirm dialog before anything is added.
+
+  New Command Palette entry: "Copy Demo Share Link" (Ctrl/Cmd-K → "demo
+  share") writes the canonical demo URL to the clipboard with a fallback
+  for browsers that don't support the async clipboard API.
+
+  Examples:
+    https://tracker.tropicalrootsmaui.com/?demo
+    https://tracker.tropicalrootsmaui.com/#demo
+
+
+v2.21.2
+--------------------
+FIX: HarvestEstimate._parseFloweringTime crashed on numeric input
+
+  The function assumed floweringTime was always a string ("8 weeks" or
+  "55-65 days") and called str.toLowerCase() unconditionally. Strain
+  catalog entries and the demo-data fixture both store floweringTime as
+  a Number, which caused "str.toLowerCase is not a function" the moment
+  any flowering plant existed and the dashboard tried to render its
+  HarvestForecast card. Loading demo data manifested it because the
+  fixture creates two flowering plants on first call.
+
+  _parseFloweringTime now (1) accepts numbers directly and treats them
+  as days, (2) coerces unknown types to string before regex matching,
+  and (3) handles bare-number strings ("65"). Also hardened
+  _findFloweringTime and HarvestForecast._strainYieldStats to coerce
+  m.strainName before .toLowerCase() in case a record is missing it.
+
+
+v2.21.1
+--------------------
+FIX: Service Worker Was Serving Stale index.html
+
+  The service worker had three issues that combined to lock users on a
+  stale shell forever: (1) CACHE_VERSION was stuck at 2.5.0, so old caches
+  never got purged on activate; (2) PRECACHE referenced /PlantManager.html
+  which doesn't exist (left over from a rename — the actual file is
+  /index.html); (3) the same-origin fetch handler was cache-first, so once
+  a stale index.html got cached, the user kept getting it forever and
+  never saw new deploys. This is why "Load Demo Data" appeared broken on
+  the live site — users were running the old, sparser fixture.
+
+  Switched HTML/text shell requests to network-first with cache fallback,
+  removed index.html from PRECACHE entirely, bumped CACHE_VERSION to
+  2.21.1 (which purges every old trm-pm-* cache via the activate handler),
+  and added a SKIP_WAITING + controllerchange-reload flow on the page so
+  fresh deploys take over on the next load instead of waiting for all
+  tabs to close.
+
+  Users currently on a stale shell may need ONE hard reload
+  (Ctrl/Cmd+Shift+R) to break out the first time. After that, future
+  deploys land automatically on the next normal reload.
+
+POLISH: Robust Demo Data Loader
+
+  loadDemoData() now wraps its fixture-build in try/catch with a Toast
+  error surface, so silent failures get reported instead of looking like
+  "the button does nothing." When the user already has plants, it
+  confirms before adding demo records on top. Also added a "Load Demo
+  Data" entry to the Command Palette (Ctrl/Cmd-K → "demo") so users with
+  a dismissed Setup Wizard or existing data can still trigger it.
+
+
+v2.21.0
+--------------------
+FEATURE: Photo Lightbox
+
+  Tapping a journal photo now opens a full-screen viewer instead of a small
+  modal. Click-to-zoom (2x), prev/next navigation via on-screen arrows or
+  Arrow keys, swipe gestures on touch devices, Esc to close, click on
+  backdrop to close. The gallery scope respects the current Journal filter,
+  so prev/next walks through whichever plant the user is reviewing. A delete
+  shortcut sits in the top-left and uses the toast-undo flow.
+
+FEATURE: EXIF Date Detection
+
+  Uploaded photos now have their EXIF DateTimeOriginal extracted (parsed
+  from the first 64KB before the canvas resize strips metadata). When
+  present, the journal entry's timestamp is set to the camera capture date
+  instead of the upload date — photos shot last Tuesday land on Tuesday in
+  the timeline. A small "✓ Using photo capture date: ..." chip confirms
+  detection during upload. Falls back to upload date if EXIF is missing.
+
+FEATURE: Backup Nudges
+
+  A passive 💾 indicator appears in the header when the last export is
+  stale: amber border + dot at 14+ days (or never exported), red at 30+
+  days. Hidden when backups are fresh or when the user has no data yet.
+  Click goes straight to Export Data. Threshold constants (WARN_DAYS,
+  CRIT_DAYS) live on BackupNudge for easy tuning.
+
+FEATURE: Import Preview / Diff
+
+  Before applying any backup (plain or decrypted), a preview modal shows
+  per-category record counts: current vs backup vs Δ across mothers, envs,
+  clones, tasks, feedings, journal photos, IPM logs, harvests, strains,
+  env readings, seeds, and health checks. Backup metadata (export date,
+  app version) is shown at the top with a version-mismatch warning when
+  applicable. A red "data-loss" warning appears when the backup contains
+  fewer total records than your current data. Confirm to apply, Cancel
+  to abort.
+
+FEATURE: Undo via Toast
+
+  Toast.show() now accepts an opts.undo callback. When present, the toast
+  stays visible for 6 seconds (was 3), shows an "Undo" action button,
+  and stays clickable until the action fires or the timer elapses.
+  Replaced confirm-modal-then-act pattern with immediate-act-then-toast
+  for: Plants.handleDelete (archive), Environments.handleDelete (archive),
+  Tasks delete in the edit modal, and Journal.handleDelete. Undo restores
+  the prior record snapshot, including activity-log entry.
+
+FEATURE: Keyboard Shortcut Layer
+
+  Beyond the existing Ctrl/Cmd-K and / for the Command Palette:
+    ?           cheat sheet modal listing every shortcut
+    n           context-aware "new" — opens the add-form for the current
+                tab (Plants → add mother, Feeding → log feeding, etc.)
+    g <letter>  Vim-style go-to (1.5s prefix window):
+                  g d → Dashboard
+                  g p → Plants
+                  g c → Tasks (Care group)
+                  g r → Journal (Records group)
+                  g i → Readings (Insights group)
+  Shortcuts skip when focused on input/textarea/select or when a modal
+  or palette is open.
+
+FEATURE: Demo Data
+
+  Setup Wizard now offers "🌿 Load demo data" alongside Start Fresh and
+  Import Backup. Hydrates 2 environments (Veg Tent 4x4, Flower Room),
+  3 mother plants (Blue Dream/Pele, OG Kush/Lehua, Sour Diesel/Mahina) at
+  varied stages and health, 1 clone batch, 3 tasks (overdue/today/future),
+  3 feedings, 1 harvest, 1 active IPM event, 3 strains. Enough data for
+  Analytics, Lineage Tree, and dashboard alerts to render meaningfully.
+
+FEATURE: Context Help Icons
+
+  New U.helpIcon(anchor, label) utility renders a small ? icon styled as
+  a circular badge that deep-links to the right anchor in
+  PlantManagerHelp.html. Wired into KNF Calculator, VPD Calculator, DLI
+  Calculator, Deficiency Wizard, Pheno Hunt, and Crop Steering modal
+  headers. Pattern is reusable — drop U.helpIcon(...) into any modal
+  title string.
+
+POLISH: Print Stylesheet Unification
+
+  Single @media print block that applies to every window.print() flow
+  (Plant Report, Garden Report, Grow Journal Export, Daily Snapshot, QR
+  tags). Hides nav, header, command palette, toasts, tip banner, quick-
+  actions, hero, settings; flattens cards (white bg, no shadows, no hover
+  transforms); forces all text to black; expands link URLs after each
+  external href; sensible page-breaks (cards/rows/headings stay together);
+  0.6in page margin. Theme-agnostic — looks the same regardless of dark
+  or light theme.
+
+POLISH: Accessibility Pass
+
+  Aria-labels on every icon-only button (header gear/weather/moon/cloud-
+  sync/theme/backup-nudge, modal-close). Skip-to-content link at the top
+  of body for keyboard users. role="banner"/"navigation"/"main" on the
+  three top-level landmarks. role="status" + aria-live="polite" on the
+  toast container so screen readers announce success/error states.
+  aria-haspopup + aria-expanded synced on the settings menu button when
+  it opens/closes. Visible :focus-visible outlines (2px cyan ring) on all
+  interactive elements with appropriate offsets per element type. Bumped
+  text-tertiary contrast from .35 → .50 in dark theme and .30 → .48 in
+  light theme — passes WCAG AA on small body copy. Full prefers-reduced-
+  motion: reduce media query disables hover-lift, scale-rotate stat-card
+  icons, fadeUp panel transitions, and the pulse animation.
+
+POLISH: WhatsNew Recovery
+
+  WhatsNew now exposes show() for manual replay (wired into the Command
+  Palette as "Show What's New") and no longer silently advances
+  lastSeenVersion when the current version has no notes — so missing
+  changelog entries don't eat future popups.
+
+
+v2.20.0
+--------------------
+FEATURE: Command Palette (Ctrl/Cmd-K or "/")
+
+  Fuzzy-search launcher covering 80+ commands across navigation, quick add,
+  calculators, growing tools, diagnostics, reports, tags, and settings. Open
+  from anywhere with Ctrl-K (Cmd-K on Mac) or "/" (when not focused on an
+  input). Also accessible from the new "🔍 Search Commands" entry at the top
+  of the gear menu. Type to filter — multi-word queries match across name,
+  keywords, and section. ↑/↓ arrows navigate, Enter activates, Esc closes.
+  Each result shows an icon, the command name, and the section it belongs to
+  (Navigate / Quick Add / Calculators / Growing / Diagnostics / Reports /
+  Tags / Settings). Defaults to a navigation-first view when the search box
+  is empty. Replaces hunting through nested settings sub-menus to find the
+  one tool you remember by half its name.
+
+FEATURE: Grouped Tab Navigation — 5 Top-Level Sections
+
+  The 13-tab horizontal nav has been consolidated into 5 top-level entries:
+  Dashboard (single) plus four dropdown groups —
+
+    • Plants  → Plants, Clones, Strains
+    • Care    → Tasks, Feeding, IPM
+    • Records → Journal, Harvest, Calendar
+    • Insights → Environs, Readings, Analytics
+
+  Click a group to reveal its sub-tabs in a dropdown menu. The parent group
+  button highlights cyan whenever any of its children is the active tab, so
+  the current section is always visible in the top bar. Removes the right-
+  edge horizontal-scroll fade that was hiding tabs on narrow viewports.
+  Outside-click and selecting a sub-tab both close the dropdown. The
+  underlying `data-tab` routing is unchanged, so any deep links or buttons
+  that reference `[data-tab=X]` still work.
+
+
+v2.19.2
+--------------------
+POLISH: Polynesian/Hawaiian Nickname Suggestions
+
+  The dice button (🎲) next to the Nickname field now picks from 66 Polynesian
+  and Hawaiian names instead of Star Wars characters, reinforcing the Kānehiwa
+  brand identity. Names are drawn from Hawaiian mythology (Pele, Lono, Kāne,
+  Kanaloa, Hiʻiaka, Haumea), aliʻi lineage (Kamehameha, Liliʻu, Kaʻahumanu,
+  Kaʻiulani, Piʻilani), common given names (Leilani, Makoa, Kainoa, Keanu,
+  Mahina, Noelani, Hoku), and Hawaiian nature words (Lehua, Pikake, Ohia,
+  Hala, Ulu). The picker still avoids names already in use by active plants.
+
+POLISH: Dashboard Re-Stacking — Action-First Layout
+
+  Reorganized the dashboard so action-required content surfaces above
+  promotional/discovery chrome. New order: Hero (compact) → Stats Grid →
+  Action Required (overdue tasks, env alerts, feeding alerts, IPM reapply,
+  low seed stock — only when present) → Inline cards (Harvest Forecast, Spray
+  Rotation, Garden Stats) → Quick Actions (collapsible groups) → Recent
+  Activity → Tip Banner. Previously the tip banner sat above the stats grid
+  and alerts were buried below the four Quick Actions sections, pushing
+  actionable items below the fold.
+
+POLISH: Dismissible Tip Banner
+
+  The 💡 tip banner now has an × close button that hides it permanently
+  (state persists in localStorage). When dismissed, a small "💡 Show tips"
+  link appears at the bottom of the dashboard so the feature remains
+  rediscoverable. Compact footer styling on the banner reduces visual weight
+  vs. its previous top-of-dashboard placement.
+
+
+v2.19.1
+--------------------
+FEATURE: Plant Nicknames & Auto-Numbering
+
+  Differentiate multiple plants of the same strain with optional nicknames and
+  automatic plant numbering. When you add a second plant with the same strain name,
+  both are auto-assigned #1 and #2. Set a custom nickname (e.g. "Mom A", "North Tent")
+  that appears across all dropdowns, feeding logs, tasks, charts, calendar, notifications,
+  and the FleetView table. Display format: "Blue Dream — Yoda" (with nickname) or
+  "Blue Dream #2" (auto-number). Plant cards show nickname/number below strain name.
+  FleetView gains a sortable Label column. Search includes nicknames.
+
+FEATURE: Star Wars Name Suggestions
+
+  Click the dice button (🎲) next to the Nickname field when adding or editing a plant
+  to randomly pick from 66 Star Wars character names (Luke, Leia, Yoda, Grogu, Ahsoka,
+  Mando, etc.). The picker avoids names already in use by active plants. Click again
+  for a different suggestion, or type any custom name you prefer.
+
+POLISH: Plant Card UI Refinement
+
+  Plant cards now display a stage-themed accent stripe across the top, color-coded
+  by growth stage: lime/green for seedling and vegetative, gold/orange for
+  flowering, violet for mature, muted gray for declining. Cards lift 3px and gain
+  a subtle cyan glow shadow on hover. Stripe brightens to full opacity on hover.
+
+POLISH: Action Button Hierarchy
+
+  The 19-button action grid on each plant card has been condensed to 5 primary
+  actions (+ Feed, Edit, + Photo, + Task, Health) with the remaining 14 actions
+  collapsed into a "More" dropdown menu (Clone, IPM Log, Identify Issue, Harvest,
+  QR Tag, Timeline, Dry-Back, Lineage, Plant Report, Compare, Trichome, Training
+  Log, Breeding, Archive). The + Feed button is now styled as the primary
+  cyan-gradient action since feeding is the most common task. Archive is the last
+  item in the More menu, separated and tinted red. Click outside the menu to
+  close it.
+
+POLISH: Inline Feed CTA on Dashboard
+
+  Feeding Alerts on the dashboard now render as compact rows with an inline
+  "+ Feed" button per plant, opening the feeding log directly without needing
+  to navigate to the plant card first.
+
+FIX: Undefined Health Badge
+
+  Plants missing a healthStatus field no longer render a literal
+  "undefined" badge. The badge is now suppressed entirely when the field is
+  empty.
+
+POLISH: Custom Scrollbar Theming
+
+  Page scrollbars now match the dark theme — thin cyan-tinted thumbs that
+  intensify on hover, transparent track. Firefox uses scrollbar-color, Chromium
+  uses ::-webkit-scrollbar pseudo-elements. Light theme gets a darker cyan
+  variant.
+
+POLISH: SVG Dashboard Stat Icons
+
+  The 10 emoji icons on dashboard stat cards (Mother Plants, Flowering, Active
+  Clones, Environments, Tasks Due, Health Overview, Active Issues, Env Alerts,
+  Strains, Total Yield) have been replaced with custom inline SVG icons that
+  inherit the card's accent color (cyan, gold, green, orange, pink). Icons
+  scale and slightly rotate on hover for tactile feedback.
+
+POLISH: Stat-Card Hover Lift
+
+  Stat cards now lift 3px on hover with a soft cyan-tinted glow shadow,
+  matching the plant card treatment.
+
+POLISH: Color-Coded Plant Tags
+
+  The pill-tags on plant cards (strain type, breeder, source) now have distinct
+  visual treatments: strain type is colored by indica/sativa/hybrid/ruderalis
+  (violet/orange/green/tan), breeder is cyan italic, source is gold uppercase.
+  Easier to scan a card at a glance.
+
+POLISH: Compact Quick Add Row
+
+  Dashboard Quick Add buttons are now 25% shorter and use a tighter font weight
+  to reduce visual weight when 9-10 buttons stack horizontally. Buttons lift on
+  hover.
+
+POLISH: Tab Bar Refinement
+
+  The 13-tab navigation bar has been tightened (smaller font, less padding,
+  62px min-width) so all tabs fit comfortably at 1280px+ viewports. The right-
+  edge fade mask now only appears when the bar is actually scrollable (narrow
+  viewports). Previously the fade always cut into the rightmost "Readings" tab
+  even on wide screens.
+
+POLISH: Collapsible Hero Banner
+
+  The Kānehiwa hero illustration now defaults to a 280px-tall compact mode
+  (focal-zoomed on the upper portion of the artwork) instead of consuming the
+  full above-the-fold area. A small expand/collapse button in the corner toggles
+  between compact and full views, with the choice remembered per-user via the
+  heroExpanded setting. The existing show/hide toggle in the header still works.
+
+SEO: Static H1, noscript Fallback, Image Performance Hints
+
+  Three on-page SEO refinements: (1) the header title is now a real <h1> element
+  instead of a <span>, giving non-JS-executing crawlers (Bing, social scrapers,
+  archive.org) a real document heading. Visual styling unchanged. (2) Added a
+  <noscript> block at the top of <body> with a brief description and links to
+  the marketing site and help guide for visitors with JavaScript disabled.
+  (3) The Kānehiwa hero image and the header logo now carry fetchpriority="high",
+  decoding="async", and loading="eager" — improving Largest Contentful Paint
+  (LCP) timing and Core Web Vitals scores.
+
+
+v2.18.1
+--------------------
+FEATURE: Encrypted Exports (Optional)
+
+  Optionally encrypt data backups with a password using AES-256-GCM encryption.
+  Key derivation uses PBKDF2 with SHA-256 and 600,000 iterations for brute-force
+  resistance. Toggle encryption on/off via gear menu → Export Encryption. When
+  enabled, Export Data prompts for a password with confirmation and strength
+  indicator, then exports a .encrypted.json file. On import, encrypted files are
+  auto-detected by their TRM_ENC_V1 header and prompt for the decryption password.
+  Unencrypted backups are always accepted regardless of the setting. Password
+  recovery is not possible — a warning is shown during export.
+
+FEATURE: Nutrient Availability / pH Chart Reference
+
+  Interactive visual chart showing nutrient availability across the pH spectrum
+  (3.0–9.0). 14 nutrients (N, P, K, Ca, Mg, S, Fe, Mn, B, Cu, Zn, Mo, Cl, Ni)
+  displayed as horizontal SVG bars with optimal (green) and reduced (gold) ranges.
+  Draggable pH slider highlights current position with cyan indicator line.
+  Toggle between Soil/Organic and Hydro/Coco modes for different availability
+  ranges. Auto-reads latest logged pH from environment readings or feeding data.
+  Status summary shows locked out, reduced, and available nutrient counts.
+
+FEATURE: CO₂ Calculator & Tracking
+
+  Two-part feature: (1) CO₂ calculator for sealed rooms — enter room dimensions
+  (L×W×H), current CO₂, target PPM, and injection rate (CFH) to calculate CO₂
+  needed (cu ft) and injection time (minutes). Growth stage presets: Ambient
+  (400), Veg (800), Early Flower (1200), Peak Flower (1500), Late Flower (1000).
+  Save defaults for reuse. (2) CO₂ PPM field added to environment readings —
+  log CO₂ levels alongside temperature, humidity, pH. Displayed on reading cards,
+  sparkline in trends table, and CO₂ trend chart in the calculator modal.
+
+FEATURE: Batch Feeding / Bulk Operations
+
+  Log one feeding event for multiple plants at once. Opens a modal with an
+  environment filter dropdown, selectable plant checkbox grid (strain, stage,
+  environment shown per card), Select All / Deselect buttons with count badge,
+  and full feeding form (nutrient, amount, unit, water volume, pH in/out,
+  EC in/out, notes). On submit, creates individual feeding entries for each
+  selected plant. Accessible from Feeding tab toolbar ("Batch Feed" button),
+  gear menu (Growing group), and dashboard quick actions.
+
+
+v2.17.0
+--------------------
+FEATURE: Terpene & Cannabinoid Profile Logger
+
+  Log THC%, CBD%, and 10 terpene percentages (Myrcene, Limonene, Caryophyllene,
+  Linalool, Pinene, Humulene, Terpinolene, Ocimene, Bisabolol, Eucalyptol) per
+  harvest. Interactive 10-axis SVG radar chart visualization, effect tag selection
+  (Relaxing, Energizing, Creative, etc.), aroma notes, and quality score. Compare
+  2-3 profiles with overlaid radar charts. Linked to harvest records.
+
+FEATURE: Power Cost Calculator
+
+  Electricity cost estimator from grow equipment specs. Add equipment rows with
+  name, wattage, hours/day, and quantity. Live calculation of daily kWh, daily
+  cost, monthly cost, and per-cycle cost at your electricity rate. Save equipment
+  profiles for reuse. Default rate $0.12/kWh, configurable.
+
+FEATURE: Crop Steering Tracker
+
+  Track generative vs vegetative crop steering strategies per plant. Log dry-back
+  percentage, irrigation count, EC runoff, substrate moisture, and notes per
+  session. Trend chart with dual-axis (dry-back % and EC) and phase region
+  shading. Phase reference cards with target ranges for each strategy.
+
+FEATURE: Environmental Recipes / Grow Profiles
+
+  Reusable environment target profiles per growth stage. 4 built-in templates
+  (Seedling, Veg, Flower, Late Flower) with temp, humidity, VPD, CO2, and light
+  hour targets. Create custom recipes. Apply a recipe to any environment to see
+  live actual-vs-target comparison with green/yellow/red status indicators.
+
+FEATURE: Grow Journal Export
+
+  Generate a shareable standalone HTML grow diary for any plant. Aggregates strain
+  info, chronological photo gallery, feeding log, IPM events, harvest results, and
+  terpene profiles into a printable document. Opens in a new window ready for
+  print or save-as-HTML.
+
+FEATURE: Strain Comparison Tool
+
+  Side-by-side comparison of 2-3 strains using aggregated data from harvests,
+  reviews, and expenses. Metrics include total harvests, average dry weight,
+  quality score, flowering days, cost per gram, and review scores. Best-value
+  highlighting and bar chart visualization.
+
+FEATURE: Photo Timeline Comparison
+
+  Select two photos of the same plant to view side-by-side with date labels and
+  a days-apart indicator. Filter by plant, click thumbnails to select, and
+  compare visual progress over time.
+
+FEATURE: KNF Ferment Tracker
+
+  Track active KNF ferments (FPJ, FFJ, FAA, OHN, LABS, IMO, WCA, BRV, etc.)
+  with start date, ingredients, expected duration, and notes. Live status badges:
+  gold (fermenting), green (ready), orange (overdue). Mark used or delete when
+  finished.
+
+FEATURE: Companion Planting Guide
+
+  Static reference guide for 15 companion plants organized into 4 categories:
+  Pest Repellent, Pollinator, Soil Builder, and Trap Crop. Each entry includes
+  emoji, benefits, pests repelled, and growing tips. Filterable card grid with
+  category tabs.
+
+
+v2.16.0
+--------------------
+FEATURE: Lifetime Garden Stats
+
+  Persistent plant counter that tracks every plant ever managed — survives
+  archiving and deletion. Dashboard card shows total plants managed, harvests,
+  total yield, and days growing at a glance. Clickable card opens detailed
+  stats modal with 8 metrics (active, archived, clone batches, harvests, yield,
+  strains, days growing) plus a milestone ladder with achievement badges:
+  Seedling (10), Gardener (25), Cultivator (50), Expert (100), Veteran (250),
+  Elite (500), Master Grower (1000). Progress bar tracks advancement to next
+  milestone. Counter auto-initializes from existing data on first load.
+
+
+v2.15.0
+--------------------
+FEATURE: Unit Converter
+
+  Quick conversion tool for 7 cannabis-growing unit categories: Weight (g, oz,
+  lb, kg), Volume (mL, L, gal, fl oz, tsp, tbsp, cup), Temperature (°F, °C),
+  Length (cm, in, ft, m), Area (ft², m²), EC/PPM (EC, PPM-500, PPM-700), and
+  Light (lux, foot-candles, PPFD). Live bidirectional conversion with swap
+  button. Category tabs for quick switching. Accessible from Calculators menu
+  and dashboard quick actions.
+
+FEATURE: Pre-Grow Checklist
+
+  Template-based setup checklists for preparing a new grow. Four built-in
+  templates: Indoor Photoperiod (23 items), Indoor Autoflower (16 items),
+  Outdoor (16 items), and Hydro/DWC (19 items). Items organized by category
+  (Equipment, Environment, Medium, Nutrients, Seeds & Genetics, Safety).
+  Progress bar tracks completion percentage. Add custom items to any checklist.
+  Save multiple checklists and reuse them. Accessible from Growing menu and
+  dashboard quick actions.
+
+
+v2.14.0
+--------------------
+FEATURE: IPM Spray Rotation Planner
+
+  Proactive pest prevention calendar. Create named rotations with products from
+  the IPM catalog, each with configurable day intervals. 4-week calendar view
+  shows color-coded spray schedule by product category (insecticide, miticide,
+  fungicide, biological, organic, KNF). Tracks next due spray with overdue
+  warnings. Dashboard widget shows upcoming spray at a glance. Cross-references
+  existing IPM logs for compliance.
+
+FEATURE: Light Map / PPFD Grid
+
+  Record PPFD readings at grid points across the canopy (3x3, 4x4, or 5x5).
+  Visualize as SVG color-coded heat map (purple low → red high). Stats banner
+  shows avg PPFD, min, max, and uniformity % (min/avg). Per-environment history
+  for comparing readings over time. Includes color scale legend.
+
+FEATURE: Water Source Quality Log
+
+  Track source water parameters over time: pH, EC, TDS, alkalinity, chlorine,
+  and temperature. SVG trend chart with dual pH/EC series and ideal pH zone
+  overlay (5.8-6.5). Stats banner with averages and trend direction arrows.
+  Supports Tap, Filtered, Rain, RO, and Well water sources.
+
+FEATURE: Genetic Lineage Tree (Enhanced Visual)
+
+  Enhanced SVG family tree showing parent-clone relationships merged with
+  breeding data. Full Genetics mode adds: strain genetics subtitle text,
+  generation-colored node borders, breeding cross badges, father-plant
+  reference arrows (dashed gold), and seed harvest count badges. Toggle
+  between Simple (classic) and Full Genetics view. Legend shows node types.
+
+
+v2.13.0
+--------------------
+FEATURE: Cure Tracker
+
+  Per-jar curing log accessible from harvest cards. Track humidity %, weight (g),
+  burp schedule, duration, and terpene development notes. Color-coded range
+  indicators show ideal targets (55-65% RH, 10-15% weight loss). Summary stats
+  banner shows days curing, total weight loss, avg humidity, and burp count.
+  Auto-sets cure status to "curing" on first log entry.
+
+FEATURE: Nutrient Mix Calculator
+
+  Compute exact ml per product for any water volume and target EC/PPM. Select
+  from saved nutrient products or built-in catalog. Results table shows ml
+  needed per product with total EC. Save and load preset mixes. Warning when
+  total EC exceeds target.
+
+FEATURE: Harvest Forecast / Yield Predictor
+
+  Predicts harvest dates and estimated yield for all flowering plants using
+  HarvestEstimate engine + historical strain data. Dashboard widget shows
+  next 3 upcoming harvests. Full modal with progress bars, yield ranges,
+  and confidence badges (high/medium/low based on data points). Added to
+  Gear Menu (Growing) and Dashboard Quick Actions.
+
+
+v2.12.0
+--------------------
+FEATURE: Enhanced Plant Timeline / Grow Diary
+
+  Transformed the basic text timeline into a rich social-feed-style grow diary
+  per plant with date grouping, filter chips, inline photos, data pills, and
+  a summary stats banner.
+
+  Rich Event Cards
+    - Feedings: nutrient name, amount, pH in/out, EC in/out pills
+    - Photos: inline 48px thumbnails, growth stage badge, caption
+    - IPM: pest name, severity badge (colored), treatment notes
+    - Harvests: dry/wet weight pills, quality star rating
+    - Health checks: colored score badge (Critical→Excellent)
+    - Training: technique title, position pill
+    - Trichome: clear/cloudy/amber percentage pills
+    - Clones: count, rooting medium, success count
+    - Breeding logs: cross type, strain name, seed count
+    - Expenses: category, $amount (blue pill)
+
+  Filter & Stats
+    - Colored filter chip buttons per event type (toggle on/off)
+    - Summary stats: total events, first event date, timeline span, most active type
+
+  Date Grouping
+    - Events grouped by day with "Today" / "Yesterday" / date headers
+    - Vertical timeline line continues through day groups
+
+  Now gathers 12 event types (added breeding logs + expenses)
+
+
+v2.11.0
+--------------------
+FEATURE: Pheno Hunt Logger
+
+  New module for evaluating phenotypes from seed runs. Create a pheno hunt
+  for a strain, add individual phenotypes, and score them across 8 traits
+  (Vigor, Structure, Aroma/Terpenes, Resin Production, Yield Potential,
+  Disease Resistance, Root Development, Flower Density) on a 1-5 scale.
+
+  Phenotype Management
+    - Add/edit/remove phenotypes within a hunt
+    - Classify each as Keeper, Maybe, Eliminate, or Pending
+    - Optional photo and link to existing mother plant record
+    - Notes per phenotype
+
+  Multi-Round Scoring
+    - Score all 8 traits per round with clickable 1-5 buttons
+    - Track week number and date per round
+    - View score history with round averages
+    - Latest scores displayed as visual pip bars on phenotype cards
+
+  Comparison & Ranking
+    - Side-by-side trait comparison table (best values highlighted)
+    - Overall ranking by average score
+    - SVG radar chart overlay comparing all scored phenotypes
+    - Ranked display with gold/silver/bronze indicators
+
+  Integration
+    - Gear menu: added to Growing group
+    - Dashboard quick actions: added to Growing & Tracking section
+    - Activity logging for all hunt/phenotype/scoring actions
+    - New Store collection: phenoHunts with migration guard
+
+
+v2.10.1
 --------------------
 ENHANCEMENT: Strain Name Autocomplete
 
@@ -16,7 +1184,7 @@ ENHANCEMENT: Strain Name Autocomplete
   Strain, Setup Wizard, Seed Bank, and Breeding Tracker.
 
 
-v2.10.0 — 2026-03-10
+v2.10.0
 --------------------
 FEATURE: Guided Setup Wizard
 
@@ -29,7 +1197,7 @@ FEATURE: Guided Setup Wizard
   Add Plant → Success tips.
 
 
-v2.9.1 — 2026-03-10
+v2.9.1
 --------------------
 ENHANCEMENT: Collapsible Gear Menu Groups
 
@@ -44,7 +1212,7 @@ ENHANCEMENT: Collapsible Gear Menu Groups
   Calculators & Diagnostics (7), Reports & Layout (3).
 
 
-v2.9.0 — 2026-03-10
+v2.9.0
 --------------------
 FEATURE: Cost Efficiency Analytics + Analytics Export Report
 
@@ -77,7 +1245,7 @@ FEATURE: Cost Efficiency Analytics + Analytics Export Report
 
 ---
 
-v2.8.1 — 2026-03-10
+v2.8.1
 --------------------
 ENHANCEMENT: Cannabis Generation Labels + Clone QR Tags
 
@@ -97,7 +1265,7 @@ ENHANCEMENT: Cannabis Generation Labels + Clone QR Tags
 
 ---
 
-v2.8.0 — 2026-03-10
+v2.8.0
 --------------------
 FEATURE: QR Offspring Tracking — Generation Tags, Breeding Cross Tags, Seed Labels, QR Lookup
 
@@ -136,7 +1304,7 @@ FEATURE: QR Offspring Tracking — Generation Tags, Breeding Cross Tags, Seed La
 
 ---
 
-v2.7.0 — 2026-03-10
+v2.7.0
 --------------------
 FEATURE: Analytics Expansion — 10 New Cross-Reference Charts (20 → 30 total)
 
@@ -194,237 +1362,325 @@ FEATURE: Analytics Expansion — 10 New Cross-Reference Charts (20 → 30 total)
 
 ---
 
-v2.6.0 — 2026-03-10
+v2.6.0
 --------------------
-FEATURE: High Impact Enhancements — Feeding Trends, IPM Efficacy, SeedBank Intelligence, DryBack Saturation Tracking
+FEATURE: Feeding — Trend Analysis & EC/PPM Visualization
 
-  Feeding — Trend Analysis & EC/PPM Visualization
-    - EC/PPM Drift chart on Analytics: plots EC In vs EC Out over time (cyan/gold lines)
-    - Feeding Frequency chart on Analytics: feedings per week bar chart, color-coded by avg pH drift
-    - Feeding stats bar: This Month count, Avg pH Drift, Avg EC In, Last Feeding date
-    - Dashboard alert: warns when any plant hasn't been fed in >7 days
+  - EC/PPM Drift chart on Analytics: plots EC In vs EC Out over time
+    (cyan/gold lines)
+  - Feeding Frequency chart on Analytics: feedings-per-week bar chart,
+    color-coded by avg pH drift
+  - Feeding stats bar: This Month count, Avg pH Drift, Avg EC In,
+    Last Feeding date
+  - Dashboard alert: warns when any plant hasn't been fed in >7 days
 
-  IPM — Treatment Efficacy & Reapplication Reminders
-    - "Reapply in X days" optional field on IPM form with overdue/countdown status on active cards
-    - Resistance rotation warning: alerts if same treatment used 3+ times for a pest
-    - Resolved cards show "Resolved in X days" with calculated resolution time
-    - Treatment Efficacy table on Analytics: success rate %, avg days to resolve, color-coded
-    - Dashboard alert: warns about overdue IPM reapplications
+FEATURE: IPM — Treatment Efficacy & Reapplication Reminders
 
-  SeedBank — Inventory Alerts & Germination Intelligence
-    - Low stock warnings: ⚠️ badge + orange border on seeds with ≤3 remaining
-    - Seed age tracking: displays months since purchase, warns if >2 years old
-    - Germination stats summary card: total seeds, avg germ rate, low stock count
-    - "Plant Next" suggestion: scores strains by seed count + germination rate
-    - Sort controls: Name, Count, Age, Germination Rate
-    - Dashboard alert: warns about low seed stock
+  - "Reapply in X days" optional field on the IPM form with
+    overdue/countdown status on active cards
+  - Resistance rotation warning: alerts if the same treatment is used
+    3+ times for a pest
+  - Resolved cards show "Resolved in X days" with calculated
+    resolution time
+  - Treatment Efficacy table on Analytics: success rate %, avg days
+    to resolve, color-coded
+  - Dashboard alert: warns about overdue IPM reapplications
 
-  DryBack — Saturation Tracking & Watering Recommendations
-    - Per-plant pot configuration: saturated weight and dry weight setup
-    - Dry-back percentage calculation from current weight vs pot config
-    - Current status display: large % indicator with color-coded dry-back level
-    - Enhanced chart with reference lines (saturated/dry) and optimal zone overlay
-    - History table shows dry-back % column when pot is configured
-    - "Time to Water" estimate: calculates drying rate from recent readings
+FEATURE: SeedBank — Inventory Alerts & Germination Intelligence
 
-  Chart.line Enhancement
-    - Reference lines support: horizontal dashed lines with labels at specified y-values
-    - Zone overlay support: semi-transparent band between two y-values
+  - Low stock warnings: ⚠️ badge + orange border on seeds with
+    ≤3 remaining
+  - Seed age tracking: displays months since purchase, warns if
+    >2 years old
+  - Germination stats summary card: total seeds, avg germ rate,
+    low-stock count
+  - "Plant Next" suggestion: scores strains by seed count + germination rate
+  - Sort controls: Name, Count, Age, Germination Rate
+  - Dashboard alert: warns about low seed stock
 
-  Analytics tab: 17 → 20 charts
+FEATURE: DryBack — Saturation Tracking & Watering Recommendations
+
+  - Per-plant pot configuration: saturated weight and dry weight setup
+  - Dry-back percentage calculation from current weight vs. pot config
+  - Current status display: large % indicator with color-coded
+    dry-back level
+  - Enhanced chart with reference lines (saturated/dry) and optimal
+    zone overlay
+  - History table shows dry-back % column when pot is configured
+  - "Time to Water" estimate: calculates drying rate from recent readings
+
+POLISH: Chart.line Enhancement
+
+  - Reference lines support: horizontal dashed lines with labels at
+    specified y-values
+  - Zone overlay support: semi-transparent band between two y-values
+
+POLISH: Analytics tab grew from 17 to 20 charts
 
 ---
 
-v2.5.0 — 2026-03-10
+v2.5.0
 --------------------
-FEATURE: Quick Wins & Data Intelligence — Custom Feed Templates, Fleet Filters, Auto Snapshot, Harvest Accuracy, Strain Performance, Env Correlations
+FEATURE: Custom Feed Schedule Templates
 
-  Custom Feed Schedule Templates
-    - Create, edit, and delete your own feeding schedule templates
-    - Week builder UI: add/remove weeks with week number and nutrient instructions
-    - Custom templates saved to settings and shown in "My Custom Schedules" section
-    - Edit and Delete buttons on custom template cards, Edit button in preview
-    - Built-in templates (GH Flora, Fox Farm, Gaia Green, KNF) remain read-only
+  Create, edit, and delete your own feeding schedule templates. Week
+  builder UI adds and removes weeks with week number and nutrient
+  instructions. Custom templates save to settings and appear in a
+  "My Custom Schedules" section with Edit/Delete buttons; Edit is
+  also available from the preview. Built-in templates (GH Flora,
+  Fox Farm, Gaia Green, KNF) remain read-only.
 
-  Fleet View Filters & Bulk Actions
-    - Filter bar above table: Stage, Health, and Environment dropdowns
-    - Checkbox column with select-all header for multi-select
-    - Bulk action bar appears when plants selected: set Health, Stage, or Environment
-    - Apply bulk changes to all selected plants at once
-    - "Reset filters" link shown when filters hide all plants
+FEATURE: Fleet View Filters & Bulk Actions
 
-  Auto Daily Snapshot
-    - Optional auto-save of daily snapshot to journal on first app open each day
-    - Enable via checkbox toggle in the Snapshot modal
-    - Saves date, moon phase, task summary, environment stats, and plant overview
-    - Skips if already saved for the current day; shows toast on save
+  New filter bar above the Fleet View table with Stage, Health, and
+  Environment dropdowns. A checkbox column with a select-all header
+  enables multi-select; a bulk action bar appears whenever plants
+  are selected and lets you set Health, Stage, or Environment on all
+  selected plants at once. A "Reset filters" link appears when filters
+  hide every plant in the table.
 
-  Harvest Estimate Accuracy (Analytics #15)
-    - Compares actual flowering days to strain catalog estimates after harvest
-    - Per-strain table: Strain, Catalog Range, Avg Actual Days, Delta, Harvest Count
-    - Color-coded delta: green (≤7d), yellow (≤14d), red (>14d)
+FEATURE: Auto Daily Snapshot
 
-  Strain Performance Dashboard (Analytics #16)
-    - Ranks all strains by yield, quality, and efficiency across harvests
-    - Sortable table: Strain, Harvests, Avg Yield, Total Yield, Quality, Flower Days, Best Env
-    - Color-coded quality cells; click column headers to re-sort
+  Optional auto-save of the Daily Snapshot to the journal on the first
+  app open each day. Enable via a checkbox toggle in the Snapshot
+  modal. Each auto-save captures date, moon phase, task summary,
+  environment stats, and plant overview; skips re-saving if a snapshot
+  for the current day already exists; toasts on save.
 
-  Environment ↔ Outcome Correlations (Analytics #17)
-    - Cross-references avg environment conditions during flowering with harvest outcomes
-    - Temperature buckets → average yield bar chart
-    - Relative humidity buckets → average quality bar chart
-    - Summary insight line with optimal temperature
+FEATURE: Harvest Estimate Accuracy (Analytics)
 
-  Analytics tab: 14 → 17 charts
+  New analytics view compares actual flowering days to each strain's
+  catalog estimate after harvest. Per-strain table with columns for
+  Strain, Catalog Range, Avg Actual Days, Delta, and Harvest Count.
+  Delta cells are color-coded: green (≤7d), yellow (≤14d), red (>14d).
+
+FEATURE: Strain Performance Dashboard (Analytics)
+
+  Ranks every strain by yield, quality, and efficiency across harvests.
+  Sortable table with columns for Strain, Harvests, Avg Yield, Total
+  Yield, Quality, Flower Days, and Best Env. Quality cells are
+  color-coded; click any column header to re-sort.
+
+FEATURE: Environment ↔ Outcome Correlations (Analytics)
+
+  Cross-references average environment conditions during flowering
+  with harvest outcomes. Two bar charts: temperature buckets vs.
+  average yield, and RH buckets vs. average quality. Summary insight
+  line surfaces the optimal temperature bucket.
+
+POLISH: Analytics tab grew from 14 to 17 charts
 
 ---
 
-v2.4.0 — 2026-03-10
+v2.4.0
 --------------------
-FEATURE: 11 New Features — VPD, Trichome, Training, Deficiency Wizard, DLI, Runs, Breeding, Calibration, Fleet View, Room Diagram, Cost/Gram
+FEATURE: VPD Calculator & Chart
 
-  VPD Calculator & Chart
-    - Calculate vapor pressure deficit from temperature and humidity
-    - Auto-fills from latest environment reading
-    - Color-coded zone indicators for seedling, veg, early flower, and late flower
-    - VPD trend chart (#13) on Analytics tab using environment log history
-    - Accessible from Dashboard, gear menu, and environment cards
+  - Calculate vapor pressure deficit from temperature and humidity
+  - Auto-fills from the latest environment reading
+  - Color-coded zone indicators for seedling, veg, early flower,
+    and late flower
+  - VPD trend chart (#13) on the Analytics tab using environment
+    log history
+  - Accessible from Dashboard, gear menu, and environment cards
 
-  Trichome Harvest Tracker
-    - Log clear/cloudy/amber percentages per plant
-    - Linked sliders auto-adjust to keep total at 100%
-    - Harvest-window recommendations: Too early, Peak THC, Balanced/couch lock
-    - Stacked bar chart history with color-coded segments
-    - Compact trichome badge shown on flowering plant cards
+FEATURE: Trichome Harvest Tracker
 
-  Training Log
-    - Track 10 techniques: Topping, FIM, LST, HST, Supercrop, Mainline, SCROG, Lollipop, Defoliation, Other
-    - Per-plant training history with technique badges
-    - Integrates with Plant Timeline and Calendar
+  - Log clear/cloudy/amber percentages per plant
+  - Linked sliders auto-adjust to keep total at 100%
+  - Harvest-window recommendations: Too early, Peak THC,
+    Balanced / couch lock
+  - Stacked bar chart history with color-coded segments
+  - Compact trichome badge shown on flowering plant cards
 
-  Nutrient Deficiency Wizard
-    - 3-step diagnostic decision tree (location → symptom → pattern)
-    - Identifies 8+ deficiencies: Nitrogen, Magnesium, Iron, Potassium, Calcium, Phosphorus, Manganese, Nutrient Burn
-    - "Log as IPM Issue" button pre-fills the IPM form
-    - Linked from IPM form and accessible from Dashboard/gear menu
+FEATURE: Training Log
 
-  DLI Calculator
-    - Daily Light Integral calculation from PPFD and photoperiod
-    - PPFD estimation from light type (LED, HPS, CMH, Fluorescent, Sunlight) and wattage
-    - Optimal DLI ranges for seedling (12–18), veg (18–30), flower (30–45)
+  - Track 10 techniques: Topping, FIM, LST, HST, Supercrop, Mainline,
+    SCROG, Lollipop, Defoliation, Other
+  - Per-plant training history with technique badges
+  - Integrates with Plant Timeline and Calendar
 
-  Grow Run Manager
-    - Group plants into named grow runs with start/end dates
-    - Active and completed run tracking with status management
-    - Aggregate stats: plant count, total yield, total cost, average health
-    - Run comparison: select 2 runs for side-by-side stat comparison
+FEATURE: Nutrient Deficiency Wizard
 
-  Breeding / Pollen Tracker
-    - 3 entry types: Pollen Collection, Cross, Seed Harvest
-    - Track mother × father crosses, pollen dates, seed counts, offspring strains
-    - Per-plant breeding history via 🧬 Breed button on plant cards
+  - 3-step diagnostic decision tree (location → symptom → pattern)
+  - Identifies 8+ deficiencies: Nitrogen, Magnesium, Iron, Potassium,
+    Calcium, Phosphorus, Manganese, Nutrient Burn
+  - "Log as IPM Issue" button pre-fills the IPM form
+  - Linked from the IPM form and accessible from Dashboard / gear menu
 
-  pH/EC Calibration Reminders
-    - Calibration log with meter type, buffer solutions, and notes
-    - Configurable interval (default 30 days) with overdue detection
-    - Warning badge on environment cards when calibration is overdue
+FEATURE: DLI Calculator
 
-  Fleet View / Table Mode
-    - Sortable table toggle on Plants tab (Grid ↔ Table button)
-    - 9 columns: Strain, Type, Stage, Health, Age, Environment, Last Fed, Days Since IPM, Yield
-    - Click column headers to sort ascending/descending
+  - Daily Light Integral calculation from PPFD and photoperiod
+  - PPFD estimation from light type (LED, HPS, CMH, Fluorescent,
+    Sunlight) and wattage
+  - Optimal DLI ranges for seedling (12–18), veg (18–30), flower (30–45)
 
-  Grow Room Diagram
-    - Visual grid layout per environment (configurable rows × columns)
-    - Click cells to assign/unassign plants from a picker
-    - Persists to settings per environment
-    - Accessible from environment cards (📐 Layout) and gear menu
+FEATURE: Grow Run Manager
 
-  Harvest Cost Breakdown
-    - New Analytics chart (#14): Cost per Gram by Strain
-    - Allocates direct expenses per plant + proportional unattributed costs
-    - Plant Report now includes expenses table with total and cost/gram
+  - Group plants into named grow runs with start/end dates
+  - Active and completed run tracking with status management
+  - Aggregate stats: plant count, total yield, total cost, average
+    health
+  - Run comparison: select 2 runs for side-by-side stat comparison
 
-  Integration Points
-    - Gear menu: +7 items (VPD Calculator, DLI Calculator, Deficiency Wizard, Grow Runs, Breeding Tracker, Calibration Log, Room Layout)
-    - Dashboard: +7 quick action buttons
-    - Plant cards: +3 buttons (🔬 Trichome, ✂️ Training, 🧬 Breed) + trichome badge
-    - Environment cards: +2 buttons (VPD, 📐 Layout) + calibration badge
-    - Analytics: +2 charts (VPD Trends, Cost per Gram by Strain) — 14 total
-    - Calendar: +3 event types (training, trichome, calibration)
-    - Plant Timeline: +2 event types (training, trichome)
-    - IPM form: Deficiency Wizard link
-    - Dashboard tips: 42 → 53
+FEATURE: Breeding / Pollen Tracker
 
-  Bug Fixes
-    - Fixed HarvestEstimate checking wrong field (m.stage → m.growthStage) — flowering
-      harvest countdown badge was never displaying since v2.1.0
-    - Growth Stage dropdown now auto-fills Flowering Start date when set to "Flowering"
-      and auto-fills Flowering End date when changed away from "Flowering"
-    - Harvest countdown now works with manually defined Flowering End dates — no longer
-      requires a strain flowering time to calculate the countdown
-    - Badge shows clean week label ("8 wks") instead of redundant range ("8-8 wks") when
-      using a fixed end date
-    - Gear menu dropdown now scrolls when items exceed viewport height (was clipping bottom items)
+  - 3 entry types: Pollen Collection, Cross, Seed Harvest
+  - Track mother × father crosses, pollen dates, seed counts,
+    offspring strains
+  - Per-plant breeding history via the 🧬 Breed button on plant cards
 
-  Enhancements
-    - Room Layout upgraded to full grow room planner:
-      · Per-cell pot size selector (1–30 gal) and growing medium dropdown
-        (Soil, Coco, Hydro, Perlite, Rockwool, Living Soil, Other)
-      · Cells can be pre-configured with pot/medium before assigning a plant
-      · Room dimensions inputs (width × length in feet) with square footage display
-      · Summary footer showing plants placed, total pot volume, and medium breakdown
-      · Click any cell to open Edit Cell panel with pot, medium, and plant controls
-      · Occupied cells show plant name, health badge, pot size, and medium label
-      · Backward-compatible: old saved layouts auto-migrate on open
-    - Calibration Log upgraded to multi-meter/pen tracking:
-      · Add, edit, and archive individual meters/pens (pH, EC, pH/EC Combo, DO, TDS, Other)
-      · Per-meter fields: name, type, model, serial number, calibration interval, notes
-      · Each meter tracks calibration status independently (days since cal, overdue detection)
-      · Per-meter "Calibrate" button opens dedicated log form linked to that device
-      · Meter cards show name, type, model, status badge, and Calibrate/Edit/Archive controls
-      · Quick Log dropdown lists defined meters for fast logging
-      · Environment card badge shows the most overdue meter as a warning
-      · Calendar events now include meter name in calibration entries
-      · Backward-compatible: works with legacy global settings when no meters defined
-    - Feed Schedules upgraded with custom template support:
-      · Create, edit, and delete your own feeding schedule templates
-      · Week builder UI: add/remove weeks with week number and nutrient instructions
-      · Custom templates saved to settings and shown in "My Custom Schedules" section
-      · Edit and Delete buttons on custom template cards, Edit button in preview
-      · Built-in templates (GH Flora, Fox Farm, Gaia Green, KNF) remain read-only
-    - Fleet View upgraded with filters and bulk actions:
-      · Filter bar above table: Stage, Health, and Environment dropdowns
-      · Checkbox column with select-all header for multi-select
-      · Bulk action bar appears when plants selected: set Health, Stage, or Environment
-      · Apply bulk changes to all selected plants at once
-      · "Reset filters" link shown when filters hide all plants
-    - Auto Daily Snapshot:
-      · Optional auto-save of daily snapshot to journal on first app open each day
-      · Enable via checkbox toggle in the Snapshot modal
-      · Saves date, moon phase, task summary, environment stats, and plant overview
-      · Skips if already saved for the current day; shows toast on save
-    - Harvest Estimate Accuracy Tracking (Analytics chart):
-      · Compares actual flowering days to strain catalog estimates after harvest
-      · Per-strain table: Strain, Catalog Range, Avg Actual Days, Delta, Harvest Count
-      · Color-coded delta: green (≤7d), yellow (≤14d), red (>14d)
-      · Only appears when harvests have both floweringStart and floweringEnd dates
-    - Strain Performance Dashboard (Analytics chart):
-      · Ranks all strains by yield, quality, and efficiency across harvests
-      · Sortable table: Strain, Harvests, Avg Yield, Total Yield, Quality, Flower Days, Best Env
-      · Color-coded quality cells (green ≥4★, yellow 3★, red ≤2★)
-      · Click column headers to re-sort; total yield highlighted in cyan
-    - Environment ↔ Outcome Correlations (Analytics chart):
-      · Cross-references avg environment conditions during flowering with harvest outcomes
-      · Temperature buckets (5°F) → average yield bar chart
-      · Relative humidity buckets (10%) → average quality bar chart
-      · Summary insight: "Best avg yield came from flowering at X°F"
-      · Only appears when harvests have environment readings during flowering period
-    - Analytics tab now has up to 17 charts (was 14)
+FEATURE: pH/EC Calibration Reminders
+
+  - Calibration log with meter type, buffer solutions, and notes
+  - Configurable interval (default 30 days) with overdue detection
+  - Warning badge on environment cards when calibration is overdue
+
+FEATURE: Fleet View / Table Mode
+
+  - Sortable table toggle on the Plants tab (Grid ↔ Table button)
+  - 9 columns: Strain, Type, Stage, Health, Age, Environment, Last Fed,
+    Days Since IPM, Yield
+  - Click column headers to sort ascending/descending
+
+FEATURE: Grow Room Diagram
+
+  - Visual grid layout per environment (configurable rows × columns)
+  - Click cells to assign/unassign plants from a picker
+  - Persists to settings per environment
+  - Accessible from environment cards (📐 Layout) and the gear menu
+
+FEATURE: Harvest Cost Breakdown
+
+  - New Analytics chart (#14): Cost per Gram by Strain
+  - Allocates direct expenses per plant + proportional unattributed costs
+  - Plant Report now includes an expenses table with total and cost/gram
+
+POLISH: Cross-Feature Integration
+
+  - Gear menu: +7 items (VPD Calculator, DLI Calculator, Deficiency
+    Wizard, Grow Runs, Breeding Tracker, Calibration Log, Room Layout)
+  - Dashboard: +7 quick action buttons
+  - Plant cards: +3 buttons (🔬 Trichome, ✂️ Training, 🧬 Breed) +
+    trichome badge
+  - Environment cards: +2 buttons (VPD, 📐 Layout) + calibration badge
+  - Analytics: +2 charts (VPD Trends, Cost per Gram by Strain) — 14 total
+  - Calendar: +3 event types (training, trichome, calibration)
+  - Plant Timeline: +2 event types (training, trichome)
+  - IPM form: Deficiency Wizard link
+  - Dashboard tips: 42 → 53
+
+FIX: HarvestEstimate Field Mismatch + Date Auto-Fill Polish
+
+  - Fixed HarvestEstimate checking the wrong field (m.stage →
+    m.growthStage) — the flowering harvest countdown badge had been
+    silently broken since v2.1.0
+  - Growth Stage dropdown now auto-fills Flowering Start when set to
+    "Flowering", and auto-fills Flowering End when changed away from it
+  - Harvest countdown now works with manually defined Flowering End
+    dates — no longer requires a strain flowering time to calculate
+  - Badge shows a clean week label ("8 wks") instead of a redundant
+    range ("8-8 wks") when a fixed end date is in use
+  - Gear menu dropdown now scrolls when items exceed viewport height
+    (was clipping bottom items)
+
+ENHANCEMENT: Room Layout — Full Grow Room Planner
+
+  - Per-cell pot size selector (1–30 gal) and growing medium dropdown
+    (Soil, Coco, Hydro, Perlite, Rockwool, Living Soil, Other)
+  - Cells can be pre-configured with pot/medium before assigning a plant
+  - Room dimensions inputs (width × length in feet) with square footage
+    display
+  - Summary footer showing plants placed, total pot volume, and medium
+    breakdown
+  - Click any cell to open Edit Cell panel with pot, medium, and plant
+    controls
+  - Occupied cells show plant name, health badge, pot size, and medium
+    label
+  - Backward-compatible: old saved layouts auto-migrate on open
+
+ENHANCEMENT: Calibration Log — Multi-Meter/Pen Tracking
+
+  - Add, edit, and archive individual meters/pens (pH, EC, pH/EC Combo,
+    DO, TDS, Other)
+  - Per-meter fields: name, type, model, serial number, calibration
+    interval, notes
+  - Each meter tracks calibration status independently (days since cal,
+    overdue detection)
+  - Per-meter "Calibrate" button opens a dedicated log form linked to
+    that device
+  - Meter cards show name, type, model, status badge, and Calibrate /
+    Edit / Archive controls
+  - Quick Log dropdown lists defined meters for fast logging
+  - Environment card badge shows the most overdue meter as a warning
+  - Calendar events now include meter name in calibration entries
+  - Backward-compatible: works with legacy global settings when no
+    meters are defined
+
+ENHANCEMENT: Feed Schedules — Custom Template Support
+
+  - Create, edit, and delete your own feeding schedule templates
+  - Week builder UI: add/remove weeks with week number and nutrient
+    instructions
+  - Custom templates saved to settings and shown in a "My Custom
+    Schedules" section
+  - Edit and Delete buttons on custom template cards, Edit button in
+    preview
+  - Built-in templates (GH Flora, Fox Farm, Gaia Green, KNF) remain
+    read-only
+
+ENHANCEMENT: Fleet View — Filters & Bulk Actions
+
+  - Filter bar above the table: Stage, Health, and Environment
+    dropdowns
+  - Checkbox column with select-all header for multi-select
+  - Bulk action bar appears when plants are selected: set Health,
+    Stage, or Environment
+  - Apply bulk changes to all selected plants at once
+  - "Reset filters" link shown when filters hide all plants
+
+ENHANCEMENT: Auto Daily Snapshot
+
+  - Optional auto-save of the daily snapshot to the journal on first
+    app open each day
+  - Enable via checkbox toggle in the Snapshot modal
+  - Saves date, moon phase, task summary, environment stats, and
+    plant overview
+  - Skips if already saved for the current day; toasts on save
+
+ENHANCEMENT: Harvest Estimate Accuracy Tracking (Analytics chart)
+
+  - Compares actual flowering days to strain catalog estimates after
+    harvest
+  - Per-strain table: Strain, Catalog Range, Avg Actual Days, Delta,
+    Harvest Count
+  - Color-coded delta: green (≤7d), yellow (≤14d), red (>14d)
+  - Only appears when harvests have both floweringStart and
+    floweringEnd dates
+
+ENHANCEMENT: Strain Performance Dashboard (Analytics chart)
+
+  - Ranks all strains by yield, quality, and efficiency across harvests
+  - Sortable table: Strain, Harvests, Avg Yield, Total Yield, Quality,
+    Flower Days, Best Env
+  - Color-coded quality cells (green ≥4★, yellow 3★, red ≤2★)
+  - Click column headers to re-sort; total yield highlighted in cyan
+
+ENHANCEMENT: Environment ↔ Outcome Correlations (Analytics chart)
+
+  - Cross-references avg environment conditions during flowering with
+    harvest outcomes
+  - Temperature buckets (5°F) → average yield bar chart
+  - Relative humidity buckets (10%) → average quality bar chart
+  - Summary insight: "Best avg yield came from flowering at X°F"
+  - Only appears when harvests have environment readings during the
+    flowering period
+
+POLISH: Analytics tab grew from 14 to 17 charts
 
 ---
 
-v2.3.0 — 2026-03-10
+v2.3.0
 --------------------
 FEATURE: Pest Identification (Vision AI + Google Lens + Visual Pest Guide)
 
@@ -463,112 +1719,123 @@ FEATURE: Pest Identification (Vision AI + Google Lens + Visual Pest Guide)
     - What's New v2.3.0 modal with 6 feature bullets
 
 
-v2.2.0 — 2026-03-09
+v2.2.0
 --------------------
-FEATURE: Grow Cycles, Plant Comparison, Soil Mix Calculator & Export Report
+FEATURE: Grow Cycle Templates
 
-  Grow Cycle Templates
-  - 4 built-in grow cycle templates: Indoor Photoperiod (16 wks / 9 phases),
-    Indoor Autoflower (12 wks / 7 phases), Outdoor Tropical Maui (21 wks /
-    6 phases), Clone to Flower (12 wks / 7 phases)
-  - Each phase includes week range, phase name, light schedule, and task list
-  - Preview phases in a table before applying to a plant
-  - "Apply to Plant" auto-creates one-time tasks per phase task with
-    calculated due dates based on today's date
-  - Access from Dashboard quick actions, Settings gear menu, or plant cards
+  4 built-in grow cycle templates: Indoor Photoperiod (16 wks /
+  9 phases), Indoor Autoflower (12 wks / 7 phases), Outdoor Tropical
+  Maui (21 wks / 6 phases), Clone to Flower (12 wks / 7 phases).
+  Each phase includes week range, phase name, light schedule, and
+  task list. Preview phases in a table before applying to a plant;
+  "Apply to Plant" auto-creates one-time tasks per phase task with
+  due dates calculated from today's date. Accessible from Dashboard
+  quick actions, the Settings gear menu, or plant cards.
 
-  Soil Mix Calculator
-  - 4 pre-built soil recipes: Coots Mix (1:1:1 living soil), BuildASoil 3.0,
-    Simple Coco Mix, Tropical Living Soil (Maui-style)
-  - Custom Mix option to build recipes from scratch
-  - 14 components across 3 categories: Base Mix (3), Aeration (3),
-    Amendments (8) — each with description and editable ratio/amount
-  - Adjustable total volume with gallon/liter unit toggle
-  - Live recalculation of all amounts when volume or ratios change
-  - Save custom recipes to the Store for later use
-  - Load and delete saved recipes from the recipe grid
-  - Access from Dashboard quick actions and Settings gear menu
+FEATURE: Soil Mix Calculator
 
-  Plant Comparison
-  - Compare 2-3 plants side-by-side with checkboxes (requires 2+ plants)
-  - 11 comparison metrics: strain, type, age, stage, health, environment,
-    feedings, IPM issues, clone rate, total yield, avg health score
-  - Best values highlighted in cyan in the comparison table
-  - Mini bar charts (Feedings, Yield, Health) using Chart.bar() below table
-  - Access from Dashboard quick actions or plant card Compare button
+  4 pre-built soil recipes: Coots Mix (1:1:1 living soil), BuildASoil
+  3.0, Simple Coco Mix, Tropical Living Soil (Maui-style), plus a
+  Custom Mix option for building recipes from scratch. 14 components
+  across 3 categories — Base Mix (3), Aeration (3), Amendments (8) —
+  each with description and editable ratio/amount. Adjustable total
+  volume with gallon/liter unit toggle; all amounts recalculate live
+  when volume or ratios change. Save custom recipes to the Store for
+  later use; load and delete from the recipe grid. Accessible from
+  Dashboard quick actions and the Settings gear menu.
 
-  Export Report (Print-to-PDF)
-  - Two report modes: Plant Report (single plant) and Garden Report (full garden)
-  - Plant Report: header with strain info, stat grid (8 metrics), feeding
-    history table (last 20), harvests, IPM log, health checks
-  - Garden Report: garden stats (plants, envs, flowering, yield, expenses,
-    cost/gram), plant roster table, environments, harvest summary, expenses
-    by category
-  - Reports open in a new browser window via window.open() + document.write()
-  - Dual CSS: dark theme on screen (@media screen), clean B&W with borders
-    on print (@media print) — hidden print button in print mode
-  - "Print / Save PDF" button at top-right calls window.print()
-  - Access from plant card Report button, Dashboard, or Settings gear menu
+FEATURE: Plant Comparison
 
-  Integration
+  Compare 2–3 plants side-by-side with checkboxes (requires 2+ plants).
+  11 comparison metrics: strain, type, age, stage, health, environment,
+  feedings, IPM issues, clone rate, total yield, avg health score.
+  Best values highlighted in cyan in the comparison table; mini bar
+  charts (Feedings, Yield, Health) via Chart.bar() below the table.
+  Accessible from Dashboard quick actions or the plant card Compare
+  button.
+
+FEATURE: Export Report (Print-to-PDF)
+
+  Two report modes: Plant Report (single plant) and Garden Report
+  (full garden). Plant Report contains a header with strain info, an
+  8-metric stat grid, feeding history table (last 20), harvests,
+  IPM log, and health checks. Garden Report covers garden stats
+  (plants, envs, flowering, yield, expenses, cost/gram), plant roster
+  table, environments, harvest summary, and expenses by category.
+  Reports open in a new browser window via window.open() +
+  document.write(). Dual CSS: dark theme on screen (@media screen),
+  clean B&W with borders on print (@media print) — the print button
+  hides itself in print mode. "Print / Save PDF" button at top-right
+  calls window.print(). Accessible from the plant card Report button,
+  Dashboard, or Settings gear menu.
+
+POLISH: Cross-Feature Integration
+
   - Dashboard: 4 new quick action buttons (Grow Cycles, Compare Plants,
     Soil Mix Calc, Export Report)
   - Settings gear menu: 3 new items (Grow Cycles, Soil Mix Calc, Export Report)
   - Plant cards: 2 new buttons (Report, Compare) — 15 action buttons total
 
-  Housekeeping
+POLISH: Housekeeping
+
   - New soilMixRecipes:{} Store collection with migration support
   - 4 new dashboard tips (39 total)
   - What's New dialog for v2.2.0 with 6 bullet points
   - Service worker cache version bumped to 2.2.0
 
 
-v2.1.0 — 2026-03-09
+v2.1.0
 --------------------
-FEATURE: Plant Timeline, Feed Schedules, Dry-Back Tracking, Harvest Estimate
-         & Cost Tracker
+FEATURE: Plant Timeline
 
-  Plant Timeline
-  - Chronological event history for each plant combining 8 data sources:
-    feedings, photos, IPM, harvests, health checks, dry-backs, clones,
-    and task completions
-  - Color-coded dots per event type (green=feed, cyan=photo, red=IPM, etc.)
-  - Access via Timeline button on plant cards
+  Chronological event history for each plant, combining 8 data sources:
+  feedings, photos, IPM, harvests, health checks, dry-backs, clones,
+  and task completions. Color-coded dots per event type (green=feed,
+  cyan=photo, red=IPM, etc.). Accessible via a Timeline button on
+  plant cards.
 
-  Feed Schedule Templates
-  - 4 built-in nutrient schedule templates: GH Flora Series (10 wks),
-    Fox Farm Trio (8 wks), Gaia Green Organic (5 wks), KNF Inputs (8 wks)
-  - Preview weekly schedule with product, amount, and notes per week
-  - "Apply to Plant" creates one-time tasks for each week's feeding
-  - Access from Dashboard quick actions and Settings gear menu
+FEATURE: Feed Schedule Templates
 
-  Dry-Back Tracking
-  - Log dry-back weight readings per plant with wet/dry weight, unit, notes
-  - Line chart showing weight over time using Chart.line()
-  - History table with delete support
-  - Access via Dry-Back button on plant cards
+  4 built-in nutrient schedule templates: GH Flora Series (10 weeks),
+  Fox Farm Trio (8 weeks), Gaia Green Organic (5 weeks), and KNF
+  Inputs (8 weeks). Preview the weekly schedule with product, amount,
+  and notes per week. "Apply to Plant" creates one-time tasks for
+  each week's feeding. Accessible from Dashboard quick actions and
+  the Settings gear menu.
 
-  Harvest Estimate
-  - Parses flowering time from strain data ("8-9 weeks", "56 days", "10 weeks+")
-  - Calculates estimated harvest window based on flowering start date
-  - Progress bar badge displayed on plant cards for flowering plants
-  - Harvest estimate events shown on the Calendar tab
+FEATURE: Dry-Back Tracking
 
-  Cost Tracker
-  - Log expenses across 7 categories: Nutrients, Equipment, Soil/Media,
-    Seeds/Clones, IPM, Utilities, Other
-  - Summary stats: total spent, this month, average per month
-  - Add, edit, and delete expenses with date, amount, category, description
-  - Cost Breakdown donut chart with legend added to Analytics tab
-  - Access from Dashboard quick actions and Settings gear menu
+  Log dry-back weight readings per plant with wet/dry weight, unit,
+  and notes. Line chart shows weight over time via Chart.line() and
+  a history table with delete support backs it up. Accessible via a
+  Dry-Back button on plant cards.
 
-  Integration
+FEATURE: Harvest Estimate
+
+  Parses flowering time from strain data ("8-9 weeks", "56 days",
+  "10 weeks+") and calculates an estimated harvest window based on
+  the flowering start date. A progress-bar badge appears on plant
+  cards for flowering plants, and harvest estimate events show up
+  on the Calendar tab.
+
+FEATURE: Cost Tracker
+
+  Log expenses across 7 categories: Nutrients, Equipment, Soil/Media,
+  Seeds/Clones, IPM, Utilities, Other. Summary stats include total
+  spent, this month, and average per month. Add, edit, and delete
+  expenses with date, amount, category, and description. A Cost
+  Breakdown donut chart with legend is added to the Analytics tab.
+  Accessible from Dashboard quick actions and the Settings gear menu.
+
+POLISH: Cross-Feature Integration
+
   - Dashboard: 2 new quick action buttons (Feed Schedule, Costs)
   - Settings gear menu: 2 new items (Feed Schedules, Cost Tracker)
   - Plant cards: 2 new buttons (Timeline, Dry-Back)
   - Analytics: Cost Breakdown donut chart at bottom
 
-  Housekeeping
+POLISH: Housekeeping
+
   - New Store collections: dryBacks:{}, expenses:{} with migration support
   - 5 new Store helpers: dryBacksArray, dryBacksForMother, expensesArray,
     totalExpenses, completionsForMother
@@ -577,7 +1844,7 @@ FEATURE: Plant Timeline, Feed Schedules, Dry-Back Tracking, Harvest Estimate
   - Service worker cache version bumped to 2.1.0
 
 
-v2.0.2 — 2026-03-09
+v2.0.2
 --------------------
 FEATURE: Strain Reviews (Local Grow Journal)
 
@@ -600,7 +1867,7 @@ FEATURE: Strain Reviews (Local Grow Journal)
   - Service worker cache version bumped to 2.0.2
 
 
-v2.0.1 — 2026-03-09
+v2.0.1
 --------------------
 FEATURE: Harvest Yield Analytics & QR Code Plant Tags
 
@@ -629,46 +1896,50 @@ FEATURE: Harvest Yield Analytics & QR Code Plant Tags
   - Service worker cache version bumped to 2.0.1
 
 
-v2.0.0 — 2026-03-09
+v2.0.0
 --------------------
-FEATURE: Seed Bank, Quick Water, Health Score, Batch Ops & Daily Snapshot
+FEATURE: Seed Bank
 
-  Seed Bank
-  - New modal-based seed inventory tracker accessible from Strains tab and
-    Dashboard quick actions
-  - Track strain name, breeder, seed count, type (feminized/regular/auto),
-    source (breeder pack/trade/gift/saved), purchase date, germination rate
-  - Add, edit, and delete seed packets with running totals
+  New modal-based seed inventory tracker accessible from the Strains
+  tab and Dashboard quick actions. Track strain name, breeder, seed
+  count, type (feminized / regular / auto), source (breeder pack /
+  trade / gift / saved), purchase date, and germination rate. Add,
+  edit, and delete seed packets with running totals.
 
-  Quick Water Log
-  - Stripped-down modal for fast plain-water logging on Feeding tab and
-    Dashboard quick actions
-  - Tracks water volume, unit, pH in/out, water source (Tap/Filtered/Rain/
-    RO/Well), and optional notes
-  - Saves as regular feeding entry with nutrientName "Water Only"
+FEATURE: Quick Water Log
 
-  Plant Health Score Tracker
-  - Log quick 1–5 health scores per plant via ♥ Health button on plant cards
-  - Colored dot trend (last 5 scores) displayed below health badge on cards
-  - Auto-logs health check when plant health status changes on edit
-  - Score history with timestamps and notes visible in the health modal
+  Stripped-down modal for fast plain-water logging on the Feeding tab
+  and Dashboard quick actions. Tracks water volume, unit, pH in/out,
+  water source (Tap / Filtered / Rain / RO / Well), and optional notes.
+  Saves as a regular feeding entry with nutrientName "Water Only".
 
-  Batch Operations
-  - Select mode toggle on Plants tab toolbar with checkboxes on each card
-  - Select All / Deselect buttons with count indicator
-  - Batch update health status, growth stage, or environment for all
-    selected plants
-  - Batch archive multiple plants at once with confirmation
-  - Auto-logs health checks when batch-updating health status
+FEATURE: Plant Health Score Tracker
 
-  Daily Snapshot
-  - Auto-generated daily report accessible from Dashboard quick actions
-  - Includes date, moon phase with KNF guidance, weather conditions
-  - Lists overdue and due-today tasks, active IPM issues, environment alerts
-  - Shows recent feedings from the last 24 hours
-  - Copy to clipboard or save as journal entry
+  Log quick 1–5 health scores per plant via the ♥ Health button on
+  plant cards. A colored dot trend (last 5 scores) displays below
+  the health badge on cards. Health checks are also auto-logged when
+  a plant's health status changes on edit. Full score history with
+  timestamps and notes is visible in the health modal.
 
-  Housekeeping
+FEATURE: Batch Operations
+
+  New Select mode toggle on the Plants tab toolbar with checkboxes
+  on each card. Select All / Deselect buttons with a count indicator.
+  Batch update health status, growth stage, or environment for all
+  selected plants in one action; batch archive multiple plants at
+  once with confirmation. Auto-logs health checks when batch-updating
+  health status.
+
+FEATURE: Daily Snapshot
+
+  Auto-generated daily report accessible from Dashboard quick actions.
+  Includes date, moon phase with KNF guidance, weather conditions,
+  overdue and due-today tasks, active IPM issues, environment alerts,
+  and recent feedings from the last 24 hours. Copy to clipboard or
+  save as a journal entry.
+
+POLISH: Housekeeping
+
   - 5 new tips (27 total) covering all new features
   - What's New dialog for v2.0.0 with 10 bullet points
   - Service worker cache version bumped to 2.0.0
@@ -676,58 +1947,54 @@ FEATURE: Seed Bank, Quick Water, Health Score, Batch Ops & Daily Snapshot
   - Water source field displayed on feeding cards when present
 
 
-v1.9.0 — 2026-03-09
+v1.9.0
 --------------------
-FEATURE: PWA Install, KNF Input Calculator & Grow Calendar
+FEATURE: Progressive Web App (PWA)
 
-  Progressive Web App (PWA)
-  - App can now be installed to home screen on mobile and desktop
-  - Service worker caches the app shell, fonts, icons, and hero image
-    for full offline capability
-  - Cache-first strategy for local assets, stale-while-revalidate for
-    Google Fonts, network-only for API calls (weather, Firebase)
-  - Cache version tied to APP_VERSION — old caches automatically purged
-    on update
-  - Web manifest with proper name, icons, theme color, and start URL
-  - Apple mobile web app meta tags for iOS Safari support
+  App can now be installed to the home screen on mobile and desktop.
+  Service worker caches the app shell, fonts, icons, and hero image
+  for full offline capability. Cache-first for local assets,
+  stale-while-revalidate for Google Fonts, network-only for API calls
+  (weather, Firebase). Cache version is tied to APP_VERSION so old
+  caches are automatically purged on update. Web manifest carries
+  name, icons, theme color, and start URL; Apple mobile web app meta
+  tags add iOS Safari support.
 
-  KNF Input Calculator
-  - New calculator modal accessible from dashboard quick actions and
-    the gear settings menu
-  - 10 Korean Natural Farming inputs: FPJ, FFJ, FAA, OHN, LABS, IMO,
-    WCA, WCA-P, BRV, Sea Water Dilution
-  - Toggle between Foliar Spray and Soil Drench modes (different ratios)
-  - Adjustable volume input with gallon/liter unit toggle
-  - Calculated amounts update live as volume or mode changes
-  - Standard dilution ratios: 1:1000 foliar, 1:500 soil drench
-  - Special handling for IMO (tbsp/sq ft) and Sea Water (1:30 drench only)
-  - Preparation tips for each input with tropical/Maui-relevant guidance
+FEATURE: KNF Input Calculator
 
-  Grow Calendar
-  - New "Calendar" tab (13th tab) with full month grid view
-  - Navigation: previous/next month arrows and Today button
-  - Moon phase icon displayed on every day cell
-  - Color-coded event dots per day:
+  New calculator modal accessible from Dashboard quick actions and
+  the gear settings menu. Covers 10 Korean Natural Farming inputs
+  (FPJ, FFJ, FAA, OHN, LABS, IMO, WCA, WCA-P, BRV, Sea Water Dilution)
+  with a toggle between Foliar Spray and Soil Drench modes. Volume
+  input has a gallon/liter unit toggle and calculated amounts update
+  live as volume or mode changes. Default dilution ratios: 1:1000
+  foliar, 1:500 soil drench. IMO gets tbsp/sq ft handling; Sea Water
+  is restricted to a 1:30 drench. Per-input preparation tips offer
+  tropical/Maui-relevant guidance.
+
+FEATURE: Grow Calendar
+
+  New "Calendar" tab (the 13th) with a full month grid view. Previous/
+  next month arrows, Today button, and a moon phase icon on every day
+  cell. Color-coded event dots per day:
     green = tasks due, orange = feedings, cyan = journal entries,
     purple = harvests, red = IPM issues
-  - Event count badge on days with 3+ events
-  - Click any day to expand a detail panel showing:
-    all events grouped by type with timestamps
-  - KNF Lunar Guidance panel shows planting advice for the selected day
-  - Pulls from 5 data sources: tasks (nextDueDate), feedings (timestamp),
-    journal photos (timestamp), harvests (harvestDate), IPM logs (timestamp)
-  - Responsive: smaller cells and hidden moon icons on mobile
+  Days with 3+ events get a count badge. Click any day to expand a
+  detail panel showing all events grouped by type with timestamps,
+  plus a KNF Lunar Guidance panel with planting advice for that day.
+  Pulls from 5 data sources: tasks (nextDueDate), feedings (timestamp),
+  journal photos (timestamp), harvests (harvestDate), IPM logs
+  (timestamp). Responsive: smaller cells and hidden moon icons on
+  mobile.
 
-  Dashboard
-  - New "KNF Calculator" quick action button
-  - KNF Calculator added to gear settings overflow menu
+POLISH: Dashboard & Settings Integration
+
+  - New "KNF Calculator" Dashboard quick-action button
+  - KNF Calculator added to the gear settings overflow menu
   - 2 new tips (22 total) for KNF Calculator and Calendar features
 
-  Settings Menu
-  - KNF Calculator item added to the gear overflow menu
 
-
-v1.8.0 — 2026-03-09
+v1.8.0
 --------------------
 FEATURE: Moon Phase Tracker
 
@@ -760,7 +2027,7 @@ FEATURE: Moon Phase Tracker
   - Moon column in environment readings table
 
 
-v1.7.0 — 2026-03-09
+v1.7.0
 --------------------
 FEATURE: Weather API & Cloud Sync
 
@@ -793,7 +2060,7 @@ FEATURE: Weather API & Cloud Sync
   - Header reduced from 8 buttons to 5 (weather, moon, cloud, theme, gear)
 
 
-v1.6.4 — 2026-03-08
+v1.6.4
 --------------------
 FEATURE: Catalogs, Guide Links, Tips & Quality-of-Life
 
@@ -842,7 +2109,7 @@ FEATURE: Catalogs, Guide Links, Tips & Quality-of-Life
   - Only fills when the notes field is empty to avoid overwriting
 
 
-v1.6.3 — 2026-03-08
+v1.6.3
 --------------------
 IMPROVEMENT: Mobile Browser Optimization
 
@@ -875,7 +2142,7 @@ IMPROVEMENT: Mobile Browser Optimization
   - All 71 URLs verified against files on disk
 
 
-v1.6.2 — 2026-03-08
+v1.6.2
 --------------------
 FEATURE: Environment Alerts / Thresholds on Dashboard
 
@@ -892,7 +2159,7 @@ FEATURE: Environment Alerts / Thresholds on Dashboard
     the latest value exceeds the configured min/max threshold
 
 
-v1.6.1 — 2026-03-08
+v1.6.1
 --------------------
 IMPROVEMENT: Dashboard Flowering Card
 
@@ -902,7 +2169,7 @@ IMPROVEMENT: Dashboard Flowering Card
   - Positioned after Mother Plants card in the stats grid
 
 
-v1.6.0 — 2026-03-08
+v1.6.0
 --------------------
 FEATURE: Notification Reminders
 
@@ -940,7 +2207,7 @@ FEATURE: Notification Reminders
   - Configurable feeding reminder interval in days
 
 
-v1.5.0 — 2026-03-08
+v1.5.0
 --------------------
 FEATURE: Clone Lineage / Family Tree
 
@@ -965,7 +2232,7 @@ FEATURE: Clone Lineage / Family Tree
   - Clicking any tree node opens that plant's edit form
 
 
-v1.4.2 — 2026-03-08
+v1.4.2
 --------------------
 IMPROVEMENTS: Export Security & WhatsNew
 
@@ -980,7 +2247,7 @@ IMPROVEMENTS: Export Security & WhatsNew
   - Added "View full changelog" link opening the GitHub changelog in a new tab
 
 
-v1.4.1 — 2026-03-08
+v1.4.1
 --------------------
 FEATURE: Flowering Time Tracking
 
@@ -998,7 +2265,7 @@ FEATURE: Flowering Time Tracking
   - Harvest cards show flower duration in days
 
 
-v1.4.0 — 2026-03-08
+v1.4.0
 --------------------
 FEATURE: Harvest Tracking
 
@@ -1026,7 +2293,7 @@ FEATURE: Harvest Tracking
   - Auto-selects environment when plant is linked to one
 
 
-v1.3.1 — 2026-03-08
+v1.3.1
 --------------------
 FEATURE: Strain Catalog Expansion & Clone Provider Support
 
@@ -1065,7 +2332,7 @@ FEATURE: Strain Catalog Expansion & Clone Provider Support
     original catalog index
 
 
-v1.3.0 — 2026-03-07
+v1.3.0
 --------------------
 FEATURE: Strain Library & Analytics Charts
 
@@ -1101,35 +2368,35 @@ FEATURE: Strain Library & Analytics Charts
   - Backward compatible — existing data is unaffected
 
 
-v1.2.0 — 2026-03-07
+v1.2.0
 --------------------
-FEATURE: Feeding Log, Photo Journal, IPM Tracking
+FEATURE: Feeding / Nutrient Log
 
-  Three new high-value features for comprehensive cultivation management.
+  New "Feeding" tab to track nutrient feedings per plant or environment.
+  Log nutrient name, amount, unit, water volume, pH in/out, and EC/PPM
+  in/out. pH drift is highlighted when runoff deviates by more than 0.5.
+  Filter feedings by plant or environment; plant tags on each feeding
+  card for quick identification.
 
-  Feeding / Nutrient Log
-  - New "Feeding" tab to track nutrient feedings per plant or environment
-  - Log nutrient name, amount, unit, water volume, pH in/out, EC/PPM in/out
-  - pH drift highlighted when runoff deviates more than 0.5
-  - Filter feedings by plant or environment
-  - Plant tags on each feeding card for quick identification
+FEATURE: Photo Journal
 
-  Photo Journal
-  - New "Journal" tab with visual photo grid timeline
-  - Upload photos linked to a specific plant and growth stage
-  - Click any photo card to view full-size detail with metadata
-  - Filter by plant; photos auto-resized to save localStorage space
-  - Delete photos from the detail view
+  New "Journal" tab with a visual photo grid timeline. Upload photos
+  linked to a specific plant and growth stage. Click any photo card
+  to view full-size detail with metadata. Filter by plant; photos are
+  auto-resized to save localStorage space. Delete photos from the
+  detail view.
 
-  IPM Log (Pest & Disease Tracking)
-  - New "IPM" tab to log pest sightings, diseases, and deficiencies
-  - 11 common pest/problem presets (aphids, spider mites, powdery mildew, etc.)
-  - Severity badges: low (green), medium (gold), high (orange), critical (red)
-  - Track treatments and mark issues as resolved
-  - Filter by plant, severity, and active/resolved status
-  - Edit existing issues and update treatments
+FEATURE: IPM Log (Pest & Disease Tracking)
 
-  Integration
+  New "IPM" tab to log pest sightings, diseases, and deficiencies.
+  11 common pest/problem presets (aphids, spider mites, powdery mildew,
+  etc.) with severity badges: low (green), medium (gold), high (orange),
+  critical (red). Track treatments and mark issues as resolved. Filter
+  by plant, severity, and active/resolved status; edit existing issues
+  and update treatments.
+
+POLISH: Cross-Feature Integration
+
   - Plant cards now include + Feed, + Photo, + IPM quick action buttons
   - Dashboard: new "Active Issues" stat card (orange when issues are open)
   - Dashboard: three new quick actions (+ Log Feeding, + Add Photo, + Log Issue)
@@ -1137,7 +2404,7 @@ FEATURE: Feeding Log, Photo Journal, IPM Tracking
   - All actions logged in the activity feed
 
 
-v1.1.1 — 2026-03-07
+v1.1.1
 --------------------
 IMPROVEMENTS & FIXES
 
@@ -1152,7 +2419,7 @@ IMPROVEMENTS & FIXES
     preselect so readings are always linked to the right environment
 
 
-v1.1.0 — 2026-03-07
+v1.1.0
 --------------------
 FEATURE: Grow Environments
 
