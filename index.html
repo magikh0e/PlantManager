@@ -137,14 +137,14 @@ button{cursor:pointer}
   --header-h:56px;--tab-h:52px;--max-w:1200px;--radius:10px;--radius-sm:6px;--radius-lg:14px;
   --ease:cubic-bezier(.4,0,.2,1);--duration:.25s;
   /* dark defaults */
-  --bg-primary:#0a0c0a;--bg-secondary:#0d160d;--bg-card:rgba(27,58,30,.18);--bg-card-hover:rgba(27,58,30,.32);
+  --bg-primary:#0a0c0a;--bg-secondary:#0d160d;--bg-card:rgba(27,58,30,.18);--bg-card-hover:rgba(27,58,30,.32);--bg-overlay:#12211a;
   --bg-input:rgba(255,255,255,.05);--border-subtle:rgba(255,255,255,.08);--border-focus:var(--cyan);
   --text-primary:#f0ead8;--text-secondary:rgba(240,234,216,.65);--text-tertiary:rgba(240,234,216,.5);
   --shadow-card:0 2px 12px rgba(0,0,0,.3);--shadow-hover:0 8px 24px rgba(0,0,0,.4);
   --overlay:rgba(0,0,0,.75);
 }
 [data-theme="light"]{
-  --bg-primary:#f5f2eb;--bg-secondary:#ece8df;--bg-card:rgba(255,255,255,.85);--bg-card-hover:rgba(255,255,255,.95);
+  --bg-primary:#f5f2eb;--bg-secondary:#ece8df;--bg-card:rgba(255,255,255,.85);--bg-card-hover:rgba(255,255,255,.95);--bg-overlay:#ffffff;
   --bg-input:rgba(0,0,0,.04);--border-subtle:rgba(0,0,0,.1);
   --text-primary:#1a1a1a;--text-secondary:rgba(0,0,0,.62);--text-tertiary:rgba(0,0,0,.48);
   --shadow-card:0 2px 12px rgba(0,0,0,.08);--shadow-hover:0 8px 24px rgba(0,0,0,.12);
@@ -956,8 +956,9 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 .pol-more-btn:hover{border-color:var(--cyan);color:var(--cyan)}
 .pol-more-btn::after{content:'▾';font-size:.6rem;opacity:.7}
 .pol-more.open .pol-more-btn{border-color:var(--cyan);color:var(--cyan)}
-.pol-more-menu{display:none;position:absolute;right:0;top:calc(100% + 4px);min-width:180px;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius);box-shadow:0 12px 30px rgba(0,0,0,.5);padding:6px;z-index:100;flex-direction:column;gap:2px;max-height:340px;overflow-y:auto}
+.pol-more-menu{display:none;position:absolute;right:0;top:calc(100% + 4px);min-width:180px;background:var(--bg-overlay);border:1px solid var(--border-subtle);border-radius:var(--radius);box-shadow:0 12px 30px rgba(0,0,0,.5);padding:6px;z-index:500;flex-direction:column;gap:2px;max-height:340px;overflow-y:auto}
 .pol-more.open .pol-more-menu{display:flex}
+.pol-more.drop-up .pol-more-menu{top:auto;bottom:calc(100% + 4px)}
 .pol-more-menu button{background:transparent;border:none;color:var(--text-secondary);padding:8px 12px;font-size:.78rem;text-align:left;cursor:pointer;border-radius:var(--radius-sm);min-height:32px;transition:all .15s ease;font-weight:500}
 .pol-more-menu button:hover{background:rgba(0,200,192,.08);color:var(--cyan)}
 .pol-more-menu button.pol-archive{color:#e05c3a;border-top:1px solid var(--border-subtle);margin-top:4px;padding-top:10px}
@@ -3432,7 +3433,7 @@ const Plants={
         h+='<button class="btn btn-ghost btn-sm" onclick="Tasks.openAddModal(\''+m.id+'\')">+ Task</button>';
         h+='<button class="btn btn-ghost btn-sm" onclick="HealthCheck.openForMother(\''+m.id+'\')">&#10084; Health</button>';
         // Overflow menu (rest)
-        h+='<div class="pol-more" onclick="event.stopPropagation();this.classList.toggle(\'open\')">';
+        h+='<div class="pol-more" onclick="event.stopPropagation();_polToggleMore(this)">';
         h+='<button class="pol-more-btn" type="button">More</button>';
         h+='<div class="pol-more-menu" onclick="event.stopPropagation()">';
         h+='<button onclick="Clones.openAddModal(\''+m.id+'\')">&#9986; + Clone</button>';
@@ -17380,8 +17381,23 @@ function init(){
   sMenu.addEventListener('click',function(e){if(!e.target.closest('.smi-group-hdr')){sMenu.classList.remove('open');_syncSettingsAria();}});
   /* Polish: close any open .pol-more (plant-card overflow menus) on outside click */
   document.addEventListener('click',function(e){
-    if(!e.target.closest('.pol-more')) document.querySelectorAll('.pol-more.open').forEach(el=>el.classList.remove('open'));
+    if(!e.target.closest('.pol-more')) document.querySelectorAll('.pol-more.open').forEach(el=>{el.classList.remove('open');el.classList.remove('drop-up');});
   });
+  /* Toggle a plant-card overflow menu, flipping it upward when there isn't room below */
+  window._polToggleMore=function(el){
+    var wasOpen=el.classList.contains('open');
+    document.querySelectorAll('.pol-more.open').forEach(function(o){if(o!==el){o.classList.remove('open');o.classList.remove('drop-up');}});
+    el.classList.remove('drop-up');
+    el.classList.toggle('open');
+    if(!wasOpen){
+      var menu=el.querySelector('.pol-more-menu');
+      if(menu){
+        var btn=el.getBoundingClientRect();
+        var below=window.innerHeight-btn.bottom;
+        if(below < menu.offsetHeight+12 && btn.top > below) el.classList.add('drop-up');
+      }
+    }
+  };
   sMenu.querySelectorAll('.smi-group-hdr').forEach(function(hdr){hdr.addEventListener('click',function(e){e.stopPropagation();this.parentElement.classList.toggle('open')})});
   document.getElementById('appVersion').textContent='v'+APP_VERSION;
   Store.subscribe(()=>{
