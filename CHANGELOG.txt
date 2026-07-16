@@ -5,6 +5,16 @@ https://github.com/magikh0e/PlantManager
 
 v2.24.0 — 2026-07-14
 --------------------
+FIX: iOS reload loop
+
+  Fixed a bug where the app could continuously reload itself on iOS (home-
+  screen / standalone PWA). The service worker auto-activated every update and
+  the page reloaded whenever a new worker took over — a chain that iOS re-
+  triggered on each launch, producing a nonstop reload. Updates are now user-
+  prompted: a new version installs quietly in the background and a "new
+  version available" notice lets you reload when you choose, so you never lose
+  what you were typing.
+
 FEATURE: Plant Cost Breakdown & Archive Reasons
 
   The Strain Comparison tool now breaks cost down by plant outcome. Every

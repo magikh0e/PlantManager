@@ -8330,6 +8330,7 @@ const WhatsNew={
       '<b>Dry amendments in the Nutrient Mix Calculator</b> &mdash; each product row can be measured in tbsp/gal for dry inputs (Epsom salt, cal-mag powder, etc.) alongside ml/gal for liquids',
       '<b>Soil Mix Calculator clarity</b> &mdash; Base Mix and Aeration inputs are now labeled &ldquo;parts by volume,&rdquo; you can measure in cubic feet (cu ft) for bagged soil, and the Tropical Living Soil recipe was rebalanced into a coco-based living soil with biochar for the island climate',
       '<b>Calculator polish</b> &mdash; the DLI calculator clears wattage when Sunlight is selected, and missing unit labels were added (EC in mS/cm, wattage in W)',
+      '<b>Fixed an iOS reload loop</b> &mdash; on iPhone/iPad home-screen installs the app could get stuck reloading itself over and over. Updates are now quiet: a new version installs in the background and a notice lets you reload when you&rsquo;re ready',
     ],
     '2.23.4':[
       '<b>Hardened QR tag scanning</b> &mdash; the QR Lookup decoder now safely escapes every field read from a scanned or pasted tag, so a malformed code can never inject markup',
@@ -17343,13 +17344,21 @@ function init(){
           }
         });
       });
-      var reloaded=false;
-      navigator.serviceWorker.addEventListener('controllerchange',function(){
-        if(reloaded)return;reloaded=true;
-        /* New SW just took control (the user clicked Reload above) —
-           pick up the fresh shell now. */
-        window.location.reload();
-      });
+      /* Reload ONLY when an update the user asked for takes over. Attaching
+         this listener only when a controller ALREADY exists skips the
+         first-ever-install controllerchange (fired by clients.claim() on a
+         fresh install) — which, together with the SW no longer calling
+         skipWaiting() at install time, prevents the iOS reload loop. The
+         `reloaded` flag still guards against a double-reload within a load. */
+      if(navigator.serviceWorker.controller){
+        var reloaded=false;
+        navigator.serviceWorker.addEventListener('controllerchange',function(){
+          if(reloaded)return;reloaded=true;
+          /* New SW just took control (the user clicked Reload) — pick up the
+             fresh shell now. */
+          window.location.reload();
+        });
+      }
     }).catch(function(){});
   }
   Theme.init();

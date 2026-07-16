@@ -29,11 +29,17 @@ var PRECACHE=[
   '/CHANGELOG.txt'
 ];
 
-// Install: precache shell + take over immediately
+// Install: precache shell. Intentionally does NOT call skipWaiting() — a new
+// SW must WAIT rather than auto-activate, so the page can surface a passive
+// "new version available" toast and let the user choose when to swap in (the
+// message handler below skips waiting only when the page posts SKIP_WAITING,
+// i.e. the user clicked Reload). Auto-skipWaiting here, combined with
+// clients.claim() on activate and the page's controllerchange->reload, caused
+// a continuous reload loop on iOS standalone PWAs (each launch re-installed
+// and force-reloaded the shell).
 self.addEventListener('install',function(e){
   e.waitUntil(
     caches.open(CACHE_NAME).then(function(c){return c.addAll(PRECACHE)})
-    .then(function(){return self.skipWaiting()})
   );
 });
 
