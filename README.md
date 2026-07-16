@@ -18,9 +18,11 @@ is stored locally in your browser (`localStorage`), with optional cloud backup
 if you choose to wire up Firebase. Install it to your phone or desktop home
 screen and it works fully offline.
 
-It's built for serious growers who want to track a garden end to end — from
-seed or clone, through veg and flower, to harvest, cure, and the next
-generation — without handing their grow data to a third party.
+**Built by a grower, for growers** — and for anyone who just loves data about
+their grow. It tracks a garden end to end, from seed or clone through veg,
+flower, harvest, and cure to the next generation, then turns all of it into
+charts, trends, and analytics — without ever handing your grow data to a third
+party.
 
 ---
 
@@ -40,20 +42,23 @@ generation — without handing their grow data to a third party.
 - **Seed bank** — inventory tracker with germination rates, age tracking, and
   low-stock alerts
 - **Breeding / pollen tracker** — pollen collections, crosses, and seed harvests
+- **Pheno hunt** — run and score phenotype hunts across a seed batch, rank the keepers
+- **Plant nicknames & auto-numbering** — name individual plants, or auto-number
+  duplicates that share a strain
 
 ### Care & monitoring
 - **Task scheduling** — one-time and recurring care tasks with priorities,
   overdue/due-today highlighting, and auto-advancing due dates
 - **Feeding / nutrient log** — track nutrients, amounts, pH in/out, EC/PPM, and
-  pH-drift warnings; built-in catalog of 76 products across 10 brands
-- **Feed schedule templates** — built-in (GH Flora, Fox Farm, Gaia Green, KNF)
-  plus custom template builder; apply a schedule to a plant as tasks
+  pH-drift warnings; a deep built-in product catalog across the major nutrient lines
+- **Feed schedule templates** — built-in (GH Flora, Fox Farm, Gaia Green, Down To
+  Earth, KNF) plus custom template builder; apply a schedule to a plant as tasks
 - **Grow environments** — tents, rooms, greenhouses, etc. with dimensions,
   light setup, and per-environment sensor readings
 - **Environment readings** — temp, humidity, light hours, pH, EC/PPM with
   trend sparklines and threshold alerts
 - **IPM log** — pest, disease, and deficiency tracking with severity badges,
-  treatment efficacy, reapplication reminders, and a 51-treatment catalog
+  treatment efficacy, reapplication reminders, and a 50+ treatment catalog
 - **Pest identification** — photo-based ID via Google Cloud Vision (optional)
   or Google Lens fallback, plus a built-in visual pest guide
 - **Photo journal** — visual timeline of grow photos linked to plant and stage
@@ -67,7 +72,7 @@ generation — without handing their grow data to a third party.
 - **Trichome harvest tracker** — clear/cloudy/amber percentages with
   harvest-window recommendations
 - **Dry-back tracking** — saturation monitoring and "time to water" estimates
-- **Analytics tab** — 33 charts and tables, all pure inline SVG: yield over
+- **Analytics tab** — over a dozen charts and data tables, all pure inline SVG: yield over
   time, yield by strain, cost per gram, strain ROI ranking, environment ↔
   outcome correlations, feeding/training → yield correlations, and more
 - **Cost tracker** — expenses across categories with cost-efficiency analytics
@@ -79,6 +84,15 @@ generation — without handing their grow data to a third party.
 - **DLI / light calculator** (PPFD + photoperiod)
 - **KNF input calculator** (10 Korean Natural Farming inputs)
 - **Soil mix calculator** (4 recipes + custom builder)
+- **Nutrient mix calculator** — dosing in ml/gal (liquids) and tbsp/gal (dry amendments)
+- **Medium fill calculator** — soil volume to fill a bed, pot, or tent (cu ft / gal / L)
+- **CO₂ calculator** — target injection by room volume
+- **Power / electricity cost calculator**
+- **Crop-steering log** (generative vs vegetative)
+- **Terpene profiles** + a **KNF ferment tracker** (log FPJ/FAA/LAB batches & timing)
+- **Companion planting guide** + **nutrient-availability pH chart**
+- **Unit converter** + **harvest forecast** (projected dates & yields)
+- **Strain comparison** — cost, yield, cost-per-gram, and money lost on dead plants
 - **Nutrient deficiency wizard** (3-step diagnostic tree)
 - **Grow cycle templates** (4 built-in lifecycle plans)
 - **Moon phase tracker** (offline algorithmic, with KNF/biodynamic guidance)
@@ -91,6 +105,9 @@ generation — without handing their grow data to a third party.
 - **Grow calendar** — month grid with per-day events and lunar guidance
 - **Daily snapshot** — auto-generated daily report (optional auto-save)
 - **Guided setup wizard** for first-run onboarding
+- **Command palette** (Ctrl/Cmd+K) — fuzzy-search 80+ actions from anywhere
+- **Shareable tool links** — copy a deep link (e.g. `?tool=vpd`) that opens
+  straight into a calculator or tool, some carrying your input values
 
 ---
 
@@ -100,6 +117,9 @@ generation — without handing their grow data to a third party.
 Open the **[live app](https://tracker.tropicalrootsmaui.com/)** in any modern
 browser. On mobile or desktop, use your browser's "Install" / "Add to Home
 Screen" option to install it as an app for offline use.
+
+New here? Add `?demo` to the URL (or **Setup → Load demo data**) to explore a
+fully-populated garden first — nothing is saved until you clear the demo.
 
 ### Run it yourself
 Because it's a single static file, hosting is trivial:
@@ -176,7 +196,7 @@ gracefully falls back to Google Lens and the built-in pest guide without a key.
 ## Tech notes
 
 - **Single file.** The entire app is `index.html` — markup, styles, and a single
-  IIFE of vanilla JavaScript organized into ~70 modules.
+  IIFE of vanilla JavaScript organized into ~85 modules.
 - **No dependencies, no build.** No frameworks, no bundler, no npm install. All
   charts and QR codes are generated with hand-rolled inline SVG.
 - **PWA.** A service worker caches the app shell and assets for offline use; a
