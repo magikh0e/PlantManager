@@ -72,7 +72,7 @@ third party.
 - **Trichome harvest tracker:** clear/cloudy/amber percentages with
   harvest-window recommendations
 - **Dry-back tracking:** saturation monitoring and "time to water" estimates
-- **Analytics tab:** over a dozen charts and data tables, all pure inline SVG:
+- **Analytics tab:** 30+ charts and data tables, all pure inline SVG:
   yield over time, yield by strain, cost per gram, strain ROI ranking,
   environment ↔ outcome correlations, feeding/training → yield correlations,
   and more
