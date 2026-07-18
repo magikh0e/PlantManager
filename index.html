@@ -9190,12 +9190,12 @@ const SetupWizard={
 
     /* ── IPM events (mix of active + resolved) ────────────────── */
     [
-      {motherId:M.mahina,daysAgo:5,issueType:'pest',pest:'Spider mites',severity:'moderate',treatment:'Neem oil spray',reapply:3,resolved:false},
-      {motherId:M.pele,daysAgo:25,issueType:'pest',pest:'Fungus gnats',severity:'mild',treatment:'BTi mosquito dunks',reapply:7,resolved:true,resolvedDaysAgo:18},
-      {motherId:M.lehua,daysAgo:40,issueType:'disease',pest:'Powdery mildew',severity:'mild',treatment:'Potassium bicarbonate',reapply:5,resolved:true,resolvedDaysAgo:32},
-      {motherId:M.kainoa,daysAgo:15,issueType:'deficiency',pest:'Calcium deficiency',severity:'mild',treatment:'CalMag supplement',reapply:0,resolved:true,resolvedDaysAgo:8},
-      {motherId:M.hoku,daysAgo:55,issueType:'pest',pest:'Thrips',severity:'moderate',treatment:'Spinosad',reapply:7,resolved:true,resolvedDaysAgo:48},
-      {motherId:M.mahina,daysAgo:2,issueType:'deficiency',pest:'Nitrogen deficiency',severity:'mild',treatment:'Bumped EC to 1.4',reapply:0,resolved:false}
+      {motherId:M.mahina,daysAgo:5,issueType:'pest',pest:'Spider mites',severity:'medium',treatment:'Neem oil spray',reapply:3,resolved:false},
+      {motherId:M.pele,daysAgo:25,issueType:'pest',pest:'Fungus gnats',severity:'low',treatment:'BTi mosquito dunks',reapply:7,resolved:true,resolvedDaysAgo:18},
+      {motherId:M.lehua,daysAgo:40,issueType:'disease',pest:'Powdery mildew',severity:'low',treatment:'Potassium bicarbonate',reapply:5,resolved:true,resolvedDaysAgo:32},
+      {motherId:M.kainoa,daysAgo:15,issueType:'deficiency',pest:'Calcium deficiency',severity:'low',treatment:'CalMag supplement',reapply:0,resolved:true,resolvedDaysAgo:8},
+      {motherId:M.hoku,daysAgo:55,issueType:'pest',pest:'Thrips',severity:'medium',treatment:'Spinosad',reapply:7,resolved:true,resolvedDaysAgo:48},
+      {motherId:M.mahina,daysAgo:2,issueType:'deficiency',pest:'Nitrogen deficiency',severity:'low',treatment:'Bumped EC to 1.4',reapply:0,resolved:false}
     ].forEach(i=>{
       const id=U.id('ipm');
       Store._data.ipmLogs[id]={
