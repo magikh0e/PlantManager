@@ -26,6 +26,27 @@ third party.
 
 ---
 
+## Screenshots
+
+<table>
+  <tr>
+    <td><img src="docs/screenshots/dashboard.png" width="200" alt="Dashboard with stat cards"></td>
+    <td><img src="docs/screenshots/plants.png" width="200" alt="Plants and genetics"></td>
+    <td><img src="docs/screenshots/analytics.png" width="200" alt="Analytics charts"></td>
+    <td><img src="docs/screenshots/calculators.png" width="200" alt="KNF input calculator"></td>
+  </tr>
+  <tr>
+    <td align="center"><sub>Dashboard</sub></td>
+    <td align="center"><sub>Plants &amp; genetics</sub></td>
+    <td align="center"><sub>Analytics</sub></td>
+    <td align="center"><sub>KNF calculator</sub></td>
+  </tr>
+</table>
+
+Shown with the built-in demo garden (Hawaiian heritage landraces). Try it live: [tracker.tropicalrootsmaui.com/?demo](https://tracker.tropicalrootsmaui.com/?demo)
+
+---
+
 ## Features
 
 ### Plants & genetics
