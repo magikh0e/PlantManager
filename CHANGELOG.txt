@@ -3,6 +3,36 @@ CHANGELOG — Tropical Roots Maui - Plant Manager
 https://github.com/magikh0e/PlantManager
 
 
+v2.25.1 — 2026-07-18
+--------------------
+FIX: VPD Trends chart drew a flat line
+
+  The VPD Trends chart on the Analytics tab read the VPD calculator's result
+  as an object (r.vpd) when it returns a plain number, so every point plotted
+  as zero and the line lay flat on the axis. It now reads the value directly
+  and plots real VPD from your environment readings. Affected every user with
+  environment data, not just the demo.
+
+POLISH: Analytics default range now 90 days
+
+  The default analytics time window was 30 days, too short for month-long grow
+  cycles, so yield-over-time and cost trends often showed too little to be
+  useful. Default is now 90 days (still adjustable per chart view).
+
+FIX: Demo data completeness
+
+  Several Analytics charts showed empty states in the demo garden because the
+  demo fixture wrote values the app doesn't use. Corrected so the demo now
+  fully populates:
+  - Feeding EC fields (ecIn/ecOut -> ecPpmIn/ecPpmOut) for Feeding EC/PPM
+    Drift and Feeding -> Yield
+  - Per-plant dry-back pot config for DryBack Curves
+  - IPM severity (mild/moderate -> low/medium) for IPM Issue Overview
+  - Harvest cure status (cured -> complete) and seed type
+    (Regular/Auto -> regular/autoflower)
+  - Environment and water temperatures stored in Fahrenheit (the app's unit)
+    so VPD and temperature trends compute correctly
+
 v2.25.0 — 2026-07-17
 --------------------
 FEATURE: Hawaiian Heritage Landraces

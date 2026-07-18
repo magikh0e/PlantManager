@@ -2,7 +2,7 @@
 // Bump CACHE_VERSION on every release that ships a meaningful HTML/CSS/JS
 // change. The activate handler purges every other trm-pm-* cache, so the
 // old shell (and stale index.html) gets evicted on the next page load.
-var CACHE_VERSION='2.25.0';
+var CACHE_VERSION='2.25.1';
 var CACHE_NAME='trm-pm-v'+CACHE_VERSION;
 
 // Network-first fetches give the network ~3s before falling back to cache.

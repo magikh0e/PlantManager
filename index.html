@@ -66,7 +66,7 @@
   "description": "Track mother plants, clones, care schedules, and grow room conditions. A complete cannabis cultivation management tool.",
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "Any",
-  "softwareVersion": "2.25.0",
+  "softwareVersion": "2.25.1",
   "screenshot": "https://tracker.tropicalrootsmaui.com/play-store-screenshot-1.png",
   "featureList": [
     "Mother plant and clone tracking",
@@ -1619,7 +1619,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 (function(){
 'use strict';
 
-const APP_VERSION = '2.25.0';
+const APP_VERSION = '2.25.1';
 
 /* ═══════════════════════════════════════════════
    UTILS
@@ -8331,6 +8331,11 @@ window.DemoData=DemoData;
    ═══════════════════════════════════════════════ */
 const WhatsNew={
   _notes:{
+    '2.25.1':[
+      '<b>VPD Trends chart fixed</b> &mdash; the VPD Trends line on the Analytics tab was drawing flat on zero for everyone. It now plots real values from your environment readings',
+      '<b>Analytics default range is now 90 days</b> &mdash; a better fit for month-long grow cycles, so yield and cost trends have room to show',
+      '<b>Demo data completeness</b> &mdash; several Analytics charts (DryBack Curves, Feeding &rarr; Yield, EC/PPM Drift, Yield Over Time, IPM Overview) now populate correctly in the demo garden',
+    ],
     '2.25.0':[
       '<b>Hawaiian heritage strains</b> &mdash; the catalog gains a Hawaiian Heritage Landraces block: Hawaiian Sativa, Kaua\'i Electric, Puna Buddaz, Maui Wowie (Landrace), Hawai\'i \'78, Moloka\'i Purpz, and The Blood, with origin lore and flavors',
       '<b>Hawaiian demo garden</b> &mdash; the demo now grows the heritage lineup end to end: all six demo mothers, the seed bank, the Hawai\'i \'78 pheno hunt, and the Wowie x Purpz breeding cross',
