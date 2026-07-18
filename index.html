@@ -6594,7 +6594,7 @@ window.Strains=Strains;
    ANALYTICS / CHARTS
    ═══════════════════════════════════════════════ */
 const Analytics={
-  _dateRange:'30',
+  _dateRange:'90',
   _envFilter:'all',
   _plantFilter:'all',
 
@@ -9143,8 +9143,8 @@ const SetupWizard={
           waterVolume:1,waterUnit:'gal',
           phIn:Number((isFlower?6.2:6.0).toFixed(1)),
           phOut:Number(((isFlower?6.4:6.3)+drift).toFixed(1)),
-          ecIn:isFlower?1.7:1.2,
-          ecOut:Number(((isFlower?1.9:1.4)+drift*0.2).toFixed(2)),
+          ecPpmIn:isFlower?1.7:1.2,
+          ecPpmOut:Number(((isFlower?1.9:1.4)+drift*0.2).toFixed(2)),
           waterSource:'Filtered',
           notes:'(demo)',
           timestamp:TS(d),
@@ -9157,6 +9157,7 @@ const SetupWizard={
     feedSchedule(M.pele,'Maui Wowie','veg',60,2,5);
     feedSchedule(M.mahina,'Kaua\'i Electric','veg',30,2,5);
     feedSchedule(M.leilani,'The Blood','veg',18,1,5);
+    feedSchedule(M.hoku,'Moloka\'i Purpz','flower',90,36,6);
 
     /* ── Harvests (5 records across 3 strains so Strain Compare works) ─ */
     const harvestData=[
@@ -9269,6 +9270,7 @@ const SetupWizard={
 
     /* ── Dry-back weights (for trend chart) ───────────────────── */
     [M.pele,M.lehua,M.kainoa].forEach(mid=>{
+      Store._data.settings['dryBackConfig_'+mid]={saturatedWeight:530,dryWeight:400,potSize:'5 gal'};
       [10,8,6,4,2].forEach((d,i)=>{
         const id=U.id('db');
         const w=520-i*18-Math.floor(Math.random()*15);
