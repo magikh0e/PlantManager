@@ -9228,7 +9228,7 @@ const SetupWizard={
       for(let d=21;d>=0;d-=2){
         const id=U.id('elg');
         const isFlower=envId===E.flowerRoom;
-        const baseT=isFlower?23:25,baseH=isFlower?52:62;
+        const baseT=isFlower?73:77,baseH=isFlower?52:62;
         Store._data.envLogs[id]={
           id,environmentId:envId,timestamp:TS(d),
           temperature:Number((baseT+(Math.random()-0.5)*2).toFixed(1)),
@@ -9357,10 +9357,10 @@ const SetupWizard={
 
     /* ── Water logs ───────────────────────────────────────────── */
     [
-      {daysAgo:30,source:'Tap',ph:7.6,ec:0.5,tds:340,alk:135,cl:0.6,t:18},
-      {daysAgo:14,source:'Tap',ph:7.4,ec:0.5,tds:350,alk:130,cl:0.5,t:18},
-      {daysAgo:7,source:'RO',ph:6.5,ec:0.0,tds:5,alk:0,cl:0,t:20},
-      {daysAgo:1,source:'Filtered',ph:6.9,ec:0.2,tds:120,alk:60,cl:0.1,t:19}
+      {daysAgo:30,source:'Tap',ph:7.6,ec:0.5,tds:340,alk:135,cl:0.6,t:64},
+      {daysAgo:14,source:'Tap',ph:7.4,ec:0.5,tds:350,alk:130,cl:0.5,t:65},
+      {daysAgo:7,source:'RO',ph:6.5,ec:0.0,tds:5,alk:0,cl:0,t:68},
+      {daysAgo:1,source:'Filtered',ph:6.9,ec:0.2,tds:120,alk:60,cl:0.1,t:66}
     ].forEach(w=>{
       const id=U.id('wl');
       Store._data.waterLogs[id]={id,date:D(w.daysAgo),source:w.source,ph:w.ph,ec:w.ec,tds:w.tds,alkalinity:w.alk,chlorine:w.cl,temperature:w.t,notes:'(demo)',timestamp:TS(w.daysAgo)};
@@ -13909,7 +13909,7 @@ const VPDCalc={
     if(logs.length<2) return '';
     logs.sort(function(a,b){return a.timestamp-b.timestamp});
     var self=this;
-    var ds=[{label:'VPD (kPa)',color:'var(--cyan)',values:logs.map(function(l){var r=self.calculate(l.temperature,l.humidity,-2);return{x:l.timestamp,y:r?r.vpd:0}})}];
+    var ds=[{label:'VPD (kPa)',color:'var(--cyan)',values:logs.map(function(l){var r=self.calculate(l.temperature,l.humidity,-2);return{x:l.timestamp,y:(typeof r==='number'?r:0)}})}];
     var labels=logs.map(function(l){return new Date(l.timestamp).toLocaleDateString('en-US',{month:'short',day:'numeric'})});
     var h='<div class="card chart-card" style="padding:var(--space-md)"><div class="chart-title">&#127790; VPD Trends</div>';
     h+=Chart.line(ds,{width:540,height:200,xLabels:labels,showDots:logs.length<=20,yMin:0,yMax:2.0});
