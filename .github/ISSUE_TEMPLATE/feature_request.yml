@@ -1,0 +1,37 @@
+name: Feature request
+description: Suggest a tool, improvement, or idea for Plant Manager
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Ideas from real grows are where the best features come from. No idea is too small.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do?
+      description: Describe the grow task or situation where the app falls short.
+      placeholder: "When I ... I want to ... but the app ..."
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: What would you like to see?
+      description: Describe the feature or change you have in mind. Rough ideas welcome.
+    validations:
+      required: true
+  - type: dropdown
+    id: grow-style
+    attributes:
+      label: Your grow style (helps prioritize)
+      options:
+        - Soil / living soil
+        - Coco / salts
+        - Hydro
+        - Outdoor / greenhouse
+        - KNF / natural farming
+        - Mixed / other
+    validations:
+      required: false
