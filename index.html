@@ -66,7 +66,7 @@
   "description": "Track mother plants, clones, care schedules, and grow room conditions. A complete cannabis cultivation management tool.",
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "Any",
-  "softwareVersion": "2.24.0",
+  "softwareVersion": "2.25.0",
   "screenshot": "https://tracker.tropicalrootsmaui.com/play-store-screenshot-1.png",
   "featureList": [
     "Mother plant and clone tracking",
@@ -1619,7 +1619,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 (function(){
 'use strict';
 
-const APP_VERSION = '2.24.0';
+const APP_VERSION = '2.25.0';
 
 /* ═══════════════════════════════════════════════
    UTILS
@@ -2994,7 +2994,7 @@ const Dashboard={
     'Switch between light and dark themes using the moon icon in the header.',
     'Clone batches track success rates that feed back to each mother plant\u2019s card.',
     'Star ratings on harvests help you compare quality across different grows.',
-    'The Browse Catalog in Strains has 370+ entries including six Hawaiian heritage landraces \u2014 use the breeder filter to narrow results.',
+    'The Browse Catalog in Strains has 370+ entries including the Hawaiian heritage landraces \u2014 use the breeder filter to narrow results.',
     'Set up Weather in the header to auto-fill temperature and humidity when logging environment readings.',
     'Use Cloud Sync to back up your data to Firebase \u2014 never lose your grow records if the browser is cleared.',
     'The Moon Phase tracker shows KNF planting guidance for each lunar phase \u2014 click the moon widget on the dashboard for details.',
@@ -8331,6 +8331,12 @@ window.DemoData=DemoData;
    ═══════════════════════════════════════════════ */
 const WhatsNew={
   _notes:{
+    '2.25.0':[
+      '<b>Hawaiian heritage strains</b> &mdash; the catalog gains a Hawaiian Heritage Landraces block: Hawaiian Sativa, Kaua\'i Electric, Puna Buddaz, Maui Wowie (Landrace), Hawai\'i \'78, Moloka\'i Purpz, and The Blood, with origin lore and flavors',
+      '<b>Hawaiian demo garden</b> &mdash; the demo now grows the heritage lineup end to end: all six demo mothers, the seed bank, the Hawai\'i \'78 pheno hunt, and the Wowie x Purpz breeding cross',
+      '<b>Storage protection</b> &mdash; the app now asks your browser to shield its data from eviction (helps iPhone home-screen installs especially). About shows &ldquo;storage protected&rdquo; when granted',
+      '<b>Plant-card More menu fixed</b> &mdash; solid background so cards behind it can\'t bleed through, and it flips upward near the bottom of the list instead of running off-screen',
+    ],
     '2.24.0':[
       '<b>New Medium Fill Calculator</b> &mdash; work out how much soil a bed, pot, or tent footprint needs (a 4&times;4&times;18&Prime; bed = 24 cu ft) in cubic feet, gallons, or liters, plus how many bags to buy &mdash; then send the volume straight into the Soil Mix Calculator',
       '<b>Shareable tool links</b> &mdash; most of the app&rsquo;s tools (30+) now have a Share button that copies a deep link (e.g. <code>?tool=soilmix</code>) so you can send someone straight into the tool &mdash; every calculator, the growing tools (Strain/Plant Compare, Harvest Forecast, Grow Cycles &amp; Runs, Crop Steering, Terpene Profiles, Pheno Hunt, Ferment Tracker, Seed Bank, and more), and the diagnostic tools. VPD, DLI, Medium Fill, and KNF even carry your input values, so you can share a worked calculation',

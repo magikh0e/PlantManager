@@ -3,6 +3,41 @@ CHANGELOG — Tropical Roots Maui - Plant Manager
 https://github.com/magikh0e/PlantManager
 
 
+v2.25.0 — 2026-07-17
+--------------------
+FEATURE: Hawaiian Heritage Landraces
+
+  The strain catalog gains a Hawaiian Heritage Landraces block: Hawaiian
+  Sativa, Kaua'i Electric, Puna Buddaz, Maui Wowie (Landrace), Hawai'i '78,
+  Moloka'i Purpz, and The Blood, with type, origin lore, and flavors where
+  documented.
+
+  The demo garden now grows this lineup end to end. All six demo mothers
+  (Maui Wowie through The Blood), the strain library, the seed bank, the
+  pheno hunt (now the Hawai'i '78 Seed Run), the breeding crosses (Wowie x
+  Purpz F1), terpene profiles, and the activity log are island-grown.
+
+FEATURE: Storage Protection
+
+  On load the app asks the browser to protect its stored data from eviction
+  (navigator.storage.persist). Installed PWAs on Chromium get this granted
+  automatically; on iOS it reduces the chance Safari clears local data under
+  disk pressure. About shows "storage protected" when granted. Backups are
+  still recommended; this is a shield, not a substitute.
+
+FIX: Plant-card More menu readability
+
+  The overflow menu on plant cards used a translucent background, so cards
+  behind it bled through and made menu items hard to read. It now uses an
+  opaque surface, sits above neighboring cards, and flips upward when there
+  is no room below so it never runs off-screen.
+
+POLISH: Tips & counts
+
+  Dashboard tips corrected: the Analytics tip now says over thirty charts
+  (was fourteen), the strain-catalog tip reflects 370+ entries and the new
+  landraces, and the feed-schedule tip includes Down To Earth.
+
 v2.24.0 — 2026-07-14
 --------------------
 FIX: iOS reload loop

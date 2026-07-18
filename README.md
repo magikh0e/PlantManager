@@ -37,7 +37,7 @@ third party.
 - **Strain library:** personal genetics database with type, breeder, lineage,
   flowering time, THC/CBD, terpenes, effects, flavors, and yield
 - **Strain catalog:** 370+ built-in strains across multiple breeders and clone
-  providers, including six Hawaiian heritage landraces, with autocomplete on
+  providers, including the Hawaiian heritage landraces, with autocomplete on
   every strain-name input
 - **Strain reviews:** 1–5 star grow journals per strain with photos
 - **Seed bank:** inventory tracker with germination rates, age tracking, and
