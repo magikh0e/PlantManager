@@ -8756,7 +8756,7 @@ const About={
     let h='';
     h+='<div style="text-align:center;margin-bottom:var(--space-md)">';
     h+='<div style="font-size:1.4rem;font-weight:700;color:var(--text-primary);margin-bottom:4px">Plant Manager</div>';
-    h+='<div style="font-size:.78rem;color:var(--text-tertiary);letter-spacing:.04em">v'+APP_VERSION+(installed?' &middot; installed PWA':'')+'</div>';
+    h+='<div style="font-size:.78rem;color:var(--text-tertiary);letter-spacing:.04em">v'+APP_VERSION+(installed?' &middot; installed PWA':'')+(window._storagePersisted===true?' &middot; storage protected':'')+'</div>';
     h+='<div style="font-size:.72rem;color:var(--text-tertiary);margin-top:4px">by <a href="https://www.tropicalrootsmaui.com" target="_blank" rel="noopener" style="color:var(--cyan)">Tropical Roots Maui</a></div>';
     h+='</div>';
     h+='<p style="font-size:.85rem;color:var(--text-secondary);line-height:1.6;margin:0 0 var(--space-md) 0">A no-server, no-analytics, no-ads cannabis cultivation tracker. Your data stays on your device unless you opt into Cloud Sync.</p>';
@@ -9059,12 +9059,12 @@ const SetupWizard={
     /* ── Strains ──────────────────────────────────────────────── */
     const S={};
     const strainData=[
-      ['blueDream','Blue Dream','hybrid','DJ Short','Blueberry x Haze',65],
-      ['ogKush','OG Kush','indica','Ghost Genetics','Chemdawg x Hindu Kush',63],
-      ['sourD','Sour Diesel','sativa','Reservoir','Chemdawg x Super Skunk',70],
-      ['gdp','Granddaddy Purple','indica','Ken Estes','Mendo Purps x Skunk',58],
-      ['weddingCake','Wedding Cake','hybrid','Seed Junky','Triangle Kush x Animal Mints',60],
-      ['northernLights','Northern Lights','indica','Sensi Seeds','Afghani x Thai',55]
+      ['blueDream','Maui Wowie','sativa','Hawaiian Landrace','Original Maui landrace, 80/20 sativa',70],
+      ['ogKush','Puna Buddaz','indica','Hawaiian Landrace','Big Island landrace, rainy Puna district',63],
+      ['sourD','Kaua\'i Electric','sativa','Hawaiian Landrace','Kaua\'i landrace, slopes of Mt. Wai\'ale\'ale',70],
+      ['gdp','Moloka\'i Purpz','indica','Hawaiian Landrace','Moloka\'i sea-cliff landrace, purple-hued',60],
+      ['weddingCake','Hawai\'i \'78','hybrid','Hawaiian Landrace','Wa\'ahole heritage strain',60],
+      ['northernLights','The Blood','sativa','Hawaiian Landrace','Rare heirloom tied to Kona Gold, red bloodline',75]
     ];
     strainData.forEach(s=>{
       const id=U.id('str');S[s[0]]=id;
@@ -9075,17 +9075,17 @@ const SetupWizard={
     const M={};
     const baseMom={archived:false,notes:'(demo)'};
     M.pele=U.id('mom');
-    Store._data.mothers[M.pele]=Object.assign({},baseMom,{id:M.pele,strainId:S.blueDream,strainName:'Blue Dream',strainType:'hybrid',breeder:'DJ Short',nickname:'Pele',healthStatus:'thriving',growthStage:'vegetative',source:'seed',environmentId:E.vegTent,dateAcquired:D(95),createdAt:TS(95),photo:photo('B','#4a9e52')});
+    Store._data.mothers[M.pele]=Object.assign({},baseMom,{id:M.pele,strainId:S.blueDream,strainName:'Maui Wowie',strainType:'sativa',breeder:'Hawaiian Landrace',nickname:'Pele',healthStatus:'thriving',growthStage:'vegetative',source:'seed',environmentId:E.vegTent,dateAcquired:D(95),createdAt:TS(95),photo:photo('M','#4a9e52')});
     M.lehua=U.id('mom');
-    Store._data.mothers[M.lehua]=Object.assign({},baseMom,{id:M.lehua,strainId:S.ogKush,strainName:'OG Kush',strainType:'indica',breeder:'Ghost Genetics',nickname:'Lehua',healthStatus:'healthy',growthStage:'flowering',source:'seed',environmentId:E.flowerRoom,dateAcquired:D(85),createdAt:TS(85),floweringStart:D(45),photo:photo('O','#9b6bb5')});
+    Store._data.mothers[M.lehua]=Object.assign({},baseMom,{id:M.lehua,strainId:S.ogKush,strainName:'Puna Buddaz',strainType:'indica',breeder:'Hawaiian Landrace',nickname:'Lehua',healthStatus:'healthy',growthStage:'flowering',source:'seed',environmentId:E.flowerRoom,dateAcquired:D(85),createdAt:TS(85),floweringStart:D(45),photo:photo('P','#9b6bb5')});
     M.mahina=U.id('mom');
-    Store._data.mothers[M.mahina]=Object.assign({},baseMom,{id:M.mahina,strainId:S.sourD,strainName:'Sour Diesel',strainType:'sativa',breeder:'Reservoir',nickname:'Mahina',healthStatus:'stressed',growthStage:'vegetative',source:'clone',environmentId:E.vegTent,dateAcquired:D(35),createdAt:TS(35),photo:photo('S','#e8721a')});
+    Store._data.mothers[M.mahina]=Object.assign({},baseMom,{id:M.mahina,strainId:S.sourD,strainName:'Kaua\'i Electric',strainType:'sativa',breeder:'Hawaiian Landrace',nickname:'Mahina',healthStatus:'stressed',growthStage:'vegetative',source:'clone',environmentId:E.vegTent,dateAcquired:D(35),createdAt:TS(35),photo:photo('K','#e8721a')});
     M.hoku=U.id('mom');
-    Store._data.mothers[M.hoku]=Object.assign({},baseMom,{id:M.hoku,strainId:S.gdp,strainName:'Granddaddy Purple',strainType:'indica',breeder:'Ken Estes',nickname:'Hoku',healthStatus:'healthy',growthStage:'mature',source:'seed',environmentId:E.momTent,dateAcquired:D(180),createdAt:TS(180),photo:photo('G','#6b3d8a')});
+    Store._data.mothers[M.hoku]=Object.assign({},baseMom,{id:M.hoku,strainId:S.gdp,strainName:'Moloka\'i Purpz',strainType:'indica',breeder:'Hawaiian Landrace',nickname:'Hoku',healthStatus:'healthy',growthStage:'mature',source:'seed',environmentId:E.momTent,dateAcquired:D(180),createdAt:TS(180),photo:photo('M','#6b3d8a')});
     M.kainoa=U.id('mom');
-    Store._data.mothers[M.kainoa]=Object.assign({},baseMom,{id:M.kainoa,strainId:S.weddingCake,strainName:'Wedding Cake',strainType:'hybrid',breeder:'Seed Junky',nickname:'Kainoa',healthStatus:'healthy',growthStage:'flowering',source:'clone',environmentId:E.flowerRoom,dateAcquired:D(70),createdAt:TS(70),floweringStart:D(50),photo:photo('W','#f0b429')});
+    Store._data.mothers[M.kainoa]=Object.assign({},baseMom,{id:M.kainoa,strainId:S.weddingCake,strainName:'Hawai\'i \'78',strainType:'hybrid',breeder:'Hawaiian Landrace',nickname:'Kainoa',healthStatus:'healthy',growthStage:'flowering',source:'clone',environmentId:E.flowerRoom,dateAcquired:D(70),createdAt:TS(70),floweringStart:D(50),photo:photo('H','#f0b429')});
     M.leilani=U.id('mom');
-    Store._data.mothers[M.leilani]=Object.assign({},baseMom,{id:M.leilani,strainId:S.northernLights,strainName:'Northern Lights',strainType:'indica',breeder:'Sensi Seeds',nickname:'Leilani',healthStatus:'healthy',growthStage:'vegetative',source:'clone',parentMotherId:M.pele,environmentId:E.vegTent,dateAcquired:D(20),createdAt:TS(20),photo:photo('N','#2d6e35')});
+    Store._data.mothers[M.leilani]=Object.assign({},baseMom,{id:M.leilani,strainId:S.northernLights,strainName:'The Blood',strainType:'sativa',breeder:'Hawaiian Landrace',nickname:'Leilani',healthStatus:'healthy',growthStage:'vegetative',source:'clone',parentMotherId:M.pele,environmentId:E.vegTent,dateAcquired:D(20),createdAt:TS(20),photo:photo('B','#2d6e35')});
 
     /* ── Clones ───────────────────────────────────────────────── */
     [
@@ -9146,11 +9146,11 @@ const SetupWizard={
         };
       }
     };
-    feedSchedule(M.lehua,'OG Kush','flower',45,2,4);
-    feedSchedule(M.kainoa,'Wedding Cake','flower',50,3,4);
-    feedSchedule(M.pele,'Blue Dream','veg',60,2,5);
-    feedSchedule(M.mahina,'Sour Diesel','veg',30,2,5);
-    feedSchedule(M.leilani,'Northern Lights','veg',18,1,5);
+    feedSchedule(M.lehua,'Puna Buddaz','flower',45,2,4);
+    feedSchedule(M.kainoa,'Hawai\'i \'78','flower',50,3,4);
+    feedSchedule(M.pele,'Maui Wowie','veg',60,2,5);
+    feedSchedule(M.mahina,'Kaua\'i Electric','veg',30,2,5);
+    feedSchedule(M.leilani,'The Blood','veg',18,1,5);
 
     /* ── Harvests (5 records across 3 strains so Strain Compare works) ─ */
     const harvestData=[
@@ -9177,9 +9177,9 @@ const SetupWizard={
 
     /* ── Terpene profiles on cured harvests (feeds the radar chart) ─ */
     const TP=(hid,mid,strain,thc,cbd,terps,effects,aroma,score,daysAgo)=>{const id=U.id('tp');Store._data.terpProfiles[id]={id,harvestId:hid,motherId:mid,strainName:strain,thcPct:thc,cbdPct:cbd,terpenes:terps,effects:effects,aromas:aroma,score:score,timestamp:TS(daysAgo)};};
-    TP(HV[1],M.lehua,'OG Kush',22,0.3,[{name:'Myrcene',pct:1.2},{name:'Limonene',pct:0.8},{name:'Caryophyllene',pct:0.6},{name:'Linalool',pct:0.4},{name:'Pinene',pct:0.3},{name:'Humulene',pct:0.2}],['Relaxing','Euphoric','Pain Relief'],'Earthy pine, lemon peel, and a fuel finish.',4,19);
-    TP(HV[2],M.hoku,'Granddaddy Purple',20,0.5,[{name:'Myrcene',pct:1.5},{name:'Caryophyllene',pct:0.7},{name:'Linalool',pct:0.6},{name:'Pinene',pct:0.3},{name:'Humulene',pct:0.3},{name:'Bisabolol',pct:0.2}],['Relaxing','Sedating','Appetite'],'Grape candy, dark berry, sweet musk.',5,33);
-    TP(HV[3],M.pele,'Blue Dream',21,0.2,[{name:'Myrcene',pct:1.0},{name:'Pinene',pct:0.7},{name:'Limonene',pct:0.6},{name:'Caryophyllene',pct:0.5},{name:'Terpinolene',pct:0.3},{name:'Ocimene',pct:0.2}],['Uplifting','Creative','Euphoric'],'Blueberry over sweet haze, faint herbal pine.',4,58);
+    TP(HV[1],M.lehua,'Puna Buddaz',22,0.3,[{name:'Myrcene',pct:1.2},{name:'Limonene',pct:0.8},{name:'Caryophyllene',pct:0.6},{name:'Linalool',pct:0.4},{name:'Pinene',pct:0.3},{name:'Humulene',pct:0.2}],['Relaxing','Euphoric','Pain Relief'],'Sweet island butter, hash, ripe papaya.',4,19);
+    TP(HV[2],M.hoku,'Moloka\'i Purpz',20,0.5,[{name:'Myrcene',pct:1.5},{name:'Caryophyllene',pct:0.7},{name:'Linalool',pct:0.6},{name:'Pinene',pct:0.3},{name:'Humulene',pct:0.3},{name:'Bisabolol',pct:0.2}],['Relaxing','Sedating','Appetite'],'Grape candy, dark berry, sweet musk.',5,33);
+    TP(HV[3],M.pele,'Maui Wowie',21,0.2,[{name:'Myrcene',pct:1.0},{name:'Pinene',pct:0.7},{name:'Limonene',pct:0.6},{name:'Caryophyllene',pct:0.5},{name:'Terpinolene',pct:0.3},{name:'Ocimene',pct:0.2}],['Uplifting','Creative','Euphoric'],'Tropical citrus over sweet haze, faint pine.',4,58);
 
     /* ── IPM events (mix of active + resolved) ────────────────── */
     [
@@ -9202,14 +9202,14 @@ const SetupWizard={
 
     /* ── Journal photos (multiple per plant for Photo Compare) ─ */
     const photoSchedule=[
-      {motherId:M.lehua,daysAgo:50,stage:'vegetative',color:'#4a9e52',label:'O'},
-      {motherId:M.lehua,daysAgo:35,stage:'flowering',color:'#9b6bb5',label:'O'},
-      {motherId:M.lehua,daysAgo:14,stage:'flowering',color:'#6b3d8a',label:'O'},
-      {motherId:M.kainoa,daysAgo:55,stage:'vegetative',color:'#4a9e52',label:'W'},
-      {motherId:M.kainoa,daysAgo:30,stage:'flowering',color:'#f0b429',label:'W'},
-      {motherId:M.kainoa,daysAgo:5,stage:'flowering',color:'#e8721a',label:'W'},
-      {motherId:M.pele,daysAgo:30,stage:'vegetative',color:'#4a9e52',label:'B'},
-      {motherId:M.pele,daysAgo:5,stage:'vegetative',color:'#2d6e35',label:'B'}
+      {motherId:M.lehua,daysAgo:50,stage:'vegetative',color:'#4a9e52',label:'P'},
+      {motherId:M.lehua,daysAgo:35,stage:'flowering',color:'#9b6bb5',label:'P'},
+      {motherId:M.lehua,daysAgo:14,stage:'flowering',color:'#6b3d8a',label:'P'},
+      {motherId:M.kainoa,daysAgo:55,stage:'vegetative',color:'#4a9e52',label:'H'},
+      {motherId:M.kainoa,daysAgo:30,stage:'flowering',color:'#f0b429',label:'H'},
+      {motherId:M.kainoa,daysAgo:5,stage:'flowering',color:'#e8721a',label:'H'},
+      {motherId:M.pele,daysAgo:30,stage:'vegetative',color:'#4a9e52',label:'M'},
+      {motherId:M.pele,daysAgo:5,stage:'vegetative',color:'#2d6e35',label:'M'}
     ];
     photoSchedule.forEach(p=>{
       const id=U.id('ph');
@@ -9252,10 +9252,10 @@ const SetupWizard={
 
     /* ── Strain reviews ───────────────────────────────────────── */
     [
-      {strainId:S.blueDream,rating:5,difficulty:'Easy',yieldRating:'High',time:'65 days',method:'Soil',effects:'Balanced, creative',terps:'Berry, pine',tips:'Loves topping'},
-      {strainId:S.ogKush,rating:4,difficulty:'Medium',yieldRating:'Medium',time:'63 days',method:'Coco',effects:'Heavy, relaxing',terps:'Lemon, fuel',tips:'Watch for PM in late flower'},
-      {strainId:S.gdp,rating:5,difficulty:'Easy',yieldRating:'High',time:'58 days',method:'Soil',effects:'Sedating',terps:'Grape, candy',tips:'Cold nights pull purple'},
-      {strainId:S.weddingCake,rating:4,difficulty:'Medium',yieldRating:'Medium',time:'60 days',method:'Living soil',effects:'Euphoric',terps:'Vanilla, pepper',tips:'Stake the colas — heavy buds'}
+      {strainId:S.blueDream,rating:5,difficulty:'Easy',yieldRating:'High',time:'70 days',method:'Living soil',effects:'Uplifting, creative',terps:'Tropical fruit, pine',tips:'Loves topping and island sun'},
+      {strainId:S.ogKush,rating:4,difficulty:'Medium',yieldRating:'Medium',time:'63 days',method:'Coco',effects:'Heavy, relaxing',terps:'Sweet hash, earth',tips:'Handles humidity — bred for rain'},
+      {strainId:S.gdp,rating:5,difficulty:'Easy',yieldRating:'High',time:'58 days',method:'Soil',effects:'Sedating',terps:'Grape, dark berry',tips:'Cold nights pull deep purple'},
+      {strainId:S.weddingCake,rating:4,difficulty:'Medium',yieldRating:'Medium',time:'60 days',method:'Living soil',effects:'Euphoric',terps:'Citrus, spice',tips:'Stake the colas — heavy buds'}
     ].forEach(r=>{
       const id=U.id('rv');
       Store._data.strainReviews[id]={id,strainId:r.strainId,rating:r.rating,difficulty:r.difficulty,yieldRating:r.yieldRating,actualFlowerTime:r.time,growMethod:r.method,effects:r.effects,terps:r.terps,growTips:r.tips,notes:'(demo)',photo:'',timestamp:TS(20),createdAt:TS(20),updatedAt:TS(20)};
@@ -9276,7 +9276,7 @@ const SetupWizard={
       {date:D(95),category:'Lights',description:'200W LED panel',amount:249.0,motherId:''},
       {date:D(75),category:'Nutrients',description:'GH Flora Trio',amount:42.50,motherId:''},
       {date:D(60),category:'Soil',description:'Coots living soil 1.5cu ft',amount:65.0,motherId:''},
-      {date:D(45),category:'Seeds',description:'Wedding Cake 5pk',amount:120.0,motherId:M.kainoa},
+      {date:D(45),category:'Seeds',description:'Hawai\'i \'78 seed pack',amount:120.0,motherId:M.kainoa},
       {date:D(30),category:'Nutrients',description:'CalMag + bloom booster',amount:35.20,motherId:''},
       {date:D(20),category:'Electricity',description:'Monthly grow share',amount:48.0,motherId:''},
       {date:D(8),category:'Pest Control',description:'Neem oil + spinosad',amount:28.75,motherId:M.mahina}
@@ -9287,9 +9287,9 @@ const SetupWizard={
 
     /* ── Seeds (Seed Bank) ────────────────────────────────────── */
     [
-      {strainName:'Blue Dream',breeder:'DJ Short',count:8,fem:'Feminized',source:'Seedsman',daysAgo:120,germ:90},
-      {strainName:'Wedding Cake',breeder:'Seed Junky',count:2,fem:'Feminized',source:'Local breeder',daysAgo:90,germ:100},
-      {strainName:'Northern Lights',breeder:'Sensi Seeds',count:12,fem:'Regular',source:'Sensi',daysAgo:200,germ:80},
+      {strainName:'Maui Wowie',breeder:'Hawaiian Landrace',count:8,fem:'Regular',source:'Sacred Grove',daysAgo:120,germ:90},
+      {strainName:'Hawai\'i \'78',breeder:'Hawaiian Landrace',count:2,fem:'Regular',source:'Sacred Grove',daysAgo:90,germ:100},
+      {strainName:'Hawaiian Sativa',breeder:'Hawaiian Landrace',count:12,fem:'Regular',source:'Sacred Grove',daysAgo:200,germ:80},
       {strainName:'Auto Critical',breeder:'Royal Queen',count:5,fem:'Auto',source:'RQS',daysAgo:60,germ:0}
     ].forEach(s=>{
       const id=U.id('sd');
@@ -9365,8 +9365,8 @@ const SetupWizard={
 
     /* ── Breeding logs (cross + seed harvest for lineage tree) ─ */
     const bl1=U.id('breed'),bl2=U.id('breed');
-    Store._data.breedingLogs[bl1]={id:bl1,type:'cross',motherId:M.pele,fatherId:M.hoku,date:D(70),storageMethod:'Paper envelope',seedCount:0,strainName:'BD x GDP F1',notes:'(demo)',timestamp:TS(70)};
-    Store._data.breedingLogs[bl2]={id:bl2,type:'seed_harvest',motherId:M.pele,fatherId:M.hoku,date:D(15),storageMethod:'Mylar bag',seedCount:42,strainName:'BD x GDP F1',notes:'(demo)',timestamp:TS(15)};
+    Store._data.breedingLogs[bl1]={id:bl1,type:'cross',motherId:M.pele,fatherId:M.hoku,date:D(70),storageMethod:'Paper envelope',seedCount:0,strainName:'Wowie x Purpz F1',notes:'(demo)',timestamp:TS(70)};
+    Store._data.breedingLogs[bl2]={id:bl2,type:'seed_harvest',motherId:M.pele,fatherId:M.hoku,date:D(15),storageMethod:'Mylar bag',seedCount:42,strainName:'Wowie x Purpz F1',notes:'(demo)',timestamp:TS(15)};
 
     /* ── Pheno Hunt: active seed run with 4 scored phenotypes ──── */
     /* SR builds a scoring round; sc = [vigor,structure,aroma,resin,
@@ -9379,7 +9379,7 @@ const SetupWizard={
     phenos[PT3]={id:PT3,label:'Pheno #3 — Balanced',status:'pending',motherId:'',notes:'Middle of the pack across the board so far.',photo:'',scoringRounds:[SR(4,33,[3,3,3,3,3,3,3,3],'Nothing stands out yet')]};
     phenos[PT4]={id:PT4,label:'Pheno #4 — Runt',status:'eliminate',motherId:'',notes:'Slow growth, weak roots, mildew-prone. Culled.',photo:'',scoringRounds:[SR(3,40,[2,2,2,2,2,1,2,2],'Struggling early'),SR(5,26,[2,2,3,2,2,1,2,2],'PM spots — eliminating')]};
     const PH=U.id('pheno');
-    Store._data.phenoHunts[PH]={id:PH,name:'Wedding Cake Seed Run',strainName:'Wedding Cake',strainId:S.weddingCake,environmentId:E.vegTent,startDate:D(60),endDate:'',status:'active',notes:'8 seeds popped — hunting a frost-forward keeper to run as a mother.',phenotypes:phenos,createdAt:TS(60),updatedAt:TS(5)};
+    Store._data.phenoHunts[PH]={id:PH,name:'Hawai\'i \'78 Seed Run',strainName:'Hawai\'i \'78',strainId:S.weddingCake,environmentId:E.vegTent,startDate:D(60),endDate:'',status:'active',notes:'8 seeds popped — hunting a frost-forward keeper to run as a mother.',phenotypes:phenos,createdAt:TS(60),updatedAt:TS(5)};
 
     /* ── PPFD light map + a saved soil recipe ─────────────────── */
     const pmId=U.id('ppfd');
@@ -9390,20 +9390,20 @@ const SetupWizard={
     /* ── Activity log: enough entries to populate Recent Activity ─ */
     if(!Array.isArray(Store._data.activityLog)) Store._data.activityLog=[];
     const acts=[
-      [180,'plant_added','Added mother: Granddaddy Purple — Hoku'],
-      [95,'plant_added','Added mother: Blue Dream — Pele'],
-      [85,'plant_added','Added mother: OG Kush — Lehua'],
-      [70,'breeding','Cross: Blue Dream × Granddaddy Purple'],
-      [60,'harvest','Harvested Blue Dream — 69g dry'],
+      [180,'plant_added','Added mother: Moloka\'i Purpz — Hoku'],
+      [95,'plant_added','Added mother: Maui Wowie — Pele'],
+      [85,'plant_added','Added mother: Puna Buddaz — Lehua'],
+      [70,'breeding','Cross: Maui Wowie × Moloka\'i Purpz'],
+      [60,'harvest','Harvested Maui Wowie — 69g dry'],
       [45,'flower','Lehua entered flowering'],
-      [40,'pheno','Started pheno hunt: Wedding Cake Seed Run'],
-      [35,'plant_added','Added mother: Sour Diesel — Mahina'],
+      [40,'pheno','Started pheno hunt: Hawai\'i \'78 Seed Run'],
+      [35,'plant_added','Added mother: Kaua\'i Electric — Mahina'],
       [25,'training','Topped Pele above node 5'],
-      [21,'harvest','Harvested OG Kush — 62g dry'],
-      [20,'plant_added','Added mother: Northern Lights — Leilani'],
-      [18,'clone','Cloned 8 cuttings from Blue Dream'],
-      [15,'breeding','Seed harvest: BD × GDP F1 — 42 seeds'],
-      [10,'clone','Cloned 6 cuttings from Wedding Cake'],
+      [21,'harvest','Harvested Puna Buddaz — 62g dry'],
+      [20,'plant_added','Added mother: The Blood — Leilani'],
+      [18,'clone','Cloned 8 cuttings from Maui Wowie'],
+      [15,'breeding','Seed harvest: Wowie × Purpz F1 — 42 seeds'],
+      [10,'clone','Cloned 6 cuttings from Hawai\'i \'78'],
       [5,'ipm','Logged spider mites on Mahina'],
       [3,'feeding','Fed Lehua (Bloom A+B)'],
       [1,'health','Health check on Mahina: 2/5'],
@@ -17316,6 +17316,17 @@ window.BatchFeed=BatchFeed;
    ═══════════════════════════════════════════════ */
 function init(){
   Store.load();
+  /* Ask the browser to protect this origin's storage from eviction — iOS
+     Safari and desktop browsers can purge site data under disk pressure,
+     which would silently wipe a grower's localStorage. Chromium grants this
+     outright for installed PWAs; elsewhere it's free insurance. Result is
+     surfaced in About ("storage protected"). */
+  if(navigator.storage&&navigator.storage.persist){
+    navigator.storage.persisted()
+      .then(function(p){return p||navigator.storage.persist();})
+      .then(function(p){window._storagePersisted=!!p;})
+      .catch(function(){});
+  }
   if('serviceWorker' in navigator){
     navigator.serviceWorker.register('/service-worker.js').then(function(reg){
       /* Check for updates immediately on every load. When a new SW is
