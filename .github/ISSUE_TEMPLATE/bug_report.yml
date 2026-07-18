@@ -1,0 +1,68 @@
+name: Bug report
+description: Something broke or looks wrong in Plant Manager
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Mahalo for taking the time to report this. A couple of details below make most bugs fixable fast, often same-day.
+  - type: input
+    id: version
+    attributes:
+      label: App version
+      description: Open the gear menu, tap About, and copy the version line (for example v2.24.0).
+      placeholder: v2.24.0
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options:
+        - Android app (Play Store)
+        - iPhone / iPad (Safari or Home Screen app)
+        - Desktop browser
+        - Self-hosted copy
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and OS
+      placeholder: "Chrome 138 on Windows 11, Safari on iOS 26.5, etc."
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what happened instead? Screenshots help a lot.
+      placeholder: "I tapped ... and expected ... but instead ..."
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open the Plants tab
+        2. Tap ...
+        3. See the error
+    validations:
+      required: false
+  - type: textarea
+    id: console
+    attributes:
+      label: Console errors (optional)
+      description: "Desktop: press F12, click Console, and paste anything red. Skip this on mobile."
+      render: text
+    validations:
+      required: false
+  - type: checkboxes
+    id: data-note
+    attributes:
+      label: Data check
+      options:
+        - label: I have a current backup export of my data (recommended before troubleshooting)
+          required: false

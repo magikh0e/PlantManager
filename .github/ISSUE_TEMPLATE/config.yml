@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Try the live demo
+    url: https://tracker.tropicalrootsmaui.com/?demo
+    about: See the app with realistic data loaded. No signup, no install.
+  - name: Help guide
+    url: https://tracker.tropicalrootsmaui.com/PlantManagerHelp.html
+    about: Full guide to every tab, tool, and calculator, with an FAQ.
