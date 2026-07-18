@@ -9162,10 +9162,10 @@ const SetupWizard={
     /* ── Harvests (5 records across 3 strains so Strain Compare works) ─ */
     const harvestData=[
       {motherId:M.lehua,strainId:S.ogKush,daysAgo:90,wet:215,dry:52,quality:4,fStart:155,fEnd:90,trim:'wet',cure:'curing'},
-      {motherId:M.lehua,strainId:S.ogKush,daysAgo:21,wet:240,dry:62,quality:4,fStart:84,fEnd:21,trim:'wet',cure:'cured'},
-      {motherId:M.hoku,strainId:S.gdp,daysAgo:35,wet:310,dry:78,quality:5,fStart:93,fEnd:35,trim:'wet',cure:'cured'},
-      {motherId:M.pele,strainId:S.blueDream,daysAgo:60,wet:285,dry:69,quality:4,fStart:125,fEnd:60,trim:'dry',cure:'cured'},
-      {motherId:M.pele,strainId:S.blueDream,daysAgo:130,wet:265,dry:65,quality:5,fStart:195,fEnd:130,trim:'wet',cure:'cured'}
+      {motherId:M.lehua,strainId:S.ogKush,daysAgo:21,wet:240,dry:62,quality:4,fStart:84,fEnd:21,trim:'wet',cure:'complete'},
+      {motherId:M.hoku,strainId:S.gdp,daysAgo:35,wet:310,dry:78,quality:5,fStart:93,fEnd:35,trim:'wet',cure:'complete'},
+      {motherId:M.pele,strainId:S.blueDream,daysAgo:60,wet:285,dry:69,quality:4,fStart:125,fEnd:60,trim:'dry',cure:'complete'},
+      {motherId:M.pele,strainId:S.blueDream,daysAgo:130,wet:265,dry:65,quality:5,fStart:195,fEnd:130,trim:'wet',cure:'complete'}
     ];
     const HV=[];
     harvestData.forEach(h=>{
@@ -9174,7 +9174,7 @@ const SetupWizard={
         id,motherId:h.motherId,strainId:h.strainId,environmentId:E.flowerRoom,
         harvestDate:D(h.daysAgo),floweringStart:D(h.fStart),floweringEnd:D(h.fEnd),
         trimType:h.trim,wetWeight:h.wet,dryWeight:h.dry,
-        cureMethod:'jar',cureStatus:h.cure,cureStart:D(h.daysAgo-1),cureEnd:h.cure==='cured'?D(h.daysAgo-21):'',
+        cureMethod:'jar',cureStatus:h.cure,cureStart:D(h.daysAgo-1),cureEnd:h.cure==='complete'?D(h.daysAgo-21):'',
         quality:h.quality,qualityScore:h.quality,
         storageLocation:'Pantry shelf',terps:'Pine, citrus',flavorNotes:'Sweet finish',
         photo:'',notes:'(demo)',cureLog:[],
@@ -9295,10 +9295,10 @@ const SetupWizard={
 
     /* ── Seeds (Seed Bank) ────────────────────────────────────── */
     [
-      {strainName:'Maui Wowie',breeder:'Hawaiian Landrace',count:8,fem:'Regular',source:'Sacred Grove',daysAgo:120,germ:90},
-      {strainName:'Hawai\'i \'78',breeder:'Hawaiian Landrace',count:2,fem:'Regular',source:'Sacred Grove',daysAgo:90,germ:100},
-      {strainName:'Hawaiian Sativa',breeder:'Hawaiian Landrace',count:12,fem:'Regular',source:'Sacred Grove',daysAgo:200,germ:80},
-      {strainName:'Auto Critical',breeder:'Royal Queen',count:5,fem:'Auto',source:'RQS',daysAgo:60,germ:0}
+      {strainName:'Maui Wowie',breeder:'Hawaiian Landrace',count:8,fem:'regular',source:'Sacred Grove',daysAgo:120,germ:90},
+      {strainName:'Hawai\'i \'78',breeder:'Hawaiian Landrace',count:2,fem:'regular',source:'Sacred Grove',daysAgo:90,germ:100},
+      {strainName:'Hawaiian Sativa',breeder:'Hawaiian Landrace',count:12,fem:'regular',source:'Sacred Grove',daysAgo:200,germ:80},
+      {strainName:'Auto Critical',breeder:'Royal Queen',count:5,fem:'autoflower',source:'RQS',daysAgo:60,germ:0}
     ].forEach(s=>{
       const id=U.id('sd');
       Store._data.seeds[id]={id,strainName:s.strainName,breeder:s.breeder,seedCount:s.count,femOrReg:s.fem,source:s.source,datePurchased:D(s.daysAgo),germinationRate:s.germ,notes:'(demo)',createdAt:TS(s.daysAgo)};
