@@ -249,6 +249,14 @@ See [CHANGELOG.txt](CHANGELOG.txt) for full version history.
 
 ---
 
+## Support
+
+Free and open-source, built and maintained in my own time, with no accounts, tracking, or ads. If it has made your grow a little easier, a coffee is always appreciated and helps keep it going.
+
+<a href="https://buymeacoffee.com/magikh0e"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy me a coffee" height="42"></a>
+
+---
+
 ## License
 
 Released under the **GNU General Public License v3.0 or later**
