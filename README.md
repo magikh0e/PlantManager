@@ -1,8 +1,8 @@
 # Tropical Roots Maui: Plant Manager
 
-A complete, single-file cultivation management app for tracking mother plants,
-clones, feedings, environments, harvests, genetics, and more. No accounts, no
-analytics, no ads. Your data stays on your device.
+A single-file cultivation management app for tracking mother plants, clones,
+feedings, environments, harvests, and genetics. No accounts, no analytics, no
+ads. Your data stays on your device.
 
 **Live app:** https://tracker.tropicalrootsmaui.com/
 **Latest release:** [see the Releases page](https://github.com/magikh0e/PlantManager/releases/latest)
@@ -12,17 +12,16 @@ analytics, no ads. Your data stays on your device.
 
 ## What it is
 
-Plant Manager is a **Progressive Web App** shipped as one self-contained
+Plant Manager is a progressive web app shipped as one self-contained
 `index.html` file. There is no server, no build step, and no sign-up. All data
 is stored locally in your browser (`localStorage`), with optional cloud backup
 if you choose to wire up Firebase. Install it to your phone or desktop home
 screen and it works fully offline.
 
-**Built by a grower, for growers**, and for anyone who just loves data about
-their grow. It tracks a garden end to end, from seed or clone through veg,
-flower, harvest, and cure to the next generation, then turns all of it into
-charts, trends, and analytics, all without ever handing your grow data to a
-third party.
+Built by a grower, for growers, and for anyone who likes data about their
+plants. It follows a garden from seed or clone through veg, flower, harvest,
+and cure, then on to the next generation, and turns the whole record into
+charts and analytics. None of it leaves your device.
 
 ---
 
@@ -72,7 +71,7 @@ Shown with the built-in demo garden (Hawaiian heritage landraces). Try it live: 
 - **Task scheduling:** one-time and recurring care tasks with priorities,
   overdue/due-today highlighting, and auto-advancing due dates
 - **Feeding / nutrient log:** track nutrients, amounts, pH in/out, EC/PPM, and
-  pH-drift warnings; a deep built-in product catalog across the major nutrient lines
+  pH-drift warnings; a large built-in product catalog across the major nutrient lines
 - **Feed schedule templates:** built-in (GH Flora, Fox Farm, Gaia Green, Down To
   Earth, KNF) plus custom template builder; apply a schedule to a plant as tasks
 - **Grow environments:** tents, rooms, greenhouses, etc. with dimensions,
@@ -157,7 +156,7 @@ python -m http.server 8080
 # then open http://localhost:8080
 ```
 
-Or simply open `index.html` directly in a browser. (A local server is
+Or open `index.html` directly in a browser. (A local server is
 recommended so the service worker and PWA install prompt work correctly.)
 
 To self-host, upload the contents of the repo to any static web host. There is
@@ -212,7 +211,7 @@ All integrations are off by default and the app works fully without them.
 | **Google Cloud Vision** | Photo-based pest/disease ID | Free-tier API key (1,000 img/mo) |
 
 Keys are entered in-app (gear menu → settings) and stored locally. Pest ID
-gracefully falls back to Google Lens and the built-in pest guide without a key.
+falls back to Google Lens and the built-in pest guide when there's no key.
 
 ---
 
