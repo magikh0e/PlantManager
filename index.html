@@ -13085,7 +13085,7 @@ const MediumCalc={
     const shapeEl=document.getElementById('mcShape');if(!shapeEl)return;
     this._shape=shapeEl.value;
     const dims=document.getElementById('mcDims');if(!dims)return;
-    const get=id=>{const el=document.getElementById(id);return el?el.value:''};
+    const get=id=>{const el=document.getElementById(id);return el?U.esc(el.value):''};
     /* Dimension inputs call _calc (not _render) so typing doesn't rebuild and
        steal focus; only a shape change rebuilds this block. */
     if(this._shape==='rect'){
@@ -14462,7 +14462,7 @@ const NutrientCalc={
       h+='<td style="text-align:right;padding:4px 8px;border-top:1px solid var(--border-subtle);font-weight:700;color:var(--cyan)">'+r.needed+' '+ul+'</td></tr>';
     });
     h+='</tbody></table>';
-    h+='<div class="nmc-total">Total EC: '+totalEc+' PPM &middot; '+volume+' '+unit+'</div>';
+    h+='<div class="nmc-total">Total EC: '+totalEc+' PPM &middot; '+volume+' '+U.esc(unit)+'</div>';
     if(totalEc>targetEc) h+='<div class="nmc-warn">&#9888; Total EC ('+totalEc+') exceeds target ('+targetEc+')</div>';
     if(totalEc>0&&totalEc<targetEc) h+='<div style="font-size:.72rem;color:var(--text-tertiary);margin-top:var(--space-xs)">'+Math.round(totalEc/targetEc*100)+'% of target EC</div>';
     h+='</div>';
@@ -16466,7 +16466,7 @@ const CropSteer={
       h+='<div style="font-size:.68rem;color:var(--text-tertiary);margin-top:4px">Dry-back: '+p.targetDb+'<br>Irrigations: '+p.irrigations+'</div></div>';
     });
     h+='</div>';
-    h+='<button class="btn btn-primary btn-sm" onclick="CropSteer.openLog(\''+mid+'\')">+ Log Entry</button>';
+    h+='<button class="btn btn-primary btn-sm" onclick="CropSteer.openLog(\''+U.esc(mid)+'\')">+ Log Entry</button>';
     if(logs.length){
       h+='<div style="margin-top:var(--space-md)">';
       h+=this._trendChart(logs);
