@@ -66,7 +66,7 @@
   "description": "Free, open-source cannabis grow journal. Track mothers, clones, feedings, environments and harvests with 30+ charts. Works offline, no account, your data stays yours.",
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "Any",
-  "softwareVersion": "2.25.1",
+  "softwareVersion": "2.25.2",
   "screenshot": "https://tracker.tropicalrootsmaui.com/play-store-screenshot-1.png",
   "featureList": [
     "Mother plant and clone tracking",
@@ -1619,7 +1619,7 @@ body{background:var(--bg-primary);color:var(--text-primary);min-height:100vh;tra
 (function(){
 'use strict';
 
-const APP_VERSION = '2.25.1';
+const APP_VERSION = '2.25.2';
 
 /* ═══════════════════════════════════════════════
    UTILS
@@ -8331,6 +8331,9 @@ window.DemoData=DemoData;
    ═══════════════════════════════════════════════ */
 const WhatsNew={
   _notes:{
+    '2.25.2':[
+      '<b>Security hardening</b>: the Medium Fill, Nutrient Mix, and Crop Steering tools now escape values read back from their own inputs before displaying them, closing a cross-site-scripting path a crafted data import could have used. Nothing changes in normal use',
+    ],
     '2.25.1':[
       '<b>VPD Trends chart fixed</b> &mdash; the VPD Trends line on the Analytics tab was drawing flat on zero for everyone. It now plots real values from your environment readings',
       '<b>Analytics default range is now 90 days</b> &mdash; a better fit for month-long grow cycles, so yield and cost trends have room to show',

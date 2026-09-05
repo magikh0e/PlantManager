@@ -3,6 +3,17 @@ CHANGELOG — Tropical Roots Maui - Plant Manager
 https://github.com/magikh0e/PlantManager
 
 
+v2.25.2 — 2026-09-05
+--------------------
+SEC: Escape DOM-derived values before rendering
+
+  Hardened three calculators that re-read a live input or dropdown value and
+  wrote it back into the page: the Medium Fill dimension fields, the Nutrient
+  Mix volume unit, and the Crop Steering plant selector. Each value is now
+  HTML-escaped first, closing a cross-site-scripting path a crafted data
+  import could otherwise have used. No change to normal use. Resolves the
+  CodeQL js/xss-through-dom findings.
+
 v2.25.1 — 2026-07-18
 --------------------
 FIX: VPD Trends chart drew a flat line
