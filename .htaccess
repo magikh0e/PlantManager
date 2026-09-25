@@ -1,0 +1,280 @@
+# ENABLE DIRECTORY VIEWS
+Options +Indexes
+
+AddType image/svg+xml svg svgz
+AddEncoding gzip svgz
+ErrorDocument 404 /404.html
+
+# STRONG HTACCESS PROTECTION
+<Files ~ "^.*\.([Hh][Tt][Aa])">
+  <IfVersion < 2.3>
+    order allow,deny
+    deny from all
+  </IfVersion>
+  <IfVersion >= 2.3>
+    Require all denied
+  </IfVersion>
+</Files>
+
+# DIRECTORY CUSTOMIZATION
+<IfModule mod_autoindex.c>
+
+  # SET INDEX OPTIONS
+  IndexOptions IgnoreCase FancyIndexing HTMLTable SuppressHTMLPreamble FoldersFirst VersionSort NameWidth=* DescriptionWidth=* XHTML IconHeight=16 IconWidth=16
+
+  # Other options.
+  # IconsAreLinks SuppressColumnSorting
+
+  # SET DISPLAY ORDER
+  IndexOrderDefault Ascending Name
+
+  IndexStyleSheet /fancy-index/style.css
+
+  # SPECIFY HEADER FILE
+  HeaderName /fancy-index/header.html
+
+  # SPECIFY FOOTER FILE
+  ReadmeName /fancy-index/footer.html
+
+  # IGNORE THESE FILES
+  IndexIgnoreReset ON
+  IndexIgnore .ftpquota .DS_Store .git fancy-index
+
+  # DEFAULT ICON
+  DefaultIcon /fancy-index/icons/file-text.svg
+
+  AddIcon /fancy-index/icons/back.svg ..
+  AddIcon /fancy-index/icons/github.svg .github
+  AddIcon /fancy-index/icons/nodejs.svg node_modules
+  AddIcon /fancy-index/icons/file-directory.svg ^^DIRECTORY^^
+
+  # SPECIFIC FILE ICONS
+  # https://github.com/file-icons/source
+  AddIcon /fancy-index/icons/file-binary.svg .com .exe
+  AddIcon /fancy-index/icons/file-code.svg .c .h .mustache .rust .source .apache .yml .jade
+  AddIcon /fancy-index/icons/file-media.svg .png .jpg .jpeg .webp .gif .bmp .mp4 .webm .ogv .mov .ico
+  AddIcon /fancy-index/icons/file-pdf.svg .pdf
+  AddIcon /fancy-index/icons/file-text.svg .txt .srt README readme Procfile
+  AddIcon /fancy-index/icons/file-zip.svg .zip .z .gz .Z .tgz .tar.gz .tar .rar
+  AddIcon /fancy-index/icons/gear.svg .htaccess .env .env-dev .env-production .env-staging
+  AddIcon /fancy-index/icons/config.svg .conf .ini .cfg .prefs
+  AddIcon /fancy-index/icons/less.svg .less
+  AddIcon /fancy-index/icons/css.svg .css
+  AddIcon /fancy-index/icons/html.svg .html .htm
+  AddIcon /fancy-index/icons/coffee.svg .coffee
+  AddIcon /fancy-index/icons/java.svg .java
+  AddIcon /fancy-index/icons/markdown.svg .markdown .md
+  AddIcon /fancy-index/icons/eslint.svg *.eslintignore *.eslintrc.js *.eslintrc.json *.eslintrc *.eslintrc.yml
+  AddIcon /fancy-index/icons/webpack.svg webpack.config.js
+  AddIcon /fancy-index/icons/rollup.svg rollup.config.js
+  AddIcon /fancy-index/icons/postcss.svg postcss.config.js *.postcssrc *.postcssrc.json *.postcssrc.js *.postcssrc.yml
+  AddIcon /fancy-index/icons/grunt.svg gruntfile.js Gruntfile.js
+  AddIcon /fancy-index/icons/gulp.svg gulpfile.js Gulpfile.js
+  AddIcon /fancy-index/icons/js.svg .js
+  AddIcon /fancy-index/icons/composer.svg composer.json composer.lock composer.phar
+  AddIcon /fancy-index/icons/bower.svg bower.json
+  AddIcon /fancy-index/icons/npm.svg package.json package-lock.json
+  AddIcon /fancy-index/icons/settings.svg .json
+  AddIcon /fancy-index/icons/mustache.svg .mustache
+  AddIcon /fancy-index/icons/php.svg .php
+  AddIcon /fancy-index/icons/python.svg .py
+  AddIcon /fancy-index/icons/ruby.svg .rb
+  AddIcon /fancy-index/icons/rust.svg .rust
+  AddIcon /fancy-index/icons/sass.svg .sass
+  AddIcon /fancy-index/icons/scss.svg .scss
+  AddIcon /fancy-index/icons/svg.svg .svg .svgx .eps
+  AddIcon /fancy-index/icons/xml.svg .xml
+  AddIcon /fancy-index/icons/typescript.svg .ts
+  AddIcon /fancy-index/icons/vue.svg .vue
+  AddIcon /fancy-index/icons/yarn.svg yarn.lock
+  AddIcon /fancy-index/icons/babel.svg *.babelrc
+  AddIcon /fancy-index/icons/git.svg *.gitignore *.gitattributes
+  AddIcon /fancy-index/icons/editor-config.svg .editorconfig
+  AddIcon /fancy-index/icons/shopify.svg .liquid
+  AddIcon /fancy-index/icons/nunjucks.svg .nunjucks
+  AddIcon /fancy-index/icons/pug.svg .pug
+  AddIcon /fancy-index/icons/adobe-photoshop.svg .psd
+  AddIcon /fancy-index/icons/adobe-illustrator.svg .ai
+  AddIcon /fancy-index/icons/stylus.svg .styl
+  AddIcon /fancy-index/icons/terminal.svg .sh .bash
+  AddIcon /fancy-index/icons/database.svg .sql .mysql .sqlite .dsql .db
+  AddIcon /fancy-index/icons/vagrant.svg vagrantfile Vagrantfile
+  AddIcon /fancy-index/icons/file-word.svg .doc .docx
+  AddIcon /fancy-index/icons/file-excel.svg .xls .xlsx
+  AddIcon /fancy-index/icons/yaml.svg .yml .yaml
+  AddIcon /fancy-index/icons/brainfuck.svg .b
+  AddIcon /fancy-index/icons/cobol.svg .cbl .cob .cpy
+  AddIcon /fancy-index/icons/docker.svg docker-compose.yml
+  AddIcon /fancy-index/icons/virtualbox.svg .ova .vbox
+  AddIcon /fancy-index/icons/rpm.svg .rpm
+  AddIcon /fancy-index/icons/deb.svg .deb
+
+  # FILE DESCRIPTIONS
+  AddDescription "MPEG Layer 3 Format" .mp3
+  AddDescription "MPEG Layer 4 Format" .mp4
+  AddDescription "SubRip subtitles format" .srt
+  AddDescription "GZIP compressed TAR archive" .tgz .tar.gz
+  AddDescription "GZIP compressed archive" .Z .z .gz .zip
+  AddDescription "RAR compressed archive" .rar
+  AddDescription "TAR compressed archive" .tar
+  AddDescription "ZIP compressed archive" .zip
+  AddDescription "Windows executable file" .exe
+  AddDescription "Common Gateway Interface" .cgi
+  AddDescription "Joint Photographics Experts Group" .jpg .jpeg .jpe
+  AddDescription "Graphic Interchange Format" .gif
+  AddDescription "Portable Network Graphic" .png
+  AddDescription "Vector graphic" .ps .ai .eps
+  AddDescription "Hypertext Markup Language" .html .shtml .htm
+  AddDescription "Cascading Style Sheet" .css
+  AddDescription "DocType Definition" .dtd
+  AddDescription "Extensible Markup Language" .xml
+  AddDescription "Win32 compressed HTML help" .chm
+  AddDescription "Adobe Portable Document Format" .pdf
+  AddDescription "Plain text file" .txt .nfo .faq .readme
+  AddDescription "Unix man page" .man
+  AddDescription "Email data" .eml .mbox
+  AddDescription "Microsoft Word document" .doc .docx
+  AddDescription "Microsoft Excel document" .xls .xlsx
+  AddDescription "PHP: Hypertext Preprocessor script" .php  .php3 .php4
+  AddDescription "PHP: Hypertext Preprocessor source code" .phps
+  AddDescription "JavaScript Object Notation" .json
+  AddDescription "JavaScript" .js
+  AddDescription "Java code"  .java
+  AddDescription "Unix shell script" .sh .shar .csh .ksh .command
+  AddDescription "Mac OS X shell script" .command
+  AddDescription "Configuration file" .conf
+  AddDescription "Mac OS X terminal" .term
+  AddDescription "BitTorrent file" .torrent
+  AddDescription "Windows link" .lnk .url
+  AddDescription "Scalable Vector Graphic" .svg
+  AddDescription "OpenDocument Text" .odt
+  AddDescription "OpenDocument Spreadsheet" .ods
+  AddDescription "OpenDocument Presentation" .odp
+  AddDescription "OpenDocument Graphics" .odg
+  AddDescription "OpenDocument Chart" .odc
+  AddDescription "OpenDocument Formula" .odf
+  AddDescription "OpenDocument Database" .odb
+  AddDescription "OpenDocument Image" .odi
+  AddDescription "OpenDocument Text Master" .odm
+  AddDescription "OpenDocument Text Template" .ott
+  AddDescription "OpenDocument Spreadsheet Template" .ots
+  AddDescription "OpenDocument Presentation Template" .otp
+  AddDescription "OpenDocument Graphics Template" .otg
+  AddDescription "YAML: Yet Another Markup Language" .yaml .yml
+  AddDescription "SASS: Syntactically Awesome Stylesheets" .sass
+  AddDescription "SCSS: Sassy Cascading Style Sheet" .scss
+  AddDescription "Travis configuration" .travis
+  AddDescription "RPM installation package" .rpm
+  AddDescription "Debian installation package" .deb
+
+  # DEFAULT DESCRIPTION
+  # AddDescription "[<span class='description'>Unknown item</span>]" *
+</IfModule>
+# ═══════════════════════════════════════════════════════════════════
+# Tropical Roots Maui — SEO 301 Permanent Redirects
+# Generated by seo-rename.sh
+#
+# HOW TO USE:
+#   Option A: Append to your existing .htaccess file
+#     cat seo-redirects.conf >> /var/www/html/.htaccess
+#
+#   Option B: Include from Apache config (recommended)
+#     Include /var/www/html/seo-redirects.conf
+#
+# These 301 redirects preserve link equity (SEO juice) from
+# any existing backlinks, bookmarks, and search engine indexes
+# pointing to the old URLs.
+# ═══════════════════════════════════════════════════════════════════
+
+RewriteEngine On
+
+# seed-to-sprout-your-first-grow-with-kanehiwa.html → seed-starting-guide.html
+RewriteRule ^KnowledgeBase/cannabis-grow-guides/seed-to-sprout-your-first-grow-with-kanehiwa\.html$ /KnowledgeBase/cannabis-grow-guides/seed-starting-guide.html [R=301,L]
+
+# LSTGuide.html → plant-training-guide.html
+RewriteRule ^KnowledgeBase/cannabis-grow-guides/LSTGuide\.html$ /KnowledgeBase/cannabis-grow-guides/plant-training-guide.html [R=301,L]
+
+# tropical-roots-maui-dli-guide.html → dli-light-schedule-guide.html
+RewriteRule ^KnowledgeBase/cannabis-grow-guides/tropical-roots-maui-dli-guide\.html$ /KnowledgeBase/cannabis-grow-guides/dli-light-schedule-guide.html [R=301,L]
+
+# tropical-roots-maui-temp-humidity-guide.html → temperature-humidity-vpd-guide.html
+RewriteRule ^KnowledgeBase/cannabis-grow-guides/tropical-roots-maui-temp-humidity-guide\.html$ /KnowledgeBase/cannabis-grow-guides/temperature-humidity-vpd-guide.html [R=301,L]
+
+# tropical-roots-maui-grow-tent-guide.html → grow-tent-setup-guide.html
+RewriteRule ^KnowledgeBase/cannabis-grow-guides/tropical-roots-maui-grow-tent-guide\.html$ /KnowledgeBase/cannabis-grow-guides/grow-tent-setup-guide.html [R=301,L]
+
+# tropical-roots-maui-grow-tent-guide_1.html → grow-tent-setup-guide-alt.html
+RewriteRule ^KnowledgeBase/cannabis-grow-guides/tropical-roots-maui-grow-tent-guide_1\.html$ /KnowledgeBase/cannabis-grow-guides/grow-tent-setup-guide-alt.html [R=301,L]
+
+# DIY-Organic-Living-Soil.html → living-soil-guide.html
+RewriteRule ^KnowledgeBase/cannabis-grow-guides/DIY-Organic-Living-Soil\.html$ /KnowledgeBase/cannabis-grow-guides/living-soil-guide.html [R=301,L]
+
+# PlantDeficiencyGuide.html → plant-deficiency-guide.html
+RewriteRule ^KnowledgeBase/cannabis-grow-guides/PlantDeficiencyGuide\.html$ /KnowledgeBase/cannabis-grow-guides/plant-deficiency-guide.html [R=301,L]
+
+# microbial-fortress-sterile-environment-guide.html → microbial-fortress-guide.html
+RewriteRule ^KnowledgeBase/cannabis-grow-guides/microbial-fortress-sterile-environment-guide\.html$ /KnowledgeBase/cannabis-grow-guides/microbial-fortress-guide.html [R=301,L]
+
+# harvest-guide.html → cannabis-harvest-guide.html
+RewriteRule ^KnowledgeBase/cannabis-grow-guides/harvest-guide\.html$ /KnowledgeBase/cannabis-grow-guides/cannabis-harvest-guide.html [R=301,L]
+
+# sacred-cure-guide.html → cannabis-curing-guide.html
+RewriteRule ^KnowledgeBase/cannabis-grow-guides/sacred-cure-guide\.html$ /KnowledgeBase/cannabis-grow-guides/cannabis-curing-guide.html [R=301,L]
+
+# organic-teas-guide.html → compost-tea-guide.html
+RewriteRule ^KnowledgeBase/cannabis-grow-guides/organic-teas-guide\.html$ /KnowledgeBase/cannabis-grow-guides/compost-tea-guide.html [R=301,L]
+
+# cannabis-cloning-guide-multiply-your-mana.html → cannabis-cloning-guide.html
+RewriteRule ^KnowledgeBase/cannabis-grow-guides/cannabis-cloning-guide-multiply-your-mana\.html$ /KnowledgeBase/cannabis-grow-guides/cannabis-cloning-guide.html [R=301,L]
+
+# mother-plant-genetic-preservation-guide.html → mother-plant-guide.html
+RewriteRule ^KnowledgeBase/cannabis-grow-guides/mother-plant-genetic-preservation-guide\.html$ /KnowledgeBase/cannabis-grow-guides/mother-plant-guide.html [R=301,L]
+
+# worm-bin-mastery-guide.html → worm-bin-guide.html
+RewriteRule ^KnowledgeBase/cannabis-grow-guides/worm-bin-mastery-guide\.html$ /KnowledgeBase/cannabis-grow-guides/worm-bin-guide.html [R=301,L]
+
+# autoflower-soil.html → autoflower-soil-guide.html
+RewriteRule ^KnowledgeBase/cannabis-grow-guides/autoflower-soil\.html$ /KnowledgeBase/cannabis-grow-guides/autoflower-soil-guide.html [R=301,L]
+
+# PestIdentificationGuide.html → pest-identification-guide.html
+RewriteRule ^KnowledgeBase/cannabis-grow-guides/PestIdentificationGuide\.html$ /KnowledgeBase/cannabis-grow-guides/pest-identification-guide.html [R=301,L]
+
+# WhiteOilRecipe.html → white-oil-pest-spray-recipe.html
+RewriteRule ^KnowledgeBase/cannabis-grow-guides/WhiteOilRecipe\.html$ /KnowledgeBase/cannabis-grow-guides/white-oil-pest-spray-recipe.html [R=301,L]
+
+# terpene-guide.html → cannabis-terpene-guide.html
+RewriteRule ^KnowledgeBase/cannabis-grow-guides/terpene-guide\.html$ /KnowledgeBase/cannabis-grow-guides/cannabis-terpene-guide.html [R=301,L]
+
+# flavonoid-guide.html → cannabis-flavonoid-guide.html
+RewriteRule ^KnowledgeBase/cannabis-grow-guides/flavonoid-guide\.html$ /KnowledgeBase/cannabis-grow-guides/cannabis-flavonoid-guide.html [R=301,L]
+
+# knf-korean-natural-farming-guide.html → knf-guide.html
+RewriteRule ^KnowledgeBase/knf-series/knf-korean-natural-farming-guide\.html$ /KnowledgeBase/knf-series/knf-guide.html [R=301,L]
+
+# InfusingMCTOil.html → cannabis-coconut-oil-infusion.html
+RewriteRule ^KnowledgeBase/cannabis-recipes/Infusions/InfusingMCTOil\.html$ /KnowledgeBase/cannabis-recipes/Infusions/cannabis-coconut-oil-infusion.html [R=301,L]
+
+# OilStorageLabel.html → oil-storage-label.html
+RewriteRule ^KnowledgeBase/cannabis-recipes/Infusions/OilStorageLabel\.html$ /KnowledgeBase/cannabis-recipes/Infusions/oil-storage-label.html [R=301,L]
+
+# JelloGummies.html → cannabis-gummy-recipe.html
+RewriteRule ^KnowledgeBase/cannabis-recipes/JelloGummies\.html$ /KnowledgeBase/cannabis-recipes/cannabis-gummy-recipe.html [R=301,L]
+
+# LorAnnOilsGummies.html → lorann-gummy-recipe.html
+RewriteRule ^KnowledgeBase/cannabis-recipes/LorAnnOilsGummies\.html$ /KnowledgeBase/cannabis-recipes/lorann-gummy-recipe.html [R=301,L]
+
+# POG-Gummies.html → pog-gummy-recipe.html
+RewriteRule ^KnowledgeBase/cannabis-recipes/POG-Gummies\.html$ /KnowledgeBase/cannabis-recipes/pog-gummy-recipe.html [R=301,L]
+
+# InfusedChocolateBark.html → cannabis-chocolate-bark-recipe.html
+RewriteRule ^KnowledgeBase/cannabis-recipes/InfusedChocolateBark\.html$ /KnowledgeBase/cannabis-recipes/cannabis-chocolate-bark-recipe.html [R=301,L]
+
+# InfusedIslandTea.html → infused-island-tea-recipe.html
+RewriteRule ^KnowledgeBase/cannabis-recipes/InfusedIslandTea\.html$ /KnowledgeBase/cannabis-recipes/infused-island-tea-recipe.html [R=301,L]
+
+# Tropical-Infusion-Coconut-Lemonade.html → infused-coconut-lemonade-recipe.html
+RewriteRule ^KnowledgeBase/cannabis-recipes/Tropical-Infusion-Coconut-Lemonade\.html$ /KnowledgeBase/cannabis-recipes/infused-coconut-lemonade-recipe.html [R=301,L]
+
+# DosageLabel.html → dosage-label.html
+RewriteRule ^KnowledgeBase/cannabis-recipes/DosageLabel\.html$ /KnowledgeBase/cannabis-recipes/dosage-label.html [R=301,L]
+

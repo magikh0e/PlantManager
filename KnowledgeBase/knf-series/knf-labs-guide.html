@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="preload" href="/site-components.css" as="style" onload="this.onload=null;this.rel=&#39;stylesheet&#39;">
+<noscript><link rel="stylesheet" href="/site-components.css"></noscript>
+${link_line}
+<title>Lactic Acid Bacteria (LabS) — Tropical Roots Maui</title>
+<meta name="title" content="Lactic Acid Bacteria (LabS) — Tropical Roots Maui">
+<meta name="description" content="Brew your own Lactic Acid Bacteria serum from rice wash water and milk. The KNF 'Clean-Up Crew' that suppresses disease, cycles nutrients, and supercharges your living soil.">
+<meta name="keywords" content="LabS, lactic acid bacteria, KNF, Korean Natural Farming, rice wash water, probiotic soil drench, powdery mildew, organic cannabis, Tropical Roots Maui, Kānehiwa">
+<meta name="author" content="Tropical Roots Maui">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-labs-guide.html">
+
+<!-- ═══ OPEN GRAPH ═══ -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Tropical Roots Maui">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-labs-guide.html">
+<meta property="og:title" content="Lactic Acid Bacteria (LabS) — Tropical Roots Maui">
+<meta property="og:description" content="Brew the KNF 'Clean-Up Crew' — a powerful probiotic that outcompetes pathogens, breaks down organic matter, and makes nutrients plant-available.">
+<meta property="og:image" content="https://tropicalrootsmaui.com/img/ogimg/knflab.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+
+<!-- ═══ TWITTER ═══ -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@tropicalrootsmaui">
+<meta name="twitter:title" content="Lactic Acid Bacteria (LabS) — Tropical Roots Maui">
+<meta name="twitter:description" content="Brew the KNF 'Clean-Up Crew' — a powerful probiotic serum from rice water and milk.">
+<meta name="twitter:image" content="https://tropicalrootsmaui.com/img/ogimg/knflab.webp">
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black:    #0a0c0a;
+  --dark:     #111a10;
+  --jungle:   #1b3a1e;
+  --green:    #2d6e35;
+  --leaf:     #4a9e52;
+  --cyan:     #00c8c0;
+  --cyan-dim: #00968f;
+  --gold:     #f0b429;
+  --orange:   #e8721a;
+  --cream:    #f4edd8;
+  --sand:     #e0ceaa;
+  --text:     #f0ead8;
+  --muted:    rgba(240,234,216,0.62);
+  --nav-h:    68px;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Lora', serif;
+  background: var(--black); color: var(--text);
+  overflow-x: hidden; min-height: 100vh;
+  display: flex; flex-direction: column;
+}
+body::after {
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9998;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  opacity: 0.5;
+}
+.bg-ambience {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse at 10% 30%, rgba(45,110,53,0.14) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 70%, rgba(0,200,192,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, rgba(240,180,41,0.05) 0%, transparent 45%),
+    linear-gradient(180deg, #0a0c0a 0%, #0c1a0c 50%, #0a0c0a 100%);
+}
+.orb { position: fixed; border-radius: 50%; pointer-events: none; animation: pulse-orb 7s ease-in-out infinite; }
+.orb-1 { width: 500px; height: 500px; top: 10%; right: -150px; background: radial-gradient(circle, rgba(45,110,53,0.12) 0%, transparent 70%); }
+.orb-2 { width: 350px; height: 350px; bottom: 20%; left: -100px; background: radial-gradient(circle, rgba(0,200,192,0.07) 0%, transparent 70%); animation-delay: -3.5s; }
+@keyframes pulse-orb { 0%,100% { transform: scale(1); opacity: 0.6; } 50% { transform: scale(1.1); opacity: 1; } }
+
+main { flex: 1; padding-top: var(--nav-h); position: relative; z-index: 1; }
+
+@keyframes grow-line { from { transform: scaleY(0); opacity: 0; } to { transform: scaleY(1); opacity: 1; } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── HERO ── */
+.recipe-hero { text-align: center; padding: 4.5rem 2rem 3rem; position: relative; }
+.recipe-hero::after {
+  content: ''; display: block; width: 1px; height: 60px;
+  background: linear-gradient(to bottom, var(--cyan), transparent);
+  margin: 2.5rem auto 0; animation: grow-line 1.2s 0.6s ease both; transform-origin: top;
+}
+.hero-eyebrow {
+  display: inline-block;
+  background: rgba(0,200,192,0.08); border: 1px solid rgba(0,200,192,0.25);
+  color: var(--cyan); font-family: 'Cinzel', serif;
+  font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+  padding: 0.38rem 1.1rem; margin-bottom: 1.4rem;
+  animation: fadeUp 0.8s ease both;
+}
+.hero-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1.7rem, 5vw, 3.2rem); line-height: 1.15;
+  animation: fadeUp 0.8s 0.1s ease both;
+}
+.hero-title .gold { color: var(--gold); }
+.hero-byline {
+  font-family: 'Cinzel', serif; font-size: 0.62rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--muted); margin-top: 0.8rem;
+  animation: fadeUp 0.8s 0.15s ease both;
+}
+.hero-sub {
+  font-style: italic; color: var(--muted); font-size: 0.95rem;
+  margin-top: 0.5rem; max-width: 640px; margin-left: auto; margin-right: auto;
+  animation: fadeUp 0.8s 0.2s ease both;
+}
+.hero-img {
+  display: block; max-width: 600px; width: 90%; margin: 2rem auto 0;
+  border-radius: 10px; border: 1px solid rgba(0,200,192,0.15);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  animation: fadeUp 0.8s 0.3s ease both;
+}
+
+/* ── META PILLS ── */
+.recipe-meta {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem;
+  padding: 2.5rem 2rem 3rem; animation: fadeUp 0.8s 0.3s ease both;
+}
+.meta-pill {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.5rem 1.1rem; background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(0,200,192,0.15);
+  font-family: 'Cinzel', serif; font-size: 0.62rem;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--sand);
+}
+.meta-pill .icon { font-size: 1rem; }
+.meta-pill .label { color: var(--muted); margin-right: 0.2rem; }
+
+/* ── WHY BOX ── */
+.why-section { max-width: 760px; margin: 0 auto 3rem; padding: 0 2rem; }
+.why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.why-card {
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(0,200,192,0.12);
+  border-radius: 8px; padding: 1.3rem 1.2rem; text-align: center;
+}
+.why-card .why-icon { font-size: 1.6rem; display: block; margin-bottom: 0.6rem; }
+.why-card .why-title {
+  font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--cyan); display: block; margin-bottom: 0.4rem;
+}
+.why-card p { font-size: 0.84rem; line-height: 1.7; color: var(--sand); }
+
+/* ── MATERIALS ── */
+.materials-section { max-width: 760px; margin: 0 auto 3rem; padding: 0 2rem; }
+.materials-box {
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(0,200,192,0.1);
+  border-radius: 8px; padding: 1.8rem 2rem;
+}
+.materials-box h3 {
+  font-family: 'Cinzel Decorative', serif; font-size: 1.1rem;
+  color: var(--gold); margin-bottom: 1.2rem;
+}
+.mat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.8rem; }
+.mat-item {
+  background: rgba(0,200,192,0.03); border: 1px solid rgba(0,200,192,0.1);
+  border-radius: 6px; padding: 0.8rem 1rem;
+  display: flex; align-items: center; gap: 0.7rem;
+}
+.mat-item .mat-icon { font-size: 1.3rem; flex-shrink: 0; }
+.mat-item .mat-name { font-size: 0.88rem; color: var(--sand); }
+.mat-item .mat-name strong { color: var(--text); }
+
+/* ── STEP SECTIONS ── */
+.step-section { max-width: 760px; margin: 0 auto 3rem; padding: 0 2rem; }
+.step-header {
+  display: flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem;
+}
+.step-number {
+  width: 48px; height: 48px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid var(--cyan); border-radius: 50%;
+  font-family: 'Cinzel Decorative', serif; font-size: 1.1rem; color: var(--cyan);
+}
+.step-title {
+  font-family: 'Cinzel Decorative', serif; font-size: clamp(1rem, 3vw, 1.3rem);
+  color: var(--text); line-height: 1.3;
+}
+.step-title .gold { color: var(--gold); }
+.step-body {
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(0,200,192,0.1);
+  border-radius: 8px; padding: 1.8rem 2rem;
+}
+.step-body p { font-size: 0.92rem; line-height: 1.85; color: var(--sand); margin-bottom: 0.8rem; }
+.step-body p:last-child { margin-bottom: 0; }
+.step-body strong { color: var(--gold); }
+.step-body a { color: var(--cyan); text-decoration: underline; text-underline-offset: 2px; }
+.detail-label {
+  font-family: 'Cinzel', serif; font-size: 0.56rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--cyan); display: block; margin: 1.2rem 0 0.5rem;
+}
+.detail-label:first-child { margin-top: 0; }
+
+/* Substeps */
+.substeps { display: flex; flex-direction: column; gap: 0.7rem; margin-top: 0.5rem; }
+.substep {
+  display: flex; align-items: flex-start; gap: 0.8rem;
+  padding: 0.7rem 0.9rem; background: rgba(0,200,192,0.03); border-radius: 6px;
+}
+.substep-num {
+  width: 28px; height: 28px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border: 1.5px solid rgba(0,200,192,0.35); border-radius: 50%;
+  font-family: 'Cinzel', serif; font-size: 0.72rem; color: var(--cyan);
+}
+.substep-text { font-size: 0.88rem; line-height: 1.75; color: var(--sand); }
+.substep-text strong { color: var(--text); }
+
+/* Layers diagram */
+.layers-box {
+  background: rgba(240,180,41,0.04); border: 1px solid rgba(240,180,41,0.18);
+  border-radius: 8px; padding: 1.2rem 1.4rem; margin-top: 0.8rem;
+}
+.layer-row {
+  display: flex; align-items: center; gap: 0.8rem;
+  padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.layer-row:last-child { border-bottom: none; }
+.layer-icon { font-size: 1.1rem; flex-shrink: 0; width: 28px; text-align: center; }
+.layer-label {
+  font-family: 'Cinzel', serif; font-size: 0.56rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--gold); min-width: 80px;
+}
+.layer-desc { font-size: 0.86rem; color: var(--sand); }
+
+/* ── ISLAND TIP ── */
+.island-tip {
+  margin-top: 1rem; padding: 0.85rem 1.1rem;
+  background: rgba(0,200,192,0.04); border-left: 3px solid var(--cyan);
+  font-size: 0.86rem; line-height: 1.75; color: var(--sand);
+}
+.island-tip .tip-label {
+  font-family: 'Cinzel', serif; font-size: 0.56rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--cyan); display: block; margin-bottom: 0.35rem;
+}
+.island-tip strong { color: var(--text); }
+
+/* ── TIP BOX ── */
+.tip-box { max-width: 760px; margin: 0 auto 3rem; padding: 0 2rem; }
+.tip-inner {
+  background: rgba(240,180,41,0.05); border: 1px solid rgba(240,180,41,0.2);
+  border-radius: 8px; padding: 1.5rem 2rem;
+  display: flex; gap: 1rem; align-items: flex-start;
+}
+.tip-icon { font-size: 1.4rem; flex-shrink: 0; }
+.tip-content { font-size: 0.9rem; line-height: 1.8; color: var(--sand); }
+.tip-content strong { color: var(--gold); }
+.tip-content a { color: var(--cyan); text-decoration: underline; text-underline-offset: 2px; }
+
+/* ── HOW TO USE ── */
+.usage-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem; margin-top: 0.5rem; }
+.usage-card {
+  background: rgba(0,200,192,0.03); border: 1px solid rgba(0,200,192,0.12);
+  border-radius: 6px; padding: 1rem 1.1rem; text-align: center;
+}
+.usage-card .u-icon { font-size: 1.4rem; display: block; margin-bottom: 0.4rem; }
+.usage-card .u-title {
+  font-family: 'Cinzel', serif; font-size: 0.56rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--cyan); display: block; margin-bottom: 0.3rem;
+}
+.usage-card p { font-size: 0.84rem; line-height: 1.65; color: var(--sand); }
+
+/* ── SERIES NAV ── */
+.series-nav { max-width: 760px; margin: 0 auto 3rem; padding: 0 2rem; }
+.series-nav-inner {
+  background: rgba(240,180,41,0.05); border: 1px solid rgba(240,180,41,0.2);
+  border-radius: 8px; padding: 1.5rem 2rem;
+}
+.series-nav-inner .sn-title { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.6rem; }
+.series-nav-inner .sn-title strong { color: var(--gold); font-size: 0.95rem; }
+.series-nav-inner .sn-links { font-size: 0.88rem; line-height: 1.9; color: var(--sand); }
+.series-nav-inner .sn-links a { color: var(--cyan); text-decoration: underline; text-underline-offset: 2px; }
+
+/* ── KĀNEHIWA WISDOM ── */
+.wisdom-section{max-width:740px;margin:3rem auto;padding:0 1.5rem;}
+.kw-rotate-box{background:linear-gradient(135deg,rgba(0,200,192,0.06),rgba(240,180,41,0.06));border:1px solid rgba(0,200,192,0.18);border-radius:12px;padding:2rem 2.2rem 1.6rem;text-align:center;position:relative;min-height:180px;}
+.kw-rotate-box .kw-label{display:block;font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--cyan);margin-bottom:0.6rem;}
+.kw-rotate-box .kw-title{display:block;font-family:'Cinzel Decorative',serif;font-size:1.05rem;color:var(--gold);margin-bottom:1.2rem;}
+.kw-slide{display:none;animation:kwFadeIn .6s ease;}
+.kw-slide.active{display:block;}
+@keyframes kwFadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.kw-slide .kw-quote{font-family:'Cormorant Garamond',serif;font-size:1.08rem;font-style:italic;color:var(--text);line-height:1.8;margin:0 auto;max-width:600px;}
+.kw-dots{display:flex;justify-content:center;gap:8px;margin-top:1.2rem;}
+.kw-dots .kw-dot{width:8px;height:8px;border-radius:50%;background:rgba(240,234,216,0.2);cursor:pointer;border:none;padding:0;transition:background .3s;}
+.kw-dots .kw-dot.active{background:var(--gold);}
+
+/* ── DISCLAIMER ── */
+.disclaimer {
+  background: rgba(27,58,30,0.3); border-top: 1px solid rgba(0,200,192,0.1);
+  max-width: 760px; margin: 2rem auto 0; padding: 1.2rem 2rem;
+}
+.disclaimer p { font-size: 0.78rem; line-height: 1.7; color: var(--muted); text-align: center; }
+.disclaimer strong { color: var(--sand); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .recipe-hero { padding: 3rem 1.2rem 2rem; }
+  .hero-title { font-size: clamp(1.4rem, 7vw, 2rem); }
+  .step-section, .tip-box, .materials-section, .why-section, .series-nav { padding-left: 1.2rem; padding-right: 1.2rem; }
+  .step-body, .materials-box { padding: 1.4rem 1.2rem; }
+  .why-grid { grid-template-columns: 1fr; }
+}
+
+</style>
+
+<style>:root { --trm-nav-h: 68px; --nav-h: 68px; }
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  height: var(--trm-nav-h);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2rem; box-sizing: border-box;
+  background: rgba(10,12,10,0.95);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0,200,192,0.18);
+}
+.nav-logo { display: flex; align-items: center; gap: 0.85rem; text-decoration: none; flex-shrink: 0; }
+.nav-logo-icon {
+  width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, #1b3a1e, #2d6e35);
+  border: 2px solid #00c8c0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; box-shadow: 0 0 14px rgba(0,200,192,0.3);
+}
+.nav-logo-text .line1 { font-family: "Cinzel Decorative", serif; font-size: 0.92rem; color: #00c8c0; letter-spacing: 0.1em; display: block; line-height: 1.3; }
+.nav-logo-text .line2 { font-family: "Cinzel", serif; font-size: 0.75rem; color: #e0ceaa; letter-spacing: 0.22em; text-transform: uppercase; display: block; }
+.nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; margin: 0; padding: 0; }
+.nav-links a { font-family: "Cinzel", serif; font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: #e0ceaa; text-decoration: none; opacity: 0.75; transition: opacity 0.2s, color 0.2s; }
+.nav-links a:hover { opacity: 1; color: #00c8c0; }
+.nav-links a.active { opacity: 1; color: #00c8c0; }
+.nav-shop { font-family: "Cinzel", serif; font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; color: #00c8c0; border: 1.5px solid #00c8c0; padding: 0.45rem 1.2rem; transition: background 0.2s, color 0.2s; white-space: nowrap; }
+.nav-shop:hover { background: #00c8c0; color: #0a0c0a; }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; -webkit-tap-highlight-color: transparent; }
+.hamburger span { display: block; width: 24px; height: 2px; background: #00c8c0; transition: 0.25s; }
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+.mobile-menu { display: none; position: fixed; top: var(--trm-nav-h); left: 0; right: 0; z-index: 290; background: rgba(10,12,10,0.98); flex-direction: column; padding: 1.4rem 1.5rem 1.8rem; gap: 1.2rem; border-bottom: 2px solid #00c8c0; }
+.mobile-menu.open { display: flex; }
+.mobile-menu a { font-family: "Cinzel", serif; font-size: 1.05rem; letter-spacing: 0.14em; text-transform: uppercase; color: #e0ceaa; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.07); padding-bottom: 1rem; }
+.mobile-menu a:last-child { border-bottom: none; color: #00c8c0; padding-bottom: 0; }
+footer { background: #070908; border-top: 1px solid rgba(0,200,192,0.12); padding: 4rem 2.5rem 2rem; position: relative; z-index: 1; }
+.footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.footer-brand .nav-logo-icon { width: 48px; height: 48px; font-size: 1.4rem; }
+.footer-brand .brand-name { font-family: "Cinzel Decorative", serif; font-size: 1rem; color: #00c8c0; margin: 1rem 0 0.8rem; display: block; }
+.footer-brand p { font-size: 0.92rem; color: rgba(240,234,216,0.62); line-height: 1.7; max-width: 260px; }
+.footer-col h5 { font-family: "Cinzel", serif; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: #f0b429; margin-bottom: 1.4rem; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; padding: 0; margin: 0; }
+.footer-col ul a { font-size: 0.92rem; color: rgba(240,234,216,0.62); text-decoration: none; transition: color 0.2s; }
+.footer-col ul a:hover { color: #00c8c0; }
+.footer-bottom { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; padding-top: 2rem; }
+.footer-bottom p { font-family: "Lora", serif; font-size: 0.82rem; color: rgba(240,234,216,0.25); }
+.socials { display: flex; gap: 0.8rem; }
+.socials a { width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 1rem; text-decoration: none; transition: border-color 0.2s, background 0.2s; }
+.socials a:hover { border-color: #00c8c0; background: rgba(0,200,192,0.1); }
+@media (max-width: 1000px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+@media (max-width: 640px) { .footer-grid { grid-template-columns: 1fr; } }
+@media (max-width: 760px) { .nav-links, .nav-shop { display: none; } .hamburger { display: flex; } }
+</style>
+</head>
+<body>
+
+<div class="bg-ambience"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<div id="trm-nav"></div>
+
+<main>
+
+<!-- HERO -->
+<div class="recipe-hero">
+  <span class="hero-eyebrow">KNF Series · The Sixth Input</span>
+  <h1 class="hero-title">Lactic Acid Bacteria <span class="gold">(LabS)</span></h1>
+  <p class="hero-byline">The "Clean-Up Crew" of KNF</p>
+  <p class="hero-sub">A powerful probiotic — essentially "plant yogurt" — that outcompetes bad bacteria and fungi, breaks down organic matter, and makes nutrients more available to your roots.</p>
+  <img src="https://tropicalrootsmaui.com/img/ogimg/knflab.webp" alt="A high-quality, polished illustration featuring the character Kānehiwa, a wooden tiki-style deity with glowing eyes, standing in a lush, clean Maui landscape. To his left, a large parchment scroll titled Kānehiwa's KNF Lab Guide provides a 4-step infographic for making Lactic Acid Bacteria (LabS). The steps illustrate the rice wash starter, the 1:10 milk transformation, harvesting the serum from curds, and storage options. At the bottom of the scroll, an Emergency Recovery Spray recipe is listed with icons for FPJ, OHN, WCA, and Sea Water. Kānehiwa holds a glass bottle of KNF serum and a woven basket containing a jar of rice, a bowl of cooked rice, and fresh ginger. The scene is free of insects and microbes, focusing on a sanitized, professional botanical aesthetic with vibrant Hawaiian flora." class="hero-img" loading="eager" fetchpriority="high">
+</div>
+
+<!-- META PILLS -->
+<div class="recipe-meta">
+  <div class="meta-pill"><span class="icon">🧫</span> <span class="label">Type</span> Fermented Serum</div>
+  <div class="meta-pill"><span class="icon">⏱️</span> <span class="label">Brew Time</span> 5–8 Days</div>
+  <div class="meta-pill"><span class="icon">💧</span> <span class="label">Dilution</span> 1:1000</div>
+  <div class="meta-pill"><span class="icon">📊</span> <span class="label">Level</span> Beginner</div>
+</div>
+
+<!-- WHY LabS -->
+<div class="why-section">
+  <div class="why-grid">
+    <div class="why-card">
+      <span class="why-icon">🛡️</span>
+      <span class="why-title">Disease Suppression</span>
+      <p>The ultimate weapon against Powdery Mildew and soil-borne pathogens. LabS colonies outcompete harmful fungi and bacteria for resources.</p>
+    </div>
+    <div class="why-card">
+      <span class="why-icon">♻️</span>
+      <span class="why-title">Nutrient Cycling</span>
+      <p>Solubilizes phosphates and decomposes dry amendments (like Down to Earth) faster — unlocking nutrients weeks sooner than water alone.</p>
+    </div>
+    <div class="why-card">
+      <span class="why-icon">💨</span>
+      <span class="why-title">Odor Control</span>
+      <p>Neutralizes the smell of funky ferments or stagnant soil. LabS bacteria consume the volatile compounds that cause foul odors.</p>
+    </div>
+  </div>
+</div>
+
+<!-- MATERIALS -->
+<div class="materials-section">
+  <div class="materials-box">
+    <h2>🧪 Materials Needed</h2>
+    <div class="mat-grid">
+      <div class="mat-item">
+        <span class="mat-icon">🍚</span>
+        <span class="mat-name"><strong>Rice Wash Water</strong> — the cloudy first rinse</span>
+      </div>
+      <div class="mat-item">
+        <span class="mat-icon">🥛</span>
+        <span class="mat-name"><strong>Fresh Milk</strong> — cow's milk, whole (raw is ideal)</span>
+      </div>
+      <div class="mat-item">
+        <span class="mat-icon">🫙</span>
+        <span class="mat-name"><strong>Glass Jars</strong> — wide-mouth, various sizes</span>
+      </div>
+      <div class="mat-item">
+        <span class="mat-icon">☕</span>
+        <span class="mat-name"><strong>Breathable Cover</strong> — coffee filter + rubber band</span>
+      </div>
+      <div class="mat-item">
+        <span class="mat-icon">🤎</span>
+        <span class="mat-name"><strong>Brown Sugar</strong> — for shelf-stable storage (optional)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 1: RICE WATER STARTER -->
+<div class="step-section">
+  <div class="step-header">
+    <div class="step-number">1</div>
+    <h2 class="step-title">Phase 1: The <span class="gold">Rice Water Starter</span></h2>
+  </div>
+  <div class="step-body">
+    <p>This first phase captures the wild lactic acid bacteria that are naturally present in the air and on your rice grains. You're creating the starter culture that will seed the milk transformation.</p>
+
+    <div class="substeps">
+      <div class="substep">
+        <div class="substep-num">1</div>
+        <div class="substep-text"><strong>Rinse &amp; Collect:</strong> Rinse one cup of white rice in water. Collect the first "cloudy" wash — about 1–2 cups. This starchy water is the food source for the bacteria.</div>
+      </div>
+      <div class="substep">
+        <div class="substep-num">2</div>
+        <div class="substep-text"><strong>Ferment:</strong> Pour the cloudy water into a glass jar — fill it only <strong>halfway</strong> (the bacteria need airspace). Cover with a breathable lid (coffee filter + rubber band).</div>
+      </div>
+      <div class="substep">
+        <div class="substep-num">3</div>
+        <div class="substep-text"><strong>Wait:</strong> Store in a dark place for <strong>2–3 days</strong>. It's ready when it smells slightly sour and has a thin film on top. This is your <strong>"Rice Wash Starter."</strong></div>
+      </div>
+    </div>
+
+    <div class="island-tip">
+      <span class="tip-label">🌺 Hawaiʻi Island Tip</span>
+      In Maui's warmth, <strong>2 days is usually enough</strong> — check on day 2. The tropical temperatures accelerate fermentation significantly. If it smells rotten instead of pleasantly sour, the wrong organisms won. Discard and start over — use <strong>organic white rice</strong> if available, as it carries more diverse beneficial microbes than heavily processed rice.
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 2: MILK TRANSFORMATION -->
+<div class="step-section">
+  <div class="step-header">
+    <div class="step-number">2</div>
+    <h2 class="step-title">Phase 2: The <span class="gold">Milk Transformation</span></h2>
+  </div>
+  <div class="step-body">
+    <p>Now you use your starter culture to selectively breed lactic acid bacteria in milk. The LAB consume the lactose (milk sugar) and produce lactic acid, which separates the milk into curds and a clear serum — your LabS.</p>
+
+    <div class="substeps">
+      <div class="substep">
+        <div class="substep-num">1</div>
+        <div class="substep-text"><strong>The 1:10 Ratio:</strong> Pour your Rice Wash Starter into a larger jar and add <strong>10× the amount of milk</strong>. Example: 100ml of rice water into 1000ml of milk.</div>
+      </div>
+      <div class="substep">
+        <div class="substep-num">2</div>
+        <div class="substep-text"><strong>The Separation:</strong> Cover with a breathable lid and let it sit in the dark for <strong>3–5 days</strong>. Don't stir or disturb it — the bacteria need stillness to work.</div>
+      </div>
+      <div class="substep">
+        <div class="substep-num">3</div>
+        <div class="substep-text"><strong>The Result:</strong> You will see three distinct layers form — this is exactly what you want:</div>
+      </div>
+    </div>
+
+    <div class="layers-box">
+      <div class="layer-row">
+        <span class="layer-icon">🧀</span>
+        <span class="layer-label">Top Layer</span>
+        <span class="layer-desc">Floating yellow/white "cheese" (curds)</span>
+      </div>
+      <div class="layer-row">
+        <span class="layer-icon">✨</span>
+        <span class="layer-label">Middle</span>
+        <span class="layer-desc">Clear, yellowish liquid — <strong style="color:var(--gold);">this is your LabS Serum</strong></span>
+      </div>
+      <div class="layer-row">
+        <span class="layer-icon">🔽</span>
+        <span class="layer-label">Bottom</span>
+        <span class="layer-desc">Sediments (discard)</span>
+      </div>
+    </div>
+
+    <div class="substeps" style="margin-top:1rem;">
+      <div class="substep">
+        <div class="substep-num">4</div>
+        <div class="substep-text"><strong>Harvest:</strong> Carefully skim off the cheese (it makes great <strong>compost or chicken feed!</strong>). Siphon or pour out the clear yellow liquid into a clean bottle. Discard the sediment. You now have raw LabS Serum.</div>
+      </div>
+    </div>
+
+    <div class="island-tip">
+      <span class="tip-label">🌺 Hawaiʻi Island Tip</span>
+      On Maui, the milk transformation happens faster — <strong>check at 3 days</strong> rather than waiting the full 5. Hawaiʻi's warmth means the LAB are more active, but it also means the curds can go "off" if left too long. <strong>Local whole milk from Maui dairies</strong> produces excellent results — the fresher the milk, the cleaner the separation. If you keep chickens or have neighbors who do, the cheese curds are a prized protein-rich treat for the flock.
+    </div>
+  </div>
+</div>
+
+<!-- STEP 3: STORAGE -->
+<div class="step-section">
+  <div class="step-header">
+    <div class="step-number">3</div>
+    <h2 class="step-title">How to <span class="gold">Store LabS</span></h2>
+  </div>
+  <div class="step-body">
+    <span class="detail-label">🤎 Shelf-Stable (Recommended)</span>
+    <p>Mix the LabS Serum with an <strong>equal weight of brown sugar</strong>. The sugar puts the bacteria into a dormant state — alive but sleeping — ready to reactivate when diluted in water. Stores at room temperature for <strong>up to a year</strong>.</p>
+
+    <span class="detail-label">❄️ Refrigerated</span>
+    <p>If you don't add sugar, store the raw serum in the fridge for <strong>up to 6 months</strong>. Keep it sealed — it will slowly continue to ferment at fridge temperature, but much more slowly.</p>
+
+    <div class="island-tip">
+      <span class="tip-label">🌺 Hawaiʻi Island Tip</span>
+      In Hawaiʻi's heat, the <strong>brown sugar method is strongly recommended</strong> — raw LabS left at tropical room temperature will over-ferment and lose potency within weeks. Store your sugar-preserved LabS in <strong>dark glass bottles in the coolest interior room</strong>, never on the lānai or in a hot garage. Label every batch with the date — you'll be making this regularly once you see what it does.
+    </div>
+  </div>
+</div>
+
+<!-- STEP 4: HOW TO USE -->
+<div class="step-section">
+  <div class="step-header">
+    <div class="step-number">4</div>
+    <h2 class="step-title">How to <span class="gold">Use LabS</span></h2>
+  </div>
+  <div class="step-body">
+    <p>Dilution ratio: <strong>1:1000</strong> (approximately 1ml per liter or 4ml per gallon). LabS is gentle enough for weekly use throughout the entire grow cycle.</p>
+
+    <div class="usage-grid">
+      <div class="usage-card">
+        <span class="u-icon">💧</span>
+        <span class="u-title">Soil Drench</span>
+        <p>Use weekly to keep your rhizosphere healthy and teeming with beneficial bacteria.</p>
+      </div>
+      <div class="usage-card">
+        <span class="u-icon">🌿</span>
+        <span class="u-title">Foliar Spray</span>
+        <p>Use to prevent or treat Powdery Mildew. Spray early morning for best results.</p>
+      </div>
+      <div class="usage-card">
+        <span class="u-icon">♻️</span>
+        <span class="u-title">Compost Booster</span>
+        <p>Spray directly onto mulch or compost pile to speed up decomposition dramatically.</p>
+      </div>
+    </div>
+
+    <div class="island-tip">
+      <span class="tip-label">🌺 Hawaiʻi Island Tip</span>
+      LabS is your <strong>secret weapon against Maui's relentless humidity-driven PM pressure</strong>. Combine it with <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-ohn-guide.html">OHN</a> for a foliar spray that both repels pests and suppresses fungi — the one-two punch described in the <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-pest-disease-guide.html">Pest &amp; Disease Troubleshooting Guide</a>. For outdoor container grows, a weekly LabS soil drench after rain helps <strong>rebalance the microbiome</strong> that heavy tropical downpours disrupt.
+    </div>
+  </div>
+</div>
+
+<!-- PRO TIP -->
+<div class="tip-box">
+  <div class="tip-inner">
+    <span class="tip-icon">💡</span>
+    <div class="tip-content">
+      <strong>The "Amendment Activator":</strong> If you're using Down to Earth 4-4-4 or other dry organic amendments, a LabS drench right after top-dressing will "wake up" the biology and get those nutrients into your plant <strong>weeks faster</strong> than water alone. The lactic acid bacteria break down the organic compounds into plant-available forms — think of it as giving your soil a digestive enzyme.
+    </div>
+  </div>
+</div>
+
+<!-- KNF SERIES NAV -->
+<div class="series-nav">
+  <div class="series-nav-inner">
+    <div class="sn-title">
+      <span style="font-size:1.2rem;">📚</span>
+      <strong>KNF Series</strong>
+    </div>
+    <div class="sn-links">
+      🌏 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-guide.html">Introduction to KNF</a> — Start Here<br>
+      <br><span style="font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(0,200,192,0.7);font-weight:600;">I. The Foundational Biology</span><br>
+      🍄 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-imo-guide.html">IMO (Indigenous Microorganisms)</a> — From Rice Box to Black Gold<br>
+      🧫 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-labs-guide.html">LabS (Lactic Acid Bacteria)</a> — The Clean-Up Crew<br>
+      <br><span style="font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(0,200,192,0.7);font-weight:600;">II. The Primary Growth Engines</span><br>
+      🐟 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-faa-guide.html">FAA (Fish Amino Acids)</a> — The Nitrogen Engine<br>
+      🌱 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-fpj-guide.html">FPJ (Fermented Plant Juice)</a> — The Growth Hormone<br>
+      <br><span style="font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(0,200,192,0.7);font-weight:600;">III. Specialized &amp; Bloom Nutrition</span><br>
+      🦴 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-wca-guide.html">WCA (Calcium)</a> — The Cell Wall Builder<br>
+      🔥 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-wca-p-guide.html">WCA-P (Calcium Phosphate)</a> — The Bloom Fuel<br>
+      🛡️ <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-ohn-guide.html">OHN (Oriental Herbal Nutrient)</a> — The Immune Booster<br>
+      <br><span style="font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(0,200,192,0.7);font-weight:600;">IV. Application &amp; Strategy</span><br>
+      📋 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-feeding-schedule.html">KNF Feeding Schedule</a> — Seed to Harvest Program<br>
+      📊 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-feeding-chart.html">KNF Feeding Chart</a> — Printable Quick Reference<br>
+      🐛 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-pest-disease-guide.html">Pest &amp; Disease Troubleshooting</a> — Maui Edition<br>
+      <br><span style="font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(0,200,192,0.7);font-weight:600;">V. Foliar Techniques</span><br>
+      🍚 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-brv-guide.html">BRV Foliar Spray</a> — Unlocking the Canopy
+    </div>
+</div>
+</div>
+
+<!-- KĀNEHIWA WISDOM -->
+<div class="wisdom-section">
+  <div class="kw-rotate-box" id="kwBox">
+    <span class="kw-label">🌿 Words of Kānehiwa 🌿</span>
+    <span class="kw-title">The Invisible Army</span>
+
+    <div class="kw-slide active">
+      <p class="kw-quote">"You cannot see them, but they are there — billions strong, working through every grain of soil. LabS is not a product you apply. It is an army you recruit. Feed them, and they will fight every battle your roots cannot."</p>
+    </div>
+    <div class="kw-slide">
+      <p class="kw-quote">"The same wisdom that turns milk into cheese turns dead soil into living earth. Fermentation is the oldest technology on this planet — older than fire, older than the wheel. When you brew LabS, you are practicing the first science."</p>
+    </div>
+    <div class="kw-slide">
+      <p class="kw-quote">"A healthy rhizosphere smells like the forest floor after rain. If your soil smells wrong, it is telling you the biology is wrong. LabS is how you reset the conversation between roots and earth."</p>
+    </div>
+
+    <div class="kw-dots">
+      <button class="kw-dot active" onclick="goKW(0)"></button>
+      <button class="kw-dot" onclick="goKW(1)"></button>
+      <button class="kw-dot" onclick="goKW(2)"></button>
+    </div>
+  </div>
+</div>
+
+<div class="disclaimer">
+  <p>This guide is provided for educational purposes only. <strong>Always research local laws and regulations before cultivating.</strong> Tropical Roots Maui assumes no responsibility for actions taken based on this information.</p>
+</div>
+
+</main>
+
+<div id="trm-footer"></div>
+
+<script>
+// Hamburger toggle
+const burger = document.getElementById('trm-burger');
+const mobileNav = document.getElementById('trm-mobile-nav');
+if (burger) {
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    mobileNav.classList.toggle('open');
+  });
+  mobileNav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      burger.classList.remove('open');
+      mobileNav.classList.remove('open');
+    });
+  });
+}
+
+/* Kānehiwa Wisdom Rotator */
+(function(){
+  var slides=document.querySelectorAll('#kwBox .kw-slide'),
+      dots=document.querySelectorAll('#kwBox .kw-dot'),
+      cur=0,timer;
+  function go(i){
+    slides[cur].classList.remove('active');dots[cur].classList.remove('active');
+    cur=i%slides.length;
+    slides[cur].classList.add('active');dots[cur].classList.add('active');
+    clearInterval(timer);timer=setInterval(function(){go(cur+1)},8000);
+  }
+  window.goKW=go;
+  timer=setInterval(function(){go(cur+1)},8000);
+})();
+</script>
+
+<script src="/site-components.js" defer></script>
+</body></html>

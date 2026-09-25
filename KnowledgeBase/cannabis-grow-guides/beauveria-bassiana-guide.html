@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="preload" href="https://tropicalrootsmaui.com/site-components.css" as="style" onload="this.onload=null;this.rel=&#39;stylesheet&#39;">
+<noscript><link rel="stylesheet" href="https://tropicalrootsmaui.com/site-components.css"></noscript>
+${link_line}
+<title>The Fungal Ally: Beauveria bassiana — Tropical Roots Maui</title>
+
+<!-- Primary Meta -->
+<meta name="description" content="Deploy Beauveria bassiana as biological warfare against cannabis pests. The Tropical Roots Maui guide to entomopathogenic fungi — infection protocol, White Muscardine disease, application strategy, and Maui humidity advantages.">
+<meta name="keywords" content="Beauveria bassiana, entomopathogenic fungus, biological pest control, white muscardine, spider mites, thrips, aphids, organic IPM, Tropical Roots Maui">
+<meta name="author" content="Tropical Roots Maui">
+<link rel="canonical" href="https://tropicalrootsmaui.com/KnowledgeBase/cannabis-grow-guides/beauveria-bassiana-guide.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Fungal Ally: Beauveria bassiana — Tropical Roots Maui">
+<meta property="og:description" content="Biological warfare for your canopy — entomopathogenic fungi, White Muscardine infection protocol, and Maui deployment strategies.">
+<meta property="og:url" content="https://tropicalrootsmaui.com/KnowledgeBase/cannabis-grow-guides/beauveria-bassiana-guide.html">
+<meta property="og:site_name" content="Tropical Roots Maui">
+<meta property="og:image" content="https://tropicalrootsmaui.com/img/fungal-ally-beauveria-bassiana-guide.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Fungal Ally: Beauveria bassiana — Tropical Roots Maui">
+<meta name="twitter:description" content="Entomopathogenic fungi — White Muscardine protocol and Maui deployment strategies.">
+<meta name="twitter:image" content="https://tropicalrootsmaui.com/img/fungal-ally-beauveria-bassiana-guide.webp">
+<meta name="twitter:site" content="@tropicalrootsmaui">
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "The Fungal Ally: Beauveria bassiana",
+  "description": "The Tropical Roots Maui guide to deploying Beauveria bassiana as biological pest control for cannabis. Covers the infection protocol, White Muscardine disease stages, foliar and soil drench application, UV vulnerability, and Hawaii-specific humidity advantages.",
+  "image": "https://tropicalrootsmaui.com/img/fungal-ally-beauveria-bassiana-guide.webp",
+  "author": { "@type": "Organization", "name": "Tropical Roots Maui", "url": "https://tropicalrootsmaui.com" },
+  "publisher": { "@type": "Organization", "name": "Tropical Roots Maui", "url": "https://tropicalrootsmaui.com" },
+  "url": "https://tropicalrootsmaui.com/KnowledgeBase/cannabis-grow-guides/beauveria-bassiana-guide.html",
+  "keywords": "Beauveria bassiana, entomopathogenic fungus, biological pest control, white muscardine, IPM"
+}
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --black:#0a0c0a; --dark:#111a10; --jungle:#1b3a1e; --green:#2d6e35; --leaf:#4a9e52;
+  --cyan:#00c8c0; --cyan-dim:#00968f; --gold:#f0b429; --orange:#e8721a;
+  --cream:#f4edd8; --sand:#e0ceaa; --text:#f0ead8; --muted:rgba(240,234,216,0.62); --nav-h:68px;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Lora',serif;background:var(--black);color:var(--text);overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column;}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");opacity:0.5;}
+.bg-ambience{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 10% 30%,rgba(45,110,53,0.14) 0%,transparent 50%),radial-gradient(ellipse at 90% 70%,rgba(0,200,192,0.07) 0%,transparent 50%),radial-gradient(ellipse at 50% 100%,rgba(240,180,41,0.05) 0%,transparent 45%),linear-gradient(180deg,#0a0c0a 0%,#0c1a0c 50%,#0a0c0a 100%);}
+.orb{position:fixed;border-radius:50%;pointer-events:none;animation:pulse-orb 7s ease-in-out infinite;}
+.orb-1{width:500px;height:500px;top:10%;right:-150px;background:radial-gradient(circle,rgba(45,110,53,0.12) 0%,transparent 70%);}
+.orb-2{width:350px;height:350px;bottom:20%;left:-100px;background:radial-gradient(circle,rgba(0,200,192,0.07) 0%,transparent 70%);animation-delay:-3.5s;}
+@keyframes pulse-orb{0%,100%{transform:scale(1);opacity:0.6;}50%{transform:scale(1.1);opacity:1;}}
+
+main{flex:1;padding-top:var(--nav-h);position:relative;z-index:1;}
+.recipe-hero{text-align:center;padding:4.5rem 2rem 3rem;position:relative;}
+.recipe-hero::after{content:'';display:block;width:1px;height:60px;background:linear-gradient(to bottom,var(--cyan),transparent);margin:2.5rem auto 0;animation:grow-line 1.2s 0.6s ease both;transform-origin:top;}
+@keyframes grow-line{from{transform:scaleY(0);opacity:0;}to{transform:scaleY(1);opacity:1;}}
+.hero-eyebrow{display:inline-block;background:rgba(0,200,192,0.08);border:1px solid rgba(0,200,192,0.25);color:var(--cyan);font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;padding:0.38rem 1.1rem;margin-bottom:1.4rem;animation:fadeUp 0.8s ease both;}
+.hero-title{font-family:'Cinzel Decorative',serif;font-size:clamp(2rem,5vw,3.8rem);line-height:1.1;animation:fadeUp 0.8s 0.1s ease both;}
+.hero-title .gold{color:var(--gold);}.hero-title .cyan{color:var(--cyan);}
+.hero-sub{font-style:italic;color:var(--muted);font-size:1.05rem;margin-top:0.9rem;animation:fadeUp 0.8s 0.2s ease both;}
+
+.recipe-meta{display:flex;flex-wrap:wrap;justify-content:center;gap:0.8rem;padding:0 2rem 3rem;animation:fadeUp 0.8s 0.3s ease both;}
+.meta-pill{display:flex;align-items:center;gap:0.5rem;padding:0.5rem 1.1rem;background:rgba(255,255,255,0.03);border:1px solid rgba(0,200,192,0.15);font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--sand);}
+.meta-pill .label{color:var(--muted);margin-right:0.2rem;}
+
+.mantra-band{max-width:760px;margin:0 auto 3.5rem;padding:0 2rem;}
+.mantra-card{border:1px solid rgba(240,180,41,0.25);background:rgba(240,180,41,0.04);padding:2rem 2.5rem;text-align:center;position:relative;}
+.mantra-card::before{content:'';position:absolute;top:-1px;left:-1px;width:24px;height:24px;border-top:2px solid var(--gold);border-left:2px solid var(--gold);}
+.mantra-card::after{content:'';position:absolute;bottom:-1px;right:-1px;width:24px;height:24px;border-bottom:2px solid var(--cyan);border-right:2px solid var(--cyan);}
+.mantra-eyebrow{font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:0.8rem;}
+.mantra-card blockquote{font-family:'Cinzel Decorative',serif;font-size:clamp(1.05rem,3vw,1.15rem);line-height:1.4;color:var(--text);}
+.mantra-card blockquote span{color:var(--cyan);}
+
+.guide-content{max-width:900px;margin:0 auto;padding:0 2rem 5rem;}
+.guide-section{margin-bottom:3rem;}
+.section-header{display:flex;align-items:center;gap:1.2rem;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid rgba(0,200,192,0.12);}
+.section-icon{font-size:1.4rem;flex-shrink:0;}
+.section-num{font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--cyan);display:block;margin-bottom:0.25rem;}
+.section-title{font-family:'Cinzel',serif;font-size:1rem;letter-spacing:0.08em;color:var(--text);font-weight:600;}
+
+.rule-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;}
+.rule-card{padding:1.3rem 1.5rem;background:rgba(27,58,30,0.15);border:1px solid rgba(255,255,255,0.07);transition:border-color 0.2s;}
+.rule-card:hover{border-color:rgba(0,200,192,0.25);}
+.rule-card .rule-icon{font-size:1.4rem;display:block;margin-bottom:0.5rem;}
+.rule-card .rule-name{font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:0.5rem;}
+.rule-card p{font-size:0.85rem;line-height:1.8;color:var(--muted);}
+.rule-card p strong{color:var(--text);}
+
+.highlight-box{padding:1.2rem 1.5rem;background:rgba(0,200,192,0.05);border-left:3px solid var(--cyan);margin-bottom:1rem;font-size:0.9rem;line-height:1.8;color:var(--text);}
+.highlight-box strong{color:var(--cyan);}
+.highlight-box.gold{background:rgba(240,180,41,0.05);border-left-color:var(--gold);}
+.highlight-box.gold strong{color:var(--gold);}
+.highlight-box.orange{background:rgba(232,114,26,0.06);border-left-color:var(--orange);}
+.highlight-box.orange strong{color:var(--orange);}
+
+.warning-box{padding:1.2rem 1.5rem;background:rgba(232,114,26,0.07);border:1px solid rgba(232,114,26,0.25);margin-top:1.2rem;display:flex;gap:1rem;align-items:flex-start;}
+.warning-box .warn-icon{font-size:1.15rem;flex-shrink:0;margin-top:0.1rem;}
+.warning-box p{font-size:0.85rem;line-height:1.8;color:var(--sand);}
+.warning-box p strong{color:var(--orange);}
+
+/* ── INFECTION STAGES ── */
+.stage-grid{display:flex;flex-direction:column;gap:1rem;}
+.stage-card{padding:1.3rem 1.5rem;background:rgba(27,58,30,0.12);border:1px solid rgba(255,255,255,0.07);border-left:3px solid var(--cyan);transition:border-color 0.2s;position:relative;}
+.stage-card:hover{border-color:rgba(0,200,192,0.25);}
+.stage-card .stage-num{font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--cyan);display:block;margin-bottom:0.4rem;}
+.stage-card .stage-name{font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:0.6rem;font-weight:600;}
+.stage-card p{font-size:0.85rem;line-height:1.8;color:var(--muted);}
+.stage-card p strong{color:var(--text);}
+
+.section-divider{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:1rem;margin:3rem 0;}
+.section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(0,200,192,0.2),transparent);}
+
+.guide-footer{max-width:900px;margin:0 auto;padding:0 2rem 5rem;}
+.footer-cta{border:1px solid rgba(0,200,192,0.2);background:rgba(27,58,30,0.15);padding:2.5rem;text-align:center;position:relative;overflow:hidden;}
+.footer-cta::before{content:'🍄';position:absolute;right:-10px;top:50%;transform:translateY(-50%);font-size:9rem;opacity:0.04;}
+.footer-cta span{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--cyan);display:block;margin-bottom:0.8rem;}
+.footer-cta h3{font-family:'Cinzel Decorative',serif;font-size:clamp(1rem,2.5vw,1.15rem);margin-bottom:0.8rem;}
+.footer-cta p{font-size:0.9rem;color:var(--muted);line-height:1.8;max-width:520px;margin:0 auto 1.8rem;}
+.cta-buttons{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;}
+.cta-btn{font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.16em;text-transform:uppercase;padding:0.8rem 2rem;border:1px solid;text-decoration:none;transition:background 0.2s,color 0.2s;display:inline-block;}
+.cta-btn.cyan{border-color:var(--cyan);color:var(--cyan);}.cta-btn.cyan:hover{background:rgba(0,200,192,0.12);}
+.cta-btn.gold{border-color:var(--gold);color:var(--gold);}.cta-btn.gold:hover{background:rgba(240,180,41,0.1);}
+
+.cross-links-section{max-width:900px;margin:0 auto 2rem;padding:0 2rem;display:flex;flex-direction:column;gap:0.6rem;}
+.cross-link-card{display:flex;align-items:center;gap:1.4rem;padding:1.2rem 1.6rem;background:rgba(0,200,192,.03);border:1px solid rgba(0,200,192,.18);text-decoration:none;color:inherit;border-radius:8px;transition:all 0.25s ease;}
+.cross-link-card:hover{border-color:rgba(0,200,192,.35);background:rgba(0,200,192,.06);transform:translateY(-2px);}
+.cross-link-icon{font-size:1.8rem;flex-shrink:0;}
+.cross-link-text{flex:1;min-width:0;}
+.cross-link-label{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);display:block;margin-bottom:.25rem;}
+.cross-link-title{font-size:0.92rem;color:var(--sand);font-weight:600;}
+.cross-link-desc{font-size:0.78rem;color:var(--muted);line-height:1.5;margin-top:0.2rem;}
+.cross-link-arrow{color:var(--cyan);font-size:1.2rem;opacity:0;transition:opacity 0.2s;}
+.cross-link-card:hover .cross-link-arrow{opacity:1;}
+
+.disclaimer{background:rgba(27,58,30,0.3);border-top:1px solid rgba(0,200,192,0.1);border-bottom:1px solid rgba(0,200,192,0.1);padding:1.5rem 2rem;text-align:center;margin-bottom:0;}
+.disclaimer p{font-size:0.78rem;color:var(--muted);font-style:italic;max-width:700px;margin:0 auto;line-height:1.7;}
+.disclaimer strong{color:var(--sand);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity 0.6s ease,transform 0.6s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+@media(max-width:640px){.rule-grid{grid-template-columns:1fr;}.guide-content{padding:0 1.2rem 4rem;}.hero-title{font-size:clamp(1.6rem,9vw,2.5rem);}}
+
+/* ── HERO IMAGE ── */
+.hero-ring-wrap{position:relative;width:100%;max-width:750px;margin:1.5rem auto 0;padding:22px;}
+.hero-ring{position:absolute;top:0;left:0;right:0;bottom:0;border:1px solid rgba(0,200,192,0.2);border-radius:6px;animation:hero-spin 22s linear infinite;transform-origin:center;pointer-events:none;will-change:transform;}
+.hero-ring::before{content:'';position:absolute;top:-4px;left:50%;width:8px;height:8px;background:var(--cyan);border-radius:50%;transform:translateX(-50%);box-shadow:0 0 10px var(--cyan),0 0 22px rgba(0,200,192,0.5);}
+.hero-ring::after{content:'';position:absolute;bottom:-4px;left:50%;width:5px;height:5px;background:var(--gold);border-radius:50%;transform:translateX(-50%);box-shadow:0 0 8px var(--gold),0 0 18px rgba(240,180,41,0.4);}
+@keyframes hero-spin{to{transform:rotate(360deg);}}
+.hero-frame{position:relative;width:100%;}
+.hero-frame::before{content:'';position:absolute;top:-4px;left:-4px;width:20px;height:20px;border-top:2px solid var(--cyan);border-left:2px solid var(--cyan);pointer-events:none;z-index:2;}
+.hero-frame::after{content:'';position:absolute;bottom:-4px;right:-4px;width:20px;height:20px;border-bottom:2px solid var(--gold);border-right:2px solid var(--gold);pointer-events:none;z-index:2;}
+.hero-frame img{width:100%;display:block;position:relative;z-index:1;object-fit:contain;box-shadow:0 0 50px rgba(0,200,192,0.1),0 20px 50px rgba(0,0,0,0.55);cursor:zoom-in;}
+.hero-glow{position:absolute;bottom:-12px;left:15%;right:15%;height:36px;background:radial-gradient(ellipse,rgba(0,200,192,0.2),transparent 70%);filter:blur(10px);pointer-events:none;}
+.hero-frame-label{position:absolute;bottom:0;left:0;right:0;padding:0.8rem 1.2rem;background:linear-gradient(to top,rgba(0,0,0,0.7),transparent);z-index:2;}
+.hero-frame-label span{font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--cyan);}
+.hero-caption{margin:0.6rem auto 0;max-width:750px;padding:0 22px;}
+.hero-caption figcaption{font-style:italic;font-size:0.82rem;line-height:1.65;color:var(--muted);text-align:center;opacity:0.85;}
+@media(max-width:480px){.hero-ring-wrap{max-width:100%;padding:16px;}.hero-caption{padding:0 16px;}}
+</style>
+</head>
+<body>
+<div class="bg-ambience"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div id="trm-nav"></div>
+
+<main>
+
+  <!-- HERO -->
+  <section class="recipe-hero">
+    <span class="hero-eyebrow">🍄 &nbsp; Biological Warfare</span>
+    <div class="hero-ring-wrap">
+      <div class="hero-ring"></div>
+      <div class="hero-frame">
+        <img src="https://tropicalrootsmaui.com/img/fungal-ally-beauveria-bassiana-guide.webp"
+             alt="A photo-realistic instructional graphic for Tropical Roots Maui, framed by a hand-carved Koa wood border with the phrases 'BUILDING THE MICROBIAL FORTRESS' and 'PRESERVING THE MANA' carved into the sides. Inside a misty sanctuary, a Tiki Golem character named Kānehiwa, featuring glowing green eyes and a flower crown, uses a magnifying glass to inspect a large purple cannabis leaf resting on a stone prep table. To the left, three carved stone panels detail the process: 1. The Infection Cycle (illustrating the four stages of White Muscardine Disease consuming a mite), 2. Deployment Strategy (showing application timing, humidity targets, and warnings against fungicides), and 3. Pest Targets (showing biological targets like spider mites, aphids, and whiteflies). The background features Akaka Falls, vibrant purple cannabis plants, and an active volcanic peak under a golden-teal sunrise."
+             title="Tropical Roots Maui: The Fungal Ally &amp; Beauveria Bassiana Guide"
+             onclick="document.getElementById('heroLightbox').style.display='flex'"
+             loading="eager" fetchpriority="high" decoding="async">
+        <div class="hero-frame-label"><span>The Fungal Ally — Beauveria bassiana</span></div>
+        <div class="hero-glow"></div>
+      </div>
+    </div>
+    <figure class="hero-caption">
+      <figcaption>Master Cultivator Kānehiwa deploys "The Fungal Ally" within the Alchemical Sanctuary. This guide breaks down how to utilize Beauveria bassiana, a natural entomopathogenic fungus, as an advanced biological weapon to infect and consume soft-bodied pests without using synthetic chemicals that disrupt the living soil food web.</figcaption>
+    </figure>
+    <h1 class="hero-title">The <span class="gold">Fungal Ally</span><br><span class="cyan">Beauveria bassiana</span></h1>
+    <p class="hero-sub">Entomopathogenic Fungi · Self-Replicating Pest Destruction</p>
+  </section>
+
+  <div id="heroLightbox" onclick="this.style.display='none'" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.92);z-index:9999;align-items:center;justify-content:center;cursor:zoom-out;padding:2rem;">
+    <img src="https://tropicalrootsmaui.com/img/fungal-ally-beauveria-bassiana-guide.webp" alt="Tropical Roots Maui: The Fungal Ally &amp; Beauveria Bassiana Guide" style="max-width:95%;max-height:95vh;border-radius:8px;box-shadow:0 0 60px rgba(0,200,192,0.2);">
+  </div>
+
+  <!-- META PILLS -->
+  <div class="recipe-meta">
+    <div class="meta-pill"><span>🍄</span><span class="label">Type:</span> Biological IPM</div>
+    <div class="meta-pill"><span>🌿</span><span class="label">Level:</span> Intermediate</div>
+    <div class="meta-pill"><span>⏱️</span><span class="label">Kill Time:</span> 3–7 Days</div>
+    <div class="meta-pill"><span>💧</span><span class="label">Humidity:</span> 50%+ RH</div>
+  </div>
+
+  <!-- MANTRA CARD -->
+  <div class="mantra-band reveal" style="transition-delay: 0s;">
+    <div class="mantra-card">
+      <span class="mantra-eyebrow">Kānehiwa's Patience</span>
+      <blockquote>"The fungal ally does not kill instantly like a chemical spray; it takes days to <span>digest the enemy</span>. Do not panic if pests are still moving 48 hours after application. The infection is already inside them."</blockquote>
+      <p style="font-size:0.9rem;color:var(--muted);margin-top:1rem;line-height:1.8;">When mechanical barriers and suffocants are not enough to breach an established pest colony, we call upon the most advanced weapon in our biological armory — a living, breathing entity that naturally dwells within healthy soils. By harnessing this ancient ally, you unleash a self-replicating plague upon your enemies without harming the plant, the soil food web, or your own mana.</p>
+    </div>
+  </div>
+
+  <div class="guide-content">
+
+    <!-- SECTION 1: THE LIVING SPORE -->
+    <div class="guide-section reveal" style="transition-delay: 0.06s;">
+      <div class="section-header">
+        <span class="section-icon">🔬</span>
+        <div class="section-title-wrap">
+          <span class="section-num">Chapter 01</span>
+          <span class="section-title">The Living Spore — Understanding the Ally</span>
+        </div>
+      </div>
+
+      <p style="font-size:0.92rem;line-height:1.85;color:var(--muted);margin-bottom:1.5rem;">Beauveria bassiana is an equal-opportunity destroyer of soft-bodied and hard-bodied pests alike. It is highly effective against the sanctuary's most stubborn invaders: spider mites, aphids, thrips, whiteflies, and fungus gnats.</p>
+
+      <div class="rule-grid">
+        <div class="rule-card">
+          <span class="rule-icon">🧫</span>
+          <span class="rule-name">The Dormant Weapon</span>
+          <p>The product you acquire will be a concentrated <strong>powder or liquid suspension of dormant fungal spores (conidia)</strong>. These spores are essentially microscopic seeds waiting for the right conditions — warmth, humidity, and a host — to awaken and begin their work.</p>
+        </div>
+        <div class="rule-card">
+          <span class="rule-icon">🎯</span>
+          <span class="rule-name">The Biological Target</span>
+          <p>Unlike synthetic poisons that must be ingested, B. bassiana is a <strong>contact killer</strong>. The spore simply needs to touch the exoskeleton of the pest to begin the invasion. No feeding required — mere contact is a death sentence. This makes it effective against pests that avoid bait-based traps.</p>
+        </div>
+        <div class="rule-card">
+          <span class="rule-icon">✅</span>
+          <span class="rule-name">The Safe Harbor</span>
+          <p>B. bassiana is <strong>entirely safe for your plants, human handlers, and earthworms</strong>. It specifically targets the biology of arthropods (insects, mites, arachnids). It will not harm beneficial soil microbes, mycorrhizal fungi, or the living soil food web. It is OMRI-listed for organic production.</p>
+        </div>
+      </div>
+
+      <div class="highlight-box" style="margin-top:1.2rem;">
+        <strong>Target List:</strong> Spider mites, broad mites, russet mites, aphids, thrips, whiteflies, fungus gnats (larvae and adults), root aphids, mealybugs, leafhoppers, and even some beetle species. B. bassiana is one of the broadest-spectrum biological controls available.
+      </div>
+    </div>
+
+    <div class="section-divider">🌊</div>
+
+    <!-- SECTION 2: THE INFECTION PROTOCOL -->
+    <div class="guide-section reveal" style="transition-delay: 0.12s;">
+      <div class="section-header">
+        <span class="section-icon">☠️</span>
+        <div class="section-title-wrap">
+          <span class="section-num">Chapter 02</span>
+          <span class="section-title">The Infection Protocol — White Muscardine Disease</span>
+        </div>
+      </div>
+
+      <p style="font-size:0.92rem;line-height:1.85;color:var(--muted);margin-bottom:1.5rem;">When deployed correctly, this fungal ally executes a ruthless, four-stage alchemical breakdown of the host. Understanding each stage helps you recognize when the weapon is working.</p>
+
+      <div class="stage-grid">
+        <div class="stage-card">
+          <span class="stage-num">Stage 1 — Hours</span>
+          <span class="stage-name">Attachment</span>
+          <p>When sprayed, the microscopic spores <strong>adhere to the pest's protective cuticle</strong> (exoskeleton). The spores are naturally sticky and cling to any surface they contact. At this stage, the pest appears completely normal — no visible signs of infection.</p>
+        </div>
+        <div class="stage-card">
+          <span class="stage-num">Stage 2 — 12–48 Hours</span>
+          <span class="stage-name">Germination &amp; Penetration</span>
+          <p>Activated by ambient humidity, the spore awakens. It secretes <strong>powerful enzymes (chitinases and proteases) that dissolve the insect's armor</strong>, allowing a germ tube to punch directly into the pest's body cavity. The pest may slow down but is still mobile — the breach has begun.</p>
+        </div>
+        <div class="stage-card">
+          <span class="stage-num">Stage 3 — 2–5 Days</span>
+          <span class="stage-name">Internal Consumption</span>
+          <p>Once inside, the fungus <strong>rapidly multiplies, feeding on the pest's internal nutrients</strong> and releasing toxins (beauvericin and bassianolide) that paralyze the nervous system and suppress the immune response. The pest stops feeding, becomes sluggish, and dies within 3–7 days depending on species and size.</p>
+        </div>
+        <div class="stage-card" style="border-left-color:var(--gold);">
+          <span class="stage-num">Stage 4 — 5–10 Days</span>
+          <span class="stage-name">The Eruption — Re-sporulation</span>
+          <p>In the final, most alchemical stage, the fungus <strong>erupts back out through the dead insect's shell</strong>, coating the carcass in a dense <strong>white fuzz (White Muscardine)</strong>. This fuzz releases <strong>thousands of new spores</strong> into the canopy to hunt down remaining pests. The weapon literally replicates itself from each kill — a self-perpetuating plague.</p>
+        </div>
+      </div>
+
+      <div class="highlight-box gold" style="margin-top:1.2rem;">
+        <strong>The Self-Replicating Advantage:</strong> Unlike chemical sprays that degrade after application, B. bassiana <strong>amplifies its own presence</strong> with every pest it kills. A single infected thrip becomes a spore factory that infects dozens more. In high-humidity environments like Maui, this cascade effect can collapse an entire pest colony within 2–3 weeks from a single application.
+      </div>
+    </div>
+
+    <div class="section-divider">🌴</div>
+
+    <!-- SECTION 3: DEPLOYMENT STRATEGY -->
+    <div class="guide-section reveal" style="transition-delay: 0.18s;">
+      <div class="section-header">
+        <span class="section-icon">🎯</span>
+        <div class="section-title-wrap">
+          <span class="section-num">Chapter 03</span>
+          <span class="section-title">Deployment Strategy — Application in the Sanctuary</span>
+        </div>
+      </div>
+
+      <p style="font-size:0.92rem;line-height:1.85;color:var(--muted);margin-bottom:1.5rem;">Because you are deploying a living fungus, the environment dictates your success. B. bassiana thrives in humid climates but is vulnerable to certain elements during application.</p>
+
+      <div class="rule-grid">
+        <div class="rule-card">
+          <span class="rule-icon">🌿</span>
+          <span class="rule-name">Foliar Spray</span>
+          <p>Mix spores into pure, <strong>dechlorinated water</strong> (chloramine kills the spores on contact). Spray the canopy thoroughly, <strong>targeting the undersides of leaves</strong> where pests hide. Use a fine mist sprayer for maximum coverage. Ensure full leaf contact — every surface is a potential infection zone.</p>
+        </div>
+        <div class="rule-card">
+          <span class="rule-icon">🌍</span>
+          <span class="rule-name">Soil Drench</span>
+          <p>Drench the soil surface to target <strong>root aphids and fungus gnat larvae</strong> hiding in the root zone. The spores will persist in the top layer of soil, creating a living minefield for any larvae that emerge. Compatible with living soil and SIP bottom-watering systems.</p>
+        </div>
+        <div class="rule-card">
+          <span class="rule-icon">🌅</span>
+          <span class="rule-name">The UV Rule</span>
+          <p><strong>Ultraviolet light instantly sterilizes and kills fungal spores.</strong> Never apply under intense grow lights or direct midday sun. The perfect deployment window is <strong>at sunset or right as indoor lights turn off</strong>. The spores need 12–24 hours of darkness to germinate and penetrate the host.</p>
+        </div>
+        <div class="rule-card">
+          <span class="rule-icon">💧</span>
+          <span class="rule-name">The Humidity Catalyst</span>
+          <p>The spores require a <strong>minimum of 50% relative humidity</strong> to germinate on the pest. The higher the humidity during the crucial nighttime window, the faster the infection takes hold. In Maui's naturally humid climate, this threshold is almost always met — a massive advantage over dry mainland grows.</p>
+        </div>
+      </div>
+
+      <div class="warning-box">
+        <span class="warn-icon">⚠️</span>
+        <p><strong>The Fungicide Rule:</strong> Never mix or apply B. bassiana alongside <strong>sulfur, copper, neem oil, or other fungicides</strong>. These compounds will instantly destroy your own living weapon. If you've recently applied a fungicide, wait at least <strong>7–10 days</strong> before deploying B. bassiana to allow residues to break down.</p>
+      </div>
+
+      <div class="highlight-box" style="margin-top:1.2rem;">
+        <strong>Application Schedule:</strong> For active infestations, apply <strong>every 5–7 days for 3 consecutive applications</strong>. This ensures overlapping infection cycles that prevent any generation from escaping. For preventive maintenance, apply once every 2–3 weeks during the growing season.
+      </div>
+    </div>
+
+    <div class="section-divider">🏝️</div>
+
+    <!-- SECTION 4: MAUI TIPS -->
+    <div class="guide-section reveal" style="transition-delay: 0.24s;">
+      <div class="section-header">
+        <span class="section-icon">🏝️</span>
+        <div class="section-title-wrap">
+          <span class="section-num">Island Intel</span>
+          <span class="section-title">Maui's Natural Advantage for B. bassiana</span>
+        </div>
+      </div>
+
+      <div class="rule-grid">
+        <div class="rule-card">
+          <span class="rule-icon">💧</span>
+          <span class="rule-name">Humidity Superpower</span>
+          <p>Maui's ambient humidity (65–80%+) is <strong>far above the 50% germination threshold</strong>. This means B. bassiana activates faster, infects more aggressively, and re-sporulates more completely on the islands than in dry mainland grows. Your climate is the weapon's best friend — what usually hurts growers (humidity) here becomes an IPM advantage.</p>
+        </div>
+        <div class="rule-card">
+          <span class="rule-icon">🌡️</span>
+          <span class="rule-name">Ideal Temperature Range</span>
+          <p>B. bassiana thrives at <strong>68–82°F</strong> — exactly Maui's year-round ambient range. No heating or cooling adjustments needed. The spores are also active down to 60°F (upcountry nights) and survive brief spikes above 90°F, though germination slows outside the sweet spot.</p>
+        </div>
+        <div class="rule-card">
+          <span class="rule-icon">☀️</span>
+          <span class="rule-name">UV Management</span>
+          <p>Maui's intense tropical UV is the <strong>primary threat to spore survival</strong>. For outdoor grows, apply exclusively at dusk or dawn. For indoor grows with natural light supplementation, time applications to the dark cycle. Shade cloth (30–50%) over outdoor plants can extend spore viability during the day.</p>
+        </div>
+        <div class="rule-card">
+          <span class="rule-icon">🛒</span>
+          <span class="rule-name">Sourcing on Maui</span>
+          <p>Look for <strong>BotaniGard, Mycotrol, or BioCeres</strong> — all are commercial B. bassiana formulations available at Maui hydroponics stores or online. Store unused product in the <strong>refrigerator (not freezer)</strong> to keep spores viable for up to a year. Check expiration dates — dead spores don't infect anything.</p>
+        </div>
+      </div>
+
+      <div class="highlight-box orange" style="margin-top:1.2rem;">
+        <strong>The Complete IPM Arsenal:</strong> B. bassiana is the biological heavy artillery. Layer it with <a href="https://tropicalrootsmaui.com/KnowledgeBase/cannabis-grow-guides/diatomaceous-earth-guide.html" style="color:var(--cyan);text-decoration:underline;">Diatomaceous Earth</a> (mechanical barrier), <a href="https://tropicalrootsmaui.com/KnowledgeBase/cannabis-grow-guides/white-oil-pest-spray-recipe.html" style="color:var(--cyan);text-decoration:underline;">White Oil</a> (suffocant), <a href="https://tropicalrootsmaui.com/KnowledgeBase/cannabis-grow-guides/companion-cultivation-guide.html" style="color:var(--cyan);text-decoration:underline;">Companion Cultivation</a> (predatory insects), and <a href="https://tropicalrootsmaui.com/KnowledgeBase/cannabis-grow-guides/pest-identification-guide.html" style="color:var(--cyan);text-decoration:underline;">Pest Identification</a> for a fortress with no blind spots.
+      </div>
+    </div>
+
+  </div><!-- /guide-content -->
+
+  <!-- FOOTER CTA -->
+  <div class="guide-footer reveal" style="transition-delay: 0.3s;">
+    <div class="footer-cta">
+      <span>The Full Biological Arsenal</span>
+      <h2>Mechanical · Biological · Living Defense</h2>
+      <p>B. bassiana is the apex predator of your IPM stack. Combine with DE, White Oil, companion planting, and the Microbial Fortress for unstoppable organic defense.</p>
+      <div class="cta-buttons">
+        <a href="https://tropicalrootsmaui.com/KnowledgeBase/cannabis-grow-guides/pest-identification-guide.html" class="cta-btn cyan">Pest ID Guide</a>
+        <a href="https://tropicalrootsmaui.com/KnowledgeBase/cannabis-grow-guides/diatomaceous-earth-guide.html" class="cta-btn gold">DE Guide</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- RELATED GUIDES -->
+  <div style="max-width:900px;margin:2rem auto;padding:0 2rem;display:flex;align-items:center;gap:1rem;">
+    <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(0,200,192,0.25),transparent);"></div>
+    <span style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:rgba(0,200,192,0.6);white-space:nowrap;">📚 Related Guides</span>
+    <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(0,200,192,0.25),transparent);"></div>
+  </div>
+  <div class="cross-links-section">
+    <a href="https://tropicalrootsmaui.com/KnowledgeBase/cannabis-grow-guides/pest-identification-guide.html" class="cross-link-card">
+      <div class="cross-link-icon">🔍</div>
+      <div class="cross-link-text">
+        <span class="cross-link-label">Know Your Enemy</span>
+        <div class="cross-link-title">Pest Identification Guide</div>
+        <div class="cross-link-desc">Visual ID of every pest B. bassiana targets — spider mites, thrips, aphids, whiteflies, and fungus gnats.</div>
+      </div>
+      <div class="cross-link-arrow">→</div>
+    </a>
+    <a href="https://tropicalrootsmaui.com/KnowledgeBase/cannabis-grow-guides/diatomaceous-earth-guide.html" class="cross-link-card">
+      <div class="cross-link-icon">🛡️</div>
+      <div class="cross-link-text">
+        <span class="cross-link-label">Mechanical IPM</span>
+        <div class="cross-link-title">The Elemental Guard: Diatomaceous Earth</div>
+        <div class="cross-link-desc">Mechanical barrier for crawling pests — pairs with B. bassiana for ground-level plus canopy-level defense.</div>
+      </div>
+      <div class="cross-link-arrow">→</div>
+    </a>
+    <a href="https://tropicalrootsmaui.com/KnowledgeBase/cannabis-grow-guides/white-oil-pest-spray-recipe.html" class="cross-link-card">
+      <div class="cross-link-icon">🧴</div>
+      <div class="cross-link-text">
+        <span class="cross-link-label">Suffocant Defense</span>
+        <div class="cross-link-title">White Oil Pest Spray Recipe</div>
+        <div class="cross-link-desc">Organic foliar suffocant — use between B. bassiana applications (allow 3+ days gap to protect spores).</div>
+      </div>
+      <div class="cross-link-arrow">→</div>
+    </a>
+    <a href="https://tropicalrootsmaui.com/KnowledgeBase/cannabis-grow-guides/companion-cultivation-guide.html" class="cross-link-card">
+      <div class="cross-link-icon">🌻</div>
+      <div class="cross-link-text">
+        <span class="cross-link-label">Biological Reinforcement</span>
+        <div class="cross-link-title">Companion Cultivation: Expanding the Fortress</div>
+        <div class="cross-link-desc">Attract predatory insects that work alongside B. bassiana — lacewings, ladybugs, and parasitic wasps.</div>
+      </div>
+      <div class="cross-link-arrow">→</div>
+    </a>
+    <a href="https://tropicalrootsmaui.com/KnowledgeBase/cannabis-grow-guides/microbial-fortress-guide.html" class="cross-link-card">
+      <div class="cross-link-icon">🛡️</div>
+      <div class="cross-link-text">
+        <span class="cross-link-label">The Fortress</span>
+        <div class="cross-link-title">Microbial Fortress &amp; Sterile Environment</div>
+        <div class="cross-link-desc">The hygiene and sanitation protocols that prevent infestations before B. bassiana is needed.</div>
+      </div>
+      <div class="cross-link-arrow">→</div>
+    </a>
+  </div>
+
+  <!-- DISCLAIMER -->
+  <div class="disclaimer">
+    <p><strong>For educational purposes only.</strong> This guide covers biological pest management techniques for legal cannabis cultivation. Always follow product label instructions and local agricultural regulations. B. bassiana is OMRI-listed for organic production but may require registration in some jurisdictions. The information provided is not a substitute for professional consultation.</p>
+  </div>
+
+</main>
+
+<div id="trm-footer"></div>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.07 });
+document.querySelectorAll('.reveal').forEach((el, i) => {
+  el.style.transitionDelay = (i * 0.06) + 's';
+  obs.observe(el);
+});
+</script>
+<script src="https://tropicalrootsmaui.com/site-components.js" defer></script>
+
+</body></html>

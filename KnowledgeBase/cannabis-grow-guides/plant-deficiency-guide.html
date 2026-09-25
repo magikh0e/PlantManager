@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<!-- saved from url=(0069)https://tropicalrootsmaui.com/KnowledgeBase/cannabis-grow-guides/plant-deficiency-guide.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="preload" href="/site-components.css" as="style" onload="this.onload=null;this.rel=&#39;stylesheet&#39;">
+<noscript><link rel="stylesheet" href="/site-components.css"></noscript>
+${link_line}
+
+<!-- ═══ PRIMARY META ═══ -->
+<title>Reading Your Plants: Deficiency Guide — Tropical Roots Maui</title>
+<meta name="title" content="Reading Your Plants: Deficiency Guide — Tropical Roots Maui">
+<meta name="description" content="Learn to identify cannabis nutrient deficiencies by reading your plants. Covers nitrogen, phosphorus, potassium, magnesium, and calcium — with mobile vs. immobile nutrient behavior explained.">
+<meta name="keywords" content="cannabis nutrient deficiency, plant deficiency guide, nitrogen deficiency cannabis, phosphorus deficiency, potassium deficiency, magnesium deficiency, calcium deficiency, cannabis grow guide, Tropical Roots Maui, reading cannabis plants">
+<meta name="author" content="Tropical Roots Maui">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://tropicalrootsmaui.com/KnowledgeBase/cannabis-grow-guides/plant-deficiency-guide.html">
+
+<!-- ═══ OPEN GRAPH ═══ -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Tropical Roots Maui">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://tropicalrootsmaui.com/KnowledgeBase/cannabis-grow-guides/plant-deficiency-guide.html">
+<meta property="og:title" content="Reading Your Plants: Deficiency Guide — Tropical Roots Maui">
+<meta property="og:description" content="Learn to identify cannabis nutrient deficiencies by reading your plants. Covers nitrogen, phosphorus, potassium, magnesium, and calcium.">
+<meta property="og:image" content="https://tropicalrootsmaui.com/img/tropical-roots-maui-cannabis-deficiency-lockout-guide.webp">
+<meta property="og:image:type" content="image/webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Deficiency Guide (Mana Lockout Remediation)">
+
+<!-- ═══ TWITTER / X CARD ═══ -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@tropicalrootsmaui">
+<meta name="twitter:creator" content="@tropicalrootsmaui">
+<meta name="twitter:title" content="Reading Your Plants: Deficiency Guide — Tropical Roots Maui">
+<meta name="twitter:description" content="Identify cannabis nutrient deficiencies by reading your plants. Mobile vs. immobile nutrients explained.">
+<meta name="twitter:image" content="https://tropicalrootsmaui.com/img/tropical-roots-maui-cannabis-deficiency-lockout-guide.webp">
+<meta name="twitter:image:alt" content="Deficiency Guide (Mana Lockout Remediation)">
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --black: #0a0c0a; --dark: #111a10; --jungle: #1b3a1e; --green: #2d6e35; --leaf: #4a9e52;
+  --cyan: #00c8c0; --cyan-dim: #00968f; --gold: #f0b429; --orange: #e8721a;
+  --cream: #f4edd8; --sand: #e0ceaa; --text: #f0ead8; --muted: rgba(240,234,216,0.62);
+  --nav-h: 68px;
+  /* Deficiency colors */
+  --n-color: #7ec850; --n-bg: rgba(126,200,80,0.08);
+  --p-color: #9b6bb5; --p-bg: rgba(155,107,181,0.08);
+  --k-color: #e8721a; --k-bg: rgba(232,114,26,0.08);
+  --mg-color: #f0b429; --mg-bg: rgba(240,180,41,0.08);
+  --ca-color: #e05c3a; --ca-bg: rgba(224,92,58,0.08);
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Lora', serif;
+  background: var(--black);
+  color: var(--text);
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+body::after {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 9998;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  opacity: 0.5;
+}
+.bg-ambience {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse at 10% 30%, rgba(45,110,53,.14) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 70%, rgba(0,200,192,.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, rgba(240,180,41,.05) 0%, transparent 45%),
+    linear-gradient(180deg, #0a0c0a 0%, #0c1a0c 50%, #0a0c0a 100%);
+}
+.orb { position: fixed; border-radius: 50%; pointer-events: none; animation: pulse-orb 7s ease-in-out infinite; }
+.orb-1 { width: 500px; height: 500px; top: 10%; right: -150px; background: radial-gradient(circle, rgba(45,110,53,.12) 0%, transparent 70%); }
+.orb-2 { width: 350px; height: 350px; bottom: 20%; left: -100px; background: radial-gradient(circle, rgba(0,200,192,.07) 0%, transparent 70%); animation-delay: -3.5s; }
+@keyframes pulse-orb { 0%,100%{transform:scale(1);opacity:.6;} 50%{transform:scale(1.1);opacity:1;} }
+
+main { flex: 1; padding-top: var(--nav-h); position: relative; z-index: 1; }
+
+/* ── HERO ── */
+.hero {
+  text-align: center;
+  padding: 4.5rem 2rem 3rem;
+  position: relative;
+}
+.hero::after {
+  content: '';
+  display: block;
+  width: 1px; height: 60px;
+  background: linear-gradient(to bottom, var(--cyan), transparent);
+  margin: 2.5rem auto 0;
+  animation: grow-line 1.2s .6s ease both;
+  transform-origin: top;
+}
+@keyframes grow-line { from{transform:scaleY(0);opacity:0;} to{transform:scaleY(1);opacity:1;} }
+.hero-eyebrow {
+  display: inline-block;
+  background: rgba(0,200,192,.08);
+  border: 1px solid rgba(0,200,192,.25);
+  color: var(--cyan);
+  font-family: 'Cinzel', serif;
+  font-size: .62rem; letter-spacing: .22em; text-transform: uppercase;
+  padding: .38rem 1.1rem; margin-bottom: 1.4rem;
+  animation: fadeUp .8s ease both;
+}
+.hero-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1.8rem, 5vw, 3.8rem);
+  line-height: 1.15;
+  animation: fadeUp .8s .1s ease both;
+}
+.hero-title .gold { color: var(--gold); }
+.hero-title .cyan { color: var(--cyan); }
+.hero-sub {
+  font-style: italic;
+  color: var(--muted);
+  font-size: 1rem;
+  margin-top: .9rem;
+  max-width: 560px;
+  margin-left: auto; margin-right: auto;
+  animation: fadeUp .8s .2s ease both;
+}
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
+
+/* ── META PILLS ── */
+.meta-pills {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: .8rem; padding: 0 2rem 3rem;
+  animation: fadeUp .8s .3s ease both;
+}
+.meta-pill {
+  display: flex; align-items: center; gap: .5rem;
+  padding: .5rem 1.1rem;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(0,200,192,.15);
+  font-family: 'Cinzel', serif;
+  font-size: .62rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--sand);
+}
+.meta-pill .label { color: var(--muted); margin-right: .2rem; }
+
+/* ── MOBILE VS IMMOBILE EXPLAINER ── */
+.concept-section {
+  max-width: 900px; margin: 0 auto 4rem; padding: 0 2rem;
+}
+.concept-header {
+  font-family: 'Cinzel', serif;
+  font-size: .65rem; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--cyan); margin-bottom: 1.6rem;
+  padding-bottom: .8rem;
+  border-bottom: 1px solid rgba(0,200,192,.15);
+  display: flex; align-items: center; gap: .5rem;
+}
+.concept-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+.concept-card {
+  padding: 1.6rem 1.8rem;
+  position: relative;
+  overflow: hidden;
+}
+.concept-card.mobile-card {
+  background: rgba(74,158,82,.06);
+  border: 1px solid rgba(74,158,82,.25);
+}
+.concept-card.immobile-card {
+  background: rgba(224,92,58,.06);
+  border: 1px solid rgba(224,92,58,.25);
+}
+.concept-card::before {
+  content: '';
+  position: absolute; top: -1px; left: -1px;
+  width: 20px; height: 20px;
+}
+.mobile-card::before { border-top: 2px solid var(--leaf); border-left: 2px solid var(--leaf); }
+.immobile-card::before { border-top: 2px solid var(--ca-color); border-left: 2px solid var(--ca-color); }
+.concept-card-label {
+  font-family: 'Cinzel', serif;
+  font-size: .6rem; letter-spacing: .2em; text-transform: uppercase;
+  margin-bottom: .5rem; display: flex; align-items: center; gap: .5rem;
+}
+.mobile-card .concept-card-label { color: var(--leaf); }
+.immobile-card .concept-card-label { color: var(--ca-color); }
+.concept-card-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1rem; color: var(--text);
+  margin-bottom: .7rem;
+}
+.concept-card p {
+  font-size: .88rem; line-height: 1.8; color: var(--muted);
+}
+.concept-card strong { color: var(--sand); font-weight: 600; }
+.concept-examples {
+  margin-top: .9rem;
+  display: flex; flex-wrap: wrap; gap: .4rem;
+}
+.example-tag {
+  font-family: 'Cinzel', serif;
+  font-size: .55rem; letter-spacing: .12em; text-transform: uppercase;
+  padding: .2rem .6rem;
+}
+.mobile-card .example-tag { color: var(--leaf); border: 1px solid rgba(74,158,82,.3); background: rgba(74,158,82,.06); }
+.immobile-card .example-tag { color: var(--ca-color); border: 1px solid rgba(224,92,58,.3); background: rgba(224,92,58,.06); }
+
+/* ── SECTION DIVIDER ── */
+.section-divider {
+  max-width: 900px; margin: 0 auto 3rem; padding: 0 2rem;
+  display: flex; align-items: center; gap: 1.2rem;
+}
+.divider-line {
+  flex: 1; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,200,192,.25), transparent);
+}
+.divider-label {
+  font-family: 'Cinzel', serif;
+  font-size: .62rem; letter-spacing: .24em; text-transform: uppercase;
+  color: var(--gold); white-space: nowrap;
+}
+
+/* ── DEFICIENCY CARDS ── */
+.deficiencies-section {
+  max-width: 900px; margin: 0 auto 2rem; padding: 0 2rem;
+  display: flex; flex-direction: column; gap: 1.6rem;
+}
+.deficiency-card {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  border: 1px solid rgba(255,255,255,.06);
+  position: relative;
+  overflow: hidden;
+  transition: border-color .25s;
+}
+.deficiency-card:hover { border-color: rgba(255,255,255,.14); }
+.deficiency-card::before {
+  content: '';
+  position: absolute; top: -1px; left: -1px;
+  width: 20px; height: 20px;
+}
+.deficiency-card::after {
+  content: '';
+  position: absolute; bottom: -1px; right: -1px;
+  width: 20px; height: 20px;
+}
+
+/* Per-nutrient color theming */
+.card-n { background: var(--n-bg); }
+.card-n::before, .card-n::after { border-color: var(--n-color) !important; }
+.card-n::before { border-top: 2px solid var(--n-color); border-left: 2px solid var(--n-color); }
+.card-n::after { border-bottom: 2px solid var(--n-color); border-right: 2px solid var(--n-color); }
+.card-n .def-accent { background: var(--n-color); }
+.card-n .def-symbol { color: var(--n-color); border-color: rgba(126,200,80,.3); background: rgba(126,200,80,.08); }
+.card-n .def-badge { color: var(--n-color); border-color: rgba(126,200,80,.3); background: rgba(126,200,80,.06); }
+.card-n .fix-box { border-color: rgba(126,200,80,.25); background: rgba(126,200,80,.05); }
+.card-n .fix-label { color: var(--n-color); }
+
+.card-p { background: var(--p-bg); }
+.card-p::before { border-top: 2px solid var(--p-color); border-left: 2px solid var(--p-color); }
+.card-p::after { border-bottom: 2px solid var(--p-color); border-right: 2px solid var(--p-color); }
+.card-p .def-accent { background: var(--p-color); }
+.card-p .def-symbol { color: var(--p-color); border-color: rgba(155,107,181,.3); background: rgba(155,107,181,.08); }
+.card-p .def-badge { color: var(--p-color); border-color: rgba(155,107,181,.3); background: rgba(155,107,181,.06); }
+.card-p .fix-box { border-color: rgba(155,107,181,.25); background: rgba(155,107,181,.05); }
+.card-p .fix-label { color: var(--p-color); }
+
+.card-k { background: var(--k-bg); }
+.card-k::before { border-top: 2px solid var(--k-color); border-left: 2px solid var(--k-color); }
+.card-k::after { border-bottom: 2px solid var(--k-color); border-right: 2px solid var(--k-color); }
+.card-k .def-accent { background: var(--k-color); }
+.card-k .def-symbol { color: var(--k-color); border-color: rgba(232,114,26,.3); background: rgba(232,114,26,.08); }
+.card-k .def-badge { color: var(--k-color); border-color: rgba(232,114,26,.3); background: rgba(232,114,26,.06); }
+.card-k .fix-box { border-color: rgba(232,114,26,.25); background: rgba(232,114,26,.05); }
+.card-k .fix-label { color: var(--k-color); }
+
+.card-mg { background: var(--mg-bg); }
+.card-mg::before { border-top: 2px solid var(--mg-color); border-left: 2px solid var(--mg-color); }
+.card-mg::after { border-bottom: 2px solid var(--mg-color); border-right: 2px solid var(--mg-color); }
+.card-mg .def-accent { background: var(--mg-color); }
+.card-mg .def-symbol { color: var(--mg-color); border-color: rgba(240,180,41,.3); background: rgba(240,180,41,.08); }
+.card-mg .def-badge { color: var(--mg-color); border-color: rgba(240,180,41,.3); background: rgba(240,180,41,.06); }
+.card-mg .fix-box { border-color: rgba(240,180,41,.25); background: rgba(240,180,41,.05); }
+.card-mg .fix-label { color: var(--mg-color); }
+
+.card-ca { background: var(--ca-bg); }
+.card-ca::before { border-top: 2px solid var(--ca-color); border-left: 2px solid var(--ca-color); }
+.card-ca::after { border-bottom: 2px solid var(--ca-color); border-right: 2px solid var(--ca-color); }
+.card-ca .def-accent { background: var(--ca-color); }
+.card-ca .def-symbol { color: var(--ca-color); border-color: rgba(224,92,58,.3); background: rgba(224,92,58,.08); }
+.card-ca .def-badge { color: var(--ca-color); border-color: rgba(224,92,58,.3); background: rgba(224,92,58,.06); }
+.card-ca .fix-box { border-color: rgba(224,92,58,.25); background: rgba(224,92,58,.05); }
+.card-ca .fix-label { color: var(--ca-color); }
+
+/* Card left panel */
+.def-left {
+  padding: 1.8rem 1.4rem;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1rem;
+  border-right: 1px solid rgba(255,255,255,.05);
+  text-align: center;
+  position: relative;
+}
+.def-accent {
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+}
+.def-symbol {
+  font-family: 'Cinzel', serif;
+  font-size: 2.2rem; font-weight: 700;
+  width: 72px; height: 72px;
+  border: 1.5px solid;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.def-name {
+  font-family: 'Cinzel', serif;
+  font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--text);
+}
+.def-element {
+  font-size: .78rem; color: var(--muted); font-style: italic;
+}
+.def-badge {
+  font-family: 'Cinzel', serif;
+  font-size: .5rem; letter-spacing: .14em; text-transform: uppercase;
+  padding: .2rem .6rem;
+  border: 1px solid;
+}
+
+/* Card right panel */
+.def-right {
+  padding: 1.8rem 2rem;
+  display: flex; flex-direction: column; gap: 1rem;
+}
+.def-row-label {
+  font-family: 'Cinzel', serif;
+  font-size: .55rem; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: .3rem; display: block;
+}
+.def-symptoms p, .def-progression p {
+  font-size: .9rem; line-height: 1.8; color: var(--text);
+}
+.def-symptoms strong, .def-progression strong {
+  color: var(--sand);
+}
+.fix-box {
+  padding: .9rem 1.1rem;
+  border-left: 3px solid;
+}
+.fix-label {
+  font-family: 'Cinzel', serif;
+  font-size: .55rem; letter-spacing: .18em; text-transform: uppercase;
+  display: block; margin-bottom: .35rem;
+}
+.fix-box p {
+  font-size: .88rem; line-height: 1.75; color: var(--sand);
+}
+
+/* ── GOLDEN RULE ── */
+.golden-rule-section {
+  max-width: 900px; margin: 0 auto 4rem; padding: 0 2rem;
+}
+.golden-rule-card {
+  border: 1px solid rgba(240,180,41,.3);
+  background: rgba(240,180,41,.04);
+  padding: 2.2rem 2.5rem;
+  position: relative;
+  text-align: center;
+}
+.golden-rule-card::before {
+  content: ''; position: absolute; top: -1px; left: -1px;
+  width: 24px; height: 24px;
+  border-top: 2px solid var(--gold); border-left: 2px solid var(--gold);
+}
+.golden-rule-card::after {
+  content: ''; position: absolute; bottom: -1px; right: -1px;
+  width: 24px; height: 24px;
+  border-bottom: 2px solid var(--gold); border-right: 2px solid var(--gold);
+}
+.golden-rule-eyebrow {
+  font-family: 'Cinzel', serif;
+  font-size: .6rem; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: .8rem; display: block;
+}
+.golden-rule-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.4rem; color: var(--text); margin-bottom: 1.2rem;
+}
+.golden-rule-title .gold { color: var(--gold); }
+.ph-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1rem; max-width: 500px; margin: 0 auto 1.4rem;
+}
+.ph-box {
+  padding: 1rem 1.4rem;
+  background: rgba(0,0,0,.3);
+  border: 1px solid rgba(255,255,255,.08);
+}
+.ph-box .ph-type {
+  font-family: 'Cinzel', serif;
+  font-size: .58rem; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: .3rem; display: block;
+}
+.ph-box .ph-range {
+  font-family: 'Cinzel', serif;
+  font-size: 1.3rem; font-weight: 700; color: var(--cyan);
+}
+.golden-rule-note {
+  font-size: .88rem; line-height: 1.8; color: var(--muted);
+  font-style: italic; max-width: 580px; margin: 0 auto;
+}
+.golden-rule-note strong { color: var(--sand); font-style: normal; }
+
+/* ── QUICK REFERENCE ── */
+.quick-ref-section {
+  max-width: 900px; margin: 0 auto 4rem; padding: 0 2rem;
+}
+.quick-ref-header {
+  font-family: 'Cinzel', serif;
+  font-size: .65rem; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--cyan); margin-bottom: 1.4rem;
+  padding-bottom: .8rem;
+  border-bottom: 1px solid rgba(0,200,192,.15);
+  display: flex; align-items: center; gap: .5rem;
+}
+.quick-ref-table {
+  width: 100%; border-collapse: collapse;
+}
+.quick-ref-table thead tr {
+  border-bottom: 1px solid rgba(0,200,192,.2);
+}
+.quick-ref-table th {
+  font-family: 'Cinzel', serif;
+  font-size: .56rem; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--muted); padding: .6rem .8rem; text-align: left;
+}
+.quick-ref-table tbody tr {
+  border-bottom: 1px solid rgba(255,255,255,.04);
+  transition: background .2s;
+}
+.quick-ref-table tbody tr:hover { background: rgba(255,255,255,.02); }
+.quick-ref-table td {
+  padding: .7rem .8rem; font-size: .85rem; color: var(--text); vertical-align: middle;
+}
+.qr-nutrient {
+  display: flex; align-items: center; gap: .7rem;
+}
+.qr-dot {
+  width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+}
+.qr-name { font-family: 'Cinzel', serif; font-size: .75rem; }
+.qr-badge {
+  font-family: 'Cinzel', serif;
+  font-size: .5rem; letter-spacing: .12em; text-transform: uppercase;
+  padding: .15rem .45rem; border: 1px solid;
+}
+.badge-mobile { color: var(--leaf); border-color: rgba(74,158,82,.3); background: rgba(74,158,82,.06); }
+.badge-immobile { color: var(--ca-color); border-color: rgba(224,92,58,.3); background: rgba(224,92,58,.06); }
+.qr-where { color: var(--muted); font-size: .82rem; font-style: italic; }
+
+/* ── DISCLAIMER ── */
+.island-tip {
+  max-width: 900px; margin: 0.4rem auto 1.4rem; padding: 0.85rem 1.2rem;
+  background: rgba(0,200,192,0.04); border-left: 3px solid var(--cyan);
+  font-size: 0.86rem; line-height: 1.75; color: var(--sand);
+}
+.island-tip .tip-label {
+  font-family: 'Cinzel', serif; font-size: 0.56rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--cyan); display: block; margin-bottom: 0.35rem;
+}
+.island-tip strong { color: var(--text); }
+.island-tip a { color: var(--cyan); text-decoration: underline; text-underline-offset: 2px; }
+
+.disclaimer {
+  background: rgba(27,58,30,.3);
+  border-top: 1px solid rgba(0,200,192,.1);
+  border-bottom: 1px solid rgba(0,200,192,.1);
+  padding: 1.5rem 2rem;
+  text-align: center; margin: 0;
+}
+.disclaimer p {
+  font-size: .78rem; color: var(--muted); font-style: italic;
+  max-width: 700px; margin: 0 auto; line-height: 1.7;
+}
+.disclaimer strong { color: var(--sand); }
+
+/* ── CROSS-LINKS ── */
+.cross-links-section {
+  max-width: 900px; margin: 0 auto 3rem; padding: 0 2rem;
+  display: flex; flex-direction: column; gap: 0.8rem;
+}
+.cross-link-card {
+  display: flex; align-items: center; gap: 1.4rem;
+  padding: 1.2rem 1.6rem;
+  background: rgba(0,200,192,.03);
+  border: 1px solid rgba(0,200,192,.18);
+  text-decoration: none; color: inherit;
+  transition: border-color .2s, background .2s;
+}
+.cross-link-card:hover {
+  border-color: rgba(0,200,192,.35);
+  background: rgba(0,200,192,.06);
+}
+.cross-link-icon { font-size: 1.8rem; flex-shrink: 0; }
+.cross-link-text { flex: 1; }
+.cross-link-label {
+  font-family: 'Cinzel', serif;
+  font-size: .55rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--cyan); margin-bottom: .25rem; display: block;
+}
+.cross-link-title {
+  font-family: 'Cinzel', serif;
+  font-size: .95rem; color: var(--text); margin-bottom: .3rem;
+}
+.cross-link-desc { font-size: .82rem; color: var(--muted); line-height: 1.6; }
+.cross-link-arrow {
+  font-family: 'Cinzel', serif; font-size: 1rem; color: var(--cyan); flex-shrink: 0;
+}
+
+/* ── REVEAL ANIMATION ── */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 700px) {
+  .concept-grid { grid-template-columns: 1fr; }
+  .deficiency-card { grid-template-columns: 1fr; }
+  .def-left { border-right: none; border-bottom: 1px solid rgba(255,255,255,.05); flex-direction: row; justify-content: flex-start; padding: 1.2rem 1.4rem; }
+  .def-accent { height: 100%; width: 3px; top: 0; right: auto; left: 0; }
+  .ph-grid { grid-template-columns: 1fr; max-width: 280px; }
+  .quick-ref-table td, .quick-ref-table th { padding: .5rem .5rem; font-size: .78rem; }
+  .sg-ring-wrap { width: auto; max-width: 100%; }
+  .sg-frame { width: auto; }
+  .sg-img { width: auto; max-width: 100%; height: auto; }
+  .hero-frame img { width: auto; max-width: 100%; height: auto; object-fit: contain; }
+}
+
+/* ── REFERENCE IMAGE ── */
+.ref-image-section {
+  max-width: 900px; margin: 0 auto 2rem; padding: 0 2rem;
+}
+.ref-image-header {
+  font-family: 'Cinzel', serif;
+  font-size: .65rem; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--cyan); margin-bottom: 1.2rem;
+  padding-bottom: .8rem;
+  border-bottom: 1px solid rgba(0,200,192,.15);
+  display: flex; align-items: center; gap: .5rem;
+}
+.ref-image-wrap {
+  position: relative;
+  border: 1px solid rgba(0,200,192,.15);
+  background: rgba(27,58,30,.15);
+  padding: 1.2rem;
+}
+.ref-image-wrap::before {
+  content: ''; position: absolute; top: -1px; left: -1px;
+  width: 20px; height: 20px;
+  border-top: 2px solid var(--cyan); border-left: 2px solid var(--cyan);
+}
+.ref-image-wrap::after {
+  content: ''; position: absolute; bottom: -1px; right: -1px;
+  width: 20px; height: 20px;
+  border-bottom: 2px solid var(--gold); border-right: 2px solid var(--gold);
+}
+.ref-image {
+  width: 100%; display: block;
+  border-radius: 2px;
+}
+.ref-image-caption {
+  font-size: .78rem; color: var(--muted); font-style: italic;
+  text-align: center; margin-top: .8rem; line-height: 1.6;
+}
+
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.sg-ring-wrap {
+  position: relative; width:100%; max-width:750px; margin:2rem auto 0;
+  padding: 22px; animation: fadeUp 0.85s ease both;
+}
+.sg-ring {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  border: 1px solid rgba(0,200,192,0.2); border-radius: 6px;
+  animation: spin-slow 22s linear infinite;
+  transform-origin: center center; pointer-events: none; will-change: transform;
+}
+.sg-ring::before {
+  content: ''; position: absolute; top: -4px; left: 50%;
+  width: 8px; height: 8px; background: var(--cyan); border-radius: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 10px var(--cyan), 0 0 22px rgba(0,200,192,0.5);
+}
+.sg-ring::after {
+  content: ''; position: absolute; bottom: -4px; left: 50%;
+  width: 5px; height: 5px; background: var(--gold); border-radius: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 8px var(--gold), 0 0 18px rgba(240,180,41,0.4);
+}
+.sg-frame { position: relative; width: 100%; }
+.sg-frame::before {
+  content: ''; position: absolute; top: -4px; left: -4px;
+  width: 20px; height: 20px;
+  border-top: 2px solid var(--cyan); border-left: 2px solid var(--cyan);
+  pointer-events: none; z-index: 2;
+}
+.sg-frame::after {
+  content: ''; position: absolute; bottom: -4px; right: -4px;
+  width: 20px; height: 20px;
+  border-bottom: 2px solid var(--gold); border-right: 2px solid var(--gold);
+  pointer-events: none; z-index: 2;
+}
+.sg-img {
+  width: 100%; display: block; position: relative; z-index: 1;
+  box-shadow: 0 0 50px rgba(0,200,192,0.1), 0 20px 50px rgba(0,0,0,0.55);
+}
+.sg-glow {
+  position: absolute; bottom: -12px; left: 15%; right: 15%; height: 36px;
+  background: radial-gradient(ellipse, rgba(0,200,192,0.2), transparent 70%);
+  filter: blur(10px); pointer-events: none;
+}
+</style>
+<style>:root { --trm-nav-h: 68px; --nav-h: 68px; }
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  height: var(--trm-nav-h);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2rem; box-sizing: border-box;
+  background: rgba(10,12,10,0.95);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0,200,192,0.18);
+}
+.nav-logo { display: flex; align-items: center; gap: 0.85rem; text-decoration: none; flex-shrink: 0; }
+.nav-logo-icon {
+  width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, #1b3a1e, #2d6e35);
+  border: 2px solid #00c8c0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; box-shadow: 0 0 14px rgba(0,200,192,0.3);
+}
+.nav-logo-text .line1 {
+  font-family: "Cinzel Decorative", serif; font-size: 0.92rem;
+  color: #00c8c0; letter-spacing: 0.1em; display: block; line-height: 1.3;
+}
+.nav-logo-text .line2 {
+  font-family: "Cinzel", serif; font-size: 0.75rem;
+  color: #e0ceaa; letter-spacing: 0.22em; text-transform: uppercase; display: block;
+}
+.nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; margin: 0; padding: 0; }
+.nav-links a {
+  font-family: "Cinzel", serif; font-size: 0.78rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: #e0ceaa; text-decoration: none; opacity: 0.75;
+  transition: opacity 0.2s, color 0.2s;
+}
+.nav-links a:hover { opacity: 1; color: #00c8c0; }
+.nav-links a.active { opacity: 1; color: #00c8c0; }
+.nav-shop {
+  font-family: "Cinzel", serif; font-size: 0.75rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  text-decoration: none; color: #00c8c0;
+  border: 1.5px solid #00c8c0; padding: 0.45rem 1.2rem;
+  transition: background 0.2s, color 0.2s; white-space: nowrap;
+}
+.nav-shop:hover { background: #00c8c0; color: #0a0c0a; }
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  cursor: pointer; background: none; border: none; padding: 4px;
+  -webkit-tap-highlight-color: transparent;
+}
+.hamburger span { display: block; width: 24px; height: 2px; background: #00c8c0; transition: 0.25s; }
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+.mobile-menu {
+  display: none; position: fixed; top: var(--trm-nav-h); left: 0; right: 0; z-index: 290;
+  background: rgba(10,12,10,0.98);
+  flex-direction: column; padding: 1.4rem 1.5rem 1.8rem; gap: 1.2rem;
+  border-bottom: 2px solid #00c8c0;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-family: "Cinzel", serif; font-size: 1.05rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: #e0ceaa; text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.07); padding-bottom: 1rem;
+}
+.mobile-menu a:last-child { border-bottom: none; color: #00c8c0; padding-bottom: 0; }
+footer {
+  background: #070908;
+  border-top: 1px solid rgba(0,200,192,0.12);
+  padding: 4rem 2.5rem 2rem;
+  position: relative; z-index: 1;
+}
+.footer-grid {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem;
+  padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.footer-brand .nav-logo-icon { width: 48px; height: 48px; font-size: 1.4rem; }
+.footer-brand .brand-name {
+  font-family: "Cinzel Decorative", serif;
+  font-size: 1rem; color: #00c8c0; margin: 1rem 0 0.8rem; display: block;
+}
+.footer-brand p { font-size: 0.92rem; color: rgba(240,234,216,0.62); line-height: 1.7; max-width: 260px; }
+.footer-col h5 {
+  font-family: "Cinzel", serif; font-size: 0.72rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: #f0b429; margin-bottom: 1.4rem;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; padding: 0; margin: 0; }
+.footer-col ul a {
+  font-size: 0.92rem; color: rgba(240,234,216,0.62); text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-col ul a:hover { color: #00c8c0; }
+.footer-bottom {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 1rem; padding-top: 2rem;
+}
+.footer-bottom p { font-family: "Lora", serif; font-size: 0.82rem; color: rgba(240,234,216,0.25); }
+.socials { display: flex; gap: 0.8rem; }
+.socials a {
+  width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; text-decoration: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.socials a:hover { border-color: #00c8c0; background: rgba(0,200,192,0.1); }
+@media (max-width: 1000px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .footer-brand { grid-column: 1 / -1; }
+}
+@media (max-width: 640px) {
+  .footer-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .nav-links, .nav-shop { display: none; }
+  .hamburger { display: flex; }
+}</style></head>
+<body>
+<div class="bg-ambience"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div id="trm-nav"></div>
+
+<main>
+
+<!-- HERO -->
+<header class="hero">
+  <span class="hero-eyebrow">🌱 &nbsp; Grow Guide &amp; Tutorials</span>
+  <div style="margin-top:1.5rem;margin-bottom:2rem;display:flex;justify-content:center;">
+  <div class="sg-ring-wrap">
+    <div class="sg-ring"></div>
+    <div class="sg-frame">
+      <img src="https://tropicalrootsmaui.com/img/tropical-roots-maui-cannabis-deficiency-lockout-guide.webp"
+           alt="Cannabis Plant Deficiency Guide (Reading the Mana Lockout)"
+           title="Cannabis Deficiency Guide: Reading the Mana Lockout"
+           class="sg-img" style="cursor:zoom-in;" onclick="document.getElementById('heroLightbox').style.display='flex'"
+           loading="eager" fetchpriority="high" decoding="async">
+      <div class="sg-glow"></div>
+    </div>
+  </div>
+  </div>
+  <h1 class="hero-title">Reading Your <span class="gold">Plants</span><br><span class="cyan">Deficiency Guide</span></h1>
+  <p class="hero-sub">Read the leaves. Secure the fortress. Kānehiwa walks you through our precise guide to reading complex deficiency diagnoses—Mobile N/P, Engine K/Mg, and Immobile Ca lockouts. Dominate your environment and check your soil's microbial life to lock in the potent mana for your Maui Cultivars. (All values illustrative).</p>
+  <p style="font-family:'Lora',serif; font-style:italic; color:var(--gold); font-size:0.88rem; margin-top:1rem; max-width:620px; margin-left:auto; margin-right:auto; animation:fadeUp 0.8s 0.25s ease both;">"A plant does not speak with words, but with the color of her leaves and the reach of her branches. To be a master grower is to learn the silent language of the garden. Observe first, act second, and always move with the rhythm of the island." — Kānehiwa</p>
+</header>
+
+<!-- META PILLS -->
+<div class="meta-pills">
+  <div class="meta-pill"><span>🧬</span><span><span class="label">Nutrients Covered:</span> N · P · K · Mg · Ca</span></div>
+  <div class="meta-pill"><span>📍</span><span><span class="label">Look:</span> Old Growth vs. New Growth</span></div>
+  <div class="meta-pill"><span>⚡</span><span><span class="label">First Step Always:</span> Check pH</span></div>
+</div>
+
+<!-- MOBILE VS IMMOBILE -->
+<section class="concept-section reveal visible">
+  <div class="concept-header">🔬 &nbsp; The First Rule: Where Is the Problem?</div>
+  <div class="concept-grid">
+    <div class="concept-card mobile-card">
+      <div class="concept-card-label">⬇️ Starts at the Bottom</div>
+      <div class="concept-card-title">Mobile Nutrients</div>
+      <p>When the plant is deficient, it <strong>moves nutrients away from older leaves</strong> to support new growth. So symptoms show up on the lower, older leaves first.</p>
+      <div class="concept-examples">
+        <span class="example-tag">Nitrogen (N)</span>
+        <span class="example-tag">Phosphorus (P)</span>
+        <span class="example-tag">Potassium (K)</span>
+        <span class="example-tag">Magnesium (Mg)</span>
+      </div>
+    </div>
+    <div class="concept-card immobile-card">
+      <div class="concept-card-label">⬆️ Starts at the Top</div>
+      <div class="concept-card-title">Immobile Nutrients</div>
+      <p>The plant <strong>cannot move these nutrients</strong> once they're locked into tissue. Deficiencies show up on new, top growth first — young leaves suffer most.</p>
+      <div class="concept-examples">
+        <span class="example-tag">Calcium (Ca)</span>
+        <span class="example-tag">Iron (Fe)</span>
+        <span class="example-tag">Boron (B)</span>
+        <span class="example-tag">Sulfur (S)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REFERENCE IMAGE -->
+<section class="ref-image-section reveal visible">
+  <div class="ref-image-header">🖼️ &nbsp; Reading the Mana Lockout</div>
+  <div class="ref-image-wrap">
+    <img src="https://tropicalrootsmaui.com/img/tropical-roots-maui-cannabis-plant-nutrient-deficiency-lockout-guide.webp" alt="Cannabis Plant Deficiency Guide (Reading the Mana Lockout)" title="Cannabis Deficiency Guide: Reading the Mana Lockout" class="ref-image" style="cursor:zoom-in;" onclick="document.getElementById('heroLightbox').querySelector('img').src=this.src;document.getElementById('heroLightbox').style.display='flex'">
+    <p class="ref-image-caption">Read the leaves. Fix the source. Kānehiwa guides you through our foundational Tropical Roots Maui deficiency guide. Learn to identify Nitrogen, Phosphorus, Potassium, Magnesium, and Calcium lockouts, and discover how to remediate them using natural KNF inputs like FPJ and WCA. Build your microbial fortress, dial in your VPD, and unlock potent nutrient uptake to preserve the mana. (All values illustrative).</p>
+  </div>
+</section>
+
+<!-- DEFICIENCY DIVIDER -->
+<div class="section-divider reveal visible">
+  <div class="divider-line"></div>
+  <span class="divider-label">🌿 The Deficiency Checklist</span>
+  <div class="divider-line"></div>
+</div>
+
+<!-- DEFICIENCY CARDS -->
+<div class="deficiencies-section">
+
+  <!-- NITROGEN -->
+  <div class="deficiency-card card-n reveal visible">
+    <div class="def-left">
+      <div class="def-accent"></div>
+      <div class="def-symbol">N</div>
+      <div>
+        <div class="def-name">Nitrogen</div>
+        <div class="def-element">Macronutrient</div>
+      </div>
+      <span class="def-badge">Mobile</span>
+    </div>
+    <div class="def-right">
+      <div class="def-symptoms">
+        <span class="def-row-label">Symptoms</span>
+        <p>Lower, older leaves turn <strong>pale green then yellow</strong>, starting at the tips and working inward. See the Nitrogen section of the <strong>Reading the Mana Lockout</strong> image above for a visual reference.</p>
+      </div>
+      <div class="def-progression">
+        <span class="def-row-label">Progression</span>
+        <p>Yellowing <strong>climbs up the plant</strong> as it cannibalizes older growth to feed the top canopy. Overall growth slows noticeably.</p>
+      </div>
+      <div class="fix-box">
+        <span class="fix-label">✦ Fix</span>
+        <p>Increase base nutrients or add a high-nitrogen organic amendment like <strong>bat guano</strong> or <strong>fish emulsion</strong>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width:900px;margin:0.6rem auto 1.2rem;padding:0.75rem 1.2rem;background:rgba(240,180,41,0.04);border:1px solid rgba(240,180,41,0.2);border-left:3px solid var(--gold);position:relative;">
+    <p style="font-size:0.82rem;line-height:1.75;color:#e0ceaa;font-style:italic;margin:0;">"When the lower leaves turn pale like the fading moon, the plant is hungry for the spirit of the sky. Give her the nitrogen she needs to keep her green cloak vibrant and strong." <span style="color:var(--gold);font-style:normal;">— Kānehiwa</span></p>
+  </div>
+
+  <div class="island-tip">
+    <span class="tip-label">🌺 Hawaiʻi Island Tip</span>
+    On Maui, nitrogen burns off fast in our volcanic soil and tropical rain. If you're running KNF, <strong><a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-faa-guide.html">FAA (Fish Amino Acids)</a> is your go-to nitrogen fix</strong> — it delivers amino-chelated N that microbes love. For a quick hit, <strong><a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-fpj-guide.html">FPJ</a> at 1:500</strong> (double strength) as a soil drench works within days. Our warm soil biology processes organic N much faster than cold-climate grows — you'll see green return in 3–4 days vs. the 7–10 days mainland guides suggest.
+  </div>
+
+  <!-- PHOSPHORUS -->
+  <div class="deficiency-card card-p reveal visible">
+    <div class="def-left">
+      <div class="def-accent"></div>
+      <div class="def-symbol">P</div>
+      <div>
+        <div class="def-name">Phosphorus</div>
+        <div class="def-element">Macronutrient</div>
+      </div>
+      <span class="def-badge">Mobile</span>
+    </div>
+    <div class="def-right">
+      <div class="def-symptoms">
+        <span class="def-row-label">Symptoms</span>
+        <p>Leaves darken to a deep green and develop <strong>dark purple or copper-colored spots</strong>. Leaf stems (petioles) may turn bright red or purple. Refer to the Phosphorus section of the <strong>Reading the Mana Lockout</strong> image above.</p>
+      </div>
+      <div class="def-progression">
+        <span class="def-row-label">Progression</span>
+        <p>Growth slows significantly, <strong>especially during flowering</strong>. Buds may fail to develop properly if not corrected early.</p>
+      </div>
+      <div class="fix-box">
+        <span class="fix-label">✦ Fix</span>
+        <p><strong>Check pH first</strong> — P lockout is often a pH problem. If pH is correct, add a bloom-specific organic booster.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width:900px;margin:0.6rem auto 1.2rem;padding:0.75rem 1.2rem;background:rgba(240,180,41,0.04);border:1px solid rgba(240,180,41,0.2);border-left:3px solid var(--gold);position:relative;">
+    <p style="font-size:0.82rem;line-height:1.75;color:#e0ceaa;font-style:italic;margin:0;">"If the stems turn purple like the sunset and the leaves darken with shadow, the roots are struggling to build their temple. Phosphorus is the foundation of the bloom; do not let her foundation crumble." <span style="color:var(--gold);font-style:normal;">— Kānehiwa</span></p>
+  </div>
+
+  <div class="island-tip">
+    <span class="tip-label">🌺 Hawaiʻi Island Tip</span>
+    Purple stems on Maui can fool you — many strains show purple petioles naturally in our intense UV. <strong>True P deficiency will also darken the leaf tissue itself</strong>, not just the stems. If you're running KNF, <strong><a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-wca-p-guide.html">WCA-P (Calcium Phosphate)</a> is your bloom-stage phosphorus source</strong>. Our volcanic soils are naturally high in iron, which can bind phosphorus — keeping <strong>pH at 6.2–6.5</strong> in soil is critical for P availability in Hawaiʻi.
+  </div>
+
+  <!-- POTASSIUM -->
+  <div class="deficiency-card card-k reveal visible">
+    <div class="def-left">
+      <div class="def-accent"></div>
+      <div class="def-symbol">K</div>
+      <div>
+        <div class="def-name">Potassium</div>
+        <div class="def-element">Macronutrient</div>
+      </div>
+      <span class="def-badge">Mobile</span>
+    </div>
+    <div class="def-right">
+      <div class="def-symptoms">
+        <span class="def-row-label">Symptoms</span>
+        <p><strong>Burnt or yellow leaf edges</strong> (marginal chlorosis) while the inner leaf remains green. Sometimes called "the scorched look." Compare with the Potassium section of the <strong>Reading the Mana Lockout</strong> image above.</p>
+      </div>
+      <div class="def-progression">
+        <span class="def-row-label">Progression</span>
+        <p>Brown spots appear and spread. Leaves may look <strong>stretched, thin, or weak</strong>. Stems may become brittle.</p>
+      </div>
+      <div class="fix-box">
+        <span class="fix-label">✦ Fix</span>
+        <p>Add <strong>kelp meal</strong> or a potassium-rich organic supplement. Avoid overwatering, which can lock out K.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width:900px;margin:0.6rem auto 1.2rem;padding:0.75rem 1.2rem;background:rgba(240,180,41,0.04);border:1px solid rgba(240,180,41,0.2);border-left:3px solid var(--gold);position:relative;">
+    <p style="font-size:0.82rem;line-height:1.75;color:#e0ceaa;font-style:italic;margin:0;">"When the edges of the leaves burn like the lava's touch, the plant is thirsty for the strength of the earth. Potassium is the water-bearer; it helps her stand tall against the heat of the day." <span style="color:var(--gold);font-style:normal;">— Kānehiwa</span></p>
+  </div>
+
+  <div class="island-tip">
+    <span class="tip-label">🌺 Hawaiʻi Island Tip</span>
+    <strong>K deficiency is extra common on Maui during flower</strong> — our heavy tropical rains leach potassium from the soil fast, and flowering plants are K-hungry. Burnt leaf edges during weeks 4–6 of bloom? That's almost always K. KNF growers: <strong>banana stalk FPJ is the island solution</strong> — banana plants are potassium powerhouses. Chop a stalk, ferment with brown sugar, and you have a potassium-rich FPJ. Kelp meal from the beach (rinse salt first) also works as a top-dress amendment.
+  </div>
+
+  <!-- MAGNESIUM -->
+  <div class="deficiency-card card-mg reveal visible">
+    <div class="def-left">
+      <div class="def-accent"></div>
+      <div class="def-symbol">Mg</div>
+      <div>
+        <div class="def-name">Magnesium</div>
+        <div class="def-element">Secondary Macro</div>
+      </div>
+      <span class="def-badge">Mobile</span>
+    </div>
+    <div class="def-right">
+      <div class="def-symptoms">
+        <span class="def-row-label">Symptoms</span>
+        <p><strong>Yellowing between the leaf veins</strong> (interveinal chlorosis) on older leaves. The veins stay dark green while the leaf tissue around them turns bright yellow. See the Magnesium section of the <strong>Reading the Mana Lockout</strong> image above.</p>
+      </div>
+      <div class="def-progression">
+        <span class="def-row-label">Progression</span>
+        <p>Rust-colored spots may appear. Affected leaves <strong>curl upward</strong> at the edges and eventually drop.</p>
+      </div>
+      <div class="fix-box">
+        <span class="fix-label">✦ Fix</span>
+        <p>Add <strong>Epsom salt</strong> (Magnesium Sulfate) to your watering schedule at 1 tsp/gallon, or apply as a foliar spray for a faster response.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="island-tip">
+    <span class="tip-label">🌺 Hawaiʻi Island Tip</span>
+    Mg deficiency is the <strong>#1 misdiagnosed issue in Hawaiʻi grows</strong>. Our county water on Maui is naturally soft (low mineral content), and heavy watering in the heat flushes what little Mg exists right through the pot. <strong>Epsom salt foliar spray (1 tsp/gallon, before 7 AM)</strong> is the fastest fix — you'll see green returning between the veins within 48 hours. For prevention, add <strong>dolomite lime</strong> to your soil mix at the start of each cycle — it provides both Ca and Mg slowly over months.
+  </div>
+
+  <!-- CALCIUM -->
+  <div class="deficiency-card card-ca reveal visible">
+    <div class="def-left">
+      <div class="def-accent"></div>
+      <div class="def-symbol">Ca</div>
+      <div>
+        <div class="def-name">Calcium</div>
+        <div class="def-element">Secondary Macro</div>
+      </div>
+      <span class="def-badge">Immobile</span>
+    </div>
+    <div class="def-right">
+      <div class="def-symptoms">
+        <span class="def-row-label">Symptoms</span>
+        <p>Small, <strong>rusty-brown pitting or spots on new growth</strong> — the top leaves, not the bottom. New leaves may be twisted, crinkled, or show hooked tips. Refer to the Calcium section of the <strong>Reading the Mana Lockout</strong> image above.</p>
+      </div>
+      <div class="def-progression">
+        <span class="def-row-label">Progression</span>
+        <p>Growing tips may die back entirely. Root health suffers in parallel, <strong>compounding other deficiencies</strong>. Often appears alongside Magnesium deficiency.</p>
+      </div>
+      <div class="fix-box">
+        <span class="fix-label">✦ Fix</span>
+        <p>Use a <strong>Cal-Mag supplement</strong> or add oyster shell flour to your living soil. Ensure pH is in range — Ca is very sensitive to lockout.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width:900px;margin:0.6rem auto 1.2rem;padding:0.75rem 1.2rem;background:rgba(240,180,41,0.04);border:1px solid rgba(240,180,41,0.2);border-left:3px solid var(--gold);position:relative;">
+    <p style="font-size:0.82rem;line-height:1.75;color:#e0ceaa;font-style:italic;margin:0;">"Spots like the freckles of the sun on a young leaf mean the bones of the plant are weak. Calcium and Magnesium are the mana that binds the cells together. Keep them balanced, or the structure will fail." <span style="color:var(--gold);font-style:normal;">— Kānehiwa</span></p>
+  </div>
+
+  <div class="island-tip">
+    <span class="tip-label">🌺 Hawaiʻi Island Tip</span>
+    KNF growers on Maui have a secret weapon for calcium: <strong><a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-wca-guide.html">WCA (Water-Soluble Calcium)</a></strong> — toasted eggshells dissolved in vinegar. It's plant-available immediately and far cheaper than Cal-Mag bottles. Our high humidity (70%+ year-round) makes Ca deficiency dangerous because weak cell walls + moisture = <strong>bud rot and botrytis</strong>. Preventive WCA at 1:1000 every watering during flower is the Maui standard. Save your eggshells — they're literal gold on this island. See the <a href="https://tropicalrootsmaui.com/KnowledgeBase/cannabis-grow-guides/microbial-fortress-guide.html">Microbial Fortress Guide</a> for full pathogen defense protocols.
+  </div>
+
+</div>
+
+<!-- GOLDEN RULE DIVIDER -->
+<div class="section-divider reveal visible">
+  <div class="divider-line"></div>
+  <span class="divider-label">⚠️ The Golden Rule</span>
+  <div class="divider-line"></div>
+</div>
+
+<!-- GOLDEN RULE -->
+<div class="golden-rule-section reveal visible">
+  <div class="golden-rule-card">
+    <span class="golden-rule-eyebrow">Before You Add Anything</span>
+    <div class="golden-rule-title">Always <span class="gold">Check Your pH</span> First</div>
+    <div class="ph-grid">
+      <div class="ph-box">
+        <span class="ph-type">🌱 Soil / Living Soil</span>
+        <div class="ph-range">6.0 – 7.0</div>
+      </div>
+      <div class="ph-box">
+        <span class="ph-type">💧 Hydro / Inert Media</span>
+        <div class="ph-range">5.5 – 6.1</div>
+      </div>
+    </div>
+    <p class="golden-rule-note">If pH is too high or too low, the plant's roots are <strong>locked out</strong> and cannot absorb nutrients even if they are present in the soil. Adding more nutrients to a pH problem will make things worse — not better.</p>
+  </div>
+  <div style="max-width:780px;margin:1rem auto 0;padding:0.75rem 1.2rem;background:rgba(240,180,41,0.04);border:1px solid rgba(240,180,41,0.2);border-left:3px solid var(--gold);position:relative;">
+    <p style="font-size:0.82rem;line-height:1.75;color:#e0ceaa;font-style:italic;margin:0;">"The soil is a living breath. If the water is too sour or too sweet, the plant's mouth is closed to the nutrients around her. Seek the middle path — the balance of the mountain stream — so she may drink freely." <span style="color:var(--gold);font-style:normal;">— Kānehiwa</span></p>
+  </div>
+
+  <div class="island-tip">
+    <span class="tip-label">🌺 Hawaiʻi Island Tip — Water &amp; pH on Maui</span>
+    Maui county water typically comes out of the tap at <strong>pH 7.8–8.4</strong> depending on your district — that's way too alkaline for cannabis. <strong>Always pH-adjust your water before feeding.</strong> If you're running KNF, the natural acidity of inputs like <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-labs-guide.html">LabS</a> and brown rice vinegar will help bring pH down organically. Living soil growers: Maui's volcanic soil already has good buffering capacity, but adding <strong>peat or coco coir</strong> to your mix helps maintain the 6.2–6.8 sweet spot. Test your runoff — not just your input water.
+  </div>
+</div>
+
+<!-- QUICK REF DIVIDER -->
+<div class="section-divider reveal visible">
+  <div class="divider-line"></div>
+  <span class="divider-label">📋 Quick Reference</span>
+  <div class="divider-line"></div>
+</div>
+
+<!-- QUICK REFERENCE TABLE -->
+<section class="quick-ref-section reveal visible">
+  <div class="quick-ref-header">🗂️ &nbsp; At-a-Glance Deficiency Summary</div>
+  <table class="quick-ref-table">
+    <thead>
+      <tr>
+        <th>Nutrient</th>
+        <th>Type</th>
+        <th>Where It Shows</th>
+        <th>Key Visual</th>
+        <th>First Fix</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><div class="qr-nutrient"><div class="qr-dot" style="background:var(--n-color)"></div><span class="qr-name">Nitrogen (N)</span></div></td>
+        <td><span class="qr-badge badge-mobile">Mobile</span></td>
+        <td class="qr-where">Old, lower leaves</td>
+        <td>Pale yellow, tips first</td>
+        <td>Base nutrients / bat guano</td>
+      </tr>
+      <tr>
+        <td><div class="qr-nutrient"><div class="qr-dot" style="background:var(--p-color)"></div><span class="qr-name">Phosphorus (P)</span></div></td>
+        <td><span class="qr-badge badge-mobile">Mobile</span></td>
+        <td class="qr-where">Old, lower leaves</td>
+        <td>Dark leaves, purple stems</td>
+        <td>Check pH → bloom booster</td>
+      </tr>
+      <tr>
+        <td><div class="qr-nutrient"><div class="qr-dot" style="background:var(--k-color)"></div><span class="qr-name">Potassium (K)</span></div></td>
+        <td><span class="qr-badge badge-mobile">Mobile</span></td>
+        <td class="qr-where">Old, lower leaves</td>
+        <td>Burnt / yellow edges</td>
+        <td>Kelp meal / K supplement</td>
+      </tr>
+      <tr>
+        <td><div class="qr-nutrient"><div class="qr-dot" style="background:var(--mg-color)"></div><span class="qr-name">Magnesium (Mg)</span></div></td>
+        <td><span class="qr-badge badge-mobile">Mobile</span></td>
+        <td class="qr-where">Old, lower leaves</td>
+        <td>Yellow between veins</td>
+        <td>Epsom salt foliar / water</td>
+      </tr>
+      <tr>
+        <td><div class="qr-nutrient"><div class="qr-dot" style="background:var(--ca-color)"></div><span class="qr-name">Calcium (Ca)</span></div></td>
+        <td><span class="qr-badge badge-immobile">Immobile</span></td>
+        <td class="qr-where">New, top growth</td>
+        <td>Brown spots / twisted tips</td>
+        <td>Cal-Mag / oyster shell</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- CROSS-LINKS -->
+<div class="section-divider reveal visible">
+  <div class="divider-line"></div>
+  <span class="divider-label">📚 Related Guides</span>
+  <div class="divider-line"></div>
+</div>
+
+<div class="cross-links-section">
+  <a href="https://tropicalrootsmaui.com/KnowledgeBase/cannabis-grow-guides/pest-identification-guide.html" class="cross-link-card reveal visible">
+    <div class="cross-link-icon">🛡️</div>
+    <div class="cross-link-text">
+      <span class="cross-link-label">Not a Deficiency? Check for Pests</span>
+      <div class="cross-link-title">Kānehiwa's Pest Identification Guide</div>
+      <div class="cross-link-desc">Yellowing, wilting, and stunted growth can also be caused by pests like Spider Mites, Aphids, and Thrips. Rule out infestations with this six-panel visual guide.</div>
+    </div>
+    <div class="cross-link-arrow">→</div>
+  </a>
+  <a href="https://tropicalrootsmaui.com/KnowledgeBase/cannabis-grow-guides/white-oil-pest-spray-recipe.html" class="cross-link-card reveal visible">
+    <div class="cross-link-icon">🧪</div>
+    <div class="cross-link-text">
+      <span class="cross-link-label">If Pests Are the Cause</span>
+      <div class="cross-link-title">Kānehiwa's White Oil Recipe</div>
+      <div class="cross-link-desc">A simple organic spray that suffocates soft-bodied pests like Aphids and Whiteflies — the corrective action when pest damage is mimicking nutrient deficiency.</div>
+    </div>
+    <div class="cross-link-arrow">→</div>
+  </a>
+  <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-feeding-schedule.html" class="cross-link-card reveal visible">
+    <div class="cross-link-icon">📋</div>
+    <div class="cross-link-text">
+      <span class="cross-link-label">Prevent Deficiencies Before They Start</span>
+      <div class="cross-link-title">KNF Feeding Schedule — Seed to Harvest</div>
+      <div class="cross-link-desc">The complete Tropical Roots Maui KNF feeding program — every input, ratio, and timing laid out across five phases. A well-fed plant rarely shows deficiencies.</div>
+    </div>
+    <div class="cross-link-arrow">→</div>
+  </a>
+  <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-pest-disease-guide.html" class="cross-link-card reveal visible">
+    <div class="cross-link-icon">🐛</div>
+    <div class="cross-link-text">
+      <span class="cross-link-label">KNF-Specific Pest &amp; Disease Solutions</span>
+      <div class="cross-link-title">Pest &amp; Disease Troubleshooting — Maui Edition</div>
+      <div class="cross-link-desc">Combat broad mites, powdery mildew, fungus gnats, and more using KNF inputs like OHN, WCA, and BRV. Includes the Emergency Recovery Spray.</div>
+    </div>
+    <div class="cross-link-arrow">→</div>
+  </a>
+  <a href="https://tropicalrootsmaui.com/KnowledgeBase/cannabis-grow-guides/compost-tea-guide.html" class="cross-link-card reveal visible">
+    <div class="cross-link-icon">🫧</div>
+    <div class="cross-link-text">
+      <span class="cross-link-label">Feed Biology, Not Just Nutrients</span>
+      <div class="cross-link-title">Organic Compost Teas Guide</div>
+      <div class="cross-link-desc">Brew high-nitrogen veg teas and high-phosphorus bloom teas to deliver nutrients through living soil biology — often resolving deficiencies faster than bottled supplements.</div>
+    </div>
+    <div class="cross-link-arrow">→</div>
+  </a>
+
+
+    <a href="https://tropicalrootsmaui.com/KnowledgeBase/cannabis-grow-guides/living-soil-guide.html" class="cross-link-card">
+      <div class="cross-link-icon">🌍</div>
+      <div class="cross-link-text">
+        <span class="cross-link-label">Build Better Soil</span>
+        <div class="cross-link-title">DIY Living Soil Guide</div>
+        <div class="cross-link-desc">Prevent deficiencies from the start with properly balanced living soil.</div>
+      </div>
+      <div class="cross-link-arrow">→</div>
+    </a>
+
+    <a href="https://tropicalrootsmaui.com/KnowledgeBase/cannabis-grow-guides/top-dress-guide.html" class="cross-link-card">
+      <div class="cross-link-icon">🌱</div>
+      <div class="cross-link-text">
+        <span class="cross-link-label">Amend Your Soil</span>
+        <div class="cross-link-title">Top Dress Guide</div>
+        <div class="cross-link-desc">Top dress with targeted amendments to correct specific nutrient deficiencies.</div>
+      </div>
+      <div class="cross-link-arrow">→</div>
+    </a>
+
+    <a href="https://tropicalrootsmaui.com/KnowledgeBase/cannabis-grow-guides/water-alchemy-guide.html" class="cross-link-card">
+      <div class="cross-link-icon">💧</div>
+      <div class="cross-link-text">
+        <span class="cross-link-label">Check Your Water</span>
+        <div class="cross-link-title">Water Alchemy Guide</div>
+        <div class="cross-link-desc">Poor water quality can cause or mimic nutrient deficiencies — check your pH and minerals.</div>
+      </div>
+      <div class="cross-link-arrow">→</div>
+    </a>
+
+    <a href="https://tropicalrootsmaui.com/KnowledgeBase/cannabis-grow-guides/vegetative-stage-guide.html" class="cross-link-card">
+      <div class="cross-link-icon">🌿</div>
+      <div class="cross-link-text">
+        <span class="cross-link-label">Veg Stage Care</span>
+        <div class="cross-link-title">Vegetative Stage Guide</div>
+        <div class="cross-link-desc">Most deficiencies show during veg — learn complete vegetative care.</div>
+      </div>
+      <div class="cross-link-arrow">→</div>
+    </a>
+  </div>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer">
+  <p>This guide covers the most common deficiencies for home growers. Always confirm your diagnosis by checking pH first and ruling out environmental factors (overwatering, root issues, light burn) before adjusting nutrients. When in doubt, <strong>less is more</strong> — nutrient toxicity can look similar to deficiency.</p>
+  </div>
+
+</main>
+
+<div id="trm-footer"></div>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+  });
+}, { threshold: 0.06 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+
+
+
+
+
+
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d3489079a24c423',t:'MTc3MTk5NDUzOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+
+<div id="heroLightbox" onclick="this.style.display='none'" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.92);z-index:9999;align-items:center;justify-content:center;cursor:zoom-out;padding:2rem;">
+  <img src="https://tropicalrootsmaui.com/img/tropical-roots-maui-cannabis-deficiency-lockout-guide.webp" alt="Cannabis Plant Deficiency Guide (Reading the Mana Lockout)" style="max-width:95%;max-height:95vh;border-radius:8px;box-shadow:0 0 60px rgba(0,200,192,0.2);">
+</div>
+<script src="/site-components.js" defer></script>
+</body></html>

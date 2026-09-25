@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Tropical Roots Maui Plant Manager — sitemap.xml
+  Deploy this file to tracker.tropicalrootsmaui.com as `sitemap.xml`
+
+  Per sitemap protocol, a sitemap may only list URLs from the same
+  protocol + host + port it is served from. Tracker subdomain URLs
+  cannot appear in the main domain's sitemap.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Plant Manager app (PWA install + landing) -->
+  <url>
+    <loc>https://tracker.tropicalrootsmaui.com/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Help guide -->
+  <url>
+    <loc>https://tracker.tropicalrootsmaui.com/PlantManagerHelp.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+</urlset>

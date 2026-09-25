@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<link rel="preload" href="/site-components.css" as="style" onload="this.onload=null;this.rel=&#39;stylesheet&#39;">
+<noscript><link rel="stylesheet" href="/site-components.css"></noscript>
+${link_line}
+<title>404 — Tropical Roots Maui</title>
+<meta name="description" content="The trail has gone cold, but the jungle still calls. Let Kānehiwa guide you back to Tropical Roots Maui.">
+<meta name="robots" content="noindex, follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tropical Roots Maui">
+<meta property="og:title" content="404 — Page Not Found | Tropical Roots Maui">
+<meta property="og:description" content="The trail has gone cold, but the jungle still calls. Let Kānehiwa guide you back.">
+<meta property="og:image" content="https://tropicalrootsmaui.com/img/4oh4.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="404 — Page Not Found | Tropical Roots Maui">
+<meta name="twitter:image" content="https://tropicalrootsmaui.com/img/4oh4.webp">
+<meta name="twitter:image:alt" content="404 — Page Not Found | Tropical Roots Maui">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black:    #0a0c0a;
+  --dark:     #111a10;
+  --jungle:   #1b3a1e;
+  --green:    #2d6e35;
+  --leaf:     #4a9e52;
+  --cyan:     #00c8c0;
+  --cyan-dim: #00968f;
+  --gold:     #f0b429;
+  --orange:   #e8721a;
+  --cream:    #f4edd8;
+  --sand:     #e0ceaa;
+  --text:     #f0ead8;
+  --muted:    rgba(240,234,216,0.62);
+  --nav-h:    68px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Lora', serif;
+  background: var(--black);
+  color: var(--text);
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+body::after {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 9998;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  opacity: 0.5;
+}
+
+/* ═══════════════════
+   NAV
+═══════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  height: var(--nav-h);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2rem;
+  background: rgba(10,12,10,0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0,200,192,0.18);
+}
+.nav-logo { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; }
+.nav-logo-icon {
+  width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--jungle), var(--green));
+  border: 2px solid var(--cyan);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+  box-shadow: 0 0 14px rgba(0,200,192,0.3);
+}
+.nav-logo-text .line1 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.72rem; color: var(--cyan); letter-spacing: 0.1em; display: block;
+}
+.nav-logo-text .line2 {
+  font-family: 'Cinzel', serif;
+  font-size: 0.58rem; color: var(--sand); letter-spacing: 0.22em;
+  text-transform: uppercase; display: block;
+}
+.nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+.nav-links a {
+  font-family: 'Cinzel', serif; font-size: 0.7rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--sand); text-decoration: none; opacity: 0.75;
+  transition: opacity 0.2s, color 0.2s;
+}
+.nav-links a:hover { opacity: 1; color: var(--cyan); }
+.nav-shop {
+  font-family: 'Cinzel', serif; font-size: 0.68rem; letter-spacing: 0.16em;
+  text-transform: uppercase; text-decoration: none;
+  color: var(--cyan); border: 1.5px solid var(--cyan); padding: 0.45rem 1.2rem;
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+.nav-shop:hover { background: var(--cyan); color: var(--black); }
+
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  cursor: pointer; background: none; border: none; padding: 4px;
+}
+.hamburger span { display: block; width: 24px; height: 2px; background: var(--cyan); transition: 0.25s; }
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+
+.mobile-menu {
+  display: none;
+  position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 290;
+  background: rgba(10,12,10,0.98);
+  flex-direction: column; padding: 1.4rem 1.5rem 1.8rem; gap: 1.2rem;
+  border-bottom: 2px solid var(--cyan);
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-family: 'Cinzel', serif; font-size: 0.95rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--sand); text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.07); padding-bottom: 1rem;
+}
+.mobile-menu a:last-child { border-bottom: none; color: var(--cyan); padding-bottom: 0; }
+
+/* ═══════════════════
+   BACKGROUND
+═══════════════════ */
+.bg-ambience {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse at 15% 60%, rgba(45,110,53,0.16) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 20%, rgba(0,200,192,0.07) 0%, transparent 48%),
+    radial-gradient(ellipse at 55% 95%, rgba(240,180,41,0.05) 0%, transparent 40%),
+    linear-gradient(180deg, #0a0c0a 0%, #0d1a0d 60%, #0a0c0a 100%);
+}
+.orb {
+  position: fixed; border-radius: 50%; pointer-events: none;
+  animation: pulse-orb 6s ease-in-out infinite;
+}
+.orb-1 {
+  width: 500px; height: 500px; top: -120px; right: -120px;
+  background: radial-gradient(circle, rgba(45,110,53,0.13) 0%, transparent 70%);
+}
+.orb-2 {
+  width: 380px; height: 380px; bottom: -80px; left: -80px;
+  background: radial-gradient(circle, rgba(0,200,192,0.08) 0%, transparent 70%);
+  animation-delay: -3s;
+}
+@keyframes pulse-orb {
+  0%,100% { transform: scale(1); opacity: 0.6; }
+  50%      { transform: scale(1.1); opacity: 1; }
+}
+
+/* ═══════════════════
+   MAIN
+═══════════════════ */
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--nav-h);
+  position: relative;
+  z-index: 1;
+}
+
+.error-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  width: 100%;
+}
+
+.error-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  width: 100%;
+  max-width: 1100px;
+}
+
+/* ═══════════════════
+   IMAGE COLUMN
+═══════════════════ */
+.error-image-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInLeft 0.85s ease both;
+}
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Outer ring wrapper — sized to image + padding for the ring */
+.kanehiwa-ring-wrap {
+  position: relative;
+  width: 100%;
+  /* extra space so the spinning ring isn't clipped */
+  padding: 22px;
+}
+
+/* The spinning ring — a sibling div, not using inset */
+.kanehiwa-ring {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border: 1px solid rgba(0,200,192,0.2);
+  border-radius: 6px;
+  animation: spin-slow 22s linear infinite;
+  transform-origin: center center;
+  pointer-events: none;
+  will-change: transform;
+}
+/* glowing dot rides the top edge of the ring */
+.kanehiwa-ring::before {
+  content: '';
+  position: absolute;
+  top: -4px; left: 50%;
+  width: 8px; height: 8px;
+  background: var(--cyan); border-radius: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 10px var(--cyan), 0 0 22px rgba(0,200,192,0.5);
+}
+/* second dot on the opposite side for balance */
+.kanehiwa-ring::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 50%;
+  width: 5px; height: 5px;
+  background: var(--gold); border-radius: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 8px var(--gold), 0 0 18px rgba(240,180,41,0.4);
+}
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+
+/* corner accent brackets on the image itself */
+.kanehiwa-frame {
+  position: relative;
+  width: 100%;
+}
+.kanehiwa-frame::before {
+  content: '';
+  position: absolute;
+  top: -4px; left: -4px;
+  width: 20px; height: 20px;
+  border-top: 2px solid var(--cyan);
+  border-left: 2px solid var(--cyan);
+  pointer-events: none;
+  z-index: 2;
+}
+.kanehiwa-frame::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; right: -4px;
+  width: 20px; height: 20px;
+  border-bottom: 2px solid var(--gold);
+  border-right: 2px solid var(--gold);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.kanehiwa-img {
+  width: 100%;
+  display: block;
+  position: relative; z-index: 1;
+  box-shadow:
+    0 0 50px rgba(0,200,192,0.1),
+    0 20px 50px rgba(0,0,0,0.55);
+}
+
+.kanehiwa-glow {
+  position: absolute;
+  bottom: -12px; left: 15%; right: 15%;
+  height: 36px;
+  background: radial-gradient(ellipse, rgba(0,200,192,0.2), transparent 70%);
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+/* ═══════════════════
+   TEXT COLUMN
+═══════════════════ */
+.error-text-col {
+  animation: fadeInRight 0.85s 0.12s ease both;
+}
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.error-eyebrow {
+  display: inline-block;
+  background: rgba(0,200,192,0.08); border: 1px solid rgba(0,200,192,0.25);
+  color: var(--cyan); font-family: 'Cinzel', serif;
+  font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 0.38rem 1rem; margin-bottom: 1.2rem;
+}
+
+.error-number {
+  display: block;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(5rem, 11vw, 9rem);
+  line-height: 0.95;
+  background: linear-gradient(135deg, var(--leaf) 0%, var(--cyan) 45%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.15em;
+}
+
+.error-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1.3rem, 3vw, 2.2rem);
+  line-height: 1.2;
+  color: var(--text);
+}
+.error-title .gold { color: var(--gold); }
+
+.error-divider {
+  width: 56px; height: 3px; margin: 1.2rem 0;
+  background: linear-gradient(90deg, var(--cyan), var(--gold));
+}
+
+.kanehiwa-quote {
+  font-style: italic;
+  font-size: 0.98rem; line-height: 1.8;
+  color: var(--cream);
+  border-left: 3px solid var(--cyan);
+  padding-left: 1rem;
+  margin-bottom: 1rem;
+}
+
+.error-desc {
+  font-size: 0.9rem; line-height: 1.8;
+  color: var(--muted);
+  margin-bottom: 2rem;
+}
+
+.error-actions {
+  display: flex; flex-wrap: wrap; gap: 0.9rem;
+  margin-bottom: 2rem;
+}
+.btn-glow {
+  font-family: 'Cinzel', serif; font-size: 0.68rem; letter-spacing: 0.16em;
+  text-transform: uppercase; text-decoration: none; display: inline-block;
+  padding: 0.8rem 1.8rem;
+  background: linear-gradient(135deg, var(--cyan-dim), var(--cyan));
+  color: var(--black); font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(0,200,192,0.35);
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-glow:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,200,192,0.5); }
+.btn-ghost {
+  font-family: 'Cinzel', serif; font-size: 0.68rem; letter-spacing: 0.16em;
+  text-transform: uppercase; text-decoration: none; display: inline-block;
+  padding: 0.8rem 1.8rem;
+  border: 1.5px solid rgba(240,234,216,0.22); color: var(--text);
+  transition: border-color 0.2s, color 0.2s, transform 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-ghost:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+.quick-links-label {
+  font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--muted); display: block;
+  border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1.5rem; margin-bottom: 0.75rem;
+}
+.quick-links { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.quick-link {
+  font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em;
+  text-transform: uppercase; text-decoration: none;
+  padding: 0.4rem 0.9rem;
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+  color: var(--muted);
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.quick-link:active,
+.quick-link:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0,200,192,0.06); }
+
+/* ═══════════════════
+   FOOTER
+═══════════════════ */
+footer {
+  background: #070908;
+  border-top: 1px solid rgba(0,200,192,0.1);
+  padding: 1.4rem 2rem;
+  text-align: center;
+  position: relative; z-index: 1;
+}
+footer p { font-size: 0.72rem; color: rgba(240,234,216,0.2); }
+
+/* ═══════════════════
+   RESPONSIVE — TABLET
+═══════════════════ */
+@media (max-width: 860px) {
+  .nav-links, .nav-shop { display: none; }
+  .hamburger { display: flex; }
+
+  .error-wrap { padding: 2rem 1.2rem 2.5rem; align-items: flex-start; }
+
+  .error-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .error-image-col { order: 1; }
+  .error-text-col  { order: 2; }
+
+  .kanehiwa-ring-wrap { padding: 18px; }
+
+  .error-text-col     { text-align: center; }
+  .error-divider      { margin: 1.2rem auto; }
+  .kanehiwa-quote     { text-align: left; }
+  .error-actions      { justify-content: center; }
+  .quick-links        { justify-content: center; }
+  .quick-links-label  { text-align: center; }
+}
+
+/* ═══════════════════
+   RESPONSIVE — MOBILE
+═══════════════════ */
+@media (max-width: 480px) {
+  :root { --nav-h: 62px; }
+
+  .error-wrap { padding: 1.5rem 1rem 2rem; }
+
+  .error-number { font-size: clamp(4rem, 22vw, 6rem); }
+  .error-title  { font-size: clamp(1.2rem, 6vw, 1.8rem); }
+
+  .kanehiwa-ring-wrap { padding: 16px; }
+
+  .kanehiwa-quote { font-size: 0.9rem; }
+  .error-desc     { font-size: 0.85rem; }
+
+  .btn-glow, .btn-ghost {
+    width: 100%; text-align: center; font-size: 0.65rem;
+  }
+  .quick-link { font-size: 0.58rem; padding: 0.4rem 0.7rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-ambience"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<!-- ═══ NAV ═══ -->
+<div id="trm-nav"></div>
+
+
+
+<!-- ═══ MAIN ═══ -->
+<main>
+  <div class="error-wrap">
+    <div class="error-layout">
+
+      <!-- IMAGE -->
+      <div class="error-image-col">
+        <div class="kanehiwa-ring-wrap">
+          <div class="kanehiwa-ring"></div>
+          <div class="kanehiwa-frame">
+            <img
+              src="/img/4oh4.webp"
+              alt="404 Error - Harvest Not Found (Tropical Roots Maui)"
+              class="kanehiwa-img"
+              loading="eager" fetchpriority="high"
+              decoding="async"
+            />
+            <div class="kanehiwa-glow"></div>
+          </div>
+        </div>
+        <p style="text-align:center;font-size:0.82rem;color:var(--muted);font-style:italic;max-width:320px;margin:0.8rem auto 0;line-height:1.6;">Even the best paths get overgrown. Let's get you back to the Master Cultivator's Path.</p>
+      </div>
+
+      <!-- TEXT -->
+      <div class="error-text-col">
+        <span class="error-eyebrow">🌺 &nbsp; Kānehiwa Speaks</span>
+        <span class="error-number">404</span>
+        <h1 class="error-title">Lost in the<br/><span class="gold">Sacred Groves</span></h1>
+        <div class="error-divider"></div>
+
+        <blockquote class="kanehiwa-quote">
+          "You have wandered deep into the sacred groves, where trails haven't been blazed yet. Let Kānehiwa guide you back to the village."
+        </blockquote>
+
+        <p class="error-desc">
+          The page you seek has vanished into the jungle — moved, renamed, or perhaps never existed at all. Head back to safer ground below.
+        </p>
+
+        <div class="error-actions">
+          <a href="/" class="btn-glow">← Return Home</a>
+          <a href="#" class="btn-ghost">Browse the Shop</a>
+        </div>
+
+        <span class="quick-links-label">Or find your way</span>
+        <div class="quick-links">
+          <a href="/" class="quick-link">🏠 Home</a>
+          <a href="#" class="quick-link">📖 Knowledge</a>
+          <a href="#" class="quick-link">🌿 Shop Seeds</a>
+          <a href="#" class="quick-link">🌺 About</a>
+          <a href="https://www.instagram.com/tropicalrootsmaui/" target="_blank" class="quick-link">📷 Instagram</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<div id="trm-footer"></div>
+
+<script>
+</script>
+<script src="/site-components.js" defer></script>
+</body>
+</html>

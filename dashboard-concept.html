@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<title>Kānehiwa's Register — Plant Manager Sanctum</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ───── Tokens ───── */
+:root{
+  --obsidian:#0a0908;
+  --volcanic:#14100d;
+  --ash:#1f1914;
+  --ash-lift:#2a221a;
+  --soot:#38302a;
+  --parchment:#e8dcc4;
+  --parchment-warm:#efe2c7;
+  --parchment-dim:#c9b890;
+  --bone:#b8a47a;
+  --bone-dim:#8a7a58;
+  --biolum:#5fe3d8;
+  --biolum-dim:#3ba89f;
+  --phosphor:#8ffef4;
+  --gold:#d4a574;
+  --gold-bright:#e8c088;
+  --gold-dim:#8f6e42;
+  --ember:#c94e2e;
+  --ember-glow:#e86b3e;
+  --moss:#6b8a52;
+  --blood:#8b1e1e;
+  --ink:#1a1410;
+
+  --serif:'Fraunces',Georgia,serif;
+  --grimoire:'IM Fell English SC','IM Fell English',Georgia,serif;
+  --grimoire-italic:'IM Fell English',Georgia,serif;
+  --mono:'JetBrains Mono','Courier New',monospace;
+
+  --rad:2px;
+  --rad-lg:4px;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+html{scroll-behavior:smooth}
+
+body{
+  font-family:var(--serif);
+  background:var(--obsidian);
+  color:var(--bone);
+  min-height:100vh;
+  overflow-x:hidden;
+  font-feature-settings:"onum" 1,"liga" 1,"dlig" 1;
+  position:relative;
+}
+
+/* ───── Atmospheric Background ───── */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(212,165,116,0.08) 0%, transparent 45%),
+    radial-gradient(ellipse at 80% 90%, rgba(95,227,216,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(201,78,46,0.03) 0%, transparent 60%),
+    linear-gradient(180deg, #0a0908 0%, #14100d 100%);
+  pointer-events:none;
+  z-index:-2;
+}
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.9 0 0 0 0 0.8 0 0 0 0 0.6 0 0 0 0.08 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity:.6;
+  pointer-events:none;
+  z-index:-1;
+  mix-blend-mode:overlay;
+}
+
+/* drifting dust motes */
+.motes{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.mote{
+  position:absolute;
+  width:2px;height:2px;
+  background:var(--gold);
+  border-radius:50%;
+  opacity:0;
+  box-shadow:0 0 6px var(--gold-bright);
+  animation:drift 22s linear infinite;
+}
+.mote:nth-child(2){animation-delay:-3s;animation-duration:28s;left:15%}
+.mote:nth-child(3){animation-delay:-7s;animation-duration:35s;left:32%;background:var(--biolum);box-shadow:0 0 8px var(--phosphor)}
+.mote:nth-child(4){animation-delay:-12s;animation-duration:24s;left:48%}
+.mote:nth-child(5){animation-delay:-16s;animation-duration:30s;left:67%;background:var(--biolum);box-shadow:0 0 8px var(--phosphor)}
+.mote:nth-child(6){animation-delay:-5s;animation-duration:40s;left:82%}
+.mote:nth-child(7){animation-delay:-20s;animation-duration:26s;left:93%}
+@keyframes drift{
+  0%{transform:translateY(110vh) translateX(0);opacity:0}
+  10%{opacity:.7}
+  90%{opacity:.5}
+  100%{transform:translateY(-10vh) translateX(40px);opacity:0}
+}
+
+/* ───── Page frame ───── */
+.vault{
+  position:relative;
+  max-width:1400px;
+  margin:0 auto;
+  padding:42px 48px 60px;
+  z-index:1;
+}
+
+/* decorative SVG frame that draws itself on load */
+.vault-frame{
+  position:absolute;
+  inset:24px 28px;
+  pointer-events:none;
+  z-index:2;
+}
+.vault-frame svg{width:100%;height:100%;overflow:visible}
+.vault-frame path, .vault-frame line{
+  fill:none;
+  stroke:var(--gold-dim);
+  stroke-width:.75;
+  stroke-dasharray:4000;
+  stroke-dashoffset:4000;
+  animation:ink-bleed 2.4s cubic-bezier(.7,0,.3,1) .2s forwards;
+}
+@keyframes ink-bleed{to{stroke-dashoffset:0}}
+
+/* ───── Header ───── */
+.banner{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:end;
+  gap:24px;
+  padding:0 8px 28px;
+  border-bottom:1px solid transparent;
+  position:relative;
+  animation:rise 1.2s cubic-bezier(.2,.8,.2,1) 1.4s backwards;
+}
+.banner::after{
+  content:'';
+  position:absolute;
+  left:0;right:0;bottom:0;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-dim) 20%,var(--gold) 50%,var(--gold-dim) 80%,transparent);
+  transform-origin:center;
+  animation:spread-line 1.6s cubic-bezier(.7,0,.3,1) 1.6s backwards;
+}
+@keyframes spread-line{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+.sigil{
+  width:64px;height:64px;
+  display:grid;place-items:center;
+  color:var(--gold);
+  filter:drop-shadow(0 0 12px rgba(212,165,116,.25));
+}
+.sigil svg{width:100%;height:100%}
+
+.title-block .overline{
+  font-family:var(--mono);
+  font-size:.68rem;
+  letter-spacing:.34em;
+  text-transform:uppercase;
+  color:var(--bone-dim);
+  margin-bottom:6px;
+  display:flex;gap:14px;align-items:center;
+}
+.title-block .overline::before,
+.title-block .overline::after{
+  content:'';
+  flex:0 0 18px;
+  height:1px;
+  background:var(--gold-dim);
+}
+.title-block .overline::after{flex:1}
+.title-block h1{
+  font-family:var(--grimoire);
+  font-size:clamp(2.1rem,4vw,3.2rem);
+  font-weight:400;
+  color:var(--parchment);
+  letter-spacing:.04em;
+  line-height:.95;
+  text-shadow:0 1px 0 var(--ink), 0 0 30px rgba(212,165,116,.15);
+}
+.title-block h1 em{
+  font-family:var(--grimoire-italic);
+  font-style:italic;
+  color:var(--gold);
+  font-weight:400;
+}
+.title-block .chamber{
+  margin-top:10px;
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:1rem;
+  color:var(--bone);
+}
+.title-block .chamber strong{
+  color:var(--parchment-dim);
+  font-weight:500;
+  font-style:normal;
+}
+
+.luna{
+  text-align:right;
+  font-family:var(--mono);
+  font-size:.72rem;
+  letter-spacing:.22em;
+  color:var(--bone-dim);
+  text-transform:uppercase;
+}
+.luna .phase{
+  display:block;
+  margin-top:6px;
+  font-size:1.4rem;
+  color:var(--parchment);
+  letter-spacing:0;
+}
+.luna .date{
+  margin-top:4px;
+  font-family:var(--grimoire);
+  letter-spacing:.18em;
+  color:var(--gold);
+  font-size:.88rem;
+}
+
+/* ───── The Sanctum (hero parchment panel) ───── */
+.sanctum{
+  position:relative;
+  margin:36px 0 44px;
+  background:
+    radial-gradient(ellipse at 30% 10%, rgba(255,255,255,.08) 0%, transparent 50%),
+    linear-gradient(160deg, var(--parchment-warm) 0%, var(--parchment) 40%, #d9caad 100%);
+  background-color:var(--parchment);
+  color:var(--ink);
+  padding:44px 56px 48px;
+  border:1px solid var(--gold-dim);
+  box-shadow:
+    0 0 0 1px rgba(212,165,116,.25) inset,
+    0 0 0 6px var(--obsidian),
+    0 0 0 7px rgba(212,165,116,.4),
+    0 24px 60px rgba(0,0,0,.6),
+    0 0 120px rgba(212,165,116,.08);
+  animation:unveil 1.4s cubic-bezier(.2,.8,.2,1) 2s backwards;
+  overflow:hidden;
+}
+@keyframes unveil{from{opacity:0;transform:scale(.98) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+
+/* parchment texture overlay */
+.sanctum::before{
+  content:'';
+  position:absolute;inset:0;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='p'><feTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3'/><feColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.3 0 0 0 0 0.15 0 0 0 0.15 0'/></filter><rect width='100%' height='100%' filter='url(%23p)'/></svg>");
+  opacity:.6;
+  mix-blend-mode:multiply;
+  pointer-events:none;
+}
+/* burn / stain spots */
+.sanctum::after{
+  content:'';
+  position:absolute;
+  right:-30px;bottom:-40px;
+  width:220px;height:220px;
+  background:radial-gradient(circle, rgba(139,30,30,.18) 0%, rgba(139,30,30,.06) 40%, transparent 70%);
+  border-radius:50%;
+  pointer-events:none;
+}
+
+.sanctum-inner{position:relative;z-index:1}
+
+.sanctum .overline{
+  font-family:var(--mono);
+  font-size:.66rem;
+  letter-spacing:.4em;
+  text-transform:uppercase;
+  color:var(--gold-dim);
+  margin-bottom:16px;
+  display:flex;align-items:center;gap:10px;
+}
+.sanctum .overline .dot{
+  width:5px;height:5px;background:var(--ember);border-radius:50%;
+  box-shadow:0 0 8px var(--ember);
+  animation:pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
+
+.sanctum h2{
+  font-family:var(--grimoire);
+  font-size:clamp(2.4rem,4.5vw,3.6rem);
+  font-weight:400;
+  color:var(--ink);
+  line-height:1;
+  letter-spacing:.02em;
+  margin-bottom:18px;
+}
+.sanctum h2 .cap{
+  float:left;
+  font-family:var(--grimoire-italic);
+  font-style:italic;
+  font-size:5.8rem;
+  line-height:.82;
+  margin:2px 10px -4px 0;
+  color:var(--ember);
+  text-shadow:2px 2px 0 rgba(201,78,46,.15);
+}
+.sanctum .lede{
+  font-family:var(--serif);
+  font-size:1.08rem;
+  font-weight:400;
+  line-height:1.6;
+  color:var(--ink);
+  max-width:62ch;
+  font-variation-settings:"opsz" 14;
+}
+.sanctum .lede em{
+  font-style:italic;
+  color:var(--blood);
+  font-weight:500;
+}
+
+.sanctum-footer{
+  margin-top:26px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:32px;
+  padding-top:20px;
+  border-top:1px dashed rgba(26,20,16,.3);
+  font-family:var(--mono);
+  font-size:.78rem;
+  color:var(--ink);
+}
+.sanctum-footer dl{display:flex;gap:10px;align-items:baseline}
+.sanctum-footer dt{
+  font-family:var(--grimoire);
+  font-size:.72rem;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--gold-dim);
+}
+.sanctum-footer dd{font-weight:500;color:var(--ink)}
+
+/* wax seal */
+.seal{
+  position:absolute;
+  top:18px;right:18px;
+  width:74px;height:74px;
+  z-index:2;
+  filter:drop-shadow(0 3px 6px rgba(0,0,0,.4));
+}
+.seal svg{width:100%;height:100%}
+
+/* ───── Section headings ───── */
+.section-head{
+  display:flex;align-items:center;gap:18px;
+  margin:42px 0 22px;
+}
+.section-head .glyph{
+  width:36px;height:36px;
+  color:var(--gold);
+  flex:0 0 36px;
+}
+.section-head h3{
+  font-family:var(--grimoire);
+  font-size:1.35rem;
+  font-weight:400;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--parchment);
+}
+.section-head .rule{
+  flex:1;
+  height:1px;
+  background:linear-gradient(90deg,var(--gold-dim),transparent);
+}
+.section-head .count{
+  font-family:var(--mono);
+  font-size:.78rem;
+  color:var(--bone-dim);
+  letter-spacing:.2em;
+}
+
+/* ───── Main Grid: Living Ones + Elements ───── */
+.grid{
+  display:grid;
+  grid-template-columns:minmax(0,2fr) minmax(0,1fr);
+  gap:44px;
+  align-items:start;
+}
+
+/* ───── Plant roster ───── */
+.roster{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+}
+.specimen{
+  position:relative;
+  background:linear-gradient(180deg,var(--ash-lift) 0%,var(--ash) 100%);
+  border:1px solid var(--soot);
+  padding:20px 22px 22px;
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:16px;
+  align-items:start;
+  transition:border-color .4s ease, transform .4s ease, box-shadow .4s ease;
+  animation:rise 1s cubic-bezier(.2,.8,.2,1) backwards;
+  overflow:hidden;
+}
+.specimen:nth-child(1){animation-delay:2.4s}
+.specimen:nth-child(2){animation-delay:2.55s}
+.specimen:nth-child(3){animation-delay:2.7s}
+.specimen:nth-child(4){animation-delay:2.85s}
+.specimen:nth-child(5){animation-delay:3.0s}
+.specimen:nth-child(6){animation-delay:3.15s}
+
+.specimen::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);
+  opacity:.5;
+}
+.specimen::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at 100% 0%, rgba(95,227,216,.08) 0%, transparent 50%);
+  opacity:0;
+  transition:opacity .4s ease;
+  pointer-events:none;
+}
+.specimen:hover{
+  border-color:var(--biolum-dim);
+  transform:translateY(-2px);
+  box-shadow:
+    0 0 0 1px rgba(95,227,216,.2),
+    0 12px 30px rgba(0,0,0,.4),
+    0 0 40px rgba(95,227,216,.06);
+}
+.specimen:hover::after{opacity:1}
+.specimen:hover .glyph-frame{transform:rotate(8deg)}
+
+.glyph-frame{
+  width:54px;height:54px;
+  border:1px solid var(--gold-dim);
+  display:grid;place-items:center;
+  color:var(--gold);
+  background:var(--obsidian);
+  position:relative;
+  transition:transform .6s cubic-bezier(.2,.8,.2,1);
+}
+.glyph-frame::before{
+  content:'';
+  position:absolute;
+  inset:-3px;
+  border:1px solid var(--soot);
+}
+.glyph-frame svg{width:32px;height:32px}
+.glyph-frame .roman{
+  position:absolute;
+  bottom:-8px;right:-8px;
+  background:var(--blood);
+  color:var(--parchment);
+  font-family:var(--grimoire);
+  font-size:.62rem;
+  padding:1px 6px;
+  letter-spacing:.12em;
+  box-shadow:0 2px 4px rgba(0,0,0,.5);
+}
+
+.specimen-body{min-width:0}
+.specimen-strain{
+  font-family:var(--grimoire);
+  font-size:.7rem;
+  letter-spacing:.26em;
+  text-transform:uppercase;
+  color:var(--bone-dim);
+  margin-bottom:2px;
+}
+.specimen-name{
+  font-family:var(--serif);
+  font-size:1.32rem;
+  font-weight:500;
+  color:var(--parchment);
+  line-height:1.1;
+  letter-spacing:-.01em;
+  font-variation-settings:"opsz" 36;
+}
+.specimen-name .nick{
+  color:var(--biolum);
+  font-style:italic;
+  font-weight:400;
+}
+.specimen-meta{
+  margin-top:10px;
+  display:flex;flex-wrap:wrap;gap:14px;
+  font-family:var(--mono);
+  font-size:.72rem;
+  color:var(--bone);
+}
+.specimen-meta span{display:flex;gap:6px;align-items:baseline}
+.specimen-meta b{
+  color:var(--parchment);
+  font-weight:500;
+  font-size:.85rem;
+}
+.specimen-meta .label{
+  font-family:var(--grimoire);
+  font-size:.62rem;
+  letter-spacing:.2em;
+  color:var(--gold-dim);
+  text-transform:uppercase;
+}
+
+.stage-bar{
+  margin-top:12px;
+  height:2px;
+  background:var(--soot);
+  position:relative;
+  overflow:hidden;
+}
+.stage-bar::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,var(--biolum-dim),var(--biolum),var(--phosphor));
+  transform:scaleX(var(--pct,.5));
+  transform-origin:left;
+  box-shadow:0 0 8px var(--biolum);
+}
+.health{
+  position:absolute;
+  top:14px;right:16px;
+  font-family:var(--mono);
+  font-size:.64rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--moss);
+  display:flex;align-items:center;gap:6px;
+}
+.health::before{
+  content:'';
+  width:6px;height:6px;
+  background:currentColor;
+  border-radius:50%;
+  box-shadow:0 0 8px currentColor;
+}
+.health.stressed{color:var(--gold-bright)}
+.health.quarantine{color:var(--ember)}
+
+/* ───── Elements column ───── */
+.elements{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+.element{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:18px;
+  padding:16px 20px;
+  background:linear-gradient(180deg,var(--ash) 0%,var(--volcanic) 100%);
+  border:1px solid var(--soot);
+  border-left:2px solid var(--gold-dim);
+  position:relative;
+  animation:rise 1s cubic-bezier(.2,.8,.2,1) backwards;
+}
+.element:nth-child(1){animation-delay:2.5s}
+.element:nth-child(2){animation-delay:2.62s}
+.element:nth-child(3){animation-delay:2.74s}
+.element:nth-child(4){animation-delay:2.86s}
+.element:nth-child(5){animation-delay:2.98s}
+.element:nth-child(6){animation-delay:3.1s}
+
+.element .symbol{
+  font-family:var(--grimoire);
+  font-size:1.8rem;
+  color:var(--gold);
+  width:34px;
+  text-align:center;
+  line-height:1;
+  text-shadow:0 0 12px rgba(212,165,116,.3);
+}
+.element .label{
+  font-family:var(--grimoire);
+  font-size:.66rem;
+  letter-spacing:.3em;
+  text-transform:uppercase;
+  color:var(--bone-dim);
+  line-height:1;
+  margin-bottom:5px;
+}
+.element .ident{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:.84rem;
+  color:var(--bone);
+}
+.element .readout{
+  font-family:var(--mono);
+  font-size:1.4rem;
+  font-weight:500;
+  color:var(--parchment);
+  line-height:1;
+  letter-spacing:-.02em;
+  text-align:right;
+}
+.element .readout .unit{
+  font-size:.7rem;
+  color:var(--bone-dim);
+  margin-left:3px;
+  font-weight:400;
+}
+.element .readout .trend{
+  font-family:var(--serif);
+  font-size:.7rem;
+  font-style:italic;
+  display:block;
+  color:var(--moss);
+  margin-top:4px;
+  letter-spacing:.08em;
+}
+.element .readout .trend.warn{color:var(--gold-bright)}
+.element .readout .trend.bad{color:var(--ember)}
+
+.element.alert{
+  border-left-color:var(--ember);
+  background:linear-gradient(180deg,var(--ash) 0%,rgba(201,78,46,.06) 100%);
+}
+.element.alert::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(ellipse at right, rgba(232,107,62,.08) 0%, transparent 60%);
+  animation:ember 3s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes ember{0%,100%{opacity:.4}50%{opacity:1}}
+
+/* ───── The Rites Remaining (tasks) ───── */
+.rites{
+  margin-top:48px;
+  position:relative;
+  background:
+    linear-gradient(180deg, var(--parchment) 0%, #d9c9a8 100%);
+  color:var(--ink);
+  padding:30px 40px 34px;
+  /* torn paper edges via clip-path */
+  clip-path:polygon(
+    0 8px, 2% 0, 6% 5px, 10% 2px, 14% 6px, 18% 1px, 22% 4px, 26% 0, 30% 5px,
+    34% 2px, 38% 6px, 42% 0, 46% 4px, 50% 2px, 54% 5px, 58% 0, 62% 4px,
+    66% 2px, 70% 5px, 74% 0, 78% 4px, 82% 1px, 86% 5px, 90% 0, 94% 4px, 98% 1px, 100% 6px,
+    100% calc(100% - 5px), 98% 100%, 94% calc(100% - 4px), 90% 100%, 86% calc(100% - 3px),
+    82% 100%, 78% calc(100% - 4px), 74% 100%, 70% calc(100% - 3px), 66% 100%,
+    62% calc(100% - 4px), 58% 100%, 54% calc(100% - 2px), 50% 100%, 46% calc(100% - 4px),
+    42% 100%, 38% calc(100% - 3px), 34% 100%, 30% calc(100% - 4px), 26% 100%,
+    22% calc(100% - 3px), 18% 100%, 14% calc(100% - 4px), 10% 100%, 6% calc(100% - 3px),
+    2% 100%, 0 calc(100% - 5px)
+  );
+  box-shadow:0 16px 40px rgba(0,0,0,.5);
+  animation:unveil 1.2s cubic-bezier(.2,.8,.2,1) 3.2s backwards;
+}
+.rites::before{
+  content:'';
+  position:absolute;inset:0;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='p2'><feTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2'/><feColorMatrix values='0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 0 0.1 0 0 0 0.12 0'/></filter><rect width='100%' height='100%' filter='url(%23p2)'/></svg>");
+  opacity:.7;
+  mix-blend-mode:multiply;
+  pointer-events:none;
+}
+
+.rites-head{
+  display:flex;align-items:baseline;gap:18px;
+  margin-bottom:20px;
+  position:relative;
+}
+.rites-head h3{
+  font-family:var(--grimoire);
+  font-size:1.35rem;
+  font-weight:400;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--ink);
+}
+.rites-head .sub{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:1rem;
+  color:var(--gold-dim);
+}
+
+.rite{
+  position:relative;
+  display:grid;
+  grid-template-columns:auto 1fr auto auto;
+  align-items:center;
+  gap:20px;
+  padding:12px 4px;
+  border-bottom:1px dashed rgba(26,20,16,.25);
+  font-family:var(--serif);
+}
+.rite:last-child{border-bottom:none}
+.rite .mark{
+  width:22px;height:22px;
+  border:1px solid var(--gold-dim);
+  background:transparent;
+  position:relative;
+  cursor:pointer;
+  transition:all .3s ease;
+  flex:0 0 22px;
+}
+.rite .mark:hover{border-color:var(--ember);transform:rotate(-4deg)}
+.rite.done .mark::after{
+  content:'';
+  position:absolute;
+  inset:3px;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='none' stroke='%23c94e2e' stroke-width='3' stroke-linecap='round' d='M4 12 L10 18 L20 6'/></svg>") center/contain no-repeat;
+}
+.rite.done .rite-text{text-decoration:line-through;opacity:.5}
+
+.rite-text{
+  font-size:1.04rem;
+  color:var(--ink);
+  font-weight:400;
+  font-variation-settings:"opsz" 16;
+}
+.rite-text em{
+  font-style:italic;
+  color:var(--blood);
+  font-weight:500;
+}
+.rite-text .tag{
+  display:inline-block;
+  font-family:var(--grimoire);
+  font-size:.66rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--gold-dim);
+  padding:1px 8px;
+  border:1px solid var(--gold-dim);
+  margin-left:8px;
+  vertical-align:2px;
+}
+.rite-time{
+  font-family:var(--mono);
+  font-size:.78rem;
+  color:var(--ink);
+  opacity:.6;
+  letter-spacing:.1em;
+}
+.rite-priority{
+  font-family:var(--grimoire);
+  font-size:.66rem;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--blood);
+  padding:2px 10px;
+  border:1px solid var(--blood);
+  background:rgba(139,30,30,.05);
+}
+.rite-priority.low{color:var(--gold-dim);border-color:var(--gold-dim);background:transparent}
+
+/* ───── Responsive ───── */
+@media (max-width: 960px){
+  .grid{grid-template-columns:1fr;gap:28px}
+  .roster{grid-template-columns:1fr}
+  .sanctum{padding:32px 28px}
+  .sanctum h2 .cap{font-size:4.2rem}
+  .vault{padding:28px 22px 40px}
+  .vault-frame{inset:16px 14px}
+  .banner{grid-template-columns:auto 1fr;gap:14px}
+  .luna{grid-column:1/-1;text-align:left;display:flex;gap:16px;align-items:baseline}
+  .luna .phase,.luna .date{display:inline-block;margin:0}
+}
+@media (max-width: 520px){
+  .rites{padding:24px 20px 28px}
+  .rite{grid-template-columns:auto 1fr;gap:12px}
+  .rite-time,.rite-priority{grid-column:2;justify-self:start}
+  .sanctum-footer{gap:18px}
+}
+
+/* selection */
+::selection{background:var(--gold);color:var(--ink)}
+</style>
+</head>
+<body>
+
+<div class="motes" aria-hidden="true">
+  <span class="mote"></span><span class="mote"></span><span class="mote"></span>
+  <span class="mote"></span><span class="mote"></span><span class="mote"></span>
+  <span class="mote"></span>
+</div>
+
+<main class="vault">
+
+  <!-- outer decorative frame, draws on load -->
+  <div class="vault-frame" aria-hidden="true">
+    <svg viewBox="0 0 1000 1400" preserveAspectRatio="none">
+      <!-- corner brackets -->
+      <path d="M 0 40 L 0 0 L 40 0"/>
+      <path d="M 960 0 L 1000 0 L 1000 40"/>
+      <path d="M 1000 1360 L 1000 1400 L 960 1400"/>
+      <path d="M 40 1400 L 0 1400 L 0 1360"/>
+      <!-- side inner lines -->
+      <line x1="0" y1="0" x2="1000" y2="0"/>
+      <line x1="0" y1="1400" x2="1000" y2="1400"/>
+    </svg>
+  </div>
+
+  <!-- ─────── Banner ─────── -->
+  <header class="banner">
+    <div class="sigil" aria-hidden="true">
+      <!-- custom petroglyph sigil: tiki face inside a sun-ring -->
+      <svg viewBox="0 0 64 64">
+        <defs>
+          <radialGradient id="sigil-g" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#e8c088"/>
+            <stop offset="100%" stop-color="#8f6e42"/>
+          </radialGradient>
+        </defs>
+        <!-- sun ring with rays -->
+        <g fill="none" stroke="url(#sigil-g)" stroke-width="1.25">
+          <circle cx="32" cy="32" r="28"/>
+          <circle cx="32" cy="32" r="22"/>
+          <!-- rays -->
+          <g stroke-linecap="round">
+            <line x1="32" y1="2"  x2="32" y2="8"/>
+            <line x1="32" y1="56" x2="32" y2="62"/>
+            <line x1="2"  y1="32" x2="8"  y2="32"/>
+            <line x1="56" y1="32" x2="62" y2="32"/>
+            <line x1="11" y1="11" x2="15" y2="15"/>
+            <line x1="49" y1="49" x2="53" y2="53"/>
+            <line x1="53" y1="11" x2="49" y2="15"/>
+            <line x1="15" y1="49" x2="11" y2="53"/>
+          </g>
+        </g>
+        <!-- tiki face -->
+        <g fill="#d4a574">
+          <path d="M22 22 L42 22 L44 28 L40 30 L40 38 L36 42 L28 42 L24 38 L24 30 L20 28 Z" opacity=".9"/>
+          <rect x="26" y="28" width="4" height="3" fill="#0a0908"/>
+          <rect x="34" y="28" width="4" height="3" fill="#0a0908"/>
+          <path d="M28 36 L36 36 L34 38 L30 38 Z" fill="#0a0908"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="title-block">
+      <div class="overline">Vol. II · Grimoire of the Living</div>
+      <h1>Kānehiwa's <em>Register</em></h1>
+      <p class="chamber">Chamber <strong>Pali North</strong> · Keeper <strong>Jeremiah Makoa</strong></p>
+    </div>
+
+    <div class="luna">
+      <span>Lunar Cycle</span>
+      <span class="phase" title="Waxing Gibbous">☽ Waxing</span>
+      <span class="date">XIV · APRIL · MMXXVI</span>
+    </div>
+  </header>
+
+  <!-- ─────── Sanctum (hero) ─────── -->
+  <section class="sanctum">
+    <div class="seal" aria-hidden="true">
+      <svg viewBox="0 0 74 74">
+        <defs>
+          <radialGradient id="wax" cx="40%" cy="35%" r="60%">
+            <stop offset="0%" stop-color="#e8735a"/>
+            <stop offset="50%" stop-color="#c94e2e"/>
+            <stop offset="100%" stop-color="#6b1d0d"/>
+          </radialGradient>
+        </defs>
+        <!-- blobby wax shape -->
+        <path d="M37 4 C 52 4, 68 14, 70 30 C 72 46, 62 66, 46 70 C 30 74, 10 66, 5 50 C 0 32, 12 12, 22 8 C 28 5, 32 4, 37 4 Z" fill="url(#wax)"/>
+        <!-- inner ring -->
+        <circle cx="37" cy="37" r="22" fill="none" stroke="#4a0f08" stroke-width=".8" opacity=".6"/>
+        <!-- stamp: "TRM" in a ring -->
+        <text x="37" y="30" text-anchor="middle" font-family="IM Fell English SC, serif" font-size="7" fill="#3a0d06" letter-spacing="1.5">TROPICAL</text>
+        <text x="37" y="43" text-anchor="middle" font-family="IM Fell English SC, serif" font-size="7" fill="#3a0d06" letter-spacing="1.5">ROOTS</text>
+        <!-- center mark -->
+        <path d="M33 47 L37 52 L41 47 M37 52 L37 57" stroke="#3a0d06" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <!-- gloss -->
+        <ellipse cx="28" cy="22" rx="10" ry="6" fill="#fff" opacity=".2"/>
+      </svg>
+    </div>
+
+    <div class="sanctum-inner">
+      <div class="overline"><span class="dot"></span>Of This Day's Concern</div>
+      <h2><span class="cap">T</span>oday the garden holds <em>five souls</em>, and the air runs warmer than the ledger prefers. Tend first to the Maui Waui — her crown wilts by a degree.</h2>
+      <p class="lede">The old moon waxes toward her fullness in five nights' time, a favorable window for foliar feeding and the gathering of cuttings from vigorous mothers. A fine mist hangs over the reservoirs. Chamber <em>Pali North</em> reports humidity nine points above the flowering mean — <strong>adjust the dehumidifier before second watering</strong>.</p>
+
+      <div class="sanctum-footer">
+        <dl><dt>Souls</dt><dd>V</dd></dl>
+        <dl><dt>Cuttings</dt><dd>XIV</dd></dl>
+        <dl><dt>Active Journals</dt><dd>III</dd></dl>
+        <dl><dt>Days in Register</dt><dd>247</dd></dl>
+        <dl><dt>Next New Moon</dt><dd>XXVII · IV</dd></dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────── The Living Ones / The Elements ─────── -->
+  <div class="section-head">
+    <span class="glyph" aria-hidden="true">
+      <svg viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.2">
+        <!-- botanical / leaf glyph -->
+        <path d="M18 3 C 10 10, 6 20, 18 33 C 30 20, 26 10, 18 3 Z"/>
+        <path d="M18 6 L 18 31" stroke-dasharray="2 2"/>
+        <path d="M18 12 Q 12 15, 10 20"/>
+        <path d="M18 12 Q 24 15, 26 20"/>
+        <path d="M18 20 Q 12 23, 11 27"/>
+        <path d="M18 20 Q 24 23, 25 27"/>
+      </svg>
+    </span>
+    <h3>The Living Ones</h3>
+    <span class="rule"></span>
+    <span class="count">V · BOUND</span>
+  </div>
+
+  <div class="grid">
+
+    <!-- plant roster -->
+    <div class="roster">
+
+      <article class="specimen">
+        <div class="glyph-frame">
+          <svg viewBox="0 0 32 32" fill="currentColor">
+            <!-- star glyph for Yoda -->
+            <path d="M16 3 L19 12 L28 12 L21 18 L24 27 L16 22 L8 27 L11 18 L4 12 L13 12 Z"/>
+          </svg>
+          <span class="roman">I</span>
+        </div>
+        <div class="specimen-body">
+          <div class="specimen-strain">Blue Dream</div>
+          <div class="specimen-name"><span class="nick">Yoda</span></div>
+          <div class="specimen-meta">
+            <span><span class="label">Stage</span> <b>Veg</b></span>
+            <span><span class="label">Day</span> <b>42</b></span>
+            <span><span class="label">Height</span> <b>38cm</b></span>
+          </div>
+          <div class="stage-bar" style="--pct:.68"></div>
+        </div>
+        <div class="health">Thriving</div>
+      </article>
+
+      <article class="specimen">
+        <div class="glyph-frame">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2">
+            <!-- spiral for Durban (warrior) -->
+            <path d="M16 16 m -10 0 a 10 10 0 1 1 20 0 a 7 7 0 1 1 -14 0 a 4 4 0 1 1 8 0"/>
+          </svg>
+          <span class="roman">II</span>
+        </div>
+        <div class="specimen-body">
+          <div class="specimen-strain">Durban Poison</div>
+          <div class="specimen-name">Durban Poison <span style="color:var(--bone-dim);font-weight:400">#I</span></div>
+          <div class="specimen-meta">
+            <span><span class="label">Stage</span> <b>Flower</b></span>
+            <span><span class="label">Day</span> <b>63</b></span>
+            <span><span class="label">Wk of Bloom</span> <b>VII</b></span>
+          </div>
+          <div class="stage-bar" style="--pct:.88"></div>
+        </div>
+        <div class="health">Thriving</div>
+      </article>
+
+      <article class="specimen">
+        <div class="glyph-frame">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8">
+            <!-- pineapple scales -->
+            <path d="M16 4 L22 11 L16 18 L10 11 Z"/>
+            <path d="M16 12 L22 19 L16 26 L10 19 Z"/>
+            <path d="M16 20 L22 27 L16 28 L10 27 Z"/>
+          </svg>
+          <span class="roman">III</span>
+        </div>
+        <div class="specimen-body">
+          <div class="specimen-strain">Pineapple Chunk</div>
+          <div class="specimen-name"><span class="nick">Ahsoka</span></div>
+          <div class="specimen-meta">
+            <span><span class="label">Stage</span> <b>Veg</b></span>
+            <span><span class="label">Day</span> <b>21</b></span>
+            <span><span class="label">Height</span> <b>19cm</b></span>
+          </div>
+          <div class="stage-bar" style="--pct:.32"></div>
+        </div>
+        <div class="health stressed">Stressed</div>
+      </article>
+
+      <article class="specimen">
+        <div class="glyph-frame">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6">
+            <!-- wave/ocean for Maui Waui -->
+            <path d="M4 14 Q 10 8, 16 14 T 28 14"/>
+            <path d="M4 20 Q 10 14, 16 20 T 28 20"/>
+            <path d="M4 26 Q 10 20, 16 26 T 28 26"/>
+            <circle cx="24" cy="8" r="2" fill="currentColor"/>
+          </svg>
+          <span class="roman">IV</span>
+        </div>
+        <div class="specimen-body">
+          <div class="specimen-strain">Maui Waui</div>
+          <div class="specimen-name"><span class="nick">Kānehiwa</span></div>
+          <div class="specimen-meta">
+            <span><span class="label">Stage</span> <b>Flower</b></span>
+            <span><span class="label">Day</span> <b>48</b></span>
+            <span><span class="label">Wk of Bloom</span> <b>V</b></span>
+          </div>
+          <div class="stage-bar" style="--pct:.72"></div>
+        </div>
+        <div class="health stressed">Needs Water</div>
+      </article>
+
+      <article class="specimen">
+        <div class="glyph-frame">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M16 16 m -10 0 a 10 10 0 1 1 20 0 a 7 7 0 1 1 -14 0 a 4 4 0 1 1 8 0"/>
+          </svg>
+          <span class="roman">V</span>
+        </div>
+        <div class="specimen-body">
+          <div class="specimen-strain">Durban Poison</div>
+          <div class="specimen-name">Durban Poison <span style="color:var(--bone-dim);font-weight:400">#II</span></div>
+          <div class="specimen-meta">
+            <span><span class="label">Stage</span> <b>Veg</b></span>
+            <span><span class="label">Day</span> <b>12</b></span>
+            <span><span class="label">Height</span> <b>11cm</b></span>
+          </div>
+          <div class="stage-bar" style="--pct:.18"></div>
+        </div>
+        <div class="health">Thriving</div>
+      </article>
+
+      <article class="specimen">
+        <div class="glyph-frame">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4">
+            <!-- mother-symbol: circle with dot -->
+            <circle cx="16" cy="16" r="11"/>
+            <circle cx="16" cy="16" r="6"/>
+            <circle cx="16" cy="16" r="2" fill="currentColor"/>
+          </svg>
+          <span class="roman">+</span>
+        </div>
+        <div class="specimen-body">
+          <div class="specimen-strain" style="color:var(--gold-dim)">A New Soul</div>
+          <div class="specimen-name" style="color:var(--bone);font-style:italic;font-weight:400">Bind to the Register</div>
+          <div class="specimen-meta">
+            <span style="font-style:italic;color:var(--bone-dim);font-family:var(--serif);font-size:.82rem">
+              Strike here to enter a new plant's name, lineage, and hour of awakening.
+            </span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- elements / environmental -->
+    <aside class="elements">
+
+      <div class="section-head" style="margin:0 0 8px;grid-column:1/-1">
+        <span class="glyph" aria-hidden="true">
+          <svg viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3">
+            <polygon points="18,4 32,28 4,28"/>
+            <polygon points="18,32 32,8 4,8"/>
+          </svg>
+        </span>
+        <h3 style="font-size:1.1rem">The Elements</h3>
+        <span class="rule"></span>
+      </div>
+
+      <div class="element">
+        <div class="symbol">🜂</div>
+        <div>
+          <div class="label">Fire · Warmth</div>
+          <div class="ident">Chamber temperature</div>
+        </div>
+        <div class="readout">
+          74<span class="unit">°F</span>
+          <span class="trend">↑ 1.2 since dawn</span>
+        </div>
+      </div>
+
+      <div class="element alert">
+        <div class="symbol">🜄</div>
+        <div>
+          <div class="label">Water · Vapour</div>
+          <div class="ident">Relative humidity</div>
+        </div>
+        <div class="readout">
+          67<span class="unit">%</span>
+          <span class="trend bad">↑ 9 above mean</span>
+        </div>
+      </div>
+
+      <div class="element">
+        <div class="symbol">🜁</div>
+        <div>
+          <div class="label">Air · Pressure</div>
+          <div class="ident">Vapour pressure deficit</div>
+        </div>
+        <div class="readout">
+          0.98<span class="unit">kPa</span>
+          <span class="trend warn">slightly low</span>
+        </div>
+      </div>
+
+      <div class="element">
+        <div class="symbol">🜃</div>
+        <div>
+          <div class="label">Earth · Root</div>
+          <div class="ident">Reservoir pH · veg bench</div>
+        </div>
+        <div class="readout">
+          6.2<span class="unit">pH</span>
+          <span class="trend">drift nominal</span>
+        </div>
+      </div>
+
+      <div class="element">
+        <div class="symbol" style="font-family:var(--mono);font-size:1.2rem">☉</div>
+        <div>
+          <div class="label">Sun · Light</div>
+          <div class="ident">Canopy PPFD</div>
+        </div>
+        <div class="readout">
+          820<span class="unit">µmol</span>
+          <span class="trend">XIV hrs on</span>
+        </div>
+      </div>
+
+      <div class="element">
+        <div class="symbol" style="font-family:var(--mono);font-size:1.1rem">CO₂</div>
+        <div>
+          <div class="label">Breath</div>
+          <div class="ident">Carbon dioxide</div>
+        </div>
+        <div class="readout">
+          812<span class="unit">ppm</span>
+          <span class="trend">supplementation on</span>
+        </div>
+      </div>
+
+    </aside>
+  </div>
+
+  <!-- ─────── The Rites Remaining ─────── -->
+  <section class="rites">
+    <div class="rites-head">
+      <h3>The Rites Remaining</h3>
+      <span class="sub">— ere the sun sets —</span>
+    </div>
+
+    <div class="rite">
+      <span class="mark" role="checkbox" aria-checked="false"></span>
+      <div class="rite-text">Top-dress <em>Maui Waui — Kānehiwa</em> with kelp &amp; fish-bone meal <span class="tag">KNF · IMO-4</span></div>
+      <div class="rite-time">06:40</div>
+      <div class="rite-priority">Thrice-Urgent</div>
+    </div>
+
+    <div class="rite done">
+      <span class="mark" role="checkbox" aria-checked="true"></span>
+      <div class="rite-text">Feed <em>Blue Dream — Yoda</em> — half-strength bloom, pH 6.2</div>
+      <div class="rite-time">07:15</div>
+      <div class="rite-priority low">Tended</div>
+    </div>
+
+    <div class="rite">
+      <span class="mark" role="checkbox" aria-checked="false"></span>
+      <div class="rite-text">IPM pass — inspect undersides of all veg mothers for thrips &amp; gnats <span class="tag">ritual · weekly</span></div>
+      <div class="rite-time">10:30</div>
+      <div class="rite-priority low">Rite</div>
+    </div>
+
+    <div class="rite">
+      <span class="mark" role="checkbox" aria-checked="false"></span>
+      <div class="rite-text">Record EC on both reservoirs &amp; reconcile with ledger</div>
+      <div class="rite-time">12:00</div>
+      <div class="rite-priority low">Rite</div>
+    </div>
+
+    <div class="rite">
+      <span class="mark" role="checkbox" aria-checked="false"></span>
+      <div class="rite-text">Transplant clone pack <em>IV</em> — coco/perlite, root zone warmed</div>
+      <div class="rite-time">15:20</div>
+      <div class="rite-priority">Urgent</div>
+    </div>
+
+    <div class="rite">
+      <span class="mark" role="checkbox" aria-checked="false"></span>
+      <div class="rite-text">Adjust dehumidifier set-point to 55% · note in journal</div>
+      <div class="rite-time">dusk</div>
+      <div class="rite-priority low">Rite</div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+/* small niceties: toggle marks, count-up numbers on elements */
+document.querySelectorAll('.rite .mark').forEach(m=>{
+  m.addEventListener('click', ()=>{
+    const rite = m.closest('.rite');
+    const done = rite.classList.toggle('done');
+    m.setAttribute('aria-checked', done ? 'true' : 'false');
+  });
+});
+
+/* count-up readouts for the elements */
+const animateReadout = (el, target, decimals=0, duration=1400)=>{
+  const start = performance.now();
+  const from = 0;
+  const step = (t)=>{
+    const p = Math.min(1, (t-start)/duration);
+    const eased = 1 - Math.pow(1-p, 3);
+    const val = from + (target-from)*eased;
+    el.firstChild.nodeValue = decimals ? val.toFixed(decimals) : Math.round(val);
+    if(p<1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+};
+window.addEventListener('load', ()=>{
+  setTimeout(()=>{
+    document.querySelectorAll('.element .readout').forEach(r=>{
+      const raw = r.firstChild.nodeValue.trim();
+      const dec = raw.includes('.') ? (raw.split('.')[1]?.length ?? 0) : 0;
+      const target = parseFloat(raw);
+      if(!isNaN(target)) animateReadout(r, target, dec);
+    });
+  }, 2800);
+});
+</script>
+
+</body>
+</html>

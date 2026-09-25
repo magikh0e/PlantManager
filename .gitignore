@@ -1,0 +1,47 @@
+# ─── Secrets ────────────────────────────────────────────────────────────
+# Google Search Console OAuth client + cached refresh token.
+# See tools/gsc-stats.py for details. NEVER commit these.
+gsc-oauth-client.json
+gsc-token.json
+
+# Generic catch-all for anything that looks like a credential file
+*.secret
+*.secret.json
+*credentials*.json
+.env
+.env.*
+!.env.example
+
+# ─── Python (for tools/) ────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.Python
+*.egg-info/
+
+# ─── OS junk ────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ─── Editor / IDE ───────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ─── Build / deploy artifacts ───────────────────────────────────────────
+seo-rename.log
+*.log
+
+# ─── Local-only / scratch ───────────────────────────────────────────────
+scratch/
+tmp/
+*.bak
+
+# PrintVault has its own repository
+printvault/

@@ -1,0 +1,195 @@
+/* --- 1. COLOR PALETTE & GLOBAL RESET --- */
+
+:root {
+    /* Primary Color Palette for Tropical Roots Maui */
+    --color-white: #FAFaFa;     /* Primary Neutral Background */
+    --color-black: #000000;     /* Secondary Neutral Text */
+    --color-teal: #3AB4B4;      /* Primary Accent (CTA Buttons, Active Links) */
+    --color-green: #90C34C;     /* Secondary Accent (Hover States, Prices) */
+    --color-purple: #752D8A;    /* Tertiary Accent (Headings, Special Text) */
+    --color-wood: #A0835D;      /* Warm Accent (Footers, Dividing Lines) */
+    --color-text-dark: #333333; /* Darker text for better contrast */
+
+    /* Typography */
+    --font-heading: 'Arial Black', sans-serif;
+    --font-body: Arial, sans-serif;
+}
+
+/* Reset for a clean start */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--color-text-dark);
+    background-color: var(--color-white);
+    line-height: 1.6;
+    scroll-behavior: smooth;
+position: absolute;
+}
+
+
+/* --- 2. TYPOGRAPHY & HEADING STYLES --- */
+
+h1, h2, h3 {
+    font-family: var(--font-heading);
+    color: var(--color-text-dark);
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: 3.5em;
+    color: var(--color-purple); /* Using purple for high-impact titles */
+}
+
+h2 {
+    font-size: 2em;
+    color: var(--color-teal); /* Using teal for section headings */
+    margin-bottom: 0.75em;
+}
+
+p {
+    margin-bottom: 1em;
+}
+
+/* --- 3. HEADER & NAVIGATION STYLES --- */
+
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    background-color: var(--color-black);
+    border-bottom: 2px solid var(--color-wood); /* Wood accent divider */
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.main-logo {
+    height: 100px; /* Adjust size to fit your image */
+    width: auto;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+}
+
+.main-nav ul li {
+    margin-left: 35px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--color-text-dark);
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--color-teal);
+}
+
+/* --- 4. CALL-TO-ACTION (CTA) BUTTON STYLE --- */
+
+.cta-button {
+    display: inline-block;
+    padding: 15px 35px;
+    background-color: var(--color-teal);
+    color: var(--color-white);
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 1em;
+    border: 2px solid var(--color-teal);
+    border-radius: 8px; /* Slightly rounded for a modern look */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cta-button:hover {
+    background-color: var(--color-green); /* Tropical green on hover */
+    border-color: var(--color-green);
+    transform: translateY(-2px); /* Subtle lift effect */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* --- 5. SECTION STYLES (Example for General Content) --- */
+
+.section-padding {
+    padding: 60px 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Example: A section that uses the wood accent as a background */
+.accent-section {
+ /*   background-color: #F8F8F8; /* Very light off-white */ */
+    border-top: 5px solid var(--color-wood);
+}
+/* --- CSS Additions for Content Grid and Footer --- */
+
+/* Style for the grid to make it 3-column */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Creates three equal columns */
+    gap: 30px; /* Space between the cards */
+    text-align: center;
+}
+
+/* Style for individual product cards */
+.product-card {
+    background-color: var(--color-white);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-card img {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border-radius: 4px;
+}
+
+.product-card h3 {
+    color: var(--color-teal);
+    font-size: 1.25em;
+    margin-bottom: 5px;
+}
+
+.product-card p {
+    color: var(--color-text-dark);
+    font-size: 0.9em;
+    min-height: 50px; /* Ensures all cards are the same height */
+}
+
+/* Smaller button style for the cards */
+.small-cta {
+    padding: 10px 20px;
+    font-size: 0.9em;
+    margin-top: 15px;
+}
+
+/* Basic Footer Style (using the warm wood accent) */
+.site-footer {
+    padding: 20px 5%;
+    text-align: center;
+    background-color: var(--color-wood); 
+    color: var(--color-white); /* White text on the dark background */
+    font-size: 0.85em;
+}

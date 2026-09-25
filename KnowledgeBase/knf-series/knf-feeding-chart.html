@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="preload" href="/site-components.css" as="style" onload="this.onload=null;this.rel=&#39;stylesheet&#39;">
+<noscript><link rel="stylesheet" href="/site-components.css"></noscript>
+${link_line}
+<title>KNF Feeding Chart — Tropical Roots Maui</title>
+<meta name="title" content="KNF Feeding Chart — Tropical Roots Maui">
+<meta name="description" content="The printable Tropical Roots Maui KNF feeding chart — every input, ratio, and timing at a glance. Pin it in your grow space for quick reference from seedling to harvest.">
+<meta name="keywords" content="KNF feeding chart, Korean Natural Farming, FPJ, FFJ, WCA, WCA-P, OHN, cannabis feeding schedule, mixing ratios, Tropical Roots Maui, Kānehiwa">
+<meta name="author" content="Tropical Roots Maui">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-feeding-chart.html">
+
+<!-- ═══ OPEN GRAPH ═══ -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Tropical Roots Maui">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-feeding-chart.html">
+<meta property="og:title" content="KNF Feeding Chart — Tropical Roots Maui">
+<meta property="og:description" content="The printable KNF feeding chart — every input, ratio, and timing at a glance.">
+<meta property="og:image" content="https://tropicalrootsmaui.com/img/ogimg/knffeedingschedule.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+
+<!-- ═══ TWITTER ═══ -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@tropicalrootsmaui">
+<meta name="twitter:title" content="KNF Feeding Chart — Tropical Roots Maui">
+<meta name="twitter:description" content="The printable KNF feeding chart — every input, ratio, and timing at a glance.">
+<meta name="twitter:image" content="https://tropicalrootsmaui.com/img/ogimg/knffeedingschedule.webp">
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black:    #0a0c0a;
+  --dark:     #111a10;
+  --jungle:   #1b3a1e;
+  --green:    #2d6e35;
+  --leaf:     #4a9e52;
+  --cyan:     #00c8c0;
+  --cyan-dim: #00968f;
+  --gold:     #f0b429;
+  --orange:   #e8721a;
+  --cream:    #f4edd8;
+  --sand:     #e0ceaa;
+  --text:     #f0ead8;
+  --muted:    rgba(240,234,216,0.62);
+  --nav-h:    68px;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Lora', serif;
+  background: var(--black); color: var(--text);
+  overflow-x: hidden; min-height: 100vh;
+  display: flex; flex-direction: column;
+}
+body::after {
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9998;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  opacity: 0.5;
+}
+.bg-ambience {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse at 10% 30%, rgba(45,110,53,0.14) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 70%, rgba(0,200,192,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, rgba(240,180,41,0.05) 0%, transparent 45%),
+    linear-gradient(180deg, #0a0c0a 0%, #0c1a0c 50%, #0a0c0a 100%);
+}
+.orb { position: fixed; border-radius: 50%; pointer-events: none; animation: pulse-orb 7s ease-in-out infinite; }
+.orb-1 { width: 500px; height: 500px; top: 10%; right: -150px; background: radial-gradient(circle, rgba(45,110,53,0.12) 0%, transparent 70%); }
+.orb-2 { width: 350px; height: 350px; bottom: 20%; left: -100px; background: radial-gradient(circle, rgba(0,200,192,0.07) 0%, transparent 70%); animation-delay: -3.5s; }
+@keyframes pulse-orb { 0%,100% { transform: scale(1); opacity: 0.6; } 50% { transform: scale(1.1); opacity: 1; } }
+
+main { flex: 1; padding-top: var(--nav-h); position: relative; z-index: 1; }
+
+/* ── ANIMATIONS ── */
+@keyframes grow-line { from { transform: scaleY(0); opacity: 0; } to { transform: scaleY(1); opacity: 1; } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── HERO ── */
+.recipe-hero { text-align: center; padding: 4.5rem 2rem 3rem; position: relative; }
+.recipe-hero::after {
+  content: ''; display: block; width: 1px; height: 60px;
+  background: linear-gradient(to bottom, var(--cyan), transparent);
+  margin: 2.5rem auto 0; animation: grow-line 1.2s 0.6s ease both; transform-origin: top;
+}
+.hero-eyebrow {
+  display: inline-block;
+  background: rgba(0,200,192,0.08); border: 1px solid rgba(0,200,192,0.25);
+  color: var(--cyan); font-family: 'Cinzel', serif;
+  font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+  padding: 0.38rem 1.1rem; margin-bottom: 1.4rem;
+  animation: fadeUp 0.8s ease both;
+}
+.hero-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1.7rem, 5vw, 3.4rem); line-height: 1.15;
+  animation: fadeUp 0.8s 0.1s ease both;
+}
+.hero-title .gold { color: var(--gold); }
+.hero-byline {
+  font-family: 'Cinzel', serif; font-size: 0.62rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--muted); margin-top: 0.8rem;
+  animation: fadeUp 0.8s 0.15s ease both;
+}
+.hero-sub {
+  font-style: italic; color: var(--muted); font-size: 0.95rem;
+  margin-top: 0.5rem; max-width: 620px; margin-left: auto; margin-right: auto;
+  animation: fadeUp 0.8s 0.2s ease both;
+}
+.hero-img {
+  display: block; max-width: 600px; width: 90%; margin: 2rem auto 0;
+  border-radius: 10px; border: 1px solid rgba(0,200,192,0.15);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  animation: fadeUp 0.8s 0.3s ease both;
+}
+
+/* ── INFO BAND ── */
+.warning-band { max-width: 860px; margin: 0 auto; padding: 0 2rem; animation: fadeUp 0.8s 0.25s ease both; }
+.info-box {
+  background: rgba(240,180,41,0.06); border: 1px solid rgba(240,180,41,0.3);
+  padding: 1rem 1.3rem; display: flex; gap: 0.9rem; align-items: flex-start;
+}
+.warning-icon { font-size: 1.2rem; flex-shrink: 0; padding-top: 0.1rem; }
+.warning-text { font-size: 0.85rem; line-height: 1.7; color: var(--sand); }
+.warning-text strong { color: var(--gold); }
+.warning-text a { color: var(--cyan); text-decoration: underline; text-underline-offset: 2px; }
+
+/* ── FEEDING CHART TABLE ── */
+.chart-wrap {
+  max-width: 860px; margin: 2.5rem auto 3rem; padding: 0 2rem;
+  animation: fadeUp 0.8s 0.3s ease both;
+}
+.chart-box {
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(0,200,192,0.15);
+  border-radius: 10px; overflow: hidden;
+}
+.chart-header {
+  background: rgba(0,200,192,0.06); padding: 1.2rem 1.8rem;
+  border-bottom: 1px solid rgba(0,200,192,0.15);
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem;
+}
+.chart-header h2 {
+  font-family: 'Cinzel Decorative', serif; font-size: 1.15rem; color: var(--gold);
+}
+.print-btn {
+  background: rgba(0,200,192,0.12); border: 1px solid rgba(0,200,192,0.3);
+  color: var(--cyan); font-family: 'Cinzel', serif; font-size: 0.58rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 0.4rem 1rem; cursor: pointer; border-radius: 4px;
+  transition: background 0.2s;
+}
+.print-btn:hover { background: rgba(0,200,192,0.2); }
+
+.chart-table-wrap { overflow-x: auto; }
+.chart-table {
+  width: 100%; border-collapse: collapse; min-width: 680px;
+}
+.chart-table th {
+  font-family: 'Cinzel', serif; font-size: 0.54rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--cyan);
+  padding: 0.7rem 0.9rem; text-align: left;
+  border-bottom: 1px solid rgba(0,200,192,0.2);
+  background: rgba(0,200,192,0.03);
+  position: sticky; top: 0;
+}
+.chart-table td {
+  padding: 0.7rem 0.9rem; font-size: 0.88rem; line-height: 1.5;
+  color: var(--sand); border-bottom: 1px solid rgba(255,255,255,0.04);
+  vertical-align: top;
+}
+.chart-table td strong { color: var(--gold); }
+.chart-table td .ratio {
+  font-family: 'Space Mono', monospace; font-size: 0.8rem; color: var(--cyan);
+}
+.chart-table td .dash { color: var(--muted); font-style: italic; }
+.chart-table .phase-label {
+  font-family: 'Cinzel', serif; font-size: 0.75rem; font-weight: 600;
+  color: var(--text); white-space: nowrap;
+}
+.chart-table .weeks {
+  font-family: 'Space Mono', monospace; font-size: 0.82rem;
+  color: var(--muted); white-space: nowrap;
+}
+
+/* Phase row accents */
+.chart-table tr.phase-seedling td { border-left: 3px solid rgba(74,158,82,0.5); }
+.chart-table tr.phase-veg td { border-left: 3px solid rgba(45,110,53,0.6); }
+.chart-table tr.phase-transition td { border-left: 3px solid rgba(240,180,41,0.5); }
+.chart-table tr.phase-mid td { border-left: 3px solid rgba(232,114,26,0.5); }
+.chart-table tr.phase-late td { border-left: 3px solid rgba(200,80,80,0.4); }
+.chart-table tr.phase-ripen td { border-left: 3px solid rgba(0,200,192,0.4); }
+
+/* ── SECTIONS ── */
+.content-section { max-width: 860px; margin: 0 auto 3rem; padding: 0 2rem; }
+.section-box {
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(0,200,192,0.1);
+  border-radius: 8px; padding: 1.8rem 2rem;
+}
+.section-box h3 {
+  font-family: 'Cinzel Decorative', serif; font-size: 1.1rem;
+  color: var(--gold); margin-bottom: 1rem;
+}
+.section-box p {
+  font-size: 0.92rem; line-height: 1.85; color: var(--sand); margin-bottom: 0.8rem;
+}
+.section-box p:last-child { margin-bottom: 0; }
+.section-box strong { color: var(--gold); }
+.section-box .detail-label {
+  font-family: 'Cinzel', serif; font-size: 0.56rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--cyan); display: block; margin: 1.2rem 0 0.5rem;
+}
+.section-box .detail-label:first-child { margin-top: 0; }
+.section-box a { color: var(--cyan); text-decoration: underline; text-underline-offset: 2px; }
+
+/* ── MIXING STEPS ── */
+.mix-steps {
+  display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.5rem;
+}
+.mix-step {
+  display: flex; align-items: flex-start; gap: 0.8rem;
+  padding: 0.6rem 0.8rem;
+  background: rgba(0,200,192,0.03); border-radius: 6px;
+}
+.mix-num {
+  width: 26px; height: 26px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border: 1.5px solid rgba(0,200,192,0.35); border-radius: 50%;
+  font-family: 'Cinzel', serif; font-size: 0.7rem; color: var(--cyan);
+}
+.mix-text { font-size: 0.88rem; line-height: 1.7; color: var(--sand); }
+.mix-text strong { color: var(--text); }
+
+/* ── TIP BOX ── */
+.tip-box { max-width: 860px; margin: 0 auto 3rem; padding: 0 2rem; }
+.tip-inner {
+  background: rgba(240,180,41,0.05); border: 1px solid rgba(240,180,41,0.2);
+  border-radius: 8px; padding: 1.5rem 2rem;
+  display: flex; gap: 1rem; align-items: flex-start;
+}
+.tip-icon { font-size: 1.4rem; flex-shrink: 0; }
+.tip-content { font-size: 0.9rem; line-height: 1.8; color: var(--sand); }
+.tip-content strong { color: var(--gold); }
+
+/* ── ISLAND TIP ── */
+.island-tip {
+  margin-top: 1rem; padding: 0.85rem 1.1rem;
+  background: rgba(0,200,192,0.04); border-left: 3px solid var(--cyan);
+  font-size: 0.86rem; line-height: 1.75; color: var(--sand);
+}
+.island-tip .tip-label {
+  font-family: 'Cinzel', serif; font-size: 0.56rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--cyan); display: block; margin-bottom: 0.35rem;
+}
+.island-tip strong { color: var(--text); }
+
+/* ── PRO TIP QUOTE ── */
+.pro-quote {
+  max-width: 860px; margin: 0 auto 3rem; padding: 0 2rem;
+}
+.pro-quote-inner {
+  background: linear-gradient(135deg, rgba(0,200,192,0.06), rgba(240,180,41,0.06));
+  border: 1px solid rgba(0,200,192,0.18); border-radius: 10px;
+  padding: 2rem 2.2rem; text-align: center;
+}
+.pro-quote-inner .pq-label {
+  font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--cyan); display: block; margin-bottom: 0.8rem;
+}
+.pro-quote-inner blockquote {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.08rem;
+  font-style: italic; color: var(--text); line-height: 1.85;
+  margin: 0 auto; max-width: 620px;
+}
+
+/* ── SERIES NAV ── */
+.series-nav { max-width: 860px; margin: 0 auto 3rem; padding: 0 2rem; }
+.series-nav-inner {
+  background: rgba(240,180,41,0.05); border: 1px solid rgba(240,180,41,0.2);
+  border-radius: 8px; padding: 1.5rem 2rem;
+}
+.series-nav-inner .sn-title {
+  display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.6rem;
+}
+.series-nav-inner .sn-title strong { color: var(--gold); font-size: 0.95rem; }
+.series-nav-inner .sn-links {
+  font-size: 0.88rem; line-height: 1.9; color: var(--sand);
+}
+.series-nav-inner .sn-links a { color: var(--cyan); text-decoration: underline; text-underline-offset: 2px; }
+
+/* ── DISCLAIMER ── */
+.disclaimer {
+  background: rgba(27,58,30,0.3); border-top: 1px solid rgba(0,200,192,0.1);
+  max-width: 860px; margin: 2rem auto 0; padding: 1.2rem 2rem;
+}
+.disclaimer p { font-size: 0.78rem; line-height: 1.7; color: var(--muted); text-align: center; }
+.disclaimer strong { color: var(--sand); }
+
+/* ── PRINT STYLES ── */
+@media print {
+  body { background: #fff !important; color: #111 !important; }
+  body::after, .bg-ambience, .orb, #trm-header, #trm-footer,
+  .print-btn, .series-nav, .disclaimer { display: none !important; }
+  main { padding-top: 0 !important; }
+  .recipe-hero { padding: 1rem 0; }
+  .recipe-hero::after { display: none; }
+  .hero-eyebrow { background: none; border: 1px solid #999; color: #555; }
+  .hero-title { color: #111; font-size: 1.8rem; }
+  .hero-title .gold { color: #b8860b; }
+  .hero-byline, .hero-sub { color: #555; }
+  .chart-box { border: 1px solid #ccc; }
+  .chart-header { background: #f5f5f5; border-bottom: 1px solid #ccc; }
+  .chart-header h2 { color: #333; }
+  .chart-table th { background: #f0f0f0; color: #333; border-bottom: 1px solid #ccc; }
+  .chart-table td { color: #333; border-bottom: 1px solid #eee; }
+  .chart-table td strong { color: #111; }
+  .chart-table td .ratio { color: #006666; }
+  .chart-table tr td { border-left-color: #999 !important; }
+  .section-box { border: 1px solid #ddd; background: #fafafa; }
+  .section-box h3 { color: #333; }
+  .section-box p, .mix-text { color: #333; }
+  .section-box strong { color: #111; }
+  .detail-label { color: #006666 !important; }
+  .tip-inner { border: 1px solid #ddd; background: #fffbf0; }
+  .tip-content { color: #333; }
+  .tip-content strong { color: #111; }
+  .island-tip { background: #f0fafa; border-left-color: #006666; color: #333; }
+  .island-tip strong { color: #111; }
+  .pro-quote-inner { background: #f5f5f5; border: 1px solid #ccc; }
+  .pro-quote-inner blockquote { color: #333; }
+  .info-box { background: #fffbf0; border: 1px solid #ddd; }
+  .warning-text { color: #333; }
+  .warning-text strong { color: #111; }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .recipe-hero { padding: 3rem 1.2rem 2rem; }
+  .hero-title { font-size: clamp(1.4rem, 7vw, 2rem); }
+  .chart-wrap, .content-section, .tip-box, .warning-band, .pro-quote, .series-nav { padding-left: 1rem; padding-right: 1rem; }
+  .chart-header { padding: 1rem; }
+  .section-box { padding: 1.4rem 1.2rem; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="bg-ambience"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<!-- HEADER -->
+<style>:root { --trm-nav-h: 68px; --nav-h: 68px; }
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  height: var(--trm-nav-h);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2rem; box-sizing: border-box;
+  background: rgba(10,12,10,0.95);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0,200,192,0.18);
+}
+.nav-logo { display: flex; align-items: center; gap: 0.85rem; text-decoration: none; flex-shrink: 0; }
+.nav-logo-icon {
+  width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, #1b3a1e, #2d6e35);
+  border: 2px solid #00c8c0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; box-shadow: 0 0 14px rgba(0,200,192,0.3);
+}
+.nav-logo-text .line1 {
+  font-family: "Cinzel Decorative", serif; font-size: 0.92rem;
+  color: #00c8c0; letter-spacing: 0.1em; display: block; line-height: 1.3;
+}
+.nav-logo-text .line2 {
+  font-family: "Cinzel", serif; font-size: 0.75rem;
+  color: #e0ceaa; letter-spacing: 0.22em; text-transform: uppercase; display: block;
+}
+.nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; margin: 0; padding: 0; }
+.nav-links a {
+  font-family: "Cinzel", serif; font-size: 0.78rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: #e0ceaa; text-decoration: none; opacity: 0.75;
+  transition: opacity 0.2s, color 0.2s;
+}
+.nav-links a:hover { opacity: 1; color: #00c8c0; }
+.nav-links a.active { opacity: 1; color: #00c8c0; }
+.nav-shop {
+  font-family: "Cinzel", serif; font-size: 0.75rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  text-decoration: none; color: #00c8c0;
+  border: 1.5px solid #00c8c0; padding: 0.45rem 1.2rem;
+  transition: background 0.2s, color 0.2s; white-space: nowrap;
+}
+.nav-shop:hover { background: #00c8c0; color: #0a0c0a; }
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  cursor: pointer; background: none; border: none; padding: 4px;
+  -webkit-tap-highlight-color: transparent;
+}
+.hamburger span { display: block; width: 24px; height: 2px; background: #00c8c0; transition: 0.25s; }
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+.mobile-menu {
+  display: none; position: fixed; top: var(--trm-nav-h); left: 0; right: 0; z-index: 290;
+  background: rgba(10,12,10,0.98);
+  flex-direction: column; padding: 1.4rem 1.5rem 1.8rem; gap: 1.2rem;
+  border-bottom: 2px solid #00c8c0;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-family: "Cinzel", serif; font-size: 1.05rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: #e0ceaa; text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.07); padding-bottom: 1rem;
+}
+.mobile-menu a:last-child { border-bottom: none; color: #00c8c0; padding-bottom: 0; }
+footer {
+  background: #070908;
+  border-top: 1px solid rgba(0,200,192,0.12);
+  padding: 4rem 2.5rem 2rem;
+  position: relative; z-index: 1;
+}
+.footer-grid {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem;
+  padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.footer-brand .nav-logo-icon { width: 48px; height: 48px; font-size: 1.4rem; }
+.footer-brand .brand-name {
+  font-family: "Cinzel Decorative", serif;
+  font-size: 1rem; color: #00c8c0; margin: 1rem 0 0.8rem; display: block;
+}
+.footer-brand p { font-size: 0.92rem; color: rgba(240,234,216,0.62); line-height: 1.7; max-width: 260px; }
+.footer-col h5 {
+  font-family: "Cinzel", serif; font-size: 0.72rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: #f0b429; margin-bottom: 1.4rem;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; padding: 0; margin: 0; }
+.footer-col ul a {
+  font-size: 0.92rem; color: rgba(240,234,216,0.62); text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-col ul a:hover { color: #00c8c0; }
+.footer-bottom {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 1rem; padding-top: 2rem;
+}
+.footer-bottom p { font-family: "Lora", serif; font-size: 0.82rem; color: rgba(240,234,216,0.25); }
+.socials { display: flex; gap: 0.8rem; }
+.socials a {
+  width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; text-decoration: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.socials a:hover { border-color: #00c8c0; background: rgba(0,200,192,0.1); }
+@media (max-width: 1000px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .footer-brand { grid-column: 1 / -1; }
+}
+@media (max-width: 640px) {
+  .footer-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .nav-links, .nav-shop { display: none; }
+  .hamburger { display: flex; }
+}
+</style>
+
+<div id="trm-nav"></div>
+
+
+<main>
+
+<!-- HERO -->
+<div class="recipe-hero">
+  <span class="hero-eyebrow">KNF Series · Quick Reference</span>
+  <h1 class="hero-title">KNF <span class="gold">Feeding Chart</span></h1>
+  <p class="hero-byline">🌿 Tropical Roots Maui — Seed to Harvest</p>
+  <p class="hero-sub">Clear, scannable, and designed for your grow space. Print it out or keep it handy on your phone to track your progress.</p>
+  <img src="https://tropicalrootsmaui.com/img/ogimg/knffeedingschedule.webp" alt="KNF Feeding Chart — Tropical Roots Maui" class="hero-img" loading="eager" fetchpriority="high">
+</div>
+
+<!-- INFO BAND -->
+<div class="warning-band">
+  <div class="info-box">
+    <span class="warning-icon">📋</span>
+    <div class="warning-text">
+      <strong>All ratios are per liter of water</strong> (multiply by ~4 for per gallon). This chart assumes a standard 4-week veg and 8–9 week flower cycle. For detailed phase breakdowns, see the full <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-feeding-schedule.html">KNF Feeding Schedule</a>.
+    </div>
+  </div>
+</div>
+
+<!-- FEEDING CHART -->
+<div class="chart-wrap">
+  <div class="chart-box">
+    <div class="chart-header">
+      <h2>🌿 Feeding Chart</h2>
+      <button class="print-btn" onclick="window.print()">🖨️ Print Chart</button>
+    </div>
+    <div class="chart-table-wrap">
+      <table class="chart-table">
+        <thead>
+          <tr>
+            <th>Growth Phase</th>
+            <th>Weeks</th>
+            <th>Primary Inputs</th>
+            <th>Mixing Ratio (per Liter)</th>
+            <th>Application Goal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="phase-seedling">
+            <td><span class="phase-label">🌱 Seedling</span></td>
+            <td><span class="weeks">1 – 2</span></td>
+            <td><strong>FPJ</strong> + <strong>OHN</strong></td>
+            <td><span class="ratio">1ml FPJ / 0.5ml OHN</span></td>
+            <td>Root health &amp; immunity.</td>
+          </tr>
+          <tr class="phase-veg">
+            <td><span class="phase-label">🌿 Vegetative</span></td>
+            <td><span class="weeks">3 – 4</span></td>
+            <td><strong>FPJ</strong> + <strong>WCA</strong> + <strong>OHN</strong></td>
+            <td><span class="ratio">2ml FPJ / 1ml WCA / 1ml OHN</span></td>
+            <td>Explosive foliage &amp; thick stems.</td>
+          </tr>
+          <tr class="phase-transition">
+            <td><span class="phase-label">🔄 Transition</span></td>
+            <td><span class="weeks">5 – 6</span></td>
+            <td><strong>WCA-P</strong> + <strong>WCA</strong></td>
+            <td><span class="ratio">1ml WCA-P / 1ml WCA</span></td>
+            <td>Triggering flowers; stop FPJ.</td>
+          </tr>
+          <tr class="phase-mid">
+            <td><span class="phase-label">🌸 Mid-Bloom</span></td>
+            <td><span class="weeks">7 – 10</span></td>
+            <td><strong>FFJ</strong> + <strong>WCA</strong> + <strong>OHN</strong></td>
+            <td><span class="ratio">2ml FFJ / 1ml WCA / 1ml OHN</span></td>
+            <td>Resin production &amp; bud density.</td>
+          </tr>
+          <tr class="phase-late">
+            <td><span class="phase-label">💎 Late Bloom</span></td>
+            <td><span class="weeks">11 – 12</span></td>
+            <td><strong>WCA</strong> + <strong>OHN</strong></td>
+            <td><span class="ratio">1ml WCA / 0.5ml OHN</span></td>
+            <td>Structural integrity; pest defense.</td>
+          </tr>
+          <tr class="phase-ripen">
+            <td><span class="phase-label">🏁 Ripening</span></td>
+            <td><span class="weeks">Final</span></td>
+            <td><strong>Clean Water</strong></td>
+            <td><span class="dash">—</span></td>
+            <td>Clean finish &amp; terpene focus.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- PREPARATION & USAGE RULES -->
+<div class="content-section">
+  <div class="section-box">
+    <h3>🧪 Preparation &amp; Usage Rules</h3>
+
+    <span class="detail-label">The Mixing Order</span>
+    <div class="mix-steps">
+      <div class="mix-step">
+        <div class="mix-num">1</div>
+        <div class="mix-text">Start with <strong>clean, dechlorinated water</strong> — let tap water sit for 24 hours, or use rainwater / catchment water.</div>
+      </div>
+      <div class="mix-step">
+        <div class="mix-num">2</div>
+        <div class="mix-text">Add <strong><a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-ohn-guide.html">OHN</a> and <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-wca-guide.html">WCA</a> first</strong> to stabilize the water.</div>
+      </div>
+      <div class="mix-step">
+        <div class="mix-num">3</div>
+        <div class="mix-text">Add <strong>FPJ or FFJ last</strong>. The fermented juices go in after the water is stabilized.</div>
+      </div>
+    </div>
+
+    <span class="detail-label">☀️ Foliar Spraying</span>
+    <p>Best done in the <strong>early morning</strong> or when lights first turn on. Stop all foliar sprays by <strong>Week 3 or 4 of Bloom</strong> to prevent moisture from getting trapped inside dense buds.</p>
+
+    <div class="island-tip">
+      <span class="tip-label">🌺 Hawaiʻi Island Tip</span>
+      On the islands, <strong>stop foliar sprays even earlier — by Week 7 (Week 3 of bloom)</strong>. Hawaiʻi's humidity means any moisture on buds takes longer to evaporate, creating perfect conditions for botrytis. Spray in the <strong>early morning before the sun is strong</strong> — never during midday island sun, which can burn wet leaves.
+    </div>
+
+    <span class="detail-label">🫙 Storage</span>
+    <p>Store your finished inputs in <strong>glass jars in a cool, dark place</strong>. Do not refrigerate them — the microbes prefer room temperature to stay active. Label and date every batch.</p>
+
+    <div class="island-tip">
+      <span class="tip-label">🌺 Hawaiʻi Island Tip</span>
+      In Hawaiʻi's heat, store inputs in the <strong>coolest interior room — never in a hot garage or on the lānai</strong>. Fermented inputs can over-ferment or go off in direct tropical sun. Dark glass bottles (amber or cobalt) are ideal for protecting light-sensitive compounds.
+    </div>
+  </div>
+</div>
+
+<!-- ISLAND TIP FOR CHART -->
+<div class="tip-box">
+  <div class="tip-inner" style="flex-direction:column;gap:0.6rem;">
+    <div class="island-tip" style="margin-top:0;">
+      <span class="tip-label">🌺 Hawaiʻi Island Tip</span>
+      In Hawaiʻi's warmth, <strong>plants move through phases faster</strong> — seedlings may be ready for veg ratios by day 10, and the flush can be shortened to 7 days. Watch the plant, not the calendar. If growing outdoors, <strong>re-apply after heavy rains</strong> that flush nutrients through the pot. During <strong>Kona wind events</strong>, increase OHN frequency to twice weekly as a preventative against the mold pressure that spikes in hot, still, humid conditions.
+    </div>
+  </div>
+</div>
+
+<!-- PRO TIP -->
+<div class="pro-quote">
+  <div class="pro-quote-inner">
+    <span class="pq-label">🌿 The "TRM" Pro-Tip 🌿</span>
+    <blockquote>"If the leaves are looking too dark green and waxy, back off the FPJ. If the stems feel soft or bendy, double your WCA dose for one watering. Listen to the plants — they'll tell you which bottle to reach for."</blockquote>
+  </div>
+</div>
+
+<!-- KNF SERIES NAV -->
+<div class="series-nav">
+  <div class="series-nav-inner">
+    <div class="sn-title">
+      <span style="font-size:1.2rem;">📚</span>
+      <strong>KNF Series</strong>
+    </div>
+    <div class="sn-links">
+      🌏 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-guide.html">Introduction to KNF</a> — Start Here<br>
+      <br><span style="font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(0,200,192,0.7);font-weight:600;">I. The Foundational Biology</span><br>
+      🍄 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-imo-guide.html">IMO (Indigenous Microorganisms)</a> — From Rice Box to Black Gold<br>
+      🧫 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-labs-guide.html">LabS (Lactic Acid Bacteria)</a> — The Clean-Up Crew<br>
+      <br><span style="font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(0,200,192,0.7);font-weight:600;">II. The Primary Growth Engines</span><br>
+      🐟 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-faa-guide.html">FAA (Fish Amino Acids)</a> — The Nitrogen Engine<br>
+      🌱 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-fpj-guide.html">FPJ (Fermented Plant Juice)</a> — The Growth Hormone<br>
+      <br><span style="font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(0,200,192,0.7);font-weight:600;">III. Specialized &amp; Bloom Nutrition</span><br>
+      🦴 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-wca-guide.html">WCA (Calcium)</a> — The Cell Wall Builder<br>
+      🔥 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-wca-p-guide.html">WCA-P (Calcium Phosphate)</a> — The Bloom Fuel<br>
+      🛡️ <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-ohn-guide.html">OHN (Oriental Herbal Nutrient)</a> — The Immune Booster<br>
+      <br><span style="font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(0,200,192,0.7);font-weight:600;">IV. Application &amp; Strategy</span><br>
+      📋 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-feeding-schedule.html">KNF Feeding Schedule</a> — Seed to Harvest Program<br>
+      📊 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-feeding-chart.html">KNF Feeding Chart</a> — Printable Quick Reference<br>
+      🐛 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-pest-disease-guide.html">Pest &amp; Disease Troubleshooting</a> — Maui Edition<br>
+      <br><span style="font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(0,200,192,0.7);font-weight:600;">V. Foliar Techniques</span><br>
+      🍚 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-brv-guide.html">BRV Foliar Spray</a> — Unlocking the Canopy
+    </div>
+</div>
+</div>
+
+<div class="disclaimer">
+  <p>This guide is provided for educational purposes only. <strong>Always research local laws and regulations before cultivating.</strong> Tropical Roots Maui assumes no responsibility for actions taken based on this information.</p>
+</div>
+
+</main>
+
+<!-- FOOTER -->
+<div id="trm-footer"></div>
+
+<script>
+// Hamburger toggle
+const burger = document.getElementById('trm-burger');
+const mobileNav = document.getElementById('trm-mobile-nav');
+if (burger) {
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    mobileNav.classList.toggle('open');
+  });
+  mobileNav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      burger.classList.remove('open');
+      mobileNav.classList.remove('open');
+    });
+  });
+}
+</script>
+
+
+<script src="/site-components.js" defer></script>
+</body></html>

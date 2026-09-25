@@ -1,0 +1,9 @@
+# Tropical Roots Maui Plant Manager — robots.txt
+# Deploy this file to tracker.tropicalrootsmaui.com as `robots.txt`
+# https://tracker.tropicalrootsmaui.com
+
+User-agent: *
+Allow: /
+
+# Sitemap (tracker subdomain only — main domain has its own)
+Sitemap: https://tracker.tropicalrootsmaui.com/sitemap.xml

@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<!-- saved from url=(0069)https://tropicalrootsmaui.com/KnowledgeBase/OilPotencyCalculator.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="preload" href="https://tropicalrootsmaui.com/site-components.css" as="style" onload="this.onload=null;this.rel=&#39;stylesheet&#39;">
+<noscript><link rel="stylesheet" href="https://tropicalrootsmaui.com/site-components.css"></noscript>
+${link_line}
+<title>MCT Oil Potency Calculator — Tropical Roots Maui</title>
+<meta name="description" content="Master your infusions with Kānehiwa's potency calculator. Easily determine mg/ml for MCT oil and butter using flower weight and THC percentages.">
+<meta name="keywords" content="MCT oil potency calculator, cannabis infusion calculator, infused oil strength, mg per tsp, THC infusion, Tropical Roots Maui">
+<meta name="author" content="Tropical Roots Maui">
+<link rel="canonical" href="https://tropicalrootsmaui.com/KnowledgeBase/OilPotencyCalculator.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="MCT Oil Potency Calculator — Tropical Roots Maui">
+<meta property="og:description" content="Master your infusions with Kānehiwa's potency calculator. Easily determine mg/ml for MCT oil and butter using flower weight and THC percentages.">
+<meta property="og:url" content="https://tropicalrootsmaui.com/KnowledgeBase/OilPotencyCalculator.html">
+<meta property="og:site_name" content="Tropical Roots Maui">
+<meta property="og:image" content="https://tropicalrootsmaui.com/img/tropical-roots-maui-mct-oil-potency-calculator-knf.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MCT Oil Potency Calculator — Tropical Roots Maui">
+<meta name="twitter:description" content="Master your infusions with Kānehiwa's potency calculator. Easily determine mg/ml for MCT oil and butter using flower weight and THC percentages.">
+<meta name="twitter:image" content="https://tropicalrootsmaui.com/img/tropical-roots-maui-mct-oil-potency-calculator-knf.webp">
+<meta name="twitter:site" content="@tropicalrootsmaui">
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+:root {
+  --black:#0a0c0a; --dark:#111a10; --jungle:#1b3a1e;
+  --cyan:#00c8c0; --gold:#f0b429; --orange:#e8721a;
+  --sand:#e0ceaa; --text:#f0ead8; --muted:rgba(240,234,216,0.62); --nav-h:68px;
+}
+html { scroll-behavior:smooth; }
+body { font-family:'Lora',serif; background:var(--black); color:var(--text); overflow-x:hidden; min-height:100vh; display:flex; flex-direction:column; }
+body::after { content:''; position:fixed; inset:0; pointer-events:none; z-index:9998; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); opacity:0.5; }
+.bg-ambience { position:fixed; inset:0; z-index:0; pointer-events:none; background:radial-gradient(ellipse at 15% 25%,rgba(45,110,53,0.14) 0%,transparent 50%),radial-gradient(ellipse at 85% 70%,rgba(0,200,192,0.07) 0%,transparent 50%),radial-gradient(ellipse at 50% 100%,rgba(240,180,41,0.05) 0%,transparent 45%),linear-gradient(180deg,#0a0c0a 0%,#0c1a0c 50%,#0a0c0a 100%); }
+.orb { position:fixed; border-radius:50%; pointer-events:none; animation:pulse-orb 7s ease-in-out infinite; }
+.orb-1 { width:500px; height:500px; top:10%; right:-150px; background:radial-gradient(circle,rgba(45,110,53,0.12) 0%,transparent 70%); }
+.orb-2 { width:350px; height:350px; bottom:20%; left:-100px; background:radial-gradient(circle,rgba(0,200,192,0.07) 0%,transparent 70%); animation-delay:-3.5s; }
+@keyframes pulse-orb { 0%,100%{transform:scale(1);opacity:0.6;} 50%{transform:scale(1.1);opacity:1;} }
+main { flex:1; padding-top:var(--nav-h); position:relative; z-index:1; }
+
+/* ── HERO ── */
+.page-hero { text-align:center; padding:4.5rem 2rem 3rem; }
+.page-hero::after { content:''; display:block; width:1px; height:60px; background:linear-gradient(to bottom,var(--gold),transparent); margin:2.5rem auto 0; animation:grow-line 1.2s 0.6s ease both; transform-origin:top; }
+@keyframes grow-line { from{transform:scaleY(0);opacity:0;} to{transform:scaleY(1);opacity:1;} }
+.hero-eyebrow { display:inline-block; background:rgba(240,180,41,0.08); border:1px solid rgba(240,180,41,0.28); color:var(--gold); font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.22em; text-transform:uppercase; padding:0.38rem 1.1rem; margin-bottom:1.4rem; animation:fadeUp 0.8s ease both; }
+.hero-title { font-family:'Cinzel Decorative',serif; font-size:clamp(2rem,5vw,3.8rem); line-height:1.1; animation:fadeUp 0.8s 0.1s ease both; }
+.hero-title .gold { color:var(--gold); }
+.hero-title .cyan { color:var(--cyan); }
+.hero-sub { font-style:italic; color:var(--muted); font-size:1.05rem; margin-top:0.9rem; animation:fadeUp 0.8s 0.2s ease both; }
+
+/* ── MAIN LAYOUT ── */
+.calc-outer { max-width:980px; margin:0 auto; padding:0 2rem 5rem; display:grid; grid-template-columns:1fr 1fr; gap:2rem; align-items:start; }
+
+/* ── PANEL ── */
+.calc-panel { border:1px solid rgba(0,200,192,0.18); background:rgba(27,58,30,0.15); padding:2rem; position:relative; }
+.calc-panel::before { content:''; position:absolute; top:-1px; left:-1px; width:20px; height:20px; border-top:2px solid var(--cyan); border-left:2px solid var(--cyan); }
+.calc-panel::after  { content:''; position:absolute; bottom:-1px; right:-1px; width:20px; height:20px; border-bottom:2px solid var(--gold); border-right:2px solid var(--gold); }
+
+.panel-title { font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--cyan); padding-bottom:0.9rem; border-bottom:1px solid rgba(0,200,192,0.15); margin-bottom:1.5rem; display:flex; align-items:center; gap:0.5rem; }
+
+/* ── FORM ── */
+.field { margin-bottom:1.2rem; }
+.field-label { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:0.4rem; }
+.field-sub { font-size:0.72rem; color:var(--muted); font-style:italic; display:block; margin-bottom:0.5rem; margin-top:-0.2rem; }
+.field-input { width:100%; background:rgba(27,58,30,0.35); border:1px solid rgba(0,200,192,0.2); color:var(--text); font-family:'Lora',serif; font-size:0.92rem; padding:0.75rem 1rem; outline:none; transition:border-color 0.2s; -moz-appearance:textfield; }
+.field-input::-webkit-inner-spin-button, .field-input::-webkit-outer-spin-button { -webkit-appearance:none; }
+.field-input:focus { border-color:var(--gold); background:rgba(27,58,30,0.5); }
+.field-select { width:100%; background:rgba(27,58,30,0.35); border:1px solid rgba(0,200,192,0.2); color:var(--text); font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.08em; padding:0.75rem 2.5rem 0.75rem 1rem; outline:none; transition:border-color 0.2s; cursor:pointer; appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23f0b429' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 1rem center; }
+.field-select:focus { border-color:var(--gold); }
+
+/* ── DIVIDER LINE ── */
+.form-divider { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); display:flex; align-items:center; gap:0.8rem; margin:1.5rem 0 1.3rem; }
+.form-divider::before, .form-divider::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,transparent,rgba(240,180,41,0.25),transparent); }
+
+/* ── THC SLIDER VISUAL ── */
+.thc-visual { height:8px; border-radius:4px; background:linear-gradient(90deg, #2d6e35 0%, #f0b429 50%, #e8721a 80%, #c0392b 100%); margin-top:0.6rem; position:relative; overflow:visible; }
+.thc-marker { position:absolute; top:-5px; width:18px; height:18px; border-radius:50%; background:var(--gold); border:2px solid var(--black); transform:translateX(-50%); transition:left 0.2s; box-shadow:0 0 8px rgba(240,180,41,0.5); }
+.thc-scale { display:flex; justify-content:space-between; font-family:'Cinzel',serif; font-size:0.52rem; letter-spacing:0.1em; color:var(--muted); margin-top:0.5rem; }
+
+/* ── CALC BTN ── */
+.calc-btn { width:100%; font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; padding:1rem; border:1px solid var(--gold); background:none; color:var(--gold); cursor:pointer; margin-top:0.5rem; transition:background 0.2s,box-shadow 0.2s; }
+.calc-btn:hover { background:rgba(240,180,41,0.1); box-shadow:0 0 20px rgba(240,180,41,0.15); }
+.reset-btn { width:100%; font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.14em; text-transform:uppercase; padding:0.6rem; border:1px solid rgba(255,255,255,0.1); background:none; color:var(--muted); cursor:pointer; margin-top:0.6rem; transition:color 0.2s,border-color 0.2s; }
+.reset-btn:hover { color:var(--text); border-color:rgba(255,255,255,0.3); }
+
+/* ── RESULTS ── */
+.results-panel { border:1px solid rgba(240,180,41,0.28); background:rgba(27,30,18,0.2); padding:2rem; position:relative; opacity:0; transform:translateY(10px); transition:opacity 0.4s ease,transform 0.4s ease; }
+.results-panel.visible { opacity:1; transform:translateY(0); }
+.results-panel::before { content:''; position:absolute; top:-1px; left:-1px; width:20px; height:20px; border-top:2px solid var(--gold); border-left:2px solid var(--gold); }
+.results-panel::after  { content:''; position:absolute; bottom:-1px; right:-1px; width:20px; height:20px; border-bottom:2px solid var(--cyan); border-right:2px solid var(--cyan); }
+
+.result-eyebrow { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:0.5rem; }
+.result-big { font-family:'Cinzel Decorative',serif; font-size:clamp(2rem,5vw,3.8rem); line-height:1; color:var(--gold); }
+.result-unit { font-family:'Cinzel',serif; font-size:0.9rem; color:var(--muted); }
+.result-sub { font-size:0.85rem; color:var(--muted); margin-top:0.3rem; }
+
+/* ── STATS GRID ── */
+.stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.7rem; margin:1.5rem 0; }
+.stat-box { padding:0.9rem 1rem; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); }
+.stat-val { font-family:'Cinzel',serif; font-size:1rem; color:var(--text); display:block; margin-bottom:0.15rem; }
+.stat-key { font-family:'Cinzel',serif; font-size:0.52rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); }
+.stat-box.highlight { border-color:rgba(0,200,192,0.3); background:rgba(0,200,192,0.05); }
+.stat-box.highlight .stat-val { color:var(--cyan); }
+
+/* ── EFFICIENCY BAR ── */
+.efficiency-section { margin:1.2rem 0; }
+.eff-label { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted); display:flex; justify-content:space-between; margin-bottom:0.4rem; }
+.eff-bar-wrap { height:6px; background:rgba(255,255,255,0.06); border-radius:3px; overflow:hidden; }
+.eff-bar { height:100%; background:linear-gradient(90deg,var(--cyan),var(--gold)); border-radius:3px; transition:width 0.6s ease; }
+
+/* ── DOSE TABLE ── */
+.dose-table-section { margin-top:1.2rem; }
+.dose-table-title { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--cyan); margin-bottom:0.8rem; padding-bottom:0.5rem; border-bottom:1px solid rgba(0,200,192,0.12); }
+.dose-table { width:100%; border-collapse:collapse; font-size:0.8rem; }
+.dose-table th { font-family:'Cinzel',serif; font-size:0.52rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); padding:0.4rem 0.7rem; text-align:left; border-bottom:1px solid rgba(255,255,255,0.07); }
+.dose-table td { padding:0.45rem 0.7rem; border-bottom:1px solid rgba(255,255,255,0.04); color:var(--muted); }
+.dose-table tr.rec td { color:var(--text); }
+.dose-table tr.rec td:first-child { color:var(--cyan); font-family:'Cinzel',serif; font-size:0.72rem; }
+.dose-table tr:last-child td { border-bottom:none; }
+
+/* ── WARNING ── */
+.warn-box { padding:0.9rem 1.1rem; background:rgba(232,114,26,0.07); border-left:3px solid var(--orange); font-size:0.85rem; line-height:1.75; color:var(--sand); margin-top:1rem; display:none; }
+.warn-box.show { display:block; }
+.warn-box strong { color:var(--orange); }
+
+/* ── INFO BOXES ── */
+.info-box { padding:0.9rem 1.1rem; background:rgba(0,200,192,0.04); border-left:3px solid rgba(0,200,192,0.3); font-size:0.85rem; line-height:1.75; color:var(--muted); margin-bottom:1rem; }
+.info-box strong { color:var(--text); }
+.info-box.gold { background:rgba(240,180,41,0.04); border-left-color:rgba(240,180,41,0.3); }
+.info-box.gold strong { color:var(--gold); }
+
+/* ── HOW IT WORKS ── */
+.how-section { max-width:980px; margin:0 auto 3rem; padding:0 2rem; }
+.how-title { font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--cyan); display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem; }
+.how-title::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,rgba(0,200,192,0.25),transparent); }
+.how-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:1rem; }
+.how-card { padding:1.2rem 1.3rem; border:1px solid rgba(255,255,255,0.07); background:rgba(27,58,30,0.1); }
+.how-num { font-family:'Cinzel Decorative',serif; font-size:1.4rem; color:rgba(240,180,41,0.2); line-height:1; margin-bottom:0.5rem; }
+.how-name { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:0.4rem; }
+.how-card p { font-size:0.8rem; line-height:1.75; color:var(--muted); }
+
+/* ── DISCLAIMER ── */
+.disclaimer { background:rgba(27,58,30,0.3); border-top:1px solid rgba(0,200,192,0.1); padding:1.5rem 2rem; text-align:center; }
+.disclaimer p { font-size:0.75rem; color:var(--muted); font-style:italic; max-width:700px; margin:0 auto; line-height:1.7; }
+.disclaimer strong { color:var(--sand); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
+.reveal { opacity:0; transform:translateY(16px); transition:opacity 0.5s ease,transform 0.5s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media(max-width:720px) {
+  .calc-outer { grid-template-columns:1fr; }
+  .stats-grid { grid-template-columns:1fr 1fr; }
+  .hero-title { font-size:clamp(1.6rem,9vw,2.5rem); }
+  .calc-outer { padding:0 1.2rem 4rem; }
+}
+@media(max-width:400px) {
+  .stats-grid { grid-template-columns:1fr; }
+}
+</style>
+<style id="hero-ring-styles">
+.hero-ring-wrap{position:relative;width:100%;max-width:420px;margin:2rem auto 0;padding:22px;}
+.hero-ring{position:absolute;top:0;left:0;right:0;bottom:0;border:1px solid rgba(0,200,192,0.2);border-radius:6px;animation:hero-spin 22s linear infinite;transform-origin:center;pointer-events:none;will-change:transform;}
+.hero-ring::before{content:'';position:absolute;top:-4px;left:50%;width:8px;height:8px;background:var(--cyan);border-radius:50%;transform:translateX(-50%);box-shadow:0 0 10px var(--cyan),0 0 22px rgba(0,200,192,0.5);}
+.hero-ring::after{content:'';position:absolute;bottom:-4px;left:50%;width:5px;height:5px;background:var(--gold);border-radius:50%;transform:translateX(-50%);box-shadow:0 0 8px var(--gold),0 0 18px rgba(240,180,41,0.4);}
+@keyframes hero-spin{to{transform:rotate(360deg);}}
+.hero-frame{position:relative;width:100%;}
+.hero-frame::before{content:'';position:absolute;top:-4px;left:-4px;width:20px;height:20px;border-top:2px solid var(--cyan);border-left:2px solid var(--cyan);pointer-events:none;z-index:2;}
+.hero-frame::after{content:'';position:absolute;bottom:-4px;right:-4px;width:20px;height:20px;border-bottom:2px solid var(--gold);border-right:2px solid var(--gold);pointer-events:none;z-index:2;}
+.hero-frame img{width:100%;display:block;position:relative;z-index:1;max-height:360px;object-fit:cover;box-shadow:0 0 50px rgba(0,200,192,0.1),0 20px 50px rgba(0,0,0,0.55);}
+.hero-glow{position:absolute;bottom:-12px;left:15%;right:15%;height:36px;background:radial-gradient(ellipse,rgba(0,200,192,0.2),transparent 70%);filter:blur(10px);pointer-events:none;}
+@media(max-width:480px){.hero-ring-wrap{max-width:280px;padding:16px;}}
+</style>
+</head>
+<body>
+<div class="bg-ambience"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div id="trm-nav"></div>
+
+<main>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <span class="hero-eyebrow">🧴 &nbsp; Know What You Made</span>
+    <h1 class="hero-title">MCT Oil <span class="gold">Potency</span><br>Calculator</h1>
+    <p class="hero-sub">Enter your THC% and grams used — find your mg per teaspoon</p>
+    <div class="hero-ring-wrap">
+      <div class="hero-ring"></div>
+      <div class="hero-frame">
+        <img src="https://tropicalrootsmaui.com/img/tropical-roots-maui-mct-oil-potency-calculator-knf.webp"
+             alt="MCT Oil Potency Calculator (Kānehiwa's Master Mix)"
+             title="MCT Potency Calculator: How to Lock in Your Therapeutic Dosing"
+             style="cursor:zoom-in;" onclick="document.getElementById('heroLightbox').style.display='flex'"
+             loading="eager" fetchpriority="high" decoding="async">
+        <div class="hero-glow"></div>
+      </div>
+    </div>
+    <p style="text-align:center;font-size:0.82rem;color:var(--muted);font-style:italic;max-width:500px;margin:0.8rem auto 0;line-height:1.6;">Precision is key. Kānehiwa shows you how to integrate elite KNF genetics, proper decarb techniques, and precise measurement to lock in the exact 20 mg/ml potency of your final MCT infusion, fueled by elite KNF genetics and dominated VPD. This definitive guide helps you personalized and lock in your exact therapeutic window, whether using high-THC cultivars or specialized CBG/CBN genetics, by using this integrated MCT Oil Potency Calculator.</p>
+  </section>
+
+  <!-- HERO LIGHTBOX -->
+  <div id="heroLightbox" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.92);z-index:9999;align-items:center;justify-content:center;cursor:zoom-out;" onclick="this.style.display='none'">
+    <img src="https://tropicalrootsmaui.com/img/tropical-roots-maui-mct-oil-potency-calculator-knf.webp" alt="MCT Oil Potency Calculator (Kānehiwa's Master Mix)" style="max-width:92vw;max-height:92vh;object-fit:contain;border-radius:6px;box-shadow:0 0 60px rgba(0,200,192,0.25);">
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="how-section reveal visible" style="transition-delay: 0s;">
+    <div class="how-title">How the Math Works</div>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-num">01</div>
+        <span class="how-name">Total THC Available</span>
+        <p>Grams of cannabis × THC% × 1000 = total mg of THC in the raw material.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">02</div>
+        <span class="how-name">Decarboxylation Loss</span>
+        <p>Heating activates THC but burns off a portion. Efficiency varies by method — typically 75–95%.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">03</div>
+        <span class="how-name">Infusion Efficiency</span>
+        <p>Not all activated THC binds to the oil. A good infusion captures roughly 80–90% of what's available.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">04</div>
+        <span class="how-name">mg Per Teaspoon</span>
+        <p>Total mg in oil ÷ total teaspoons of oil = potency per serving unit.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALCULATOR + RESULTS SIDE BY SIDE -->
+  <div class="calc-outer">
+
+    <!-- INPUT PANEL -->
+    <div class="calc-panel reveal visible" style="transition-delay: 0.05s;">
+      <div class="panel-title">🌿 &nbsp; Your Infusion Details</div>
+
+      <!-- CANNABIS INFO -->
+      <div class="field">
+        <label class="field-label" for="thc-pct">THC Percentage (%)</label>
+        <span class="field-sub">From lab test, Certificate of Analysis, or packaging label</span>
+        <input class="field-input" type="number" id="thc-pct" placeholder="e.g. 20" min="0" max="100" step="0.1" oninput="updateSlider()">
+        <div class="thc-visual" style="margin-top:0.7rem;">
+          <div class="thc-marker" id="thc-marker" style="left:20%;"></div>
+        </div>
+        <div class="thc-scale">
+          <span>0%</span><span>10%</span><span>20%</span><span>30%</span><span>40%+</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="cannabis-grams">Cannabis Weight (grams)</label>
+        <span class="field-sub">Amount used for infusion</span>
+        <input class="field-input" type="number" id="cannabis-grams" placeholder="e.g. 3.5" min="0" step="0.01">
+      </div>
+
+      <div class="form-divider">Decarboxylation &amp; Infusion</div>
+
+      <div class="field">
+        <label class="field-label" for="decarb-method">Decarb Method</label>
+        <select class="field-select" id="decarb-method">
+          <option value="0.88">Standard Oven — 240°F / 60 min (88%)</option>
+          <option value="0.95">Precision Decarb Device (95%)</option>
+          <option value="0.75">Slow Cooker / Crockpot (75%)</option>
+          <option value="0.82">Mason Jar in Oven (82%)</option>
+          <option value="1.0">Already decarbed / skip (100%)</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="infusion-method">Infusion Method</label>
+        <select class="field-select" id="infusion-method">
+          <option value="0.90">Slow Cooker — Low 4–6 hrs (90%)</option>
+          <option value="0.85">Mason Jar in Water Bath (85%)</option>
+          <option value="0.92">Magical Butter Machine (92%)</option>
+          <option value="0.80">Double Boiler — 2 hrs (80%)</option>
+          <option value="0.95">Sous Vide (95%)</option>
+        </select>
+      </div>
+
+      <div class="form-divider">Your Oil Batch</div>
+
+      <div class="field">
+        <label class="field-label" for="oil-ml">Total Oil Volume Made (ml)</label>
+        <span class="field-sub">Total ml of MCT oil used in the infusion</span>
+        <input class="field-input" type="number" id="oil-ml" placeholder="e.g. 240" min="1" step="1">
+        <div style="font-size:0.72rem;color:var(--muted);margin-top:0.4rem;font-style:italic;">Common sizes: 1 cup = 237 ml · ½ cup = 118 ml · ¼ cup = 59 ml</div>
+      </div>
+
+      <div class="info-box gold" style="margin-top:1rem;">
+        <strong>Tip:</strong> 1 teaspoon = 4.93 ml. The calculator outputs results in both mg/tsp and mg/ml so you can dose by whichever unit you prefer.
+      </div>
+
+      <button class="calc-btn" onclick="calculate()">🧪 &nbsp; Calculate Potency</button>
+      <button class="reset-btn" onclick="resetAll()">↺ &nbsp; Reset</button>
+    </div>
+
+    <!-- RESULTS PANEL -->
+    <div class="results-panel" id="results">
+      <span class="result-eyebrow">Estimated Potency</span>
+      <div>
+        <span class="result-big" id="res-per-tsp">—</span>
+        <span class="result-unit"> mg / tsp</span>
+      </div>
+      <p class="result-sub" id="res-per-ml-label">— mg per ml</p>
+
+      <div class="stats-grid">
+        <div class="stat-box">
+          <span class="stat-val" id="res-total-thc">—</span>
+          <span class="stat-key">Total THC in material</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-val" id="res-after-decarb">—</span>
+          <span class="stat-key">After decarb</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-val" id="res-in-oil">—</span>
+          <span class="stat-key">Total mg in oil</span>
+        </div>
+        <div class="stat-box highlight">
+          <span class="stat-val" id="res-per-ml">—</span>
+          <span class="stat-key">mg per ml</span>
+        </div>
+      </div>
+
+      <!-- EFFICIENCY BAR -->
+      <div class="efficiency-section">
+        <div class="eff-label">
+          <span>Combined Efficiency</span>
+          <span id="res-eff-pct">—</span>
+        </div>
+        <div class="eff-bar-wrap">
+          <div class="eff-bar" id="eff-bar" style="width:0%;"></div>
+        </div>
+      </div>
+
+      <!-- DOSE TABLE -->
+      <div class="dose-table-section">
+        <div class="dose-table-title">Dose Reference — This Oil</div>
+        <table class="dose-table">
+          <thead>
+            <tr>
+              <th>Amount</th>
+              <th>Dose (mg)</th>
+              <th>Level</th>
+            </tr>
+          </thead>
+          <tbody id="dose-table-body">
+            <tr><td colspan="3" style="color:var(--muted);font-style:italic;padding:0.8rem;">Calculate above to populate</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warn-box" id="warn-high">
+        <strong>⚠️ High Potency Oil:</strong> This oil is very strong. Even a small amount contains a high dose. Use a precise measuring tool (dropper, syringe, or kitchen scale) and always start with less than you think you need.
+      </div>
+
+      <div class="info-box" style="margin-top:1rem;">
+        These are <strong>estimates</strong>. Actual potency varies based on starting material quality, consistency of decarb, and infusion time. Always test a small dose first with any new batch.
+      </div>
+    </div>
+
+  </div><!-- /calc-outer -->
+
+  <!-- LINK TO DOSAGE CALC -->
+  <div style="max-width: 980px; margin: 0px auto 3rem; padding: 0px 2rem; transition-delay: 0.1s;" class="reveal">
+    <a href="https://tropicalrootsmaui.com/KnowledgeBase/DosageCalculator.html" style="text-decoration:none;display:block;">
+      <div style="border:1px solid rgba(0,200,192,0.2);background:rgba(27,58,30,0.1);padding:1.4rem 2rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;transition:border-color 0.3s;" onmouseover="this.style.borderColor=&#39;rgba(0,200,192,0.45)&#39;" onmouseout="this.style.borderColor=&#39;rgba(0,200,192,0.2)&#39;">
+        <span style="font-size:1.4rem;flex-shrink:0;">🧪</span>
+        <div style="flex:1;">
+          <span style="font-family:&#39;Cinzel&#39;,serif;font-size:0.52rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--cyan);display:block;margin-bottom:0.25rem;">Next Step</span>
+          <span style="font-family:&#39;Cinzel&#39;,serif;font-size:0.9rem;">Use your oil strength in the Batch Dosage Calculator →</span>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <div class="disclaimer">
+    <p><strong>For adults 21+ only.</strong> All results are estimates based on typical efficiency ranges. Actual potency varies. This tool is for informational purposes only and does not constitute medical advice. Always start with a low dose and wait 60–90 minutes. Keep infused products clearly labeled and out of reach of children and pets.</p>
+  </div>
+
+</main>
+
+<div id="trm-footer"></div>
+
+<script>
+function r(id){ return document.getElementById(id); }
+function fmt(n){ if(isNaN(n)) return '—'; return n < 10 ? n.toFixed(2) : n < 100 ? n.toFixed(1) : Math.round(n).toString(); }
+
+function updateSlider(){
+  const val = parseFloat(r('thc-pct').value) || 0;
+  const pct = Math.min(val / 40, 1) * 100;
+  r('thc-marker').style.left = pct + '%';
+}
+
+function calculate(){
+  const thcPct    = parseFloat(r('thc-pct').value);
+  const grams     = parseFloat(r('cannabis-grams').value);
+  const decarb    = parseFloat(r('decarb-method').value);
+  const infusion  = parseFloat(r('infusion-method').value);
+  const oilMl     = parseFloat(r('oil-ml').value);
+
+  if(!thcPct || !grams || !oilMl) {
+    alert('Please fill in THC%, grams of cannabis, and oil volume.');
+    return;
+  }
+
+  // Calculations
+  const totalThcMg   = grams * (thcPct / 100) * 1000;   // mg THC in raw material
+  const afterDecarbMg = totalThcMg * decarb;              // after decarboxylation
+  const inOilMg      = afterDecarbMg * infusion;          // after infusion binding
+  const perMl        = inOilMg / oilMl;                   // mg per ml
+  const perTsp       = perMl * 4.93;                      // mg per tsp
+  const efficiencyPct = decarb * infusion * 100;
+
+  // Fill results
+  r('res-per-tsp').textContent      = fmt(perTsp);
+  r('res-per-ml-label').textContent = fmt(perMl) + ' mg per ml';
+  r('res-total-thc').textContent    = fmt(totalThcMg) + ' mg';
+  r('res-after-decarb').textContent = fmt(afterDecarbMg) + ' mg';
+  r('res-in-oil').textContent       = fmt(inOilMg) + ' mg';
+  r('res-per-ml').textContent       = fmt(perMl) + ' mg';
+  r('res-eff-pct').textContent      = Math.round(efficiencyPct) + '%';
+  r('eff-bar').style.width          = Math.round(efficiencyPct) + '%';
+
+  // Dose table
+  const amounts = [
+    { label:'¼ tsp',  ml: 4.93*0.25 },
+    { label:'½ tsp',  ml: 4.93*0.5  },
+    { label:'¾ tsp',  ml: 4.93*0.75 },
+    { label:'1 tsp',  ml: 4.93      },
+    { label:'1½ tsp', ml: 4.93*1.5  },
+    { label:'2 tsp',  ml: 4.93*2    },
+  ];
+  const levels = (mg) => {
+    if(mg <= 5)  return {txt:'Microdose',    cls:'color:var(--cyan)'};
+    if(mg <= 15) return {txt:'Beginner ✅',  cls:'color:var(--cyan)'};
+    if(mg <= 30) return {txt:'Intermediate', cls:'color:var(--gold)'};
+    if(mg <= 50) return {txt:'High ⚠️',     cls:'color:var(--orange)'};
+    return              {txt:'Very High 🚨', cls:'color:#e74c3c'};
+  };
+
+  const tbody = r('dose-table-body');
+  tbody.innerHTML = amounts.map(a => {
+    const mg = perMl * a.ml;
+    const lv = levels(mg);
+    const isRec = mg >= 5 && mg <= 15;
+    return `<tr class="${isRec?'rec':''}">
+      <td>${a.label}</td>
+      <td style="color:var(--text);font-family:'Cinzel',serif;font-size:0.8rem;">${fmt(mg)} mg</td>
+      <td style="${lv.cls};font-family:'Cinzel',serif;font-size:0.65rem;">${lv.txt}</td>
+    </tr>`;
+  }).join('');
+
+  // High potency warning
+  r('warn-high').classList.toggle('show', perTsp > 50);
+
+  r('results').classList.add('visible');
+  // Scroll results into view on mobile
+  if(window.innerWidth < 720){
+    r('results').scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+}
+
+function resetAll(){
+  ['thc-pct','cannabis-grams','oil-ml'].forEach(id => r(id).value = '');
+  r('thc-marker').style.left = '0%';
+  r('results').classList.remove('visible');
+  r('dose-table-body').innerHTML = '<tr><td colspan="3" style="color:var(--muted);font-style:italic;padding:0.8rem;">Calculate above to populate</td></tr>';
+}
+
+// Scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold:0.07 });
+document.querySelectorAll('.reveal').forEach((el,i) => {
+  el.style.transitionDelay = (i*0.05)+'s';
+  obs.observe(el);
+});
+</script>
+<script src="https://tropicalrootsmaui.com/site-components.js" defer></script>
+
+
+</body></html>

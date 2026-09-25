@@ -1,0 +1,13 @@
+# Tropical Roots Maui — robots.txt
+# https://tropicalrootsmaui.com
+
+User-agent: *
+Allow: /
+
+# Disallow misc utility / verification files
+Disallow: /zoho-domain-verification.html
+Disallow: /404.html
+
+# Sitemaps
+Sitemap: https://tropicalrootsmaui.com/sitemap.xml
+Sitemap: https://tracker.tropicalrootsmaui.com/sitemap.xml

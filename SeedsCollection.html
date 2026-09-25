@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="preload" href="site-components.css" as="style" onload="this.onload=null;this.rel=&#39;stylesheet&#39;">
+<noscript><link rel="stylesheet" href="site-components.css"></noscript>
+${link_line}
+<title>Shop — Tropical Roots Maui</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black:    #0a0c0a;
+  --dark:     #111a10;
+  --jungle:   #1b3a1e;
+  --green:    #2d6e35;
+  --leaf:     #4a9e52;
+  --cyan:     #00c8c0;
+  --cyan-dim: #00968f;
+  --gold:     #f0b429;
+  --orange:   #e8721a;
+  --cream:    #f4edd8;
+  --sand:     #e0ceaa;
+  --text:     #f0ead8;
+  --muted:    rgba(240,234,216,0.62);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Lora', serif;
+  background: var(--black);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+body::after {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 9998;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  opacity: 0.5;
+}
+
+/* ══════════ NAV ══════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.9rem 2.5rem;
+  background: rgba(10,12,10,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0,200,192,0.18);
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 0.9rem; text-decoration: none;
+}
+.nav-logo-icon {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--jungle), var(--green));
+  border: 2px solid var(--cyan);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+  box-shadow: 0 0 16px rgba(0,200,192,0.3);
+  flex-shrink: 0;
+}
+.nav-logo-text { line-height: 1.1; }
+.nav-logo-text .line1 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.78rem; color: var(--cyan); letter-spacing: 0.1em; display: block;
+}
+.nav-logo-text .line2 {
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem; color: var(--sand); letter-spacing: 0.25em;
+  text-transform: uppercase; display: block;
+}
+.nav-links { display: flex; align-items: center; gap: 2.2rem; list-style: none; }
+.nav-links a {
+  font-family: 'Cinzel', serif; font-size: 0.72rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--sand); text-decoration: none; opacity: 0.75;
+  transition: opacity 0.2s, color 0.2s;
+}
+.nav-links a:hover { opacity: 1; color: var(--cyan); }
+.nav-links a.active { color: var(--gold); opacity: 1; }
+.nav-shop {
+  font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.18em;
+  text-transform: uppercase; text-decoration: none;
+  background: transparent; color: var(--cyan);
+  border: 1.5px solid var(--cyan); padding: 0.5rem 1.4rem;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.nav-shop:hover { background: var(--cyan); color: var(--black); box-shadow: 0 0 20px rgba(0,200,192,0.4); }
+
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+.hamburger span { display: block; width: 26px; height: 2px; background: var(--cyan); transition: 0.3s; }
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+.mobile-menu {
+  display: none; position: fixed; top: 72px; left: 0; right: 0;
+  background: rgba(10,12,10,0.97); z-index: 190;
+  flex-direction: column; padding: 1.5rem 2rem 2rem; gap: 1.5rem;
+  border-bottom: 2px solid var(--cyan);
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-family: 'Cinzel', serif; font-size: 1rem; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--sand); text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 1rem;
+}
+.mobile-menu a:last-child { border-bottom: none; color: var(--cyan); }
+
+/* ══════════ PAGE HERO ══════════ */
+.page-hero {
+  padding: 9rem 2.5rem 5rem;
+  background:
+    radial-gradient(ellipse at 70% 0%, rgba(0,200,192,0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 80%, rgba(45,110,53,0.2) 0%, transparent 55%),
+    linear-gradient(180deg, #0a0c0a 0%, #0d1a0d 100%);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.page-hero-vines {
+  position: absolute; inset: 0; pointer-events: none;
+}
+.vine {
+  position: absolute; opacity: 0.05; font-size: clamp(5rem, 10vw, 11rem);
+  animation: sway 6s ease-in-out infinite; user-select: none;
+}
+.vine:nth-child(1) { top: 5%; left: 1%; animation-delay: 0s; }
+.vine:nth-child(2) { top: 10%; right: 2%; animation-delay: -2s; }
+.vine:nth-child(3) { bottom: 5%; left: 8%; animation-delay: -4s; font-size: 7rem; }
+@keyframes sway {
+  0%, 100% { transform: rotate(-4deg) translateY(0); }
+  50% { transform: rotate(4deg) translateY(-12px); }
+}
+.page-hero-eyebrow {
+  display: inline-block;
+  background: rgba(0,200,192,0.1); border: 1px solid rgba(0,200,192,0.3);
+  color: var(--cyan); font-family: 'Cinzel', serif;
+  font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase;
+  padding: 0.4rem 1rem; margin-bottom: 1.8rem;
+}
+.page-hero h1 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1.1; margin-bottom: 0.5rem;
+}
+.page-hero h1 .gold { color: var(--gold); }
+.page-hero-divider {
+  width: 60px; height: 3px; margin: 1.5rem auto;
+  background: linear-gradient(90deg, var(--cyan), var(--gold));
+}
+.page-hero p {
+  font-size: 1.05rem; line-height: 1.85; color: var(--muted);
+  max-width: 560px; margin: 0 auto 2rem;
+}
+
+/* ══════════ DISCLAIMER BAND ══════════ */
+.disclaimer {
+  background: rgba(240,180,41,0.07);
+  border-top: 1px solid rgba(240,180,41,0.2);
+  border-bottom: 1px solid rgba(240,180,41,0.2);
+  padding: 1.2rem 2.5rem; text-align: center;
+}
+.disclaimer p {
+  font-size: 0.78rem; color: rgba(240,234,216,0.55); line-height: 1.7;
+  max-width: 860px; margin: 0 auto;
+}
+.disclaimer strong { color: var(--gold); }
+
+/* ══════════ DIVIDER ══════════ */
+.divider {
+  border: none; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,200,192,0.3), transparent);
+  margin: 0;
+}
+
+/* ══════════ SHARED SECTION ══════════ */
+section { padding: 6rem 2.5rem; }
+.container { max-width: 1200px; margin: 0 auto; }
+.sec-label {
+  font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.25em;
+  text-transform: uppercase; margin-bottom: 0.9rem; display: block;
+}
+.sec-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  line-height: 1.15; margin-bottom: 1.2rem;
+}
+
+/* ══════════ FILTERS ══════════ */
+.shop-controls {
+  background: var(--dark);
+  padding: 0 2.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.shop-controls-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem; padding: 1.4rem 0;
+}
+.filter-tabs {
+  display: flex; gap: 0.5rem; flex-wrap: wrap;
+}
+.filter-tab {
+  font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.15em;
+  text-transform: uppercase; padding: 0.45rem 1.1rem;
+  border: 1px solid rgba(255,255,255,0.1); color: var(--muted);
+  background: none; cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.filter-tab:hover { border-color: var(--cyan); color: var(--cyan); }
+.filter-tab.active {
+  background: rgba(0,200,192,0.12); border-color: var(--cyan); color: var(--cyan);
+}
+.sort-control {
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.sort-control label {
+  font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--muted);
+}
+.sort-control select {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--text); font-family: 'Lora', serif; font-size: 0.85rem;
+  padding: 0.4rem 0.8rem; outline: none;
+  transition: border-color 0.2s;
+}
+.sort-control select:focus { border-color: var(--cyan); }
+.sort-control select option { background: var(--dark); }
+
+/* ══════════ SHOP GRID ══════════ */
+.shop { background: var(--black); }
+.shop .sec-label { color: var(--gold); }
+.shop .sec-title span { color: var(--gold); }
+
+.shop-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 3.5rem; flex-wrap: wrap; gap: 1.5rem;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ══════════ PRODUCT CARD ══════════ */
+.product-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+  overflow: hidden; cursor: pointer;
+}
+.product-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(0,200,192,0.3);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.4), 0 0 30px rgba(0,200,192,0.08);
+}
+
+.card-top {
+  height: 220px; display: flex; align-items: center; justify-content: center;
+  font-size: 5.5rem; position: relative; overflow: hidden;
+}
+.card-top-sativa   { background: linear-gradient(135deg, #1b3a1e 0%, #2d6e35 100%); }
+.card-top-kauai    { background: linear-gradient(135deg, #1a2e3a 0%, #2d5e6e 100%); }
+.card-top-puna     { background: linear-gradient(135deg, #1a2a10 0%, #3a5a20 100%); }
+.card-top-maui     { background: linear-gradient(135deg, #3a2a10 0%, #7a5a20 100%); }
+.card-top-78       { background: linear-gradient(135deg, #3a1010 0%, #7a2020 100%); }
+.card-top-duck     { background: linear-gradient(135deg, #2a1a3a 0%, #5a2a7a 100%); }
+
+/* card top shimmer on hover */
+.card-top::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(0,200,192,0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.product-card:hover .card-top::after { opacity: 1; }
+
+.card-emoji { position: relative; z-index: 1; transition: transform 0.3s; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5)); }
+.product-card:hover .card-emoji { transform: scale(1.12) translateY(-4px); }
+
+.card-badge {
+  position: absolute; top: 12px; right: 12px;
+  font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.12em;
+  text-transform: uppercase; padding: 0.25rem 0.65rem;
+  background: var(--gold); color: var(--black); font-weight: 600; z-index: 2;
+}
+.card-badge.badge-cyan  { background: var(--cyan); color: var(--black); }
+.card-badge.badge-leaf  { background: var(--leaf); color: white; }
+.card-badge.badge-red   { background: var(--orange); color: white; }
+
+.card-indicator {
+  position: absolute; bottom: 12px; left: 12px;
+  display: flex; gap: 4px; z-index: 2;
+}
+.dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+}
+.dot.sativa { background: var(--leaf); }
+.dot.indica { background: var(--orange); }
+
+.card-body { padding: 1.4rem 1.4rem 0.8rem; }
+.card-tags {
+  display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.8rem;
+}
+.card-tag {
+  font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.12em;
+  text-transform: uppercase; padding: 0.2rem 0.55rem;
+  border: 1px solid rgba(0,200,192,0.25); color: var(--cyan);
+}
+.card-tag.gold { border-color: rgba(240,180,41,0.3); color: var(--gold); }
+
+.card-body h3 {
+  font-family: 'Cinzel', serif; font-size: 1rem; letter-spacing: 0.06em;
+  color: var(--text); margin-bottom: 0.5rem;
+  transition: color 0.2s;
+}
+.product-card:hover .card-body h3 { color: var(--cyan); }
+.card-body p {
+  font-size: 0.85rem; line-height: 1.65; color: var(--muted);
+}
+
+.card-profile {
+  display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap;
+}
+.profile-pill {
+  font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 0.22rem 0.7rem;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+  color: var(--muted);
+}
+
+.card-foot {
+  padding: 0.8rem 1.4rem 1.4rem;
+  display: flex; justify-content: space-between; align-items: center;
+  border-top: 1px solid rgba(255,255,255,0.05); margin-top: 0.8rem;
+}
+.card-price {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.3rem; color: var(--gold);
+}
+.card-price-sub {
+  font-family: 'Cinzel', serif; font-size: 0.58rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); display: block; margin-top: 0.1rem;
+}
+.card-action {
+  font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.15em;
+  text-transform: uppercase; background: none; cursor: pointer;
+  border: 1px solid rgba(0,200,192,0.35); color: var(--cyan);
+  padding: 0.4rem 0.9rem;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.card-action:hover {
+  background: var(--cyan); color: var(--black);
+  box-shadow: 0 4px 16px rgba(0,200,192,0.3);
+}
+
+/* ══════════ MODAL / DRAWER ══════════ */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(0,0,0,0.75); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 2rem 1rem;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+
+.modal {
+  background: #0d160d;
+  border: 1px solid rgba(0,200,192,0.2);
+  max-width: 760px; width: 100%;
+  max-height: 90vh; overflow-y: auto;
+  position: relative;
+  transform: translateY(30px); transition: transform 0.3s;
+}
+.modal-overlay.open .modal { transform: translateY(0); }
+
+.modal-close {
+  position: absolute; top: 1.2rem; right: 1.2rem;
+  background: none; border: 1px solid rgba(255,255,255,0.12); color: var(--muted);
+  font-size: 1.2rem; width: 36px; height: 36px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.2s, color 0.2s;
+  z-index: 2;
+}
+.modal-close:hover { border-color: var(--cyan); color: var(--cyan); }
+
+.modal-inner {
+  display: grid; grid-template-columns: 1fr 1.3fr;
+}
+.modal-visual {
+  height: 100%; min-height: 320px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 7rem; position: relative;
+}
+.modal-content { padding: 2.5rem 2.5rem 2.5rem 1.5rem; }
+.modal-eyebrow {
+  font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--cyan); margin-bottom: 0.6rem; display: block;
+}
+.modal-content h2 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1.4rem, 3vw, 2rem); line-height: 1.1; margin-bottom: 0.4rem;
+}
+.modal-divider { width: 40px; height: 2px; background: linear-gradient(90deg, var(--cyan), var(--gold)); margin: 1rem 0; }
+.modal-content p {
+  font-size: 0.92rem; line-height: 1.8; color: var(--muted); margin-bottom: 1rem;
+}
+.modal-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0; }
+.modal-tag {
+  font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 0.25rem 0.65rem;
+  border: 1px solid rgba(0,200,192,0.3); color: var(--cyan);
+}
+.modal-tag.gold { border-color: rgba(240,180,41,0.3); color: var(--gold); }
+.modal-price-row {
+  display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem;
+  border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1.2rem;
+}
+.modal-price {
+  font-family: 'Cinzel Decorative', serif; font-size: 2rem; color: var(--gold);
+}
+.modal-cta {
+  font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.18em;
+  text-transform: uppercase; text-decoration: none; display: inline-block;
+  padding: 0.85rem 2rem;
+  background: linear-gradient(135deg, var(--cyan-dim), var(--cyan));
+  color: var(--black); font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 24px rgba(0,200,192,0.35); border: none; cursor: pointer;
+}
+.modal-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,200,192,0.55); }
+
+/* ══════════ FEATURED ══════════ */
+.featured {
+  background:
+    radial-gradient(ellipse at 100% 0%, rgba(45,110,53,0.15) 0%, transparent 50%),
+    var(--dark);
+  padding: 5rem 2.5rem;
+}
+.featured-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 1.2fr 1fr; gap: 5rem; align-items: center;
+}
+.featured-visual {
+  background: linear-gradient(145deg, #1b3a1e, #0f1f10);
+  border: 1px solid rgba(0,200,192,0.15);
+  aspect-ratio: 1;
+  display: flex; align-items: center; justify-content: center;
+  font-size: clamp(6rem, 15vw, 12rem);
+  position: relative; overflow: hidden;
+}
+.featured-visual::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 30%, rgba(74,158,82,0.25), transparent 70%);
+}
+.featured-visual::after {
+  content: ''; position: absolute; inset: 12px;
+  border: 1px solid rgba(0,200,192,0.1);
+  pointer-events: none;
+}
+.featured-glow {
+  position: absolute; width: 80%; height: 80%;
+  background: radial-gradient(circle, rgba(0,200,192,0.08), transparent 70%);
+  bottom: -30%; left: 10%;
+}
+.featured-text .sec-label { color: var(--gold); }
+.featured-text .sec-title span { color: var(--gold); }
+.featured-text p {
+  font-size: 1.05rem; line-height: 1.9; color: var(--muted); margin-bottom: 1.5rem;
+}
+.featured-stats {
+  display: flex; gap: 1rem; flex-wrap: wrap; margin: 2rem 0;
+}
+.f-stat {
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+  padding: 0.8rem 1.2rem; flex: 1; min-width: 100px;
+}
+.f-stat .n {
+  font-family: 'Cinzel Decorative', serif; font-size: 1.5rem; color: var(--cyan); display: block;
+}
+.f-stat .l {
+  font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--muted); display: block; margin-top: 0.2rem;
+}
+.btn-glow {
+  font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 0.18em;
+  text-transform: uppercase; text-decoration: none; display: inline-block;
+  padding: 0.85rem 2rem;
+  background: linear-gradient(135deg, var(--cyan-dim), var(--cyan));
+  color: var(--black); font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 24px rgba(0,200,192,0.35); border: none; cursor: pointer;
+}
+.btn-glow:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,200,192,0.55); }
+
+/* ══════════ SEED INFO ══════════ */
+.seed-info {
+  background: var(--black);
+  padding: 5rem 2.5rem;
+}
+.seed-info-inner {
+  max-width: 1200px; margin: 0 auto;
+}
+.info-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1px; background: rgba(0,200,192,0.1); margin-top: 3rem;
+}
+.info-block {
+  background: var(--black); padding: 2.5rem 2rem;
+  transition: background 0.25s;
+}
+.info-block:hover { background: rgba(255,255,255,0.025); }
+.info-block .icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+.info-block h4 {
+  font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--cyan); margin-bottom: 0.6rem;
+}
+.info-block p { font-size: 0.88rem; line-height: 1.75; color: var(--muted); }
+
+/* ══════════ FOOTER ══════════ */
+footer {
+  background: #070908;
+  border-top: 1px solid rgba(0,200,192,0.12);
+  padding: 4rem 2.5rem 2rem;
+}
+.footer-grid {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem;
+  padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.footer-brand .brand-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1rem; color: var(--cyan); margin: 1rem 0 0.8rem; display: block;
+}
+.footer-brand p { font-size: 0.85rem; color: var(--muted); line-height: 1.7; max-width: 260px; }
+.footer-col h5 {
+  font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 1.4rem;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+.footer-col ul a { font-size: 0.85rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.footer-col ul a:hover { color: var(--cyan); }
+.footer-bottom {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 1rem; padding-top: 2rem;
+}
+.footer-bottom p { font-size: 0.75rem; color: rgba(240,234,216,0.25); }
+.socials { display: flex; gap: 0.8rem; }
+.socials a {
+  width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; text-decoration: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.socials a:hover { border-color: var(--cyan); background: rgba(0,200,192,0.1); }
+
+/* ══════════ SCROLL ANIMATIONS ══════════ */
+.reveal {
+  opacity: 0; transform: translateY(36px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ══════════ RESPONSIVE ══════════ */
+@media (max-width: 900px) {
+  .modal-inner { grid-template-columns: 1fr; }
+  .modal-visual { min-height: 200px; aspect-ratio: unset; }
+  .modal-content { padding: 1.5rem; }
+  .featured-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .featured-visual { max-width: 320px; margin: 0 auto; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .footer-brand { grid-column: 1 / -1; }
+}
+@media (max-width: 640px) {
+  nav { padding: 0.8rem 1.2rem; }
+  .nav-links, .nav-shop { display: none; }
+  .hamburger { display: flex; }
+  section, .shop-controls { padding-left: 1.2rem; padding-right: 1.2rem; }
+  .page-hero { padding: 8rem 1.2rem 4rem; }
+  .products-grid { grid-template-columns: 1fr; }
+  .info-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-brand { grid-column: auto; }
+  .modal-overlay { align-items: flex-end; padding: 0; }
+  .modal { max-height: 95vh; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<div id="trm-nav"></div>
+
+
+
+<!-- ── PAGE HERO ── -->
+<div class="page-hero">
+  <div class="page-hero-vines">
+    <span class="vine">🌿</span>
+    <span class="vine">🍃</span>
+    <span class="vine">🌺</span>
+  </div>
+  <span class="page-hero-eyebrow">🌺 &nbsp; Hawaiian Landrace Seeds</span>
+  <h1>The <span class="gold">Seed</span> Shop</h1>
+  <div class="page-hero-divider"></div>
+  <p>Rare, authentic Hawaiian landrace genetics — preserved and curated from the islands' most legendary strains. Each seed carries centuries of volcanic island terroir.</p>
+</div>
+
+<!-- ── DISCLAIMER ── -->
+<div class="disclaimer">
+  <p><strong>Legal Notice:</strong> All seeds are sold as <strong>souvenir collectibles</strong> only and contain 0% THC. Please verify your local laws before purchase. Tropical Roots Maui assumes no legal responsibility for actions taken after seeds are in your possession.</p>
+  <p><strong>NOTICE:</strong> At this time landrace seeds are not available to the general public. The listings are here for information purposes for the time being. 02-21-2026</p>
+</div>
+<hr class="divider"/>
+
+<!-- ── FILTERS ── -->
+<div class="shop-controls">
+  <div class="shop-controls-inner">
+    <div class="filter-tabs">
+      <button class="filter-tab active" onclick="filterProducts('all', this)">All Strains</button>
+      <button class="filter-tab" onclick="filterProducts('sativa', this)">Sativa</button>
+      <button class="filter-tab" onclick="filterProducts('indica', this)">Indica</button>
+      <button class="filter-tab" onclick="filterProducts('hybrid', this)">Hybrid</button>
+      <button class="filter-tab" onclick="filterProducts('rare', this)">Rare</button>
+    </div>
+    <div class="sort-control">
+      <label for="sortSelect">Sort by</label>
+      <select id="sortSelect">
+        <option>Featured</option>
+        <option>Price: Low–High</option>
+        <option>Price: High–Low</option>
+        <option>Name A–Z</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- ── PRODUCTS ── -->
+<section class="shop" id="products">
+  <div class="container">
+    <div class="shop-header reveal">
+      <div>
+        <span class="sec-label" style="color:var(--gold);">The Collection</span>
+        <h2 class="sec-title">Landrace <span>Seeds</span></h2>
+      </div>
+      <p style="max-width:340px;font-size:0.9rem;line-height:1.75;color:var(--muted);">Six legendary strains shaped by Hawaiian sun, volcanic soil, and decades of careful preservation.</p>
+    </div>
+
+    <div class="products-grid" id="productGrid">
+
+      <!-- Hawaiian Sativa -->
+      <div class="product-card reveal" data-type="sativa" onclick="openModal('sativa')">
+        <div class="card-top card-top-sativa">
+          <span class="card-emoji">🌿</span>
+          <div class="card-badge badge-leaf">100% Sativa</div>
+          <div class="card-indicator">
+            <div class="dot sativa"></div>
+            <div class="dot sativa"></div>
+            <div class="dot sativa"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="card-tag">Tropical</span>
+            <span class="card-tag gold">Heritage</span>
+          </div>
+          <h3>Hawaiian Sativa</h3>
+          <p>Sweet, tropical flavors with pineapple undertones balanced by spicy, sour notes. The quintessential Hawaiian landrace experience.</p>
+          <div class="card-profile">
+            <span class="profile-pill">🍍 Pineapple</span>
+            <span class="profile-pill">🌶️ Spice</span>
+            <span class="profile-pill">🍋 Sour</span>
+          </div>
+        </div>
+        <div class="card-foot">
+          <div>
+            <span class="card-price">$00.00</span>
+            <span class="card-price-sub">5 seeds / pack</span>
+          </div>
+          <button class="card-action" onclick="event.stopPropagation();openModal('sativa')">View Details</button>
+        </div>
+      </div>
+
+      <!-- Kauai Electric -->
+      <div class="product-card reveal" data-type="hybrid" onclick="openModal('kauai')" style="transition-delay:0.1s">
+        <div class="card-top card-top-kauai">
+          <span class="card-emoji">⚡</span>
+          <div class="card-badge badge-cyan">Kauaʻi Origin</div>
+          <div class="card-indicator">
+            <div class="dot sativa"></div>
+            <div class="dot sativa"></div>
+            <div class="dot"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="card-tag">Island Grown</span>
+            <span class="card-tag gold">Rare</span>
+          </div>
+          <h3>Kauaʻi Electric</h3>
+          <p>From the slopes of Mt. Waiʻaleʻale. Tropical berry flavor with spicy, herbaceous undertones — consistent regardless of growing environment.</p>
+          <div class="card-profile">
+            <span class="profile-pill">🫐 Berry</span>
+            <span class="profile-pill">🌿 Herbal</span>
+            <span class="profile-pill">⚡ Electric</span>
+          </div>
+        </div>
+        <div class="card-foot">
+          <div>
+            <span class="card-price">$00.00</span>
+            <span class="card-price-sub">5 seeds / pack</span>
+          </div>
+          <button class="card-action" onclick="event.stopPropagation();openModal('kauai')">View Details</button>
+        </div>
+      </div>
+
+      <!-- Puna Buddaz -->
+      <div class="product-card reveal" data-type="indica" onclick="openModal('puna')" style="transition-delay:0.2s">
+        <div class="card-top card-top-puna">
+          <span class="card-emoji">🌧️</span>
+          <div class="card-badge" style="background:var(--orange);color:white;">100% Indica</div>
+          <div class="card-indicator">
+            <div class="dot indica"></div>
+            <div class="dot indica"></div>
+            <div class="dot indica"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="card-tag">Big Island</span>
+            <span class="card-tag gold">Landrace</span>
+          </div>
+          <h3>Puna Buddaz</h3>
+          <p>Originating from the Puna District — the rainiest part of the Hawaiian Islands. Pure indica genetics shaped by relentless tropical moisture.</p>
+          <div class="card-profile">
+            <span class="profile-pill">🌍 Earthy</span>
+            <span class="profile-pill">🫚 Resinous</span>
+            <span class="profile-pill">💜 Heavy</span>
+          </div>
+        </div>
+        <div class="card-foot">
+          <div>
+            <span class="card-price">$00.00</span>
+            <span class="card-price-sub">5 seeds / pack</span>
+          </div>
+          <button class="card-action" onclick="event.stopPropagation();openModal('puna')">View Details</button>
+        </div>
+      </div>
+
+      <!-- Maui Wowie -->
+      <div class="product-card reveal" data-type="hybrid" onclick="openModal('maui')">
+        <div class="card-top card-top-maui">
+          <span class="card-emoji">🌊</span>
+          <div class="card-badge">80% Sativa</div>
+          <div class="card-indicator">
+            <div class="dot sativa"></div>
+            <div class="dot sativa"></div>
+            <div class="dot indica"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="card-tag">Maui Origin</span>
+            <span class="card-tag gold">Legendary</span>
+          </div>
+          <h3>Maui Wowie</h3>
+          <p>The legendary island strain. 80% sativa, 20% indica — embodying the spirit of Maui with unmatched tropical character and a storied history.</p>
+          <div class="card-profile">
+            <span class="profile-pill">🌺 Floral</span>
+            <span class="profile-pill">🍍 Tropical</span>
+            <span class="profile-pill">☀️ Uplifting</span>
+          </div>
+        </div>
+        <div class="card-foot">
+          <div>
+            <span class="card-price">$00.00</span>
+            <span class="card-price-sub">5 seeds / pack</span>
+          </div>
+          <button class="card-action" onclick="event.stopPropagation();openModal('maui')">View Details</button>
+        </div>
+      </div>
+
+      <!-- Hawaiʻi '78 -->
+      <div class="product-card reveal" data-type="rare" onclick="openModal('h78')" style="transition-delay:0.1s">
+        <div class="card-top card-top-78">
+          <span class="card-emoji">🗿</span>
+          <div class="card-badge badge-red" style="background:var(--orange);color:white;">Rare Heritage</div>
+          <div class="card-indicator">
+            <div class="dot sativa"></div>
+            <div class="dot indica"></div>
+            <div class="dot"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="card-tag">Est. 1978</span>
+            <span class="card-tag gold">Limited</span>
+          </div>
+          <h3>Hawaiʻi '78</h3>
+          <p>The Sweet Lady of Waʻahole — a rare heritage variety capturing the essence of 1970s Hawaiian cannabis culture. Extremely limited availability.</p>
+          <div class="card-profile">
+            <span class="profile-pill">🍯 Sweet</span>
+            <span class="profile-pill">🪵 Woody</span>
+            <span class="profile-pill">🕰️ Vintage</span>
+          </div>
+        </div>
+        <div class="card-foot">
+          <div>
+            <span class="card-price">$00.00</span>
+            <span class="card-price-sub">3 seeds / pack</span>
+          </div>
+          <button class="card-action" onclick="event.stopPropagation();openModal('h78')">View Details</button>
+        </div>
+      </div>
+
+      <!-- Duckfoot -->
+      <div class="product-card reveal" data-type="rare" onclick="openModal('duck')" style="transition-delay:0.2s">
+        <div class="card-top card-top-duck">
+          <span class="card-emoji">🦆</span>
+          <div class="card-badge badge-cyan">Unique Genetics</div>
+          <div class="card-indicator">
+            <div class="dot sativa"></div>
+            <div class="dot sativa"></div>
+            <div class="dot indica"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="card-tag">Webbed Leaf</span>
+            <span class="card-tag gold">Collector's</span>
+          </div>
+          <h3>Hawaiian Duckfoot</h3>
+          <p>Features the distinctive webbed-leaf Duckfoot characteristic. Tropical skunk and hash aroma with sweet flavors — a true collector's piece.</p>
+          <div class="card-profile">
+            <span class="profile-pill">🧀 Skunky</span>
+            <span class="profile-pill">🍬 Sweet</span>
+            <span class="profile-pill">💎 Rare</span>
+          </div>
+        </div>
+        <div class="card-foot">
+          <div>
+            <span class="card-price">$00.00</span>
+            <span class="card-price-sub">3 seeds / pack</span>
+          </div>
+          <button class="card-action" onclick="event.stopPropagation();openModal('duck')">View Details</button>
+        </div>
+      </div>
+
+    </div><!-- /products-grid -->
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- ── FEATURED STRAIN ── -->
+<div class="featured" id="featured">
+  <div class="featured-inner">
+    <div class="featured-visual reveal">
+      <div class="featured-glow"></div>
+      <span style="position:relative;z-index:1;filter:drop-shadow(0 0 30px rgba(0,200,192,0.4));">🌊</span>
+    </div>
+    <div class="featured-text reveal" style="transition-delay:0.15s">
+      <span class="sec-label" style="color:var(--gold);">Staff Pick</span>
+      <h2 class="sec-title">Maui Wowie<br><span>— A Legend</span></h2>
+      <p>Perhaps no strain is more synonymous with Hawaiian cannabis culture. Maui Wowie emerged in the 1970s and spread worldwide, celebrated for its tropical taste and uplifting character shaped by Maui's unique volcanic soil and trade winds.</p>
+      <p>Our seeds come from preserved genetics tracing directly back to original island stock — not the countless mainland hybrids that bear the name.</p>
+      <div class="featured-stats">
+        <div class="f-stat">
+          <span class="n">80%</span>
+          <span class="l">Sativa</span>
+        </div>
+        <div class="f-stat">
+          <span class="n">50yr</span>
+          <span class="l">Heritage</span>
+        </div>
+        <div class="f-stat">
+          <span class="n">Maui</span>
+          <span class="l">Origin</span>
+        </div>
+      </div>
+      <button class="btn-glow" onclick="openModal('maui')">View Maui Wowie</button>
+    </div>
+  </div>
+</div>
+
+<hr class="divider"/>
+
+<!-- ── SEED INFO ── -->
+<section class="seed-info">
+  <div class="seed-info-inner">
+    <div class="reveal" style="text-align:center;margin-bottom:1rem;">
+      <span class="sec-label" style="color:var(--leaf);justify-content:center;display:block;">Why Choose Us</span>
+      <h2 class="sec-title">What Makes Our <span style="color:var(--cyan);">Seeds</span> Different</h2>
+    </div>
+    <div class="info-grid reveal">
+      <div class="info-block">
+        <span class="icon">🌋</span>
+        <h3>True Island Genetics</h3>
+        <p>Our seeds trace their lineage directly to original Hawaiian landrace strains, not mainland hybrids. Volcanic soil terroir you can't replicate elsewhere.</p>
+      </div>
+      <div class="info-block">
+        <span class="icon">🔬</span>
+        <h3>Preserved Carefully</h3>
+        <p>Decades of careful selection and preservation have maintained the genetic integrity of each landrace. No modern hybridization or alteration.</p>
+      </div>
+      <div class="info-block">
+        <span class="icon">📦</span>
+        <h3>Discreet Shipping</h3>
+        <p>Every order is packaged discreetly and shipped with care. Seeds arrive in collector-grade packaging with full strain documentation.</p>
+      </div>
+      <div class="info-block">
+        <span class="icon">🌺</span>
+        <h3>Cultural Preservation</h3>
+        <p>Every purchase supports the ongoing research and preservation of Hawaiian agricultural heritage and pakalolo history.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<div id="trm-footer"></div>
+
+<!-- ══════════ MODALS ══════════ -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal" id="modalBox">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-inner">
+      <div class="modal-visual" id="modalVisual"></div>
+      <div class="modal-content">
+        <span class="modal-eyebrow" id="modalEyebrow"></span>
+        <h2 id="modalTitle"></h2>
+        <div class="modal-divider"></div>
+        <p id="modalDesc"></p>
+        <p id="modalDesc2" style="font-size:0.85rem;"></p>
+        <div class="modal-tags" id="modalTags"></div>
+        <div class="modal-price-row">
+          <span class="modal-price" id="modalPrice"></span>
+          <button class="modal-cta">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── NAV ── */
+/* ── SCROLL REVEAL ── */
+const revealEls = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+revealEls.forEach(el => obs.observe(el));
+
+/* ── FILTER ── */
+function filterProducts(type, btn) {
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.product-card').forEach(card => {
+    if (type === 'all' || card.dataset.type === type) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+/* ── MODAL DATA ── */
+const strains = {
+  sativa: {
+    emoji: '🌿', bg: 'linear-gradient(145deg, #1b3a1e, #0f1f10)',
+    eyebrow: '100% Sativa · Hawaiian Origin',
+    title: 'Hawaiian Sativa',
+    desc: 'The quintessential Hawaiian landrace — sweet, tropical flavors complemented by pineapple undertones that add nuance to spicy notes and sourness. Grown in the volcanic soil of the Hawaiian Islands for centuries.',
+    desc2: 'A true 100% sativa, these genetics have been preserved from original island stock and remain unadulterated by modern hybridization.',
+    tags: ['Sativa', 'Tropical', 'Pineapple', 'Spice', 'Heritage'],
+    price: '$00.00'
+  },
+  kauai: {
+    emoji: '⚡', bg: 'linear-gradient(145deg, #1a2e3a, #0f1f2a)',
+    eyebrow: 'Sativa-Dominant · Kauaʻi Origin',
+    title: "Kauaʻi Electric",
+    desc: "Originating from the slopes of Mt. Waiʻaleʻale — one of the wettest places on Earth — Kauaʻi Electric has since been grown and bred elsewhere on the island, but maintains its tropical berry flavor with spicy, herbaceous undertones regardless of where it is cultivated.",
+    desc2: 'The unique microclimate of Kauaʻi has shaped this strain into something that cannot be replicated on the mainland.',
+    tags: ['Island Grown', 'Berry', 'Herbal', 'Kauaʻi', 'Rare'],
+    price: '$00.00'
+  },
+  puna: {
+    emoji: '🌧️', bg: 'linear-gradient(145deg, #1a2a10, #0f1f08)',
+    eyebrow: '100% Indica · Big Island',
+    title: 'Puna Buddaz',
+    desc: 'This pure indica landrace strain originates from the Puna District on the Big Island of Hawaiʻi — the rainiest region in the archipelago. Centuries of growing in near-constant rain and volcanic soil have shaped a uniquely potent indica.',
+    desc2: 'Puna Buddaz is a testament to what Hawaiʻi\'s extreme climates can produce when genetics are left to adapt naturally over generations.',
+    tags: ['100% Indica', 'Big Island', 'Earthy', 'Resinous', 'Landrace'],
+    price: '$00.00'
+  },
+  maui: {
+    emoji: '🌊', bg: 'linear-gradient(145deg, #3a2a10, #1f1208)',
+    eyebrow: '80% Sativa · Maui Origin',
+    title: 'Maui Wowie',
+    desc: 'Perhaps no strain is more synonymous with Hawaiian cannabis culture. Maui Wowie is 80% sativa and 20% indica — this unique landrace strain embodies the spirit of Maui in every aspect of its growth and character.',
+    desc2: 'Our seeds trace directly to original island stock, not the countless mainland hybrids that bear the Maui Wowie name. Genuine Maui terroir.',
+    tags: ['Legendary', 'Maui', 'Tropical', 'Floral', 'Uplifting', '80% Sativa'],
+    price: '$00.00'
+  },
+  h78: {
+    emoji: '🗿', bg: 'linear-gradient(145deg, #3a1010, #1f0808)',
+    eyebrow: 'Heritage Variety · Est. 1978',
+    title: "Hawaiʻi '78",
+    desc: "Known as the Sweet Lady of Waʻahole — a rare heritage variety capturing the essence of late 1970s Hawaiian cannabis culture and farming. This strain is exceptionally limited and represents living history.",
+    desc2: "Only 3 seeds per pack are available due to the rarity of this preserved line. Once this stock is gone, it may not return.",
+    tags: ["Rare Heritage", "1970s", "Sweet", "Limited", "Collector's"],
+    price: '$00.00'
+  },
+  duck: {
+    emoji: '🦆', bg: 'linear-gradient(145deg, #2a1a3a, #180f22)',
+    eyebrow: "Unique Genetics · Collector's Edition",
+    title: 'Hawaiian Duckfoot',
+    desc: 'Features the distinctive Duckfoot genetic characteristic — the fingers of its leaves appear webbed, making it one of the most visually unique cannabis varieties in the world. Tropical skunk and hash smell with sweet flavors and notably heavy effects.',
+    desc2: 'Believed by some to be descended from seeds brought by the European horticulturalist Joseph Banks. A true collector\'s piece with deep historical roots.',
+    tags: ["Unique Genetics", "Webbed Leaf", "Skunky", "Sweet", "Collector's"],
+    price: '$00.00'
+  }
+};
+
+function openModal(id) {
+  const s = strains[id];
+  document.getElementById('modalVisual').style.background = s.bg;
+  document.getElementById('modalVisual').innerHTML = `<span style="font-size:7rem;position:relative;z-index:1;filter:drop-shadow(0 4px 20px rgba(0,0,0,0.6));">${s.emoji}</span>`;
+  document.getElementById('modalEyebrow').textContent = s.eyebrow;
+  document.getElementById('modalTitle').textContent = s.title;
+  document.getElementById('modalDesc').textContent = s.desc;
+  document.getElementById('modalDesc2').textContent = s.desc2;
+  document.getElementById('modalPrice').textContent = s.price;
+  const tagsEl = document.getElementById('modalTags');
+  tagsEl.innerHTML = s.tags.map((t,i) => `<span class="modal-tag${i===0?' gold':''}">${t}</span>`).join('');
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+<script src="site-components.js" defer></script>
+</body>
+</html>

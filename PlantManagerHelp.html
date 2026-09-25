@@ -10,7 +10,7 @@
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Tropical Roots Maui">
 <meta property="og:title" content="Plant Manager Help Guide — Tropical Roots Maui">
-<meta property="og:description" content="Complete help guide for the Tropical Roots Maui Plant Manager app — covering all tabs, 33 analytics charts, tools, QR tags, and features.">
+<meta property="og:description" content="Complete help guide for the Tropical Roots Maui Plant Manager app — covering all tabs, 33 analytics charts, 50+ tools, QR tags, and features.">
 <meta property="og:url" content="https://tracker.tropicalrootsmaui.com/PlantManagerHelp.html">
 <meta property="og:image" content="https://tropicalrootsmaui.com/img/tropical-roots-maui-kanehiwa-alchemical-sanctuary-logo.webp">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -212,7 +212,188 @@ kbd {
   content: ''; position: absolute; left: 0; top: 0.65rem;
   width: 6px; height: 6px; border-radius: 50%; background: var(--cyan);
 }
+
+/* FAQ accordion */
+.faq-wrap { max-width: 760px; margin: 0 auto; padding: 0 2rem; }
+.faq-item {
+  border: 1px solid rgba(0,200,192,0.18);
+  border-radius: 6px;
+  margin-bottom: 0.85rem;
+  background: rgba(15,28,16,0.4);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  overflow: hidden;
+}
+.faq-item[open] {
+  border-color: rgba(0,200,192,0.5);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 22px rgba(0,200,192,0.06);
+}
+.faq-q {
+  cursor: pointer;
+  list-style: none;
+  padding: 1rem 1.4rem 1rem 1.2rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  position: relative;
+  user-select: none;
+}
+.faq-q::-webkit-details-marker { display: none; }
+.faq-q::before {
+  content: 'Q';
+  flex: 0 0 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(240,180,41,0.5);
+  border-radius: 50%;
+  color: var(--gold);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  font-family: 'Lora', serif;
+}
+.faq-q::after {
+  content: '+';
+  position: absolute;
+  right: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--cyan);
+  font-size: 1.4rem;
+  font-weight: 300;
+  transition: transform 0.3s ease;
+  font-family: 'Lora', serif;
+  letter-spacing: 0;
+}
+.faq-item[open] .faq-q::after { transform: translateY(-50%) rotate(45deg); }
+.faq-q:hover { color: var(--cyan); }
+.faq-a {
+  padding: 0 1.4rem 1.2rem 4.05rem;
+  font-size: 0.92rem;
+  line-height: 1.75;
+  color: var(--sand);
+  border-top: 1px dashed rgba(0,200,192,0.12);
+  margin-top: -2px;
+  padding-top: 1rem;
+  animation: faq-slide 0.32s ease;
+}
+.faq-a strong { color: var(--cyan); font-style: normal; }
+.faq-a a { color: var(--cyan); text-decoration: underline; text-underline-offset: 2px; }
+.faq-a code {
+  background: rgba(0,200,192,0.08);
+  border: 1px solid rgba(0,200,192,0.18);
+  border-radius: 3px;
+  padding: 1px 6px;
+  font-size: 0.84em;
+  color: var(--gold);
+}
+@keyframes faq-slide {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 600px) {
+  .faq-q { font-size: 0.72rem; padding-left: 1rem; padding-right: 3rem; }
+  .faq-a { padding-left: 1rem; padding-right: 1rem; }
+}
+
 </style>
+
+<!-- FAQPage Structured Data for Rich Results -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Where is my data stored, and is it private?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "All Plant Manager data lives in your browser's localStorage on your own device. Nothing is uploaded, tracked, or shared with any server. Cloud Sync is optional and uses your own Firebase configuration when enabled."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will I lose my data if I clear my browser cache?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Clearing site data, switching browsers, or uninstalling the PWA without an export will erase your plants, journals, and logs. Always export a JSON backup regularly via the gear menu, or enable Cloud Sync for automatic protection."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Plant Manager free to use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Plant Manager is fully free and open-source under the GNU GPL v3 license. There are no accounts, no ads, no paid tiers, and no telemetry."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Plant Manager work offline?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Once the page has loaded once, the service worker caches the app and all assets so you can use it without an internet connection. Install it as a Progressive Web App for the best offline experience."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I sync data between phone and computer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, in two ways: (1) Manually export a JSON backup from one device and import it on the other via the gear menu. (2) Enable Cloud Sync with your own Firebase project to keep multiple devices in sync automatically. Encryption is optional on exports."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I differentiate multiple plants of the same strain?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "When you add a second plant with the same strain name, both are auto-numbered #1 and #2. You can also set a custom nickname per plant (e.g. 'Yoda' or 'North Tent') which appears in dropdowns, feeding logs, charts, and notifications. Click the dice button next to the nickname field for a random Star Wars name suggestion."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I encrypt my data exports?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Open the gear menu and select Export Encryption to enable password-based encryption. Encrypted exports use AES-256-GCM with PBKDF2 key derivation (600,000 SHA-256 iterations). Encrypted .encrypted.json files are auto-detected on import. Password recovery is not possible — store yours safely."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which devices and browsers are supported?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Plant Manager works on any modern browser: Chrome, Edge, Firefox, Safari (desktop and mobile), and Brave. It is mobile-first and installable as a PWA on iOS Safari, Android Chrome, and desktop Chromium browsers. Internet Explorer is not supported."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How accurate is the harvest yield estimate?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Harvest estimates are derived from logged height, age, environment readings, and historical yields per strain. Accuracy improves over time as you log more harvests. Treat estimates as guidance, not guarantees — many genetic and environmental factors influence final yield."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I print plant tags for the grow room?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Open any plant card and click the Tag button (under More) for an individual QR tag, or use the gear menu → Print Plant Tags / Clone Tags / Breeding Cross Tags for batch printing. Each tag includes a scannable QR code linking back to that plant in the app."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <div class="bg-ambience"></div>
@@ -225,7 +406,7 @@ kbd {
 <div class="recipe-hero">
   <div class="hero-eyebrow">Tropical Roots Maui</div>
   <h1 class="hero-title">Plant Manager<br><span class="gold">Help Guide</span></h1>
-  <div class="hero-byline">v2.9.0 &mdash; Complete Feature Reference</div>
+  <div class="hero-byline">v2.19.1 &mdash; Complete Feature Reference</div>
   <p class="hero-sub">Everything you need to know about tracking plants, clones, feedings, harvests, and more in the Tropical Roots Maui Plant Manager.</p>
 </div>
 
@@ -252,6 +433,7 @@ kbd {
       <li><a href="#tools"><span class="toc-icon">&#128295;</span> Tools &amp; Extras</a></li>
       <li><a href="#data"><span class="toc-icon">&#128190;</span> Data &amp; Backup</a></li>
       <li><a href="#pwa"><span class="toc-icon">&#128241;</span> Install as App (PWA)</a></li>
+      <li><a href="#faq"><span class="toc-icon">&#10067;</span> Frequently Asked Questions</a></li>
     </ul>
   </div>
 </div>
@@ -926,6 +1108,84 @@ kbd {
 
     <span class="detail-label">Theme Toggle</span>
     <p>Switch between <strong>dark mode</strong> (default &mdash; dark green/black) and <strong>light mode</strong> (cream/white) using the moon icon in the header.</p>
+
+    <span class="detail-label">Setup Wizard</span>
+    <p>An optional first-run wizard appears when the database is empty. Choose <strong>Start Fresh</strong> for a simplified 5-field form to add your first plant and environment, or <strong>Import Backup</strong> to restore from a previously exported JSON file. The wizard is dismissible with "Skip setup" and won't reappear once dismissed.</p>
+
+    <span class="detail-label">Strain Name Autocomplete</span>
+    <p>All strain name inputs across the app show autocomplete suggestions from the built-in catalog (400+ strains), your strain library, and existing mother plants. Matches display strain name, breeder, and a source tag (Catalog, Library, or In Use). Selecting a match auto-fills the type and breeder fields. Navigate suggestions with arrow keys and Enter; press Escape to close.</p>
+
+    <span class="detail-label">Pheno Hunt Logger</span>
+    <p>Open from the gear menu or Dashboard. Create a pheno hunt for any strain, then add individual phenotypes and score them across <strong>8 traits</strong> (Vigor, Structure, Aroma, Resin Production, Yield Potential, Disease Resistance, Root Development, Flower Density) on a 1&ndash;5 scale. Classify each phenotype as <strong>Keeper</strong>, <strong>Maybe</strong>, <strong>Eliminate</strong>, or Pending with color-coded cards. Supports multi-round scoring sessions to track development over time. Use the <strong>Compare</strong> feature for a side-by-side trait table with best-value highlighting, overall ranking with gold/silver/bronze badges, and an SVG radar chart overlay.</p>
+
+    <span class="detail-label">Enhanced Plant Timeline</span>
+    <p>The plant timeline (accessible via <strong>&#128197; Timeline</strong> on any plant card) now shows a rich social-feed-style grow diary with date-grouped event cards. Events are organized by day with "Today" / "Yesterday" headers. Each event type has a detailed card layout: feedings show pH/EC data pills, photos display inline thumbnails, IPM entries show severity badges, harvests show weight pills, and health checks show colored score badges. Use the <strong>filter chip buttons</strong> to toggle event types on or off. A summary stats banner shows total events, timeline span, and most active event type. Supports 12 event types including breeding logs and expenses.</p>
+
+    <span class="detail-label">Cure Tracker</span>
+    <p>Open from the <strong>&#129383; Cure</strong> button on harvest cards. Log per-jar curing progress with humidity %, weight (g), burp schedule, and terpene development notes. Color-coded range indicators show ideal targets: 55&ndash;65% RH for humidity and 10&ndash;15% for weight loss. The stats banner tracks days curing, total weight loss, average humidity, and burp count. The first log entry automatically sets the harvest's cure status to "curing".</p>
+
+    <span class="detail-label">Nutrient Mix Calculator</span>
+    <p>Open from the gear menu or Dashboard. Compute exact mL of each nutrient product for any water volume and target EC/PPM. Select from saved products or the built-in catalog. The results table shows mL needed per product with total EC. Save and load preset mixes. A warning appears when total EC exceeds the target.</p>
+
+    <span class="detail-label">Harvest Forecast</span>
+    <p>Open from the gear menu or Dashboard. Predicts harvest dates and estimated yields for all flowering plants using historical strain data plus configured flowering times. The Dashboard widget shows the next 3 upcoming harvests. The full modal displays progress bars, yield ranges (min/max), and confidence badges (high, medium, or low based on available data points).</p>
+
+    <span class="detail-label">IPM Spray Rotation Planner</span>
+    <p>Open from the gear menu or Dashboard. Create named spray rotations with products from the IPM catalog, each with configurable day intervals. A <strong>4-week calendar</strong> shows the color-coded spray schedule organized by product category (insecticide, miticide, fungicide, biological, organic, KNF). Tracks next due spray with overdue warnings. The Dashboard widget shows the next upcoming spray at a glance. Cross-references existing IPM logs for compliance tracking.</p>
+
+    <span class="detail-label">Light Map / PPFD Grid</span>
+    <p>Open from the gear menu or Dashboard. Record PPFD readings at grid points across the canopy using a 3&times;3, 4&times;4, or 5&times;5 grid. Visualize results as an SVG color-coded heat map ranging from purple (low) to red (high). The stats banner shows average PPFD, min, max, and uniformity percentage (min/avg). Per-environment history allows comparing readings over time.</p>
+
+    <span class="detail-label">Water Source Quality Log</span>
+    <p>Open from the gear menu or Dashboard. Track source water parameters over time: pH, EC, TDS, alkalinity, chlorine, and temperature. An SVG trend chart shows dual pH/EC series with an ideal pH zone overlay (5.8&ndash;6.5). The stats banner displays averages and trend direction arrows. Supports 5 water sources: Tap, Filtered, Rain, RO, and Well.</p>
+
+    <span class="detail-label">Genetic Lineage Tree</span>
+    <p>Open from the gear menu or the <strong>&#127795; Lineage</strong> button on plant cards. The enhanced SVG family tree shows parent-clone relationships merged with breeding data. <strong>Full Genetics</strong> mode adds strain genetics subtitles, generation-colored node borders, breeding cross badges, father-plant reference arrows (dashed gold), and seed harvest count badges. Toggle between <strong>Simple</strong> (classic) and <strong>Full Genetics</strong> view. A legend explains all node types.</p>
+
+    <span class="detail-label">Unit Converter</span>
+    <p>Open from the gear menu (Calculators group) or Dashboard. Convert between units across 7 categories: <strong>Weight</strong> (g, oz, lb, kg), <strong>Volume</strong> (mL, L, gal, fl oz, tsp, tbsp, cup), <strong>Temperature</strong> (&deg;F, &deg;C), <strong>Length</strong> (cm, in, ft, m), <strong>Area</strong> (ft&sup2;, m&sup2;), <strong>EC/PPM</strong> (EC, PPM-500, PPM-700), and <strong>Light</strong> (lux, foot-candles, PPFD). Live bidirectional conversion with a swap button to reverse source and target units.</p>
+
+    <span class="detail-label">Pre-Grow Checklist</span>
+    <p>Open from the gear menu (Growing group) or Dashboard. Choose from 4 built-in templates: <strong>Indoor Photoperiod</strong> (23 items), <strong>Indoor Autoflower</strong> (16 items), <strong>Outdoor</strong> (16 items), and <strong>Hydro/DWC</strong> (19 items). Items are organized by category (Equipment, Environment, Medium, Nutrients, Seeds &amp; Genetics, Safety). Check off items as you prepare, track progress with a percentage bar, and add custom items. Save and reuse checklists for future grows.</p>
+
+    <span class="detail-label">Garden Stats &amp; Milestones</span>
+    <p>A persistent counter on the Dashboard tracks every plant ever managed &mdash; even if deleted or archived. The <strong>Garden Stats</strong> card shows total plants managed, harvests, total yield, and days growing. Tap it to open the detailed stats modal with 8 metrics and a <strong>milestone ladder</strong> with achievement badges: Seedling (10), Gardener (25), Cultivator (50), Expert (100), Veteran (250), Elite (500), and Master Grower (1,000). A progress bar shows advancement to the next milestone.</p>
+
+    <span class="detail-label">Terpene &amp; Cannabinoid Profiles</span>
+    <p>Open from the gear menu (Growing group) or Dashboard. Log <strong>THC%</strong>, <strong>CBD%</strong>, and 10 terpene percentages (Myrcene, Limonene, Caryophyllene, Linalool, Pinene, Humulene, Terpinolene, Ocimene, Bisabolol, Eucalyptol) per harvest. Visualize results as an interactive 10-axis <strong>SVG radar chart</strong>. Tag effect profiles (Relaxing, Energizing, Creative, Focused, Euphoric, Sedating, Appetite, Anti-Inflammatory, Pain Relief, Anti-Anxiety), add aroma notes, and assign a quality score. Compare 2&ndash;3 profiles with overlaid radar charts.</p>
+
+    <span class="detail-label">Power Cost Calculator</span>
+    <p>Open from the gear menu (Calculators group) or Dashboard. Estimate electricity costs from grow equipment specifications. Add equipment rows with name, wattage, hours per day, and quantity. The calculator provides <strong>live cost estimates</strong>: daily kWh, daily cost, monthly cost, and per-cycle cost based on your electricity rate (default $0.12/kWh, configurable). Save equipment profiles for reuse across grows.</p>
+
+    <span class="detail-label">Crop Steering Tracker</span>
+    <p>Open from the gear menu (Growing group) or Dashboard. Track <strong>generative vs vegetative</strong> crop steering strategies per plant. Log dry-back percentage, irrigation count, EC runoff, substrate moisture, and notes per session. View a <strong>trend chart</strong> with dual-axis (dry-back % and EC) and phase region shading. Phase reference cards show target ranges: Generative (dry-back 15&ndash;30%, EC 3&ndash;6, 3&ndash;4 irrigations) and Vegetative (dry-back 5&ndash;15%, EC 2&ndash;3.5, 6&ndash;10 irrigations).</p>
+
+    <span class="detail-label">Environmental Recipes</span>
+    <p>Open from the gear menu (Growing group) or Dashboard. Create reusable grow-stage environment target profiles with temperature, humidity, VPD, CO2, and light hour settings. Four <strong>built-in templates</strong> are included: Seedling (72&ndash;78&deg;F, 65&ndash;75% RH), Vegetative (75&ndash;82&deg;F, 55&ndash;65% RH), Flower (72&ndash;78&deg;F, 45&ndash;55% RH), and Late Flower/Ripen (68&ndash;75&deg;F, 40&ndash;50% RH). Create custom recipes, then apply any recipe to an environment for <strong>live actual-vs-target comparison</strong> with green (within range), yellow (slightly off), and red (far off) indicators.</p>
+
+    <span class="detail-label">Grow Journal Export</span>
+    <p>Open from the gear menu (Reports group) or Dashboard. Generate a <strong>shareable standalone HTML grow diary</strong> for any plant. The export aggregates strain information, a chronological photo gallery, feeding log, IPM events, harvest results, and terpene profiles into a single printable document. The report opens in a new browser window, ready to print or save as an HTML file that can be opened in any browser without the app.</p>
+
+    <span class="detail-label">Strain Comparison Tool</span>
+    <p>Open from the gear menu (Calculators group) or Dashboard. Select 2&ndash;3 strains to compare side-by-side using aggregated data from harvests, reviews, and expenses. The comparison table shows total harvests, average dry weight, quality score, average flowering days, cost per gram, and review scores. <strong>Best values are highlighted</strong> in each column, with a bar chart for visual yield comparison.</p>
+
+    <span class="detail-label">Photo Timeline Comparison</span>
+    <p>Open from the gear menu (Reports group) or Dashboard. Select a plant, then click two photos from its journal to view them <strong>side by side</strong> with date labels and a days-apart indicator. Useful for visually tracking plant growth or comparing canopy development at different stages.</p>
+
+    <span class="detail-label">KNF Ferment Tracker</span>
+    <p>Open from the gear menu (Growing group) or Dashboard. Track active Korean Natural Farming ferments with 10 built-in types: <strong>FPJ</strong> (7 days), <strong>FFJ</strong> (90 days), <strong>FAA</strong> (90 days), <strong>OHN</strong> (30 days), <strong>LABS</strong> (7 days), <strong>IMO-3</strong> (7 days), <strong>WCA</strong> (14 days), <strong>WCA-P</strong> (30 days), <strong>BRV</strong> (7 days), and <strong>Molasses Soil Drench</strong> (1 day). Each entry tracks start date, ingredients, expected duration, and notes. Live status badges show current state: gold (fermenting), green (ready to use), or orange (overdue). Mark ferments as used or delete when finished.</p>
+
+    <span class="detail-label">Companion Planting Guide</span>
+    <p>Open from the gear menu (Diagnostics group) or Dashboard. A reference guide for <strong>15 companion plants</strong> organized into 4 filterable categories: <strong>Pest Repellent</strong> (Basil, Lavender, Peppermint, Rosemary, Garlic, Chrysanthemum), <strong>Trap Crop</strong> (Marigold, Nasturtium, Sunflower), <strong>Pollinator</strong> (Dill, Cilantro, Yarrow), and <strong>Soil Builder</strong> (Chamomile, Clover, Comfrey). Each plant card shows an emoji icon, description of benefits, specific pests repelled, and practical growing tips.</p>
+
+    <span class="detail-label">Nutrient Availability / pH Chart</span>
+    <p>Open from the gear menu (Diagnostics group) or Dashboard. An interactive visual chart showing which of <strong>14 nutrients</strong> (N, P, K, Ca, Mg, S, Fe, Mn, B, Cu, Zn, Mo, Cl, Ni) are available, reduced, or locked out at any given pH. The SVG chart displays pH 3.0&ndash;9.0 on the x-axis with horizontal bars per nutrient: green for optimal availability, gold for reduced, and gaps for locked out. A <strong>draggable pH slider</strong> moves a cyan indicator line across the chart and updates the status summary in real time. Toggle between <strong>Soil / Organic</strong> and <strong>Hydro / Coco</strong> modes for different availability ranges. The tool auto-reads your latest logged pH from environment readings or feeding data to pre-fill the slider.</p>
+
+    <span class="detail-label">CO&#8322; Calculator &amp; Tracking</span>
+    <p>Open from the gear menu (Calculators group) or Dashboard. A two-part feature for sealed-room CO&#8322; management. The <strong>calculator</strong> takes room dimensions (length, width, height in feet), current CO&#8322; PPM, target PPM, and injection rate (CFH) to compute CO&#8322; needed (cubic feet) and injection time (minutes). <strong>Growth stage presets</strong> fill the target: Ambient (400), Veg (800), Early Flower (1200), Peak Flower (1500), and Late Flower (1000). Save your defaults for quick reuse. The <strong>CO&#8322; tracking</strong> component adds a CO&#8322; PPM field to environment readings &mdash; log CO&#8322; levels alongside temperature and humidity. The calculator includes a CO&#8322; trend chart from your logged readings with reference lines at ambient and flower levels.</p>
+
+    <span class="detail-label">Batch Feeding</span>
+    <p>Open from the Feeding tab toolbar (<strong>&#128203; Batch Feed</strong>), the gear menu (Growing group), or Dashboard quick actions. Log one feeding for <strong>multiple plants at once</strong>. The modal shows an environment filter dropdown to narrow plants, a checkbox grid of plant cards (showing strain, stage, and environment), with <strong>Select All</strong> and <strong>Deselect</strong> buttons and a live count badge. Fill in the feeding details once (nutrient, amount, unit, water volume, pH in/out, EC in/out, notes) and submit to create individual feeding entries for every selected plant. Useful for feeding all plants in a tent the same nutrient mix without logging each one separately.</p>
   </div>
 </div>
 
@@ -954,6 +1214,15 @@ kbd {
 
     <span class="detail-label">Cloud Sync (Firebase)</span>
     <p>Tap the <strong>&#9729; Cloud Sync</strong> button in the header to connect with Firebase. Cloud sync provides automatic backup and cross-device synchronization. Your data is encrypted and stored securely. Log in with your email to enable sync.</p>
+
+    <span class="detail-label">Encrypted Exports</span>
+    <p>Go to gear menu &rarr; <strong>&#128274; Export Encryption</strong> to toggle encrypted exports on or off. When enabled, Export Data will prompt for a password and encrypt your backup using <strong>AES-256-GCM</strong> with PBKDF2 key derivation (SHA-256, 600,000 iterations). The export is saved as a <code>.encrypted.json</code> file. On import, encrypted files are <strong>auto-detected</strong> by their header and a password prompt appears. Unencrypted backups are always accepted regardless of this setting. A password strength indicator helps you choose a strong password. <strong>There is no password recovery</strong> &mdash; if you forget the password, the backup cannot be restored.</p>
+
+    <span class="detail-label">Plant Nicknames &amp; Auto-Numbering</span>
+    <p>When you grow multiple plants of the same strain, the app automatically assigns numbers (#1, #2, #3) to each plant so you can tell them apart in every dropdown, feeding log, task list, chart, calendar, and notification. You can also set an optional <strong>Nickname</strong> in the Add/Edit Plant form (e.g. &ldquo;Mom A&rdquo;, &ldquo;North Tent&rdquo;, &ldquo;Pheno 3&rdquo;). Nicknames override auto-numbers and display as &ldquo;Blue Dream &mdash; Yoda&rdquo; across the entire app. The FleetView table includes a sortable <strong>Label</strong> column showing each plant&rsquo;s nickname or number. Search also matches against nicknames.</p>
+
+    <span class="detail-label">Star Wars Name Suggestions</span>
+    <p>Click the <strong>&#127922; dice button</strong> next to the Nickname field when adding or editing a plant to get a random Star Wars character name as a nickname. The app picks from 66 characters (Luke, Leia, Yoda, Grogu, Ahsoka, Mando, and more) and avoids names already in use by your active plants. Click again for a different suggestion, or type your own custom nickname.</p>
   </div>
 </div>
 
@@ -984,6 +1253,114 @@ kbd {
     </ul>
     <p>Once installed, the app opens in its own window without browser chrome and works offline thanks to the service worker cache.</p>
   </div>
+</div>
+
+
+<!-- ═══ FAQ ═══ -->
+<div class="section-divider" id="faq">
+  <div class="divider-line"></div>
+  <div class="divider-label">Frequently Asked Questions</div>
+  <div class="divider-line"></div>
+</div>
+
+<div class="phase-section" style="padding-bottom:0">
+  <div class="phase-header">
+    <div class="phase-number">&#10067;</div>
+    <h2 class="phase-title">Common <span class="gold">Questions</span></h2>
+  </div>
+  <div class="phase-body">
+    <p>The most-asked questions about Plant Manager &mdash; tap any question to expand the answer.</p>
+  </div>
+</div>
+
+<div class="faq-wrap">
+
+  <details class="faq-item">
+    <summary class="faq-q">Where is my data stored, and is it private?</summary>
+    <div class="faq-a">
+      All Plant Manager data lives in your browser's <strong>localStorage</strong> on your own device. Nothing is uploaded, tracked, or shared with any server &mdash; there is no analytics, no telemetry, no account creation. <strong>Cloud Sync</strong> is entirely optional and uses your own <strong>Firebase</strong> configuration when enabled, meaning the data still belongs to you and lives in infrastructure you control.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary class="faq-q">Will I lose my data if I clear my browser cache?</summary>
+    <div class="faq-a">
+      Yes. Clearing site data, switching browsers, switching devices, or uninstalling the PWA without backing up first will erase your plants, journals, feeding logs, and harvests. <strong>Always export a JSON backup regularly</strong> via the gear menu &rarr; Export Data, or enable <strong>Cloud Sync</strong> for automatic protection. For sensitive data, enable <code>Export Encryption</code> to password-protect your backups.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary class="faq-q">Is Plant Manager free to use?</summary>
+    <div class="faq-a">
+      Yes. Plant Manager is fully free and open-source under the <strong>GNU GPL v3</strong> license. There are no accounts, no advertisements, no paid tiers, no premium features behind a paywall, and no usage telemetry. The full source is in a single HTML file you can read, modify, and self-host.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary class="faq-q">Does Plant Manager work offline?</summary>
+    <div class="faq-a">
+      Yes. After the page loads once, the <strong>service worker</strong> caches the entire app plus all assets so you can open and use it without an internet connection. This is especially handy in grow tents or rooms with weak Wi-Fi. Install it as a Progressive Web App (see the <a href="#pwa">Install as App</a> section above) for the best offline experience.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary class="faq-q">Can I sync data between my phone and computer?</summary>
+    <div class="faq-a">
+      Yes, two ways:
+      <ul style="list-style:none;padding-left:0;margin-top:0.6rem">
+        <li style="padding-left:1.2rem;position:relative;margin-bottom:0.4rem"><span style="position:absolute;left:0;top:0.6rem;width:6px;height:6px;border-radius:50%;background:var(--cyan);display:block"></span><strong>Manual:</strong> Export a JSON backup from one device, import it on the other via the gear menu.</li>
+        <li style="padding-left:1.2rem;position:relative;margin-bottom:0.4rem"><span style="position:absolute;left:0;top:0.6rem;width:6px;height:6px;border-radius:50%;background:var(--cyan);display:block"></span><strong>Automatic:</strong> Enable <strong>Cloud Sync</strong> with your own Firebase project to keep multiple devices in sync. Encryption is optional on both manual exports and cloud backups.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary class="faq-q">How do I differentiate multiple plants of the same strain?</summary>
+    <div class="faq-a">
+      When you add a second plant with the same strain name, both are <strong>auto-numbered</strong> &mdash; you'll see "Blue Dream #1" and "Blue Dream #2" across all dropdowns, charts, and logs. You can also set a custom <strong>nickname</strong> per plant (e.g. "Yoda" or "North Tent") which overrides the number; the display becomes "Blue Dream &mdash; Yoda". Need a name idea? Click the <strong>&#127922; dice</strong> button next to the nickname field for a random Star Wars character suggestion (60+ available, won't repeat names already in use).
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary class="faq-q">Can I encrypt my data exports?</summary>
+    <div class="faq-a">
+      Yes. Open the gear menu and select <strong>Export Encryption</strong> to enable password-based encryption. When enabled, exports prompt you for a password (with strength indicator) and write a <code>.encrypted.json</code> file. Encryption uses <strong>AES-256-GCM</strong> with <strong>PBKDF2</strong> key derivation (600,000 SHA-256 iterations) for brute-force resistance. On import, encrypted files are auto-detected and prompt for the decryption password. <strong>Password recovery is not possible</strong> &mdash; store your password somewhere safe.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary class="faq-q">Which devices and browsers are supported?</summary>
+    <div class="faq-a">
+      Plant Manager works on any modern browser:
+      <ul style="list-style:none;padding-left:0;margin-top:0.6rem">
+        <li style="padding-left:1.2rem;position:relative;margin-bottom:0.3rem"><span style="position:absolute;left:0;top:0.6rem;width:6px;height:6px;border-radius:50%;background:var(--cyan);display:block"></span><strong>Mobile:</strong> iOS Safari 14+, Android Chrome, Brave, Firefox</li>
+        <li style="padding-left:1.2rem;position:relative;margin-bottom:0.3rem"><span style="position:absolute;left:0;top:0.6rem;width:6px;height:6px;border-radius:50%;background:var(--cyan);display:block"></span><strong>Desktop:</strong> Chrome, Edge, Firefox, Safari, Brave</li>
+        <li style="padding-left:1.2rem;position:relative;margin-bottom:0.3rem"><span style="position:absolute;left:0;top:0.6rem;width:6px;height:6px;border-radius:50%;background:var(--cyan);display:block"></span><strong>Installable as a PWA</strong> on all of the above</li>
+      </ul>
+      Internet Explorer is not supported. Mobile is the recommended interface for grow-room logging.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary class="faq-q">How accurate is the harvest yield estimate?</summary>
+    <div class="faq-a">
+      Harvest estimates are derived from your logged plant height, age, growth stage, environment readings (VPD, light hours, CO&#8322;), and historical yields per strain. <strong>Accuracy improves over time</strong> as you log more harvests &mdash; the system learns your specific genetics and growing conditions. Treat early estimates as rough guidance, not guarantees. Final yields depend on many factors beyond the model: pheno selection, dry-back schedule, training, IPM events, and post-harvest curing.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary class="faq-q">Can I print plant tags for the grow room?</summary>
+    <div class="faq-a">
+      Yes. Three options:
+      <ul style="list-style:none;padding-left:0;margin-top:0.6rem">
+        <li style="padding-left:1.2rem;position:relative;margin-bottom:0.3rem"><span style="position:absolute;left:0;top:0.6rem;width:6px;height:6px;border-radius:50%;background:var(--cyan);display:block"></span><strong>Single tag:</strong> Open any plant card &rarr; "More" dropdown &rarr; <strong>QR Tag</strong></li>
+        <li style="padding-left:1.2rem;position:relative;margin-bottom:0.3rem"><span style="position:absolute;left:0;top:0.6rem;width:6px;height:6px;border-radius:50%;background:var(--cyan);display:block"></span><strong>Batch:</strong> Gear menu &rarr; <strong>Tags &amp; Labels</strong> &rarr; Print Plant Tags / Clone Tags / Breeding Cross Tags</li>
+        <li style="padding-left:1.2rem;position:relative;margin-bottom:0.3rem"><span style="position:absolute;left:0;top:0.6rem;width:6px;height:6px;border-radius:50%;background:var(--cyan);display:block"></span><strong>Reports:</strong> Plant Report PDF includes a tag for hand-off or archiving</li>
+      </ul>
+      Each tag includes a scannable QR code that opens the plant directly in the app.
+    </div>
+  </details>
+
 </div>
 
 

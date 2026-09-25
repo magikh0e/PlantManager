@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="preload" href="/site-components.css" as="style" onload="this.onload=null;this.rel=&#39;stylesheet&#39;">
+<noscript><link rel="stylesheet" href="/site-components.css"></noscript>
+${link_line}
+<title>KNF Pest &amp; Disease Troubleshooting — Tropical Roots Maui</title>
+<meta name="title" content="KNF Pest & Disease Troubleshooting — Tropical Roots Maui">
+<meta name="description" content="Combat broad mites, powdery mildew, fungus gnats, whiteflies, and leaf miners using KNF inputs. Maui-specific protocols with OHN, WCA, and emergency recovery sprays for tropical growers.">
+<meta name="keywords" content="KNF pest control, powdery mildew, broad mites, fungus gnats, whiteflies, aphids, OHN spray, organic pest management, Maui growing, Tropical Roots Maui, Kānehiwa">
+<meta name="author" content="Tropical Roots Maui">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-pest-disease-guide.html">
+
+<!-- ═══ OPEN GRAPH ═══ -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Tropical Roots Maui">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-pest-disease-guide.html">
+<meta property="og:title" content="KNF Pest & Disease Troubleshooting — Tropical Roots Maui">
+<meta property="og:description" content="Combat the most common Maui pest and disease issues using KNF inputs — OHN, WCA, BRV, and more.">
+<meta property="og:image" content="https://tropicalrootsmaui.com/img/ogimg/knfpestguide.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+
+<!-- ═══ TWITTER ═══ -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@tropicalrootsmaui">
+<meta name="twitter:title" content="KNF Pest & Disease Troubleshooting — Tropical Roots Maui">
+<meta name="twitter:description" content="Combat the most common Maui pest and disease issues using KNF inputs.">
+<meta name="twitter:image" content="https://tropicalrootsmaui.com/img/ogimg/knfpestguide.webp">
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black:    #0a0c0a;
+  --dark:     #111a10;
+  --jungle:   #1b3a1e;
+  --green:    #2d6e35;
+  --leaf:     #4a9e52;
+  --cyan:     #00c8c0;
+  --cyan-dim: #00968f;
+  --gold:     #f0b429;
+  --orange:   #e8721a;
+  --cream:    #f4edd8;
+  --sand:     #e0ceaa;
+  --text:     #f0ead8;
+  --muted:    rgba(240,234,216,0.62);
+  --nav-h:    68px;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Lora', serif;
+  background: var(--black); color: var(--text);
+  overflow-x: hidden; min-height: 100vh;
+  display: flex; flex-direction: column;
+}
+body::after {
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9998;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  opacity: 0.5;
+}
+.bg-ambience {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse at 10% 30%, rgba(45,110,53,0.14) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 70%, rgba(0,200,192,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, rgba(240,180,41,0.05) 0%, transparent 45%),
+    linear-gradient(180deg, #0a0c0a 0%, #0c1a0c 50%, #0a0c0a 100%);
+}
+.orb { position: fixed; border-radius: 50%; pointer-events: none; animation: pulse-orb 7s ease-in-out infinite; }
+.orb-1 { width: 500px; height: 500px; top: 10%; right: -150px; background: radial-gradient(circle, rgba(45,110,53,0.12) 0%, transparent 70%); }
+.orb-2 { width: 350px; height: 350px; bottom: 20%; left: -100px; background: radial-gradient(circle, rgba(0,200,192,0.07) 0%, transparent 70%); animation-delay: -3.5s; }
+@keyframes pulse-orb { 0%,100% { transform: scale(1); opacity: 0.6; } 50% { transform: scale(1.1); opacity: 1; } }
+
+main { flex: 1; padding-top: var(--nav-h); position: relative; z-index: 1; }
+
+@keyframes grow-line { from { transform: scaleY(0); opacity: 0; } to { transform: scaleY(1); opacity: 1; } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── HERO ── */
+.recipe-hero { text-align: center; padding: 4.5rem 2rem 3rem; position: relative; }
+.recipe-hero::after {
+  content: ''; display: block; width: 1px; height: 60px;
+  background: linear-gradient(to bottom, var(--cyan), transparent);
+  margin: 2.5rem auto 0; animation: grow-line 1.2s 0.6s ease both; transform-origin: top;
+}
+.hero-eyebrow {
+  display: inline-block;
+  background: rgba(0,200,192,0.08); border: 1px solid rgba(0,200,192,0.25);
+  color: var(--cyan); font-family: 'Cinzel', serif;
+  font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+  padding: 0.38rem 1.1rem; margin-bottom: 1.4rem;
+  animation: fadeUp 0.8s ease both;
+}
+.hero-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1.7rem, 5vw, 3.2rem); line-height: 1.15;
+  animation: fadeUp 0.8s 0.1s ease both;
+}
+.hero-title .gold { color: var(--gold); }
+.hero-byline {
+  font-family: 'Cinzel', serif; font-size: 0.62rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--muted); margin-top: 0.8rem;
+  animation: fadeUp 0.8s 0.15s ease both;
+}
+.hero-sub {
+  font-style: italic; color: var(--muted); font-size: 0.95rem;
+  margin-top: 0.5rem; max-width: 640px; margin-left: auto; margin-right: auto;
+  animation: fadeUp 0.8s 0.2s ease both;
+}
+.hero-img {
+  display: block; max-width: 600px; width: 90%; margin: 2rem auto 0;
+  border-radius: 10px; border: 1px solid rgba(0,200,192,0.15);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  animation: fadeUp 0.8s 0.3s ease both;
+}
+
+/* ── INFO BAND ── */
+.warning-band { max-width: 760px; margin: 0 auto; padding: 0 2rem; animation: fadeUp 0.8s 0.25s ease both; }
+.info-box {
+  background: rgba(240,180,41,0.06); border: 1px solid rgba(240,180,41,0.3);
+  padding: 1rem 1.3rem; display: flex; gap: 0.9rem; align-items: flex-start;
+}
+.warning-icon { font-size: 1.2rem; flex-shrink: 0; padding-top: 0.1rem; }
+.warning-text { font-size: 0.85rem; line-height: 1.7; color: var(--sand); }
+.warning-text strong { color: var(--gold); }
+.warning-text a { color: var(--cyan); text-decoration: underline; text-underline-offset: 2px; }
+
+/* ── META PILLS ── */
+.recipe-meta {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem;
+  padding: 2.5rem 2rem 3rem; animation: fadeUp 0.8s 0.3s ease both;
+}
+.meta-pill {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.5rem 1.1rem; background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(0,200,192,0.15);
+  font-family: 'Cinzel', serif; font-size: 0.62rem;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--sand);
+}
+.meta-pill .icon { font-size: 1rem; }
+.meta-pill .label { color: var(--muted); margin-right: 0.2rem; }
+
+/* ── PEST CARDS ── */
+.pest-section { max-width: 760px; margin: 0 auto 3rem; padding: 0 2rem; }
+.pest-card {
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(0,200,192,0.1);
+  border-radius: 8px; overflow: hidden;
+}
+.pest-header {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1.2rem 1.8rem;
+  background: rgba(232,114,26,0.06); border-bottom: 1px solid rgba(232,114,26,0.15);
+}
+.pest-num {
+  width: 40px; height: 40px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid var(--orange); border-radius: 50%;
+  font-family: 'Cinzel Decorative', serif; font-size: 1rem; color: var(--orange);
+}
+.pest-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1rem, 3vw, 1.35rem); color: var(--text); line-height: 1.3;
+}
+.pest-name .gold { color: var(--gold); }
+.pest-body { padding: 1.5rem 1.8rem; }
+.pest-body p { font-size: 0.92rem; line-height: 1.85; color: var(--sand); margin-bottom: 0.8rem; }
+.pest-body p:last-child { margin-bottom: 0; }
+.pest-body strong { color: var(--gold); }
+.pest-body a { color: var(--cyan); text-decoration: underline; text-underline-offset: 2px; }
+.pest-body .detail-label {
+  font-family: 'Cinzel', serif; font-size: 0.56rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--cyan); display: block; margin: 1.2rem 0 0.5rem;
+}
+.pest-body .detail-label:first-child { margin-top: 0; }
+
+/* Signs box */
+.signs-box {
+  background: rgba(232,114,26,0.06); border: 1px solid rgba(232,114,26,0.2);
+  border-radius: 6px; padding: 0.8rem 1.1rem; margin-bottom: 1rem;
+  display: flex; gap: 0.7rem; align-items: flex-start;
+}
+.signs-box .signs-icon { font-size: 1rem; flex-shrink: 0; }
+.signs-box p { font-size: 0.88rem; line-height: 1.7; color: var(--sand); margin: 0; }
+.signs-box strong { color: var(--orange); }
+
+/* Protocol box */
+.protocol-box {
+  background: rgba(0,200,192,0.04); border: 1px solid rgba(0,200,192,0.15);
+  border-radius: 6px; padding: 1rem 1.2rem; margin-top: 0.6rem;
+}
+.protocol-box .proto-label {
+  font-family: 'Cinzel', serif; font-size: 0.52rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--cyan); display: block; margin-bottom: 0.4rem;
+}
+.protocol-box .ratio {
+  font-family: monospace; font-size: 0.9rem; color: var(--cyan);
+  background: rgba(0,200,192,0.06); padding: 0.3rem 0.6rem; border-radius: 4px;
+  display: inline-block; margin: 0.3rem 0;
+}
+.protocol-box p { font-size: 0.88rem; line-height: 1.75; color: var(--sand); margin-top: 0.5rem; }
+.protocol-box strong { color: var(--text); }
+
+/* ── TIP BOX ── */
+.tip-box { max-width: 760px; margin: 0 auto 3rem; padding: 0 2rem; }
+.tip-inner {
+  background: rgba(240,180,41,0.05); border: 1px solid rgba(240,180,41,0.2);
+  border-radius: 8px; padding: 1.5rem 2rem;
+  display: flex; gap: 1rem; align-items: flex-start;
+}
+.tip-icon { font-size: 1.4rem; flex-shrink: 0; }
+.tip-content { font-size: 0.9rem; line-height: 1.8; color: var(--sand); }
+.tip-content strong { color: var(--gold); }
+
+/* ── ISLAND TIP ── */
+.island-tip {
+  margin-top: 1rem; padding: 0.85rem 1.1rem;
+  background: rgba(0,200,192,0.04); border-left: 3px solid var(--cyan);
+  font-size: 0.86rem; line-height: 1.75; color: var(--sand);
+}
+.island-tip .tip-label {
+  font-family: 'Cinzel', serif; font-size: 0.56rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--cyan); display: block; margin-bottom: 0.35rem;
+}
+.island-tip strong { color: var(--text); }
+
+/* ── EMERGENCY SPRAY ── */
+.emergency-section { max-width: 760px; margin: 0 auto 3rem; padding: 0 2rem; }
+.emergency-box {
+  background: linear-gradient(135deg, rgba(232,114,26,0.08), rgba(240,180,41,0.06));
+  border: 1px solid rgba(232,114,26,0.25); border-radius: 10px;
+  padding: 1.8rem 2rem;
+}
+.emergency-box h3 {
+  font-family: 'Cinzel Decorative', serif; font-size: 1.15rem;
+  color: var(--orange); margin-bottom: 0.3rem;
+}
+.emergency-box .em-sub {
+  font-size: 0.85rem; color: var(--muted); font-style: italic; margin-bottom: 1.2rem;
+}
+.emergency-box .recipe-line {
+  font-size: 0.92rem; line-height: 2; color: var(--sand); padding-left: 0.3rem;
+}
+.emergency-box .recipe-line strong { color: var(--cyan); }
+
+/* ── MAINTENANCE SECTION ── */
+.maint-section { max-width: 760px; margin: 0 auto 3rem; padding: 0 2rem; }
+.maint-box {
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(0,200,192,0.12);
+  border-radius: 8px; padding: 1.8rem 2rem;
+}
+.maint-box h3 {
+  font-family: 'Cinzel Decorative', serif; font-size: 1.15rem;
+  color: var(--gold); margin-bottom: 1rem;
+}
+.maint-box p { font-size: 0.92rem; line-height: 1.85; color: var(--sand); margin-bottom: 0.8rem; }
+.maint-box p:last-child { margin-bottom: 0; }
+.maint-box strong { color: var(--gold); }
+.maint-box a { color: var(--cyan); text-decoration: underline; text-underline-offset: 2px; }
+
+/* ── SERIES NAV ── */
+.series-nav { max-width: 760px; margin: 0 auto 3rem; padding: 0 2rem; }
+.series-nav-inner {
+  background: rgba(240,180,41,0.05); border: 1px solid rgba(240,180,41,0.2);
+  border-radius: 8px; padding: 1.5rem 2rem;
+}
+.series-nav-inner .sn-title {
+  display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.6rem;
+}
+.series-nav-inner .sn-title strong { color: var(--gold); font-size: 0.95rem; }
+.series-nav-inner .sn-links { font-size: 0.88rem; line-height: 1.9; color: var(--sand); }
+.series-nav-inner .sn-links a { color: var(--cyan); text-decoration: underline; text-underline-offset: 2px; }
+
+/* ── KĀNEHIWA WISDOM ── */
+.wisdom-section{max-width:740px;margin:3rem auto;padding:0 1.5rem;}
+.kw-rotate-box{background:linear-gradient(135deg,rgba(0,200,192,0.06),rgba(240,180,41,0.06));border:1px solid rgba(0,200,192,0.18);border-radius:12px;padding:2rem 2.2rem 1.6rem;text-align:center;position:relative;min-height:180px;}
+.kw-rotate-box .kw-label{display:block;font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--cyan);margin-bottom:0.6rem;}
+.kw-rotate-box .kw-title{display:block;font-family:'Cinzel Decorative',serif;font-size:1.05rem;color:var(--gold);margin-bottom:1.2rem;}
+.kw-slide{display:none;animation:kwFadeIn .6s ease;}
+.kw-slide.active{display:block;}
+@keyframes kwFadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.kw-slide .kw-quote{font-family:'Cormorant Garamond',serif;font-size:1.08rem;font-style:italic;color:var(--text);line-height:1.8;margin:0 auto;max-width:600px;}
+.kw-dots{display:flex;justify-content:center;gap:8px;margin-top:1.2rem;}
+.kw-dots .kw-dot{width:8px;height:8px;border-radius:50%;background:rgba(240,234,216,0.2);cursor:pointer;border:none;padding:0;transition:background .3s;}
+.kw-dots .kw-dot.active{background:var(--gold);}
+
+/* ── DISCLAIMER ── */
+.disclaimer {
+  background: rgba(27,58,30,0.3); border-top: 1px solid rgba(0,200,192,0.1);
+  max-width: 760px; margin: 2rem auto 0; padding: 1.2rem 2rem;
+}
+.disclaimer p { font-size: 0.78rem; line-height: 1.7; color: var(--muted); text-align: center; }
+.disclaimer strong { color: var(--sand); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .recipe-hero { padding: 3rem 1.2rem 2rem; }
+  .hero-title { font-size: clamp(1.4rem, 7vw, 2rem); }
+  .pest-section, .tip-box, .warning-band, .emergency-section, .maint-section, .series-nav { padding-left: 1.2rem; padding-right: 1.2rem; }
+  .pest-header { padding: 1rem 1.2rem; }
+  .pest-body { padding: 1.2rem; }
+  .emergency-box, .maint-box { padding: 1.4rem 1.2rem; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="bg-ambience"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<style>:root { --trm-nav-h: 68px; --nav-h: 68px; }
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  height: var(--trm-nav-h);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2rem; box-sizing: border-box;
+  background: rgba(10,12,10,0.95);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0,200,192,0.18);
+}
+.nav-logo { display: flex; align-items: center; gap: 0.85rem; text-decoration: none; flex-shrink: 0; }
+.nav-logo-icon {
+  width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, #1b3a1e, #2d6e35);
+  border: 2px solid #00c8c0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; box-shadow: 0 0 14px rgba(0,200,192,0.3);
+}
+.nav-logo-text .line1 {
+  font-family: "Cinzel Decorative", serif; font-size: 0.92rem;
+  color: #00c8c0; letter-spacing: 0.1em; display: block; line-height: 1.3;
+}
+.nav-logo-text .line2 {
+  font-family: "Cinzel", serif; font-size: 0.75rem;
+  color: #e0ceaa; letter-spacing: 0.22em; text-transform: uppercase; display: block;
+}
+.nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; margin: 0; padding: 0; }
+.nav-links a {
+  font-family: "Cinzel", serif; font-size: 0.78rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: #e0ceaa; text-decoration: none; opacity: 0.75;
+  transition: opacity 0.2s, color 0.2s;
+}
+.nav-links a:hover { opacity: 1; color: #00c8c0; }
+.nav-links a.active { opacity: 1; color: #00c8c0; }
+.nav-shop {
+  font-family: "Cinzel", serif; font-size: 0.75rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  text-decoration: none; color: #00c8c0;
+  border: 1.5px solid #00c8c0; padding: 0.45rem 1.2rem;
+  transition: background 0.2s, color 0.2s; white-space: nowrap;
+}
+.nav-shop:hover { background: #00c8c0; color: #0a0c0a; }
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  cursor: pointer; background: none; border: none; padding: 4px;
+  -webkit-tap-highlight-color: transparent;
+}
+.hamburger span { display: block; width: 24px; height: 2px; background: #00c8c0; transition: 0.25s; }
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+.mobile-menu {
+  display: none; position: fixed; top: var(--trm-nav-h); left: 0; right: 0; z-index: 290;
+  background: rgba(10,12,10,0.98);
+  flex-direction: column; padding: 1.4rem 1.5rem 1.8rem; gap: 1.2rem;
+  border-bottom: 2px solid #00c8c0;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-family: "Cinzel", serif; font-size: 1.05rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: #e0ceaa; text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.07); padding-bottom: 1rem;
+}
+.mobile-menu a:last-child { border-bottom: none; color: #00c8c0; padding-bottom: 0; }
+footer {
+  background: #070908;
+  border-top: 1px solid rgba(0,200,192,0.12);
+  padding: 4rem 2.5rem 2rem;
+  position: relative; z-index: 1;
+}
+.footer-grid {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem;
+  padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.footer-brand .nav-logo-icon { width: 48px; height: 48px; font-size: 1.4rem; }
+.footer-brand .brand-name {
+  font-family: "Cinzel Decorative", serif;
+  font-size: 1rem; color: #00c8c0; margin: 1rem 0 0.8rem; display: block;
+}
+.footer-brand p { font-size: 0.92rem; color: rgba(240,234,216,0.62); line-height: 1.7; max-width: 260px; }
+.footer-col h5 {
+  font-family: "Cinzel", serif; font-size: 0.72rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: #f0b429; margin-bottom: 1.4rem;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; padding: 0; margin: 0; }
+.footer-col ul a {
+  font-size: 0.92rem; color: rgba(240,234,216,0.62); text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-col ul a:hover { color: #00c8c0; }
+.footer-bottom {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 1rem; padding-top: 2rem;
+}
+.footer-bottom p { font-family: "Lora", serif; font-size: 0.82rem; color: rgba(240,234,216,0.25); }
+.socials { display: flex; gap: 0.8rem; }
+.socials a {
+  width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; text-decoration: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.socials a:hover { border-color: #00c8c0; background: rgba(0,200,192,0.1); }
+@media (max-width: 1000px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .footer-brand { grid-column: 1 / -1; }
+}
+@media (max-width: 640px) {
+  .footer-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .nav-links, .nav-shop { display: none; }
+  .hamburger { display: flex; }
+}
+</style>
+
+<div id="trm-nav"></div>
+
+<main>
+
+<!-- HERO -->
+<div class="recipe-hero">
+  <span class="hero-eyebrow">KNF Series · Troubleshooting</span>
+  <h1 class="hero-title">Pest &amp; Disease <span class="gold">Troubleshooting</span></h1>
+  <p class="hero-byline">The Maui Edition — KNF Solutions</p>
+  <p class="hero-sub">Year-round tropical pest pressure demands year-round defense. Here's how to use your KNF inputs to combat the most common issues in Maui gardens.</p>
+  <img src="https://tropicalrootsmaui.com/img/ogimg/knfpestguide.webp" alt="KNF Pest &amp; Disease Troubleshooting Guide — Tropical Roots Maui" class="hero-img" loading="eager" fetchpriority="high">
+</div>
+
+<!-- INFO BAND -->
+<div class="warning-band">
+  <div class="info-box">
+    <span class="warning-icon">🛡️</span>
+    <div class="warning-text">
+      <strong>Prevention beats treatment every time.</strong> The protocols below are reactive solutions for active problems — but a weekly <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-ohn-guide.html">OHN</a> spray is your first and best line of defense. If you're following the <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-feeding-schedule.html">KNF Feeding Schedule</a>, your plants are already building immunity. This guide is for when things slip through.
+    </div>
+  </div>
+</div>
+
+<!-- META PILLS -->
+<div class="recipe-meta">
+  <div class="meta-pill"><span class="icon">📖</span> <span class="label">Type</span> Troubleshooting</div>
+  <div class="meta-pill"><span class="icon">🐛</span> <span class="label">Issues</span> 7 Common</div>
+  <div class="meta-pill"><span class="icon">🌺</span> <span class="label">Region</span> Maui / Tropics</div>
+  <div class="meta-pill"><span class="icon">📊</span> <span class="label">Level</span> Intermediate</div>
+</div>
+
+<!-- PEST 1: BROAD MITES & RUSSET MITES -->
+<div class="pest-section">
+  <div class="pest-card">
+    <div class="pest-header">
+      <div class="pest-num">1</div>
+      <h2 class="pest-name">Broad Mites &amp; <span class="gold">Russet Mites</span></h2>
+    </div>
+    <div class="pest-body">
+
+      <div class="signs-box">
+        <span class="signs-icon">🔍</span>
+        <p><strong>The Signs:</strong> Twisted, shiny, "plastic-looking" new growth. Leaves curling upward (canoeing) and brittle stems. These microscopic mites are invisible to the naked eye — by the time you see the damage, they've already been feeding for days.</p>
+      </div>
+
+      <span class="detail-label">🧪 The KNF Fix: High-Strength OHN + WCA</span>
+
+      <div class="protocol-box">
+        <span class="proto-label">The Protocol</span>
+        <span class="ratio">OHN @ 1:500 (2ml/L) + WCA @ 1:1000 (1ml/L)</span>
+        <p><strong>Why?</strong> OHN acts as a systemic repellent — the garlic and ginger compounds make the plant taste and smell unpleasant to mites. WCA hardens the cell walls, making it physically difficult for these microscopic pests to pierce the plant tissue.</p>
+      </div>
+
+      <span class="detail-label">📅 Frequency</span>
+      <p>Foliar spray <strong>every 3 days for two weeks</strong>. Ensure you spray the <strong>underside of the leaves</strong> — this is where mites live and feed. Two weeks covers multiple life cycles to break the infestation.</p>
+
+      <div class="island-tip">
+        <span class="tip-label">🌺 Hawaiʻi Island Tip</span>
+        Broad mites thrive in <strong>Hawaiʻi's warmth and reproduce faster in tropical temperatures</strong> — their life cycle can be as short as 5 days in our climate vs 10+ days on the mainland. This means you need to be <strong>more aggressive with spray frequency</strong>. Consider spraying every 2 days for the first week, then every 3 days for the second. Inspect new growth daily with a jeweler's loupe — if you see "wet-looking" distorted tips, act immediately.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PEST 2: POWDERY MILDEW -->
+<div class="pest-section">
+  <div class="pest-card">
+    <div class="pest-header">
+      <div class="pest-num">2</div>
+      <h2 class="pest-name">Powdery <span class="gold">Mildew (PM)</span></h2>
+    </div>
+    <div class="pest-body">
+
+      <div class="signs-box">
+        <span class="signs-icon">🔍</span>
+        <p><strong>The Signs:</strong> White, flour-like spots on leaves that spread quickly in high humidity. Often starts on lower leaves with poor airflow and can spread to the entire canopy within days if unchecked.</p>
+      </div>
+
+      <span class="detail-label">🧪 The KNF Fix: OHN + Vinegar (BRV) + WCA</span>
+
+      <div class="protocol-box">
+        <span class="proto-label">The Protocol</span>
+        <span class="ratio">1ml OHN + 2ml BRV + 1ml WCA per liter</span>
+        <p><strong>Why?</strong> The acidity of the Brown Rice Vinegar changes the pH on the leaf surface, making it inhospitable for fungi. OHN provides antifungal properties from the garlic and cinnamon compounds, and WCA strengthens the leaf's "skin" so spores can't penetrate.</p>
+      </div>
+
+      <span class="detail-label">📅 Frequency</span>
+      <p>Spray <strong>immediately at the first sign of a spot</strong>. Do not wait for it to spread. <strong>Increase airflow in your tent!</strong> Add an extra oscillating fan aimed at the lower canopy where PM typically starts.</p>
+
+      <div class="island-tip">
+        <span class="tip-label">🌺 Hawaiʻi Island Tip</span>
+        PM is the <strong>#1 enemy of Maui indoor growers</strong>. Our baseline humidity of 65–80% is PM paradise. Beyond the spray protocol, your best defense is <strong>environmental control</strong>: keep VPD in range (see the <a href="https://tropicalrootsmaui.com/KnowledgeBase/cannabis-grow-guides/temperature-humidity-vpd-guide.html">Temp &amp; Humidity Guide</a>), run a dehumidifier in late flower, and <strong>defoliate aggressively</strong> to prevent stagnant air pockets in the canopy. Outdoor growers on the windward (wet) side are especially vulnerable — a preventative OHN + BRV spray every 5 days during rainy season is strongly recommended.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TIP -->
+<div class="tip-box">
+  <div class="tip-inner">
+    <span class="tip-icon">⚠️</span>
+    <div class="tip-content">
+      <strong>Never spray in late flower.</strong> These protocols are for vegetative and early bloom stages. Once buds are dense (Week 7+), foliar sprays can trap moisture inside flowers and cause bud rot — which is worse than what you're treating. Switch to soil drenches only.
+    </div>
+  </div>
+</div>
+
+<!-- PEST 3: FUNGUS GNATS -->
+<div class="pest-section">
+  <div class="pest-card">
+    <div class="pest-header">
+      <div class="pest-num">3</div>
+      <h2 class="pest-name">Fungus <span class="gold">Gnats</span></h2>
+    </div>
+    <div class="pest-body">
+
+      <div class="signs-box">
+        <span class="signs-icon">🔍</span>
+        <p><strong>The Signs:</strong> Small black flies jumping off the soil surface; slow, stunted growth due to larvae eating root hairs underground. You'll see adults hopping around when you water.</p>
+      </div>
+
+      <span class="detail-label">🧪 The KNF Fix: Cinnamon-Heavy OHN + Soil Drench</span>
+
+      <div class="protocol-box">
+        <span class="proto-label">The Protocol</span>
+        <span class="ratio">OHN @ 1:500 (2ml/L) — soil drench only</span>
+        <p><strong>Why?</strong> Cinnamon is a natural fungicide and repellent that disrupts the gnat's life cycle in the soil. If you have pure <strong>Cinnamon OHN</strong> (extracted separately from your blend), use that specifically for maximum potency against soil-borne pests.</p>
+      </div>
+
+      <span class="detail-label">📅 Frequency</span>
+      <p>Drench the soil <strong>once every 4 days until the adults disappear</strong>. Crucially: <strong>let the top inch of soil dry out between waterings</strong> — gnat larvae need consistently moist topsoil to survive. Drying the surface breaks their breeding cycle.</p>
+
+      <div class="island-tip">
+        <span class="tip-label">🌺 Hawaiʻi Island Tip</span>
+        Fungus gnats are <strong>endemic to Hawaiʻi's moist environment</strong> — they're nearly impossible to fully eliminate outdoors. For container grows, add a <strong>half-inch layer of coarse perlite or volcanic cinder on the soil surface</strong> to create a dry barrier that adult gnats won't lay eggs in. Yellow sticky traps placed at soil level help monitor and reduce adult populations. If using <strong>catchment water</strong>, filter it first — unfiltered rainwater can introduce gnat larvae directly.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PEST 4: WHITEFLIES & APHIDS -->
+<div class="pest-section">
+  <div class="pest-card">
+    <div class="pest-header">
+      <div class="pest-num">4</div>
+      <h2 class="pest-name">Whiteflies &amp; <span class="gold">Aphids</span></h2>
+    </div>
+    <div class="pest-body">
+
+      <div class="signs-box">
+        <span class="signs-icon">🔍</span>
+        <p><strong>The Signs:</strong> Tiny white moths fluttering when you shake branches, or green/black clusters on stems and new growth. Sticky "honeydew" residue on leaves — this sugary secretion attracts ants and can grow sooty black mold.</p>
+      </div>
+
+      <span class="detail-label">🧪 The KNF Fix: OHN + LAB (Lactic Acid Bacteria)</span>
+
+      <div class="protocol-box">
+        <span class="proto-label">The Protocol</span>
+        <span class="ratio">1ml OHN + 2ml LAB per liter</span>
+        <p><strong>Why?</strong> LAB helps break down the sticky honeydew left by pests and outcompetes any opportunistic molds (like sooty mold) that try to colonize the residue. OHN keeps the bugs from returning — the garlic compounds are particularly effective as an aphid repellent.</p>
+      </div>
+
+      <span class="detail-label">📅 Frequency</span>
+      <p>Foliar spray <strong>once every 3 days</strong> until the population is eliminated. Pay special attention to <strong>stem junctions and the underside of new growth</strong> — these are the favorite hiding spots.</p>
+
+      <div class="island-tip">
+        <span class="tip-label">🌺 Hawaiʻi Island Tip</span>
+        Whiteflies and aphids are <strong>year-round problems on the islands</strong> with no winter kill to reset populations. If you're growing outdoors, check for <strong>ant trails leading up your containers</strong> — ants actively "farm" aphids for honeydew and will protect them from predators. Break the ant trail with a ring of diatomaceous earth around your pots. For severe infestations, combine this protocol with the <a href="https://tropicalrootsmaui.com/KnowledgeBase/IPM/WhiteOilRecipe.html">White Oil Recipe</a> on alternating days for a one-two punch.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pest-section">
+  <div class="pest-card">
+    <div class="pest-header">
+      <div class="pest-num">5</div>
+      <h2 class="pest-name">Leaf <span class="gold">Miners</span></h2>
+    </div>
+    <div class="pest-body">
+
+      <div class="signs-box">
+        <span class="signs-icon">🔍</span>
+        <p><strong>The Signs:</strong> Winding, squiggly white or pale "trails" visible inside the leaf tissue — like tiny tunnels drawn across the leaf surface. Affected leaves may yellow, curl, or drop early. The larvae live and feed between the upper and lower leaf surfaces, making them difficult to reach with contact sprays.</p>
+      </div>
+
+      <span class="detail-label">🧪 The KNF Fix: OHN + FPJ Foliar Spray</span>
+
+      <div class="protocol-box">
+        <span class="proto-label">The Protocol</span>
+        <span class="ratio">2ml OHN + 1ml FPJ per liter</span>
+        <p><strong>Why?</strong> OHN's garlic and ginger compounds act as a systemic deterrent that makes the leaf tissue unpalatable to egg-laying adult flies and moths. FPJ strengthens the leaf surface and promotes rapid new growth to replace damaged tissue. Because the larvae are protected inside the leaf, prevention is far more effective than treatment.</p>
+      </div>
+
+      <span class="detail-label">📅 Frequency</span>
+      <p>Preventative foliar spray <strong>twice a week</strong> during active growing periods. For active infestations, <strong>remove and destroy all affected leaves immediately</strong> — the larvae will continue feeding and pupating if left on the plant. Spray remaining foliage every 2 days for 2 weeks to intercept the next generation of egg-laying adults.</p>
+
+      <span class="detail-label">✂️ The Manual Fix</span>
+      <p>Unlike most pests, leaf miners can't be killed in place with a spray because they're <strong>sandwiched inside the leaf</strong>. Your most effective tool is pruning. Remove every leaf with visible trails and <strong>bag and discard them</strong> — don't compost them, as the pupae can survive in your pile and reinfest. After pruning, hit the remaining canopy hard with the OHN + FPJ protocol above.</p>
+
+      <div class="island-tip">
+        <span class="tip-label">🌺 Hawaiʻi Island Tip</span>
+        Leaf miners are <strong>active year-round in Hawaiʻi's warm climate</strong> with no winter freeze to break the breeding cycle. On Maui, the vegetable leaf miner (<em>Liriomyza sativae</em>) is the most common species — it attacks a wide range of plants, not just cannabis. If you have <strong>tomatoes, beans, or other veggies growing nearby</strong>, they can serve as reservoir hosts. Consider a dedicated <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-ohn-guide.html">OHN</a> preventative spray on all plants in your growing area, not just your main crop. <strong>Neem-based OHN</strong> (made with neem leaves added to the standard 5-herb recipe) is especially effective as a systemic leaf miner deterrent in tropical conditions.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pest-section">
+  <div class="pest-card">
+    <div class="pest-header">
+      <div class="pest-num">6</div>
+      <h2 class="pest-name">Spider <span class="gold">Mites</span></h2>
+    </div>
+    <div class="pest-body">
+
+      <div class="signs-box">
+        <span class="signs-icon">🔍</span>
+        <p><strong>The Signs:</strong> Tiny yellow or white speckles on the tops of leaves (stippling) as the mites suck chlorophyll from below. Fine webbing between leaves and at branch junctions — by the time you see webs, the infestation is severe. Check the undersides of leaves with a loupe or phone camera — two-spotted spider mites appear as tiny moving dots.</p>
+      </div>
+
+      <span class="detail-label">🧪 The KNF Fix: OHN + WCA Foliar Spray</span>
+
+      <div class="protocol-box">
+        <span class="proto-label">The Protocol</span>
+        <span class="ratio">2ml OHN + 1ml WCA per liter</span>
+        <p><strong>Why?</strong> OHN's garlic and cinnamon compounds are potent acaricides — they disrupt the mites' ability to feed and reproduce. WCA coats the leaf surface with a thin calcium film that makes it physically harder for mites to pierce the cell walls and feed. Together, they create an environment hostile to mite colonization.</p>
+      </div>
+
+      <span class="detail-label">📅 Frequency</span>
+      <p>Foliar spray <strong>every 2 days for 2 weeks minimum</strong> — spider mites reproduce extremely fast and have a lifecycle of about 5–7 days. You must spray through <strong>at least 3 full generations</strong> to break the cycle. Drench the <strong>undersides of all leaves</strong> — this is where they live and lay eggs. After the initial 2-week blitz, continue once weekly as a preventative.</p>
+
+      <span class="detail-label">🌡️ Environmental Control</span>
+      <p>Spider mites thrive in <strong>hot, dry conditions</strong>. Raise your humidity to 55–65% during the treatment period to slow reproduction. Good airflow also helps — stagnant air creates the warm pockets mites love.</p>
+
+      <div class="island-tip">
+        <span class="tip-label">🌺 Hawaiʻi Island Tip</span>
+        Spider mites are <strong>most aggressive on the dry leeward side of Maui</strong> — Kīhei, Lahaina, and West Maui growers deal with them year-round. The combination of heat and low humidity (especially when the trades die down during Kona wind events) creates perfect mite conditions. Indoor tent growers: if your tent runs above 82°F with humidity below 45%, you're creating a mite paradise. <strong>Combine the OHN + WCA spray with a <a href="https://tropicalrootsmaui.com/KnowledgeBase/IPM/WhiteOilRecipe.html">White Oil</a> application on alternating days</strong> for severe infestations — the oil suffocates adults and eggs while the OHN prevents recolonization. Never use both on the same day, as the combination can stress the plant.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pest-section">
+  <div class="pest-card">
+    <div class="pest-header">
+      <div class="pest-num">7</div>
+      <h2 class="pest-name">Caterpillars &amp; <span class="gold">Budworms</span></h2>
+    </div>
+    <div class="pest-body">
+
+      <div class="signs-box">
+        <span class="signs-icon">🔍</span>
+        <p><strong>The Signs:</strong> Irregular holes chewed through leaves, dark pellet-like droppings (frass) on leaves and in bud sites, and in late flower — brown, mushy spots inside buds where caterpillars have burrowed in and their frass has triggered bud rot. The corn earworm / tobacco budworm (<em>Helicoverpa</em>) is the most destructive — it burrows directly into developing flowers.</p>
+      </div>
+
+      <span class="detail-label">🧪 The KNF Fix: OHN Preventative + Manual Removal</span>
+
+      <div class="protocol-box">
+        <span class="proto-label">The Protocol</span>
+        <span class="ratio">2ml OHN per liter — preventative foliar spray</span>
+        <p><strong>Why?</strong> OHN's strong garlic and ginger compounds act as a moth and butterfly deterrent — the adult females find the scent repulsive and avoid laying eggs on treated plants. This is primarily a <strong>prevention strategy</strong>. Once caterpillars are inside buds, no spray can reach them without saturating (and potentially rotting) the flower.</p>
+      </div>
+
+      <span class="detail-label">📅 Frequency</span>
+      <p>Preventative spray <strong>twice a week from the onset of flower</strong> — this is when moths begin targeting your plants as egg-laying sites. For active infestations, <strong>hand-pick every caterpillar you can find</strong> daily at dusk when they're most active and visible on the plant surface. Inspect every bud site — gently squeeze the base of each cola and watch for frass or movement.</p>
+
+      <span class="detail-label">✂️ The Bud Surgery</span>
+      <p>If you find brown, mushy spots in your buds, the caterpillar has already done its damage. <strong>Cut the affected section out immediately</strong> and inspect surrounding bud sites. The frass left inside creates a perfect environment for <strong>botrytis (bud rot)</strong> — so removal must be fast and thorough. Spray the wound site with diluted OHN to prevent secondary infection.</p>
+
+      <div class="island-tip">
+        <span class="tip-label">🌺 Hawaiʻi Island Tip</span>
+        Caterpillars and budworms are <strong>the #1 threat to outdoor flower in Hawaiʻi</strong>. With no frost to kill off moth populations, they breed year-round and are most active during the warmer months (April–October). Outdoor Maui growers should consider <strong>BT (Bacillus thuringiensis)</strong> as a companion to the OHN protocol — BT is a naturally occurring soil bacterium that is lethal to caterpillars but harmless to everything else. Apply BT weekly during flower as a foliar spray and <strong>stop all BT applications at least 2 weeks before harvest</strong>. For indoor tent growers, keep your tent sealed — a single moth entering through an open flap can lay hundreds of eggs overnight. <strong>Check your intake filters</strong> and seal any gaps around ductwork.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EMERGENCY RECOVERY SPRAY -->
+<div class="emergency-section">
+  <div class="emergency-box">
+    <h3>🚨 The "Emergency Recovery" Spray</h3>
+    <p class="em-sub">If your plants look generally stressed — droopy, yellowing, or recovering from a storm or heatwave:</p>
+    <div class="recipe-line">💧 <strong>1 liter</strong> Water</div>
+    <div class="recipe-line">🌱 <strong>1ml</strong> FPJ (for energy)</div>
+    <div class="recipe-line">🛡️ <strong>1ml</strong> OHN (for immunity)</div>
+    <div class="recipe-line">🦴 <strong>1ml</strong> WCA (for structure)</div>
+    <div class="recipe-line">🌊 <strong>0.5ml</strong> Sea Water (for trace minerals)</div>
+
+    <div class="island-tip" style="margin-top:1.2rem;">
+      <span class="tip-label">🌺 Hawaiʻi Island Tip</span>
+      The sea water component is <strong>easy to source on Maui — you're never more than 20 minutes from the ocean</strong>. Collect from a clean area away from harbors, river mouths, or runoff zones. <strong>North Shore or Kapalua coastline</strong> water is ideal. Filter through a coffee filter to remove sand and debris. The trace minerals in ocean water (magnesium, sulfur, boron, zinc) provide a broad-spectrum micronutrient boost that's particularly helpful after heavy rains leach minerals from the soil.
+    </div>
+  </div>
+</div>
+
+<!-- MAUI MAINTENANCE -->
+<div class="maint-section">
+  <div class="maint-box">
+    <h3>🗓️ Maui Maintenance Schedule</h3>
+    <p><strong>Don't wait for bugs to show up.</strong> In our climate, a "Clean Sweep" spray of <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-ohn-guide.html">OHN</a> and <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-wca-guide.html">WCA</a> once a week is the difference between a successful harvest and a total loss.</p>
+    <p>This weekly preventative spray creates a persistent defense layer on the leaf surface that repels pests and inhibits fungal germination. Combined with the <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-ohn-guide.html">TRM Maintenance Cocktail</a> from the OHN guide, it forms a complete organic IPM (Integrated Pest Management) strategy that replaces every bottle in your pest spray arsenal.</p>
+
+    <div class="island-tip">
+      <span class="tip-label">🌺 Hawaiʻi Island Tip</span>
+      During <strong>Kona wind events</strong> (hot, still, humid — typically fall months), bump your preventative spray to <strong>twice per week</strong>. Kona winds eliminate the trade wind airflow that normally helps keep fungal pressure in check. These are the conditions where PM and botrytis explode seemingly overnight. Monitor the weather and spray proactively when trades die down.
+    </div>
+  </div>
+</div>
+
+<!-- KNF SERIES NAV -->
+<div class="series-nav">
+  <div class="series-nav-inner">
+    <div class="sn-title">
+      <span style="font-size:1.2rem;">📚</span>
+      <strong>KNF Series</strong>
+    </div>
+    <div class="sn-links">
+      🌏 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-guide.html">Introduction to KNF</a> — Start Here<br>
+      <br><span style="font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(0,200,192,0.7);font-weight:600;">I. The Foundational Biology</span><br>
+      🍄 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-imo-guide.html">IMO (Indigenous Microorganisms)</a> — From Rice Box to Black Gold<br>
+      🧫 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-labs-guide.html">LabS (Lactic Acid Bacteria)</a> — The Clean-Up Crew<br>
+      <br><span style="font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(0,200,192,0.7);font-weight:600;">II. The Primary Growth Engines</span><br>
+      🐟 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-faa-guide.html">FAA (Fish Amino Acids)</a> — The Nitrogen Engine<br>
+      🌱 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-fpj-guide.html">FPJ (Fermented Plant Juice)</a> — The Growth Hormone<br>
+      <br><span style="font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(0,200,192,0.7);font-weight:600;">III. Specialized &amp; Bloom Nutrition</span><br>
+      🦴 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-wca-guide.html">WCA (Calcium)</a> — The Cell Wall Builder<br>
+      🔥 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-wca-p-guide.html">WCA-P (Calcium Phosphate)</a> — The Bloom Fuel<br>
+      🛡️ <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-ohn-guide.html">OHN (Oriental Herbal Nutrient)</a> — The Immune Booster<br>
+      <br><span style="font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(0,200,192,0.7);font-weight:600;">IV. Application &amp; Strategy</span><br>
+      📋 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-feeding-schedule.html">KNF Feeding Schedule</a> — Seed to Harvest Program<br>
+      📊 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-feeding-chart.html">KNF Feeding Chart</a> — Printable Quick Reference<br>
+      🐛 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-pest-disease-guide.html">Pest &amp; Disease Troubleshooting</a> — Maui Edition<br>
+      <br><span style="font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(0,200,192,0.7);font-weight:600;">V. Foliar Techniques</span><br>
+      🍚 <a href="https://tropicalrootsmaui.com/KnowledgeBase/knf-series/knf-brv-guide.html">BRV Foliar Spray</a> — Unlocking the Canopy
+    </div>
+</div>
+</div>
+
+<!-- KĀNEHIWA WISDOM -->
+<div class="wisdom-section">
+  <div class="kw-rotate-box" id="kwBox">
+    <span class="kw-label">🌿 Words of Kānehiwa 🌿</span>
+    <span class="kw-title">The Guardian's Vigil</span>
+
+    <div class="kw-slide active">
+      <p class="kw-quote">"A pest is not your enemy — it is a messenger. It tells you where the plant is weak, where the soil is out of balance, where you stopped paying attention. Fix the message, and the messenger leaves on its own."</p>
+    </div>
+    <div class="kw-slide">
+      <p class="kw-quote">"The grower who sprays only when the bugs arrive has already lost the first battle. OHN is not a rescue — it is a ritual. Weekly, without fail, rain or shine. This is the way of the guardian."</p>
+    </div>
+    <div class="kw-slide">
+      <p class="kw-quote">"In Hawaiʻi, the humidity is not your enemy — it is the cost of paradise. Learn to work with it, and your garden will produce medicine that no dry-climate grower can match."</p>
+    </div>
+
+    <div class="kw-dots">
+      <button class="kw-dot active" onclick="goKW(0)"></button>
+      <button class="kw-dot" onclick="goKW(1)"></button>
+      <button class="kw-dot" onclick="goKW(2)"></button>
+    </div>
+  </div>
+</div>
+
+<div class="disclaimer">
+  <p>This guide is provided for educational purposes only. <strong>Always research local laws and regulations before cultivating.</strong> Tropical Roots Maui assumes no responsibility for actions taken based on this information.</p>
+</div>
+
+</main>
+
+<!-- FOOTER -->
+<div id="trm-footer"></div>
+
+<script>
+// Hamburger toggle
+const burger = document.getElementById('trm-burger');
+const mobileNav = document.getElementById('trm-mobile-nav');
+if (burger) {
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    mobileNav.classList.toggle('open');
+  });
+  mobileNav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      burger.classList.remove('open');
+      mobileNav.classList.remove('open');
+    });
+  });
+}
+</script>
+
+<script>
+/* Kānehiwa Wisdom Rotator */
+(function(){
+  var slides=document.querySelectorAll('#kwBox .kw-slide'),
+      dots=document.querySelectorAll('#kwBox .kw-dot'),
+      cur=0,timer;
+  function go(i){
+    slides[cur].classList.remove('active');dots[cur].classList.remove('active');
+    cur=i%slides.length;
+    slides[cur].classList.add('active');dots[cur].classList.add('active');
+    clearInterval(timer);timer=setInterval(function(){go(cur+1)},8000);
+  }
+  window.goKW=go;
+  timer=setInterval(function(){go(cur+1)},8000);
+})();
+</script>
+
+<script src="/site-components.js" defer></script>
+</body></html>

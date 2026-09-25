@@ -1,0 +1,224 @@
+@import url("reset.css");
+
+@viewport {
+  width: device-width;
+  }
+
+html, body {
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size: 13px;
+background-color: black;
+font: 18px "Courier New", Courier, mono;
+font-size: 18px;
+text-align: center;
+margin: 0;
+padding: 0;
+background-color: #000000;
+color: #CCCCCC;
+}
+
+
+pre.content {
+	text-align: left;
+	width: auto;
+}
+p.content {
+	text-align: left;
+	width: 100%;
+}
+
+
+p {
+    padding: 10px;
+}
+
+div {align-content: center; }
+h1 {
+	font-family: "Courier New", Courier, mono;
+	color: #4B1E18;
+	font-size: 30px;
+	font-size: 2.0vw;
+	font-weight: bold;
+}
+
+#wrapper {
+    margin: 0 auto;
+    width: 100%;
+	width: 1000px;
+	
+}
+ 
+#headerwrap {
+    width: 100%;
+	width: 1000px;
+    float: left;
+    margin: 0 auto;
+	
+ }
+
+#header {
+    height: 400px;
+    background: black;
+    border-radius: 10px;
+    border: 1px solid #000;
+    margin: 5px;
+	background-image: url("/img/tropicalrootslogo.webp");
+	background-repeat: no-repeat;
+	background-position: center
+}
+
+#navigationwrap { 
+    width: 100%;
+    float: left;
+    margin: 0 auto;
+}
+
+#navigation {
+    height: 40px;
+    background: black;
+   /* border-radius: 10px;
+    border: 1px solid #4B1E18; */
+    margin: 5px;
+}
+
+#contentwrap {
+    width: 100%;
+	width: 1000px;
+    float: left;
+    margin: 0 auto;
+}
+
+#content {
+    background: black;
+    border-radius: 10px;
+    border: 1px solid #4B1E18;
+    margin: 5px;
+	font-size: 16px;
+	font-size: 2vw;
+	}
+
+#desc {
+    background: black;
+    border-radius: 10px;
+    border: 1px solid #999;
+    margin: 5px;
+	}
+div.desc {
+    background: black;
+    border-radius: 10px;
+    border: 1px solid #999;
+    margin: 5px;
+	}
+#rightcolumnwrap {
+    width: 200px;
+    float: left;
+    margin: 0 auto;
+}
+
+#rightcolumn {
+    background: black;
+    border-radius: 10px;
+    border: 1px solid #4B1E18;
+    margin: 5px;
+}
+
+#footerwrap {
+    width: 1000px;
+    float: left;
+    margin: 0 auto;
+    clear: both;
+}
+
+#footer {
+    height: 75px;
+    background: black;
+    /* border-radius: 10px;
+    border: 1px solid #4B1E18; */
+    margin: 5px;
+}
+
+a:link,a.one:link {
+ color: #8FB65F;
+ font-family: "Courier New", Courier, mono;
+ font-size: 16px;
+ text-decoration: none;
+}
+a:active, a.one:active {
+ color: #CCCCCC;
+ font-family: "Courier New", Courier, mono;
+ font-size: 16px;
+ text-decoration: none;
+}
+a:visited,a.one:visited {
+ color: #8FB65F;
+ font-family: "Courier New", Courier, mono;
+ font-size: 16px;
+ text-decoration: none;
+}
+a:hover,a.one:hover {
+ color: #0099CC;
+ font-family: "Courier New", Courier, mono;
+ font-size: 16px;
+ text-decoration: none;
+}
+@media  (max-width: 480px) {
+	h1 { 
+	font-size: calc(1.5rem + 3vw);
+	color: #999; 
+	}
+}
+
+.ascii {
+ font-family: "Courier New", Courier, mono;
+ letter-spacing: 2px;
+ color: #8FB65F;
+}
+.ascii-art {
+    font-family: monospace;
+    white-space: pre;
+	color: #999;
+	letter-spacing: 2px;
+}
+.items {
+    font-family: monospace;
+    white-space: pre;
+	color: #999;
+	letter-spacing: 2px;
+}
+.cmd {
+ font-family: "Courier New", Courier, mono;
+ color: #CD0307;
+ letter-spacing: 2px;
+}
+
+
+.divTable{
+	display: table;
+	width: 100%;
+}
+.divTableRow {
+	display: table-row;
+}
+.divTableHeading {
+	background-color: #EEE;
+	display: table-header-group;
+}
+.divTableCell, .divTableHead {
+	
+	display: table-cell;
+	padding: 3px 10px;
+	width: auto;
+}
+.divTableHeading {
+	background-color: #EEE;
+	display: table-header-group;
+	font-weight: bold;
+}
+.divTableFoot {
+	background-color: #EEE;
+	display: table-footer-group;
+	font-weight: bold;
+}
+.divTableBody {
+	display: table-row-group;
+}

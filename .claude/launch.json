@@ -1,0 +1,39 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "static-site",
+      "runtimeExecutable": "py",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8080"
+      ],
+      "port": 8080
+    },
+    {
+      "name": "openrelay-site",
+      "runtimeExecutable": "py",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8081",
+        "--directory",
+        "C:/Users/jerem/Downloads/openrelay-site"
+      ],
+      "port": 8081
+    },
+    {
+      "name": "relay-dist",
+      "runtimeExecutable": "py",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8082",
+        "--directory",
+        "C:/Users/jerem/Downloads/chat-app/frontend/dist"
+      ],
+      "port": 8082
+    }
+  ]
+}
