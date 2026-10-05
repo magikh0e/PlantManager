@@ -1,0 +1,51 @@
+name: Strain catalog request
+description: Suggest a strain to add to the built-in catalog
+title: "[Strain] "
+labels: ["strain-catalog"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The catalog grows from what people actually run. Add a strain here and it can ship for everyone.
+  - type: input
+    id: name
+    attributes:
+      label: Strain name
+      placeholder: "Maui Wowie"
+    validations:
+      required: true
+  - type: input
+    id: breeder
+    attributes:
+      label: Breeder or seed source
+      description: Who makes or preserves it. Landrace or heirloom is fine too.
+      placeholder: "Hawaiian Landrace, a seed bank, a preservation project, etc."
+    validations:
+      required: false
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type
+      options:
+        - Sativa
+        - Indica
+        - Hybrid
+        - Ruderalis / auto
+        - Landrace / heirloom
+        - Not sure
+    validations:
+      required: false
+  - type: input
+    id: flowering
+    attributes:
+      label: Flowering time (optional)
+      placeholder: "9-10 weeks, or about 65 days"
+    validations:
+      required: false
+  - type: textarea
+    id: details
+    attributes:
+      label: Lineage, flavors, or a link (optional)
+      description: Anything that helps fill out the entry: genetics, terpenes, effects, yield, or a link to a page about it.
+    validations:
+      required: false

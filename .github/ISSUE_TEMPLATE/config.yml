@@ -1,5 +1,8 @@
 blank_issues_enabled: true
 contact_links:
+  - name: Questions and how-to help
+    url: https://github.com/magikh0e/PlantManager/discussions/categories/q-a
+    about: Not a bug? Ask in Discussions Q&A. It's faster than an issue for how-do-I questions.
   - name: Try the live demo
     url: https://tracker.tropicalrootsmaui.com/?demo
     about: See the app with realistic data loaded. No signup, no install.
