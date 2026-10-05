@@ -394,6 +394,46 @@ kbd {
   "mainEntity": [
     {
       "@type": "Question",
+      "name": "How does Plant Manager compare to other grow tracker apps?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most cultivation trackers such as Grow with Jane are freemium: subscription tiers, ads in the free tier, and cloud-locked data on the vendor's servers. Plant Manager is free forever, has no ads and no subscription, and keeps your data on your own device unless you opt into your own Firebase sync. It is open-source under GPL-3.0, so you can read, fork, or self-host it. A detailed feature-by-feature comparison is at tracker.tropicalrootsmaui.com/plant-manager-vs-grow-with-jane.html."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I install Plant Manager on my phone?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "On Android (Chrome or Edge), tap the one-time Install toast, or use the gear menu Install App option, to fire the native install dialog. On iPhone or iPad Safari, tap Share, then Add to Home Screen, then Add. Once installed it launches in its own window without browser chrome and works fully offline."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "I loaded demo data. How do I clear it out now that I'm tracking real plants?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Every demo record is tagged internally as _demo. Remove them without touching your own data in any of three ways: click Clear demo data in the dashboard banner, use the gear menu Clear Demo Data, or press Ctrl+K and search for clear demo. A confirmation lists the per-category counts before anything is deleted, and your own records are preserved."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "I dismissed the demo banner with Keep mixed. How do I get it back?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Open the Command Palette (Ctrl+K or /) and search for Show Demo Banner. That clears the dismissed flag and the banner reappears on the dashboard. Or just clear demo data from the gear menu, since the banner is no longer relevant once demo records are gone."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How are the plant costs in Strain Comparison calculated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Each expense is either a direct cost (tagged to a specific plant) or shared overhead (untagged, such as tents, meters, electricity, or a bulk soil order). Shared overhead is split equally across every plant you have grown. Per strain, costs are grouped as Cost (harvested) for plants that produced a harvest, Lost (dead plants) for plants archived as Died or Culled, Cost per Plant across all plants of the strain, and Cost per Gram from harvested plants divided by their dry weight. Dead-plant losses are shown separately, not baked into cost per gram."
+      }
+    },
+    {
+      "@type": "Question",
       "name": "Where is my data stored, and is it private?",
       "acceptedAnswer": {
         "@type": "Answer",
