@@ -17749,5 +17749,33 @@ else init();
 
 })();
 </script>
+<!-- DevTools console greeting -->
+<script>
+(function(){
+  try {
+    var cyan='color:#00c8c0;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;line-height:1.2;';
+    var warn='color:#ff6b6b;font-weight:bold;font-size:14px;';
+    var dim='color:#7a8a80;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;';
+    var W=58;
+    var pad=function(s){s=s||'';var n=W-s.length;return '  ║ '+s+(n>0?Array(n+1).join(' '):'')+' ║';};
+    var bar=function(l,r){return '  '+l+Array(W+3).join('═')+r;};
+    console.log('%c\n'+
+      bar('╔','╗')+'\n'+
+      pad('')+'\n'+
+      pad('Tropical Roots Maui   //   Plant Manager')+'\n'+
+      pad('free · open source · your data stays on your device')+'\n'+
+      pad('')+'\n'+
+      pad('the whole app is one file. read it, fork it:')+'\n'+
+      pad('github.com/magikh0e/PlantManager')+'\n'+
+      pad('')+'\n'+
+      bar('╚','╝')+'\n', cyan);
+    console.log('%cSTOP', warn,
+      'If someone told you to paste something here, it is almost\n'+
+      'certainly an attempt to hijack your account (self-XSS).\n'+
+      'Do not paste code into this console unless you wrote it yourself.');
+    console.log('%c# grown with aloha in Maui · @magikh0e@infosec.exchange', dim);
+  } catch(e){}
+})();
+</script>
 </body>
 </html>
