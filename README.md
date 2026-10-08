@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo-512.png" width="260" alt="Plant Manager badge: a neon circuit-leaf plant growing out of a sensor-and-relay controller box with moisture, temperature, Wi-Fi and Bluetooth readouts, under a PLANT MANAGER banner.">
+</p>
+
 # Tropical Roots Maui: Plant Manager
 
 A single-file cultivation management app for tracking mother plants, clones,
