@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo-512.png" width="260" alt="Plant Manager badge: a neon circuit-leaf plant growing out of a sensor-and-relay controller box with moisture, temperature, Wi-Fi and Bluetooth readouts, under a PLANT MANAGER banner.">
+  <img src="assets/logo-512.png" width="260" alt="Plant Manager badge: a mother plant drawn in glowing green lines with circuit-trace roots, branching to two clone cuttings, ringed by water, temperature, genetics, chart and magnifier icons, in a riveted metal frame under PLANT MANAGER and GROW TRACKER banners.">
 </p>
 
 # Tropical Roots Maui: Plant Manager
